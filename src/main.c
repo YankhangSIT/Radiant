@@ -9,13 +9,14 @@
 // documentation link:
 // https://github.com/DigiPen-Faculty/CProcessing/wiki
 //
-// Copyright © 2022 DigiPen, All rights reserved.
+// Copyright ï¿½ 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
 #include "cprocessing.h"
 #include "mainmenu.h"
 
 //yk was here
+//darren was here
 
 int main(void)
 {
