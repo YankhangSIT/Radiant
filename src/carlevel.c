@@ -13,6 +13,17 @@ struct Car {
 	float Direction;
 }; struct Car cars[3]; //make an array to store the 3 cars (red, green, blue)
 
+typedef struct Enemy{
+	CP_Vector pos;
+	CP_Color Color;
+	float height;
+	float width;
+	float direction;
+	float speed;
+}Enemy;
+
+
+
 //pre-define speed and i
 float speed = 350.0;
 int i = -1;
