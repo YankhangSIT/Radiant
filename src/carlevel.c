@@ -30,7 +30,7 @@ struct Enemy enemies[SIZE];
 //pre-define speed and i
 float speed = 350.0;
 int i = -1;
-float elaspedTime;
+float elapsedTime;
 
 void Car_Level_Init()
 {
