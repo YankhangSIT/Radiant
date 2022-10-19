@@ -5,7 +5,7 @@
 #include "math.h"
 
 #define PI (3.141592653589793)
-
+#define SIZE (4)
 //define struct for car
 struct Car {
 	CP_Vector Pos;
@@ -13,20 +13,24 @@ struct Car {
 	float Direction;
 }; struct Car cars[3]; //make an array to store the 3 cars (red, green, blue)
 
-typedef struct Enemy{
+struct Enemy {
 	CP_Vector pos;
 	CP_Color Color;
 	float height;
 	float width;
 	float direction;
 	float speed;
-}Enemy;
+}; 
+
+
+struct Enemy enemies[SIZE];
 
 
 
 //pre-define speed and i
 float speed = 350.0;
 int i = -1;
+float elaspedTime;
 
 void Car_Level_Init()
 {
