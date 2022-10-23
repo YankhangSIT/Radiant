@@ -5,7 +5,10 @@
 #include "math.h"
 
 #define PI (3.141592653589793)
-#define SIZE (4)
+#define SIZE (2)
+#define SPAWNSIZE (5)
+#define FALSE (0)
+#define TRUE (1)
 //define struct for car
 struct Car {
 	CP_Vector Pos;
@@ -24,8 +27,8 @@ struct Enemy {
 
 
 struct Enemy enemies[SIZE];
-
-
+CP_Vector spawnPositions[SPAWNSIZE];
+int isPaused;
 
 //pre-define speed and i
 float speed = 350.0;
@@ -53,15 +56,22 @@ void Car_Level_Init()
 	cars[2].Pos = CP_Vector_Set(200.0f, 200.0f);
 	cars[2].Color = CP_Color_Create(0, 0, 255, 255);
 	cars[2].Direction = 0.0f;
+	isPaused = FALSE;
 }
 
 void Car_Level_Update()
 {
+	if (CP_Input_KeyTriggered(KEY_ESCAPE))
+	{
+		isPaused = isPaused;
+
+	}
+
 	//esc to close game
-	if (CP_Input_KeyDown(KEY_ESCAPE))
+	/*if (CP_Input_KeyDown(KEY_ESCAPE))
 	{
 		CP_Engine_Terminate();
-	}
+	}*/
 
 	//clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
