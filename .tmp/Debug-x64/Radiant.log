@@ -1,19 +1,23 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Artemissed\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\darre\OneDrive\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   carlevel.c
-C:\Users\Artemissed\source\repos\Radiant\src\carlevel.c(10,1): warning C4005: 'FALSE': macro redefinition
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(11,1): warning C4005: 'FALSE': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71): message : see previous definition of 'FALSE'
-C:\Users\Artemissed\source\repos\Radiant\src\carlevel.c(11,1): warning C4005: 'TRUE': macro redefinition
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(12,1): warning C4005: 'TRUE': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75): message : see previous definition of 'TRUE'
-C:\Users\Artemissed\source\repos\Radiant\src\carlevel.c(45,26): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\carlevel.c(45,34): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\carlevel.c(41,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\carlevel.c(42,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(53,26): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(53,34): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(43,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(44,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(68,64): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(68,94): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(73,66): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\carlevel.c(73,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
   Generating code
   2 of 8 functions (25.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
   5 File(s) copied

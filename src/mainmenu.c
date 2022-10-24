@@ -16,7 +16,7 @@ int panelDisplay = 0;
 CP_Image gunPlayer;
 CP_Image swordPlayer;
 
-
+extern int playerNum = 0;
 void Main_Menu_Init()
 {
 	//Set window width and height to variables
@@ -36,6 +36,9 @@ void Main_Menu_Init()
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
 }
+
+
+
 
 void Main_Menu_Update()
 {
@@ -61,9 +64,9 @@ void Main_Menu_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
 			
-			//panelDisplay = 1;
+			panelDisplay = 1;
 					
-			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
+			//CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
 
 
 		} 
@@ -72,10 +75,21 @@ void Main_Menu_Update()
 			CP_Engine_Terminate();
 		}
 
-	/*	if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(wWidth / 2.0f - 100, wHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			playerNum = 1;
+			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
+			panelDisplay = 0;
 
-		}*/
+
+		}
+
+		if (IsAreaClicked(wWidth / 2.0f + 100, wHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
+		{
+			playerNum = 2;
+			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
+			panelDisplay = 0;
+		}
 	}
 
 
@@ -87,13 +101,12 @@ void Main_Menu_Update()
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 500);
 		
 
-		//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		
 		
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Choose your character", wWidth / 2.0f, wHeight / 2.0f - 300);
 		CP_Image_Draw(gunPlayer, wWidth /2.0f -100 , wHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
 		CP_Image_Draw(swordPlayer, wWidth / 2.0f +100, wHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
+	
 	}
 }
 

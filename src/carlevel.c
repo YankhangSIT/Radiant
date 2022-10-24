@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "mainmenu.h"
 #include "math.h"
+#include "carlevel.h"
 
 #define PI (3.141592653589793)
 #define SIZE (2)
@@ -25,11 +26,12 @@ struct Enemy {
 	float speed;
 };
 
-
+CP_Image gunPlayer;
+CP_Image swordPlayer;
 struct Enemy enemies[SIZE];
 CP_Vector spawnPositions[SPAWNSIZE];
 int isPaused;
-
+//extern int playerNum = 0;
 //pre-define speed and i
 float speed = 210.0;
 int i = -1;
@@ -41,12 +43,18 @@ void Car_Level_Init()
 	float wWidth = CP_System_GetWindowWidth();
 	float wHeight = CP_System_GetWindowHeight();
 
+
+	gunPlayer = CP_Image_Load("../Assets/player1.png");
+	swordPlayer = CP_Image_Load("../Assets/player2.png");
+
+
+
 	//set window size and center it
 	CP_System_SetWindowSize(wWidth, wHeight);
 
 	//set position, colour and direction of the three cars (red, green, blue)
 	Character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
-	Character.Color = CP_Color_Create(255, 0, 0, 255);
+	//Character.Color = CP_Color_Create(255, 0, 0, 255);
 	//Char.Direction = 0.0f;
 
 	isPaused = FALSE;
@@ -54,6 +62,18 @@ void Car_Level_Init()
 
 void Car_Level_Update()
 {
+	
+	if (playerNum == 1)
+	{
+		CP_Image_Draw(gunPlayer, Character.Pos.x , Character.Pos.y , CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
+	}
+
+	if (playerNum == 2)
+	{
+		CP_Image_Draw(swordPlayer, Character.Pos.x , Character.Pos.y , CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
+	}
+
+
 	if (CP_Input_KeyTriggered(KEY_ESCAPE))
 	{
 		isPaused = isPaused;
@@ -76,8 +96,8 @@ void Car_Level_Update()
 	}
 	*/
 
-	CP_Settings_Fill(Character.Color);
-	CP_Graphics_DrawCircle(Character.Pos.x, Character.Pos.y, 70.0f);
+	//CP_Settings_Fill(Character.Color);
+	//CP_Graphics_DrawCircle(Character.Pos.x, Character.Pos.y, 70.0f);
 
 	/* draw triangles
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
