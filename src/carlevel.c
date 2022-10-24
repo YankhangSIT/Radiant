@@ -10,11 +10,11 @@
 #define FALSE (0)
 #define TRUE (1)
 //define struct for car
-struct Car {
+struct Character {
 	CP_Vector Pos;
 	CP_Color Color;
-	float Direction;
-}; struct Car cars[3]; //make an array to store the 3 cars (red, green, blue)
+	//float Direction;
+} Character; //struct Car cars[3]; //make an array to store the 3 cars (red, green, blue)
 
 struct Enemy {
 	CP_Vector pos;
@@ -23,7 +23,7 @@ struct Enemy {
 	float width;
 	float direction;
 	float speed;
-}; 
+};
 
 
 struct Enemy enemies[SIZE];
@@ -31,7 +31,7 @@ CP_Vector spawnPositions[SPAWNSIZE];
 int isPaused;
 
 //pre-define speed and i
-float speed = 350.0;
+float speed = 210.0;
 int i = -1;
 float elapsedTime;
 
@@ -45,17 +45,10 @@ void Car_Level_Init()
 	CP_System_SetWindowSize(wWidth, wHeight);
 
 	//set position, colour and direction of the three cars (red, green, blue)
-	cars[0].Pos = CP_Vector_Set(100.0f, 100.0f);
-	cars[0].Color = CP_Color_Create(255, 0, 0, 255);
-	cars[0].Direction = 0.0f;
+	Character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
+	Character.Color = CP_Color_Create(255, 0, 0, 255);
+	//Char.Direction = 0.0f;
 
-	cars[1].Pos = CP_Vector_Set(300.0f, 100.0f);
-	cars[1].Color = CP_Color_Create(0, 255, 0, 255);
-	cars[1].Direction = 0.0f;
-
-	cars[2].Pos = CP_Vector_Set(200.0f, 200.0f);
-	cars[2].Color = CP_Color_Create(0, 0, 255, 255);
-	cars[2].Direction = 0.0f;
 	isPaused = FALSE;
 }
 
@@ -76,13 +69,17 @@ void Car_Level_Update()
 	//clear background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-	//draw circles
+	/*draw circles
 	for (int x = 0; x < 3; x++) {
 		CP_Settings_Fill(cars[x].Color);
 		CP_Graphics_DrawCircle(cars[x].Pos.x, cars[x].Pos.y, 70.0f);
 	}
+	*/
 
-	// draw triangles
+	CP_Settings_Fill(Character.Color);
+	CP_Graphics_DrawCircle(Character.Pos.x, Character.Pos.y, 70.0f);
+
+	/* draw triangles
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	for (int x = 0; x < 3; x++) {
 		CP_Graphics_DrawTriangleAdvanced(cars[x].Pos.x + 35.0f, cars[x].Pos.y,
@@ -90,8 +87,9 @@ void Car_Level_Update()
 			cars[x].Pos.x - 20.0f, cars[x].Pos.y - 25.0f,
 			cars[x].Direction);
 	}
+	*/
 
-	//select car with mouse click
+	/*select car with mouse click
 	if (CP_Input_MouseClicked()) {
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		for (int x = 0; x < 3; x++)
@@ -99,33 +97,25 @@ void Car_Level_Update()
 				i = x;
 			}
 	}
+	*/
 
 	//using selected car, turn it left and right with A and D, move it forwards and backwards with W and S
+
+	//CP_Vector direction = AngleToVector(cars[i].Direction * (PI / 180.0)); //change my direction angle to a vector
+	//CP_Vector norm = CP_Vector_Normalize(direction); //normalize my vector
 	float dtSpeed = speed * CP_System_GetDt(); //define dt speed (350 units per second)
-	CP_Vector direction = AngleToVector(cars[i].Direction * (PI / 180.0)); //change my direction angle to a vector
-	CP_Vector norm = CP_Vector_Normalize(direction); //normalize my vector
 
 	if (CP_Input_KeyDown(KEY_A)) {
-		if (cars[i].Direction > 0) {
-			cars[i].Direction -= 150 * CP_System_GetDt();
-		}
-		else {
-			cars[i].Direction = 359; //prevent the angle from going <0 (0-359)
-		}
+		Character.Pos.x -= dtSpeed;
 	}
 	else if (CP_Input_KeyDown(KEY_D)) {
-		if (cars[i].Direction < 359) {
-			cars[i].Direction += 150 * CP_System_GetDt();
-		}
-		else {
-			cars[i].Direction = 0; //prevent the angle from going >359
-		}
+		Character.Pos.x += dtSpeed;
 	}
 	if (CP_Input_KeyDown(KEY_W)) {
-		cars[i].Pos = CP_Vector_Add(cars[i].Pos, CP_Vector_Scale(norm, dtSpeed));
+		Character.Pos.y -= dtSpeed;
 	}
 	else if (CP_Input_KeyDown(KEY_S)) {
-		cars[i].Pos = CP_Vector_Subtract(cars[i].Pos, CP_Vector_Scale(norm, dtSpeed));
+		Character.Pos.y += dtSpeed;
 	}
 }
 

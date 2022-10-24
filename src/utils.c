@@ -38,7 +38,7 @@ CP_Vector AngleToVector(float radian_angle)
 	float xValue = cos(radian_angle);
 	float yValue = sin(radian_angle);
 	CP_Vector ret = CP_Vector_Set(xValue, yValue);
-    return ret;
+	return ret;
 }
 
 CP_Vector moveCar(CP_Vector position, CP_Vector direction, float speed)
