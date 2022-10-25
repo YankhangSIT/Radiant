@@ -1,6 +1,7 @@
 #include "cprocessing.h"
 #include "stdio.h"
 #include "utils.h"
+#include "movement.h"
 #include "mainmenu.h"
 #include "math.h"
 #include "carlevel.h"
@@ -10,12 +11,11 @@
 #define SPAWNSIZE (5)
 #define FALSE (0)
 #define TRUE (1)
-//define struct for car
+//define struct for character
 struct Character {
 	CP_Vector Pos;
 	CP_Color Color;
-	//float Direction;
-} Character; //struct Car cars[3]; //make an array to store the 3 cars (red, green, blue)
+} character;
 
 struct Enemy {
 	CP_Vector Pos;
@@ -36,8 +36,8 @@ CP_Vector spawnPositions3[SPAWNSIZE];
 int isPaused;
 //extern int playerNum = 0;
 //pre-define speed and i
-float speed = 210.0;
-float enemySpeed = 100.0;
+//float speed = 210.0;
+//float enemySpeed = 100.0;
 int i = -1;
 float elapsedTime;
 float wWidth = 0;
@@ -84,7 +84,7 @@ void Car_Level_Init()
 	CP_System_SetWindowSize(wWidth, wHeight);
 	//enemy1.pos = CP_Vector_Set(0, wHeight / 5);
 	//set position, colour and direction of the three cars (red, green, blue)
-	Character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
+	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	//Character.Color = CP_Color_Create(255, 0, 0, 255);
 	//Char.Direction = 0.0f;
 
@@ -158,7 +158,7 @@ void Car_Level_Update()
 	}
 
 	if (!isPaused)
-	{
+	{ 
 		// @DARREN PLEASE CHANGE THIS SO THAT THE ENEMY.POS IS INTIATED IN THE INIT() AND NOT UPDATE() SO THE ENEMIES WILL MOVE TOWARDS THE CHARACTER.
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
@@ -178,56 +178,28 @@ void Car_Level_Update()
 			enemy1.Pos = CP_Vector_Set(spawnPositions3[i].x, spawnPositions3[i].y);
 			CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
 		}
-		
 		// @YK WAS TESTING HERE, DARREN CAN REMOVE AFTER THE ENEMIES MOVE PROPERLY
 		//enemy1.Pos = CP_Vector_Set(enemy1.Pos.x, enemy1.Pos.y);
 		//CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
-
+		
 
 		if (playerNum == 1)
 		{
-			CP_Image_Draw(gunPlayer, Character.Pos.x, Character.Pos.y, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
+			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
 		}
 
 		if (playerNum == 2)
 		{
-			CP_Image_Draw(swordPlayer, Character.Pos.x, Character.Pos.y, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
+			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
 		}
 
 		//CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		
-		float dtSpeed = speed * CP_System_GetDt(); //CHARACTER SPEED IS 210 UNITS PER SECOND
-		float dtEnemySpeed = enemySpeed * CP_System_GetDt(); //ENEMY SPEED IS 100 UNITS PER SECOND
-
-		// character WASD movement
-		if (CP_Input_KeyDown(KEY_A)) {
-			Character.Pos.x -= dtSpeed;
-		}
-		else if (CP_Input_KeyDown(KEY_D)) {
-			Character.Pos.x += dtSpeed;
-		}
-		if (CP_Input_KeyDown(KEY_W)) {
-			Character.Pos.y -= dtSpeed;
-		}
-		else if (CP_Input_KeyDown(KEY_S)) {
-			Character.Pos.y += dtSpeed;
-		}
-
-		// enemies will always move towards the character based of its X and Y values
-		if (Character.Pos.x > enemy1.Pos.x) {
-			enemy1.Pos.x += dtEnemySpeed;
-		}
-		if (Character.Pos.x < enemy1.Pos.x) {
-			enemy1.Pos.x -= dtEnemySpeed;
-		}
-
-		if (Character.Pos.y > enemy1.Pos.y) {
-			enemy1.Pos.y += dtEnemySpeed;
-		}
-		if (Character.Pos.y < enemy1.Pos.y) {
-			enemy1.Pos.y -= dtEnemySpeed;
-		}
+	
+		// updates character's positon based off WASD inputs. Function defined in movement.c
+		character.Pos = charMovement(character.Pos);
+		// updates enemy's positon based off character's position. Function defined in movement.c
+		enemy1.Pos = enemyMovement(character.Pos, enemy1.Pos);
 	}
 }
 
