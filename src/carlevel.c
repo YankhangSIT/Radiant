@@ -18,13 +18,13 @@ struct Character {
 } Character; //struct Car cars[3]; //make an array to store the 3 cars (red, green, blue)
 
 struct Enemy {
-	CP_Vector pos;
+	CP_Vector Pos;
 	CP_Color Color;
 	CP_Image enemySprite;
-	float height;
-	float width;
-	float direction;
-	float speed;
+	float Height;
+	float Width;
+	float Direction;
+	float Speed;
 };
 
 CP_Image gunPlayer;
@@ -37,6 +37,7 @@ int isPaused;
 //extern int playerNum = 0;
 //pre-define speed and i
 float speed = 210.0;
+float enemySpeed = 100.0;
 int i = -1;
 float elapsedTime;
 float wWidth = 0;
@@ -86,6 +87,8 @@ void Car_Level_Init()
 	Character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	//Character.Color = CP_Color_Create(255, 0, 0, 255);
 	//Char.Direction = 0.0f;
+
+	enemy1.Pos = CP_Vector_Set(50, 50);
 
 	isPaused = FALSE;
 }
@@ -156,27 +159,29 @@ void Car_Level_Update()
 
 	if (!isPaused)
 	{
-
+		// @DARREN PLEASE CHANGE THIS SO THAT THE ENEMY.POS IS INTIATED IN THE INIT() AND NOT UPDATE() SO THE ENEMIES WILL MOVE TOWARDS THE CHARACTER.
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
-			enemy1.pos = CP_Vector_Set(spawnPositions[i].x, spawnPositions[i].y);
-			CP_Image_Draw(enemy1.enemySprite, enemy1.pos.x, enemy1.pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
+			enemy1.Pos = CP_Vector_Set(spawnPositions[i].x, spawnPositions[i].y);
+			CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
 		}
 
 
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
-			enemy1.pos = CP_Vector_Set(spawnPositions2[i].x, spawnPositions2[i].y);
-			CP_Image_Draw(enemy1.enemySprite, enemy1.pos.x, enemy1.pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
+			enemy1.Pos = CP_Vector_Set(spawnPositions2[i].x, spawnPositions2[i].y);
+			CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
 		}
 
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
-			enemy1.pos = CP_Vector_Set(spawnPositions3[i].x, spawnPositions3[i].y);
-			CP_Image_Draw(enemy1.enemySprite, enemy1.pos.x, enemy1.pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
+			enemy1.Pos = CP_Vector_Set(spawnPositions3[i].x, spawnPositions3[i].y);
+			CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
 		}
-
-
+		
+		// @YK WAS TESTING HERE, DARREN CAN REMOVE AFTER THE ENEMIES MOVE PROPERLY
+		//enemy1.Pos = CP_Vector_Set(enemy1.Pos.x, enemy1.Pos.y);
+		//CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
 
 
 		if (playerNum == 1)
@@ -189,53 +194,13 @@ void Car_Level_Update()
 			CP_Image_Draw(swordPlayer, Character.Pos.x, Character.Pos.y, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
 		}
 
-
-
-		//esc to close game
-		/*if (CP_Input_KeyDown(KEY_ESCAPE))
-		{
-			CP_Engine_Terminate();
-		}*/
-
-		//clear background
+		//CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		
+		float dtSpeed = speed * CP_System_GetDt(); //CHARACTER SPEED IS 210 UNITS PER SECOND
+		float dtEnemySpeed = enemySpeed * CP_System_GetDt(); //ENEMY SPEED IS 100 UNITS PER SECOND
 
-		/*draw circles
-		for (int x = 0; x < 3; x++) {
-			CP_Settings_Fill(cars[x].Color);
-			CP_Graphics_DrawCircle(cars[x].Pos.x, cars[x].Pos.y, 70.0f);
-		}
-		*/
-
-		//CP_Settings_Fill(Character.Color);
-		//CP_Graphics_DrawCircle(Character.Pos.x, Character.Pos.y, 70.0f);
-
-		/* draw triangles
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		for (int x = 0; x < 3; x++) {
-			CP_Graphics_DrawTriangleAdvanced(cars[x].Pos.x + 35.0f, cars[x].Pos.y,
-				cars[x].Pos.x - 20.0f, cars[x].Pos.y + 25.0f,
-				cars[x].Pos.x - 20.0f, cars[x].Pos.y - 25.0f,
-				cars[x].Direction);
-		}
-		*/
-
-		/*select car with mouse click
-		if (CP_Input_MouseClicked()) {
-			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-			for (int x = 0; x < 3; x++)
-				if (IsCircleClicked(cars[x].Pos.x, cars[x].Pos.y, 70, mouseClickPos.x, mouseClickPos.y) == 1) {
-					i = x;
-				}
-		}
-		*/
-
-		//using selected car, turn it left and right with A and D, move it forwards and backwards with W and S
-
-		//CP_Vector direction = AngleToVector(cars[i].Direction * (PI / 180.0)); //change my direction angle to a vector
-		//CP_Vector norm = CP_Vector_Normalize(direction); //normalize my vector
-		float dtSpeed = speed * CP_System_GetDt(); //define dt speed (350 units per second)
-
+		// character WASD movement
 		if (CP_Input_KeyDown(KEY_A)) {
 			Character.Pos.x -= dtSpeed;
 		}
@@ -247,6 +212,21 @@ void Car_Level_Update()
 		}
 		else if (CP_Input_KeyDown(KEY_S)) {
 			Character.Pos.y += dtSpeed;
+		}
+
+		// enemies will always move towards the character based of its X and Y values
+		if (Character.Pos.x > enemy1.Pos.x) {
+			enemy1.Pos.x += dtEnemySpeed;
+		}
+		if (Character.Pos.x < enemy1.Pos.x) {
+			enemy1.Pos.x -= dtEnemySpeed;
+		}
+
+		if (Character.Pos.y > enemy1.Pos.y) {
+			enemy1.Pos.y += dtEnemySpeed;
+		}
+		if (Character.Pos.y < enemy1.Pos.y) {
+			enemy1.Pos.y -= dtEnemySpeed;
 		}
 	}
 }
