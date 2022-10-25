@@ -30,6 +30,9 @@
     <ClCompile Include="..\src\movement.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\movement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

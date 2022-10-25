@@ -165,6 +165,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\carlevel.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\mainmenu.c" />
+    <ClCompile Include="..\src\map.c" />
     <ClCompile Include="..\src\movement.c" />
     <ClCompile Include="..\src\utils.c" />
   </ItemGroup>
@@ -173,6 +174,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing_common.h" />
     <ClInclude Include="..\src\carlevel.h" />
     <ClInclude Include="..\src\mainmenu.h" />
+    <ClInclude Include="..\src\map.h" />
     <ClInclude Include="..\src\movement.h" />
     <ClInclude Include="..\src\spawn.h" />
     <ClInclude Include="..\src\utils.h" />
