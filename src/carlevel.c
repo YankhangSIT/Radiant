@@ -7,7 +7,7 @@
 #include "carlevel.h"
 #include <stdlib.h>
 #define PI (3.141592653589793)
-#define SIZE (2)
+#define SIZE (50)
 #define SPAWNSIZE (5)
 #define FALSE (0)
 #define TRUE (1)
@@ -18,7 +18,7 @@ struct Character {
 } character;
 
 struct Enemy {
-	CP_Vector Pos;
+	CP_Vector pos;
 	CP_Color Color;
 	CP_Image enemySprite;
 	float Height;
@@ -29,7 +29,8 @@ struct Enemy {
 
 CP_Image gunPlayer;
 CP_Image swordPlayer;
-struct Enemy enemy1;// [SIZE] ;
+struct Enemy enemy1[SIZE];
+struct Enemy enemy;
 CP_Vector spawnPositions[SPAWNSIZE];
 CP_Vector spawnPositions2[SPAWNSIZE];
 CP_Vector spawnPositions3[SPAWNSIZE];
@@ -54,24 +55,41 @@ void Car_Level_Init()
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 
-	enemy1.enemySprite = CP_Image_Load("../Assets/testEnemy.png");
+	enemy.enemySprite = CP_Image_Load("../Assets/testEnemy.png");
+	
+
 	gunPlayer = CP_Image_Load("../Assets/player1.png");
 	swordPlayer = CP_Image_Load("../Assets/player2.png");
 	srand(1);
 	//randFloat(wHeight / 3, wHeight)
-	for (int i = 0; i < SPAWNSIZE; i++)
+
+	for (int i = 0; i < SPAWNSIZE; ++i)
 	{
+		
 		spawnPositions[i] = CP_Vector_Set(randFloat(wWidth / 8, wWidth), wHeight / 7);
+		enemy1[i].pos.x = spawnPositions[i].x;
+		enemy1[i].pos.y = spawnPositions[i].y;
+	//	printf("Spawn: %f %f\n", spawnPositions[i].x, spawnPositions[i].y);
+	//	printf("Spawn Enemy: %f %f\n", enemy1[i].pos.x, enemy1[i].pos.y);
+		
 				
 	}
-	for (int i = 0; i < SPAWNSIZE; i++)
+
+	for (int i = 0; i < SPAWNSIZE; ++i)
 	{
 		spawnPositions2[i] = CP_Vector_Set(wWidth / 8, randFloat(wHeight, wHeight / 7));
+		enemy1[5+i].pos.x = spawnPositions2[i].x;
+		enemy1[5+i].pos.y = spawnPositions2[i].y;
+		//printf("Spawn Enemy: %f %f\n", enemy1[i].pos.x , enemy1[i].pos.y) ;
+		
 	}
 
-	for (int i = 0; i < SPAWNSIZE; i++)
+	for (int i = 0; i < SPAWNSIZE; ++i)
 	{
 		spawnPositions3[i] = CP_Vector_Set(wWidth -50, randFloat(wHeight, wHeight / 7));
+		enemy1[9+i].pos.x = spawnPositions3[i].x;
+		enemy1[9+i].pos.y = spawnPositions3[i].y;
+
 	}
 
 	/*for (int i = 0; i < SPAWNSIZE; i++)
@@ -88,7 +106,7 @@ void Car_Level_Init()
 	//Character.Color = CP_Color_Create(255, 0, 0, 255);
 	//Char.Direction = 0.0f;
 
-	enemy1.Pos = CP_Vector_Set(50, 50);
+	//enemy1.Pos = CP_Vector_Set(50, 50);
 
 	isPaused = FALSE;
 }
@@ -142,7 +160,7 @@ void Car_Level_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			isPaused = !isPaused;
-			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
+			Car_Level_Init();
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -162,22 +180,27 @@ void Car_Level_Update()
 		// @DARREN PLEASE CHANGE THIS SO THAT THE ENEMY.POS IS INTIATED IN THE INIT() AND NOT UPDATE() SO THE ENEMIES WILL MOVE TOWARDS THE CHARACTER.
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
-			enemy1.Pos = CP_Vector_Set(spawnPositions[i].x, spawnPositions[i].y);
-			CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
+			CP_Image_Draw(enemy.enemySprite, enemy1[i].pos.x, enemy1[i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+			enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
 		}
 
-
-		for (int i = 0; i < SPAWNSIZE; i++)
-		{
-			enemy1.Pos = CP_Vector_Set(spawnPositions2[i].x, spawnPositions2[i].y);
-			CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
-		}
+		
 
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
-			enemy1.Pos = CP_Vector_Set(spawnPositions3[i].x, spawnPositions3[i].y);
-			CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
+			
+			CP_Image_Draw(enemy.enemySprite, enemy1[5+i].pos.x, enemy1[5+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+			enemy1[5+i].pos = enemyMovement(character.Pos, enemy1[5+i].pos);
 		}
+
+		//
+
+		for (int i = 0; i < SPAWNSIZE; i++)
+		{			
+			CP_Image_Draw(enemy.enemySprite, enemy1[9+i].pos.x, enemy1[9+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+			enemy1[9 + i].pos = enemyMovement(character.Pos, enemy1[9 + i].pos);
+		}
+		
 		// @YK WAS TESTING HERE, DARREN CAN REMOVE AFTER THE ENEMIES MOVE PROPERLY
 		//enemy1.Pos = CP_Vector_Set(enemy1.Pos.x, enemy1.Pos.y);
 		//CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
@@ -199,7 +222,7 @@ void Car_Level_Update()
 		// updates character's positon based off WASD inputs. Function defined in movement.c
 		character.Pos = charMovement(character.Pos);
 		// updates enemy's positon based off character's position. Function defined in movement.c
-		enemy1.Pos = enemyMovement(character.Pos, enemy1.Pos);
+		//enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
 	}
 }
 
