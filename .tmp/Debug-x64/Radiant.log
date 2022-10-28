@@ -1,13 +1,30 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Year1\csd1401\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  map.c
-C:\Year1\csd1401\Radiant\src\map.c(84,40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\Radiant\src\map.c(85,42): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\kyk17\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  carlevel.c
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(12,1): warning C4005: 'FALSE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71): message : see previous definition of 'FALSE'
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(13,1): warning C4005: 'TRUE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75): message : see previous definition of 'TRUE'
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(55,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(56,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(102,26): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(102,34): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(183,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(183,109): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(192,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(192,113): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(200,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(200,113): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(207,63): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(207,93): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(212,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\kyk17\source\repos\Radiant\src\carlevel.c(212,97): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  movement.c
   Generating code
-  2 of 14 functions (14.3%) were compiled, the rest were copied from previous compilation.
+  2 of 12 functions (16.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Year1\csd1401\Radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\kyk17\source\repos\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
   5 File(s) copied

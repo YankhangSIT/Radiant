@@ -201,10 +201,6 @@ void Car_Level_Update()
 			enemy1[9 + i].pos = enemyMovement(character.Pos, enemy1[9 + i].pos);
 		}
 		
-		// @YK WAS TESTING HERE, DARREN CAN REMOVE AFTER THE ENEMIES MOVE PROPERLY
-		//enemy1.Pos = CP_Vector_Set(enemy1.Pos.x, enemy1.Pos.y);
-		//CP_Image_Draw(enemy1.enemySprite, enemy1.Pos.x, enemy1.Pos.y, CP_Image_GetWidth(enemy1.enemySprite), CP_Image_GetHeight(enemy1.enemySprite), 255);
-		
 
 		if (playerNum == 1)
 		{
@@ -223,6 +219,9 @@ void Car_Level_Update()
 		character.Pos = charMovement(character.Pos);
 		// updates enemy's positon based off character's position. Function defined in movement.c
 		//enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
+
+		//check where character going out of bounds
+		character.Pos = checkMapCollision(character.Pos, 0, wWidth, 0 , wHeight);
 	}
 }
 
