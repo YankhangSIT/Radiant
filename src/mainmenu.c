@@ -53,11 +53,18 @@ void Main_Menu_Update()
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_DrawText("Play", wWidth / 2.0f, wHeight / 2.0f - 100);
 
+	//Settings Button
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+	CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80);
+	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+	CP_Font_DrawText("Settings", wWidth / 2.0f, wHeight / 2.0f - 50);
+
 	//Exit Button
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 	CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 100);
+	CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 50);
 
 	//If click "Play" Button
 	if (CP_Input_MouseClicked()) {
@@ -68,11 +75,14 @@ void Main_Menu_Update()
 					
 			//CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
 
-
 		} 
 		//else if click "Exit" button
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
 			CP_Engine_Terminate();
+		}
+
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+			//CP_Engine_SetNextGameState(Settings_Init, Settings_Update, Settings_Exit);
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f - 100, wHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
@@ -80,7 +90,6 @@ void Main_Menu_Update()
 			playerNum = 1;
 			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
 			panelDisplay = 0;
-
 
 		}
 

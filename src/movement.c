@@ -25,7 +25,7 @@ CP_Vector charMovement(CP_Vector charPosition)
 
 CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 {
-	float enemySpeed = 100.0;
+	float enemySpeed = 50.0;
 	float dtEnemySpeed = enemySpeed * CP_System_GetDt(); //ENEMY SPEED IS 100 UNITS PER SECOND
 
 	if (charPosition.x > enemyPosition.x) {
@@ -43,4 +43,21 @@ CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 	}
 
 	return enemyPosition;
+}
+
+CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY) {
+	if (charPosition.x <= minX) {
+		charPosition.x = minX;
+	}
+	else if (charPosition.x >= maxX) {
+		charPosition.x = maxX;
+	}
+	if (charPosition.y <= minY) {
+		charPosition.y = minY;
+	}
+	else if (charPosition.y >= maxY) {
+		charPosition.y = maxY;
+	}
+	return charPosition;
+	
 }
