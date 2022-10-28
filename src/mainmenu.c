@@ -27,8 +27,8 @@ void Main_Menu_Init()
 	CP_System_SetWindowSize(wWidth * 2.5, wWidth * 2);
 	CP_Settings_RectMode(CP_POSITION_CENTER);	
 	
-	gunPlayer = CP_Image_Load("../Assets/player1.png");
-	swordPlayer = CP_Image_Load("../Assets/player2.png");
+	gunPlayer = CP_Image_Load("Assets/player1.png");
+	swordPlayer = CP_Image_Load("Assets/player2.png");
 
 	//align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;

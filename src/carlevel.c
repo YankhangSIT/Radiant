@@ -55,11 +55,11 @@ void Car_Level_Init()
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 
-	enemy.enemySprite = CP_Image_Load("../Assets/testEnemy.png");
+	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
 	
 
-	gunPlayer = CP_Image_Load("../Assets/player1.png");
-	swordPlayer = CP_Image_Load("../Assets/player2.png");
+	gunPlayer = CP_Image_Load("Assets/player1.png");
+	swordPlayer = CP_Image_Load("Assets/player2.png");
 	srand(1);
 	//randFloat(wHeight / 3, wHeight)
 
