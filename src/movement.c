@@ -45,6 +45,7 @@ CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 	return enemyPosition;
 }
 
+
 CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY) {
 	if (charPosition.x <= minX) {
 		charPosition.x = minX;
@@ -59,5 +60,28 @@ CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, floa
 		charPosition.y = maxY;
 	}
 	return charPosition;
-	
+
+}
+
+CP_Vector checkEnemyCollision(CP_Vector enemy1Position, CP_Vector enemy2Position, float buffer) {
+	// buffer is preferred distance between enemies
+	float xDistance = enemy2Position.x - enemy1Position.x;
+	float yDistance = enemy2Position.y - enemy1Position.y;
+	float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
+	//printf("distance between enemy 1 and enemy 2 is: %f\n", distance);
+
+	if (distance < buffer) {
+		CP_Vector vectorBetween = CP_Vector_Set(xDistance, yDistance);
+		return vectorBetween;
+		//2 has to go vectorbetween/2
+		//1 has to go vectorbetween/-2
+		//enemy2Position.x = enemy2Position.x * (vectorBetween.x * 0.5);
+		//enemy2Position.y = enemy2Position.y * (vectorBetween.y * 0.5);
+		//enemy1Position.x = enemy1Position.x * (vectorBetween.x * -0.5);
+		//enemy1Position.y = enemy1Position.y * (vectorBetween.y * -0.5);
+	}
+	else {
+		CP_Vector noChange = CP_Vector_Set(0, 0);
+		return noChange;
+	}
 }

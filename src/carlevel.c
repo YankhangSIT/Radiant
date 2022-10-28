@@ -222,6 +222,11 @@ void Car_Level_Update()
 
 		//check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, 0, wWidth, 0 , wHeight);
+		//CP_Vector vectorBetween = checkEnemyCollision(enemy1[1].pos, enemy1[2].pos, 100.f);
+		//enemy1[2].pos.x = enemy1[2].pos.x * (vectorBetween.x * 0.5);
+		//enemy1[2].pos.y = enemy1[2].pos.y * (vectorBetween.y * 0.5);
+		//enemy1[1].pos.x = enemy1[1].pos.x * (vectorBetween.x * -0.5); 
+		//enemy1[1].pos.y = enemy1[1].pos.y * (vectorBetween.y * -0.5);
 	}
 }
 
