@@ -55,6 +55,7 @@ void Car_Level_Init()
 	wHeight = CP_System_GetWindowHeight();
 
 	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
+	enemy.radius = 39;
 	
 
 	gunPlayer = CP_Image_Load("Assets/player1.png");
@@ -215,15 +216,31 @@ void Car_Level_Update()
 		// updates character's positon based off WASD inputs. Function defined in movement.c
 		character.Pos = charMovement(character.Pos);
 		// updates enemy's positon based off character's position. Function defined in movement.c
-		//enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
+		// enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
 
-		//check where character going out of bounds
+		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, 0, wWidth, 0 , wHeight);
-		//CP_Vector vectorBetween = checkEnemyCollision(enemy1[1].pos, enemy1[2].pos, 100.f);
-		//enemy1[2].pos.x = enemy1[2].pos.x * (vectorBetween.x * 0.5);
-		//enemy1[2].pos.y = enemy1[2].pos.y * (vectorBetween.y * 0.5);
-		//enemy1[1].pos.x = enemy1[1].pos.x * (vectorBetween.x * -0.5); 
-		//enemy1[1].pos.y = enemy1[1].pos.y * (vectorBetween.y * -0.5);
+
+		// enemy obstruction
+		for (int i = 0; i < (SPAWNSIZE * 3); ++i) {
+			for (int j = 0; j < (SPAWNSIZE * 3); ++j) {
+				if (i == j) continue;
+				float xDistance = enemy1[i].pos.x - enemy1[j].pos.x;
+				float yDistance = enemy1[i].pos.y - enemy1[j].pos.y;
+				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
+				float toDisplace = 0.5 * distance - (enemy.radius * 2);
+
+				if (distance < enemy.radius * 2) {
+					float toDisplace = 0.5 * (distance - (enemy.radius * 2));
+					enemy1[i].pos.x -= toDisplace * (xDistance) / distance;
+					enemy1[i].pos.y -= toDisplace * (yDistance) / distance;
+
+					enemy1[j].pos.x += toDisplace * (xDistance) / distance;
+					enemy1[j].pos.y += toDisplace * (yDistance) / distance;
+				
+				}
+			}
+		}	
 	}
 }
 
