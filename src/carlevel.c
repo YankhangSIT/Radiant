@@ -43,10 +43,6 @@ float elapsedTime;
 float wWidth = 0;
 float wHeight = 0;
 
-float randFloat(float low, float high)
-{
-	return ((float)rand() / (float)RAND_MAX) * (high - low) + low;
-}
 
 void Car_Level_Init()
 {
@@ -57,45 +53,15 @@ void Car_Level_Init()
 	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
 	enemy.radius = 39;
 	
-
+	//player sprite
 	gunPlayer = CP_Image_Load("Assets/player1.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
+	// random seed
 	srand(1);
-	//spawnEnemies(enemies, SPAWNSIZE, spawnPositions);
+	// spawn enemies
+	spawnEnemies(enemies, SPAWNSIZE, spawnPositions, wWidth, wHeight);
 
-	for (int i = 0; i < SPAWNSIZE; ++i)
-	{
-		// set spawn positions for the 5 enemies in spawnPositions array index 0
-		//which represents the top row enemies spawn positions
-		spawnPositions[0][i] = CP_Vector_Set(randFloat(wWidth / 8, wWidth), wHeight / 7);
-		enemies[i].pos.x = spawnPositions[0][i].x;
-		enemies[i].pos.y = spawnPositions[0][i].y;				
-	}
-
-	for (int i = 0; i < SPAWNSIZE; ++i)
-	{
-		// set spawn positions for the 5 enemies in spawnPositions array index 1
-		//which represents the left column enemies spawn position
-		spawnPositions[1][i] = CP_Vector_Set(wWidth / 8, randFloat(wHeight, wHeight / 7));
-		enemies[5+i].pos.x = spawnPositions[1][i].x;
-		enemies[5+i].pos.y = spawnPositions[1][i].y;	
-	}
-
-	for (int i = 0; i < SPAWNSIZE; ++i)
-	{
-		// set spawn positions for the 5 enemies in spawnPositions array index 2
-		//which represents the right column enemies spawn position
-		spawnPositions[2][i] = CP_Vector_Set(wWidth -50, randFloat(wHeight, wHeight / 7));
-		enemies[10+i].pos.x = spawnPositions[2][i].x;
-		enemies[10+i].pos.y = spawnPositions[2][i].y;
-
-	}
-
-	/*for (int i = 0; i < SPAWNSIZE; i++)
-	{
-		spawnPositions[i] = CP_Vector_Set(wWidth /4, randFloat(wHeight ,wHeight / 7));
-	}*/
-
+	
 
 	//set window size and center it
 	CP_System_SetWindowSize(wWidth, wHeight);

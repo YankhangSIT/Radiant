@@ -17,5 +17,5 @@ struct Enemy {
 
 
 
-void spawnEnemies(struct Enemy *enemies, int size, CP_Vector spawnPositions[]);
+void spawnEnemies(struct Enemy* enemies, int spawnSize, CP_Vector* spawnPositions, int wWidth, int wHeight);
 
