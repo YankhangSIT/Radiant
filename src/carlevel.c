@@ -225,18 +225,18 @@ void Car_Level_Update()
 		for (int i = 0; i < (SPAWNSIZE * 3); ++i) {
 			for (int j = 0; j < (SPAWNSIZE * 3); ++j) {
 				if (i == j) continue;
-				float xDistance = enemy1[i].pos.x - enemy1[j].pos.x;
-				float yDistance = enemy1[i].pos.y - enemy1[j].pos.y;
+				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
+				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
 				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 				float toDisplace = 0.5 * distance - (enemy.radius * 2);
 
 				if (distance < enemy.radius * 2) {
 					float toDisplace = 0.5 * (distance - (enemy.radius * 2));
-					enemy1[i].pos.x -= toDisplace * (xDistance) / distance;
-					enemy1[i].pos.y -= toDisplace * (yDistance) / distance;
+					enemies[i].pos.x -= toDisplace * (xDistance) / distance;
+					enemies[i].pos.y -= toDisplace * (yDistance) / distance;
 
-					enemy1[j].pos.x += toDisplace * (xDistance) / distance;
-					enemy1[j].pos.y += toDisplace * (yDistance) / distance;
+					enemies[j].pos.x += toDisplace * (xDistance) / distance;
+					enemies[j].pos.y += toDisplace * (yDistance) / distance;
 				
 				}
 			}
