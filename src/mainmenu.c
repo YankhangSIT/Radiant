@@ -10,7 +10,8 @@
 
 #include "cprocessing.h"
 #include "utils.h"
-#include "carlevel.h"
+//#include "carlevel.h"
+#include "level1.h"
 #include "stdio.h"
 int panelDisplay = 0;
 CP_Image gunPlayer;
@@ -88,7 +89,7 @@ void Main_Menu_Update()
 		if (IsAreaClicked(wWidth / 2.0f - 100, wHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			playerNum = 1;
-			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
+			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 			panelDisplay = 0;
 
 		}
@@ -96,7 +97,7 @@ void Main_Menu_Update()
 		if (IsAreaClicked(wWidth / 2.0f + 100, wHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			playerNum = 2;
-			CP_Engine_SetNextGameState(Car_Level_Init, Car_Level_Update, Car_Level_Exit);
+			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 			panelDisplay = 0;
 		}
 	}

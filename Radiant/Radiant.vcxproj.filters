@@ -18,7 +18,7 @@
     <ClCompile Include="..\src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\carlevel.c">
+    <ClCompile Include="..\src\level1.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\mainmenu.c">
@@ -44,7 +44,7 @@
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing_common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\carlevel.h">
+    <ClInclude Include="..\src\level1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\mainmenu.h">

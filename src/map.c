@@ -2,8 +2,58 @@
 #include "cprocessing.h"
 #include <stdlib.h>
 #include <math.h>
-#include "carlevel.h"
+#include "level1.h"
 
+
+
+CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY) {
+    if (charPosition.x <= minX) {
+        charPosition.x = minX;
+    }
+    else if (charPosition.x >= maxX) {
+        charPosition.x = maxX;
+    }
+    if (charPosition.y <= minY) {
+        charPosition.y = minY;
+    }
+    else if (charPosition.y >= maxY) {
+        charPosition.y = maxY;
+    }
+    return charPosition;
+
+}
+//CP_Vector level_1_ObstructionCollision(CP_Vector charPosition, Obstruction obs)
+//
+//{
+//    /*if (charPosition.x <= obs.tri_block[0].x1) {
+//        charPosition.x = minX;
+//    }
+//    else if (charPosition.x >= maxX) {
+//        charPosition.x = maxX;
+//    }
+//    if (charPosition.y <= minY) {
+//        charPosition.y = minY;
+//    }
+//    else if (charPosition.y >= maxY) {
+//        charPosition.y = maxY;
+//    }
+//    return charPosition;*/
+// 
+//    /*if (click_x < area_corner_x) {
+//        return 0;
+//    }
+//    else if (click_x > area_corner_x + area_width) {
+//        return 0;
+//    }
+//    else if (click_y < area_corner_y) {
+//        return 0;
+//    }
+//    else if (click_y > area_corner_y + area_height) {
+//        return 0;
+//    }
+//    return 1;*/
+//
+//}
 //#define GRID_COLS 192
 //#define GRID_ROWS 108
 //#define GRID_BUFFERS 2
@@ -21,27 +71,27 @@
 //float height;
 //int currentState;
 
-int IsGridClicked(float area_corner_x, float area_corner_y, float area_width, float area_height, float click_x, float click_y)
-{
-    // TODO
-    if (click_x < area_corner_x) {
-        return 0;
-    }
-    else if (click_x > area_corner_x + area_width) {
-        return 0;
-    }
-    else if (click_y < area_corner_y ) {
-        return 0;
-    }
-    else if (click_y > area_corner_y + area_height) {
-        return 0;
-    }
-    return 1;
+//int IsGridClicked(float area_corner_x, float area_corner_y, float area_width, float area_height, float click_x, float click_y)
+//{
+//    // TODO
+//    if (click_x < area_corner_x) {
+//        return 0;
+//    }
+//    else if (click_x > area_corner_x + area_width) {
+//        return 0;
+//    }
+//    else if (click_y < area_corner_y ) {
+//        return 0;
+//    }
+//    else if (click_y > area_corner_y + area_height) {
+//        return 0;
+//    }
+//    return 1;
+//
+//}
 
-}
-
-void level_1_Init(void)
-{
+//void level_1_Init(void)
+//{
     ///* Set every grids' cells as 'dead' */
     //for (int row = 0; row < GRID_ROWS; ++row) {
     //    for (int col = 0; col < GRID_COLS; ++col) {
@@ -78,16 +128,16 @@ void level_1_Init(void)
     //gIsPaused = FALSE;
 
     ///* Initialization of your other variables here */
-    CP_System_SetWindowSize(1920, 1080);
+    //CP_System_SetWindowSize(1920, 1080);
     //sumOfLiveNeighbors = 0;
     //currentState = 0;
     //width = CP_System_GetWindowWidth() / GRID_COLS;
     //height = CP_System_GetWindowHeight() / GRID_ROWS;
-}
+//}
 
-void level_1_Update(void)
-{
-    CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+//void level_1_Update(void)
+//{
+//    CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
     ////Game rendering
     //CP_Graphics_ClearBackground(CP_Color_Create(255, 255, 255, 255));
     //CP_Settings_RectMode(CP_POSITION_CORNER);
@@ -126,9 +176,9 @@ void level_1_Update(void)
     //        }
     //    }
     //}
-}
-
-void level_1_Exit(void)
-{
-
-}
+//}
+//
+//void level_1_Exit(void)
+//{
+//
+//}

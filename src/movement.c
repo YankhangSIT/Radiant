@@ -45,23 +45,24 @@ CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 	return enemyPosition;
 }
 
+//moved to map.c
 
-CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY) {
-	if (charPosition.x <= minX) {
-		charPosition.x = minX;
-	}
-	else if (charPosition.x >= maxX) {
-		charPosition.x = maxX;
-	}
-	if (charPosition.y <= minY) {
-		charPosition.y = minY;
-	}
-	else if (charPosition.y >= maxY) {
-		charPosition.y = maxY;
-	}
-	return charPosition;
-
-}
+//CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY) {
+//	if (charPosition.x <= minX) {
+//		charPosition.x = minX;
+//	}
+//	else if (charPosition.x >= maxX) {
+//		charPosition.x = maxX;
+//	}
+//	if (charPosition.y <= minY) {
+//		charPosition.y = minY;
+//	}
+//	else if (charPosition.y >= maxY) {
+//		charPosition.y = maxY;
+//	}
+//	return charPosition;
+//
+//}
 
 //toDisplace(enemy1[i].pos, enemy1[j].pos, enemy.radius);
 float toDisplace(CP_Vector enemy1Pos, CP_Vector enemy2Pos, float radius) {
