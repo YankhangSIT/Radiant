@@ -1,3 +1,1 @@
-void level_1_Init(void);
-void level_1_Update(void);
-void level_1_Exit(void);
+CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY);

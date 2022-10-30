@@ -76,7 +76,7 @@
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\CProcessing\inc</IncludePath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\CProcessing\lib</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\CProcessing\lib\x64</LibraryPath>
     <LinkIncremental>
     </LinkIncremental>
   </PropertyGroup>
@@ -84,7 +84,7 @@
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)Extern\CProcessing\inc</IncludePath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\</OutDir>
     <IntDir>$(SolutionDir).tmp\$(Configuration)-$(Platform)\</IntDir>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\CProcessing\lib</LibraryPath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)Extern\CProcessing\lib\x64</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -132,7 +132,7 @@
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Extern\CProcessing\lib\x64\CProcessingd.dll" "$(OutDir)" /s /r /y /q
 xcopy "$(SolutionDir)Extern\CProcessing\lib\x64\fmodL.dll" "$(OutDir)" /s /r /y /q
-xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
+xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\*" /s /r /y /q
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -162,17 +162,18 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\carlevel.c" />
+    <ClCompile Include="..\src\level1.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\mainmenu.c" />
     <ClCompile Include="..\src\map.c" />
     <ClCompile Include="..\src\movement.c" />
+    <ClCompile Include="..\src\spawn.c" />
     <ClCompile Include="..\src\utils.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h" />
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing_common.h" />
-    <ClInclude Include="..\src\carlevel.h" />
+    <ClInclude Include="..\src\level1.h" />
     <ClInclude Include="..\src\mainmenu.h" />
     <ClInclude Include="..\src\map.h" />
     <ClInclude Include="..\src\movement.h" />
