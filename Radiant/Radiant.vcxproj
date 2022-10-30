@@ -167,6 +167,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\mainmenu.c" />
     <ClCompile Include="..\src\map.c" />
     <ClCompile Include="..\src\movement.c" />
+    <ClCompile Include="..\src\spawn.c" />
     <ClCompile Include="..\src\utils.c" />
   </ItemGroup>
   <ItemGroup>

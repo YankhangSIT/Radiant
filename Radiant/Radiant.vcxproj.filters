@@ -33,6 +33,9 @@
     <ClCompile Include="..\src\map.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\spawn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h">

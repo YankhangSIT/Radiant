@@ -6,35 +6,34 @@
 #include "math.h"
 #include "carlevel.h"
 #include <stdlib.h>
+#include "spawn.h"
 #define PI (3.141592653589793)
 #define SIZE (50)
-#define SPAWNSIZE (5)
+//#define SPAWNSIZE (5)
 #define FALSE (0)
 #define TRUE (1)
+#define SPAWNSIZE (5)
+#define SPAWNINDEX (4)
+
 //define struct for character
 struct Character {
 	CP_Vector Pos;
 	CP_Color Color;
 } character;
 
-struct Enemy {
-	CP_Vector pos;
-	CP_Color Color;
-	CP_Image enemySprite;
-	float Height;
-	float Width;
-	float Direction;
-	float Speed;
-};
 
+//Sprite Image
 CP_Image gunPlayer;
 CP_Image swordPlayer;
-struct Enemy enemy1[SIZE];
+
+//
+struct Enemy enemies[SIZE];
 struct Enemy enemy;
-CP_Vector spawnPositions[SPAWNSIZE];
-CP_Vector spawnPositions2[SPAWNSIZE];
-CP_Vector spawnPositions3[SPAWNSIZE];
+CP_Vector spawnPositions[SPAWNINDEX][SPAWNSIZE];
+//
 int isPaused;
+
+
 //extern int playerNum = 0;
 //pre-define speed and i
 //float speed = 210.0;
@@ -61,34 +60,33 @@ void Car_Level_Init()
 	gunPlayer = CP_Image_Load("Assets/player1.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
 	srand(1);
-	//randFloat(wHeight / 3, wHeight)
+	//spawnEnemies(enemies, SPAWNSIZE, spawnPositions);
 
 	for (int i = 0; i < SPAWNSIZE; ++i)
 	{
-		
-		spawnPositions[i] = CP_Vector_Set(randFloat(wWidth / 8, wWidth), wHeight / 7);
-		enemy1[i].pos.x = spawnPositions[i].x;
-		enemy1[i].pos.y = spawnPositions[i].y;
-	//	printf("Spawn: %f %f\n", spawnPositions[i].x, spawnPositions[i].y);
-	//	printf("Spawn Enemy: %f %f\n", enemy1[i].pos.x, enemy1[i].pos.y);
-		
-				
+		// set spawn positions for the 5 enemies in spawnPositions array index 0
+		//which represents the top row enemies spawn positions
+		spawnPositions[0][i] = CP_Vector_Set(randFloat(wWidth / 8, wWidth), wHeight / 7);
+		enemies[i].pos.x = spawnPositions[0][i].x;
+		enemies[i].pos.y = spawnPositions[0][i].y;				
 	}
 
 	for (int i = 0; i < SPAWNSIZE; ++i)
 	{
-		spawnPositions2[i] = CP_Vector_Set(wWidth / 8, randFloat(wHeight, wHeight / 7));
-		enemy1[5+i].pos.x = spawnPositions2[i].x;
-		enemy1[5+i].pos.y = spawnPositions2[i].y;
-		//printf("Spawn Enemy: %f %f\n", enemy1[i].pos.x , enemy1[i].pos.y) ;
-		
+		// set spawn positions for the 5 enemies in spawnPositions array index 1
+		//which represents the left column enemies spawn position
+		spawnPositions[1][i] = CP_Vector_Set(wWidth / 8, randFloat(wHeight, wHeight / 7));
+		enemies[5+i].pos.x = spawnPositions[1][i].x;
+		enemies[5+i].pos.y = spawnPositions[1][i].y;	
 	}
 
 	for (int i = 0; i < SPAWNSIZE; ++i)
 	{
-		spawnPositions3[i] = CP_Vector_Set(wWidth -50, randFloat(wHeight, wHeight / 7));
-		enemy1[9+i].pos.x = spawnPositions3[i].x;
-		enemy1[9+i].pos.y = spawnPositions3[i].y;
+		// set spawn positions for the 5 enemies in spawnPositions array index 2
+		//which represents the right column enemies spawn position
+		spawnPositions[2][i] = CP_Vector_Set(wWidth -50, randFloat(wHeight, wHeight / 7));
+		enemies[10+i].pos.x = spawnPositions[2][i].x;
+		enemies[10+i].pos.y = spawnPositions[2][i].y;
 
 	}
 
@@ -177,28 +175,27 @@ void Car_Level_Update()
 
 	if (!isPaused)
 	{ 
-		// @DARREN PLEASE CHANGE THIS SO THAT THE ENEMY.POS IS INTIATED IN THE INIT() AND NOT UPDATE() SO THE ENEMIES WILL MOVE TOWARDS THE CHARACTER.
+		//Spawn Enemies in the spawn positions defined by array index 0
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
-			CP_Image_Draw(enemy.enemySprite, enemy1[i].pos.x, enemy1[i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
-			enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
+			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
-
-		
-
+	
+		//Spawn Enemies in the spawn positions defined by array index 1
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{
 			
-			CP_Image_Draw(enemy.enemySprite, enemy1[5+i].pos.x, enemy1[5+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
-			enemy1[5+i].pos = enemyMovement(character.Pos, enemy1[5+i].pos);
+			CP_Image_Draw(enemy.enemySprite, enemies[5+i].pos.x, enemies[5+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+			enemies[5+i].pos = enemyMovement(character.Pos, enemies[5+i].pos);
 		}
 
-		//
-
+		
+		//Spawn Enemies in the spawn positions defined by array index 2
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{			
-			CP_Image_Draw(enemy.enemySprite, enemy1[9+i].pos.x, enemy1[9+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
-			enemy1[9 + i].pos = enemyMovement(character.Pos, enemy1[9 + i].pos);
+			CP_Image_Draw(enemy.enemySprite, enemies[10+i].pos.x, enemies[10+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+			enemies[10 + i].pos = enemyMovement(character.Pos, enemies[10+i].pos);
 		}
 		
 
