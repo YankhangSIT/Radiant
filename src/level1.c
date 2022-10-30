@@ -20,8 +20,15 @@
 struct Character {
 	CP_Vector Pos;
 	CP_Color Color;
+	float height;
+	float width;
+	CP_Image playerSprite;
+	int playerType;
+
 } character;
 
+struct Character playerGun;
+struct Character playerSword;
 
 //Sprite Image
 CP_Image gunPlayer;
@@ -136,8 +143,23 @@ void level_1_Init()
 	// spawn enemies
 	spawnEnemies(enemies, SPAWNSIZE, spawnPositions, wWidth, wHeight);
 
-	
+	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
+	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+	if (playerNum == 1)
+	{
+		character.playerSprite = gunPlayer;
+		character.width = CP_Image_GetWidth(gunPlayer);
+		character.height = CP_Image_GetWidth(gunPlayer);
+	}
 
+	if (playerNum == 2)
+	{
+		character.playerSprite = swordPlayer;
+		character.width = CP_Image_GetWidth(swordPlayer);
+		character.height = CP_Image_GetWidth(swordPlayer);
+	}
+	//character.width = 
+	//character.height 
 	//set window size and center it
 	CP_System_SetWindowSize(wWidth, wHeight);
 	//enemy1.pos = CP_Vector_Set(0, wHeight / 5);
@@ -246,16 +268,15 @@ void level_1_Update()
 	{ 
 		//Spawn Enemies in the spawn positions defined by array index 0
 		for (int i = 0; i < SPAWNSIZE; i++)
-		{
-			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+		{			
+			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
 	
 		//Spawn Enemies in the spawn positions defined by array index 1
 		for (int i = 0; i < SPAWNSIZE; i++)
-		{
-			
-			CP_Image_Draw(enemy.enemySprite, enemies[5+i].pos.x, enemies[5+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+		{		
+			CP_Image_Draw(enemy.enemySprite, enemies[5+i].pos.x, enemies[5+i].pos.y, enemy.width, enemy.height, 255);
 			enemies[5+i].pos = enemyMovement(character.Pos, enemies[5+i].pos);
 		}
 
@@ -263,19 +284,19 @@ void level_1_Update()
 		//Spawn Enemies in the spawn positions defined by array index 2
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{			
-			CP_Image_Draw(enemy.enemySprite, enemies[10+i].pos.x, enemies[10+i].pos.y, CP_Image_GetWidth(enemy.enemySprite), CP_Image_GetHeight(enemy.enemySprite), 255);
+			CP_Image_Draw(enemy.enemySprite, enemies[10+i].pos.x, enemies[10+i].pos.y, enemy.width, enemy.height, 255);
 			enemies[10 + i].pos = enemyMovement(character.Pos, enemies[10+i].pos);
 		}
 		
 
 		if (playerNum == 1)
 		{
-			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
+			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
 		}
 
 		if (playerNum == 2)
 		{
-			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
+			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
 		}
 
 		//CLEAR BACKGROUND

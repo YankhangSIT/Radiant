@@ -8,8 +8,8 @@ struct Enemy {
 	CP_Color Color;
 	CP_Image enemySprite;
 	float radius;
-	float Height;
-	float Width;
+	float height;
+	float width;
 	float Direction;
 	float Speed;
 
