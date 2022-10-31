@@ -15,7 +15,7 @@
 #define TRUE (1)
 #define SPAWNSIZE (5)
 #define SPAWNINDEX (4)
-
+#define MAX_LENGTH (100)
 //define struct for character
 struct Character {
 	CP_Vector Pos;
@@ -125,7 +125,9 @@ static Resolution SetResolution(int width, int height) {
 }
 Resolution windowResolution;
 
-
+char timeString[MAX_LENGTH];
+int min = 0;
+int sec = 0;
 void level_1_Init()
 {
 	//Set window width and height to variables
@@ -193,7 +195,11 @@ void level_1_Init()
 
 void level_1_Update()
 {
-
+	elapsedTime += CP_System_GetDt();
+	
+	sprintf_s(timeString, MAX_LENGTH, "%.2f" ,elapsedTime);
+	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+	CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
 	/*  CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
   CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
   for (int i = 0; i < 3; i++) {
