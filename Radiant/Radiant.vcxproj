@@ -162,6 +162,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\characterSelect.c" />
     <ClCompile Include="..\src\level1.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\mainmenu.c" />
@@ -174,6 +175,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h" />
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing_common.h" />
+    <ClInclude Include="..\src\characterSelect.h" />
     <ClInclude Include="..\src\level1.h" />
     <ClInclude Include="..\src\mainmenu.h" />
     <ClInclude Include="..\src\map.h" />
