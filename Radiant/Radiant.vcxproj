@@ -168,6 +168,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\map.c" />
     <ClCompile Include="..\src\movement.c" />
     <ClCompile Include="..\src\spawn.c" />
+    <ClCompile Include="..\src\splashScreen.c" />
     <ClCompile Include="..\src\utils.c" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\src\map.h" />
     <ClInclude Include="..\src\movement.h" />
     <ClInclude Include="..\src\spawn.h" />
+    <ClInclude Include="..\src\splashScreen.h" />
     <ClInclude Include="..\src\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
