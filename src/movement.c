@@ -26,7 +26,7 @@ CP_Vector charMovement(CP_Vector charPosition)
 
 CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 {
-	float enemySpeed = 50.0;
+	float enemySpeed = 10.0;
 	float dtEnemySpeed = enemySpeed * CP_System_GetDt(); //ENEMY SPEED IS 100 UNITS PER SECOND
 
 	if (charPosition.x > enemyPosition.x) {
