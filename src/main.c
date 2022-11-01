@@ -16,6 +16,7 @@
 #include "mainmenu.h"
 #include "level1.h"
 #include "splashScreen.h"
+#include "characterSelect.h"
 //yk was here
 //darren was here
 //don was here

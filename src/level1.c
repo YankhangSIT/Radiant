@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "spawn.h"
 #include "map.h"
+#include<stdbool.h>
 #define PI (3.141592653589793)
 #define SIZE (1000)
 //#define SPAWNSIZE (5)
@@ -124,6 +125,8 @@ static Resolution SetResolution(int width, int height) {
 	res.height = height;
 	return res;
 }Resolution windowResolution;
+
+
 // string array to use for text display
 char timeString[MAX_LENGTH];
 // time variables
@@ -195,20 +198,16 @@ void level_1_Init()
 	isPaused = FALSE;
 
 
-	/*  windowResolution = SetResolution(1920,1080);
-  CP_System_SetWindowSize(windowResolution.width, windowResolution.height);
-
-  srand(1245585);
+//windowResolution = SetResolution(1920,1080);
+//  CP_System_SetWindowSize(windowResolution.width, windowResolution.height);
+//
+  srand(56423);
   for (int i = 0; i < 3; i++) {
-	  int x = rand() % ((windowResolution.width - 101)+100);
-	  int y = rand() % ((windowResolution.height - 101) + 100);
-	  obs.tri_block[i] = SetTriangle((float)x, (float)y,
-		  (float)(rand() % (x-1)), (float)(rand() % (windowResolution.height - (y + 1)) + y),
-		  (float)(rand() % (x + 100 - (x + 1)) + x), (float)(rand() % (windowResolution.height - (y + 1)) + y),
-		  (float)(rand() % (359)));
-
-
-  }*/
+	
+	  float x = rand() % (int)((wWidth / 3 + 1) + (wWidth / 3));
+	  float y = rand() % (int)((wHeight / 3 + 1) + (wHeight / 3));
+	  obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
+  }
 
 
 }
@@ -216,7 +215,7 @@ void level_1_Init()
 void level_1_Update()
 {
 	
-
+	
 
 
 
@@ -257,11 +256,7 @@ void level_1_Update()
 
 
 
-	/*  CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-  CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
-  for (int i = 0; i < 3; i++) {
-	  CP_Graphics_DrawTriangleAdvanced(obs.tri_block[i].x1, obs.tri_block[i].y1, obs.tri_block[i].x2, obs.tri_block[i].y2, obs.tri_block[i].x3, obs.tri_block[i].y3, obs.tri_block[i].degrees);
-  }*/
+	
 
 
 
@@ -416,14 +411,33 @@ void level_1_Update()
 
 		//CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	
+
+		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
+		CP_Settings_RectMode(CP_POSITION_CENTER);
+		for (int i = 0; i < 3; i++) {
+			
+			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+			
+		}
+
+
 		// updates character's positon based off WASD inputs. Function defined in movement.c
-		character.Pos = charMovement(character.Pos);
+
+			character.Pos = charMovement(character.Pos);
 		// updates enemy's positon based off character's position. Function defined in movement.c
 		// enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
+			for (int i = 0; i < 3; i++) {
+
+				character.Pos = checkObsCollision(character.Pos, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+
+			}
+			
 
 		// check where character going out of bounds
-		character.Pos = checkMapCollision(character.Pos, 0, wWidth, 0 , wHeight);
+		character.Pos = checkMapCollision(character.Pos, 0, wWidth - character.width, 0 , wHeight - character.height);
+	
+		
+		
 
 		// enemy obstruction
 		for (int i = 0; i < (SPAWNSIZE * 3); ++i) {

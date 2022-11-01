@@ -4,7 +4,8 @@
 
 CP_Vector charMovement(CP_Vector charPosition)
 {
-	float speed = 210.0;
+	/*float speed = 210.0;*/
+	float speed = 500.0;
 	float dtSpeed = speed * CP_System_GetDt(); //CHARACTER SPEED IS 210 UNITS PER SECOND
 
 	if (CP_Input_KeyDown(KEY_A)) {
