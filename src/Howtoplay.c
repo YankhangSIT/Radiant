@@ -51,6 +51,13 @@ void how_To_play_Update()
 		CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f, xHeight / 2.0f - 230);
 		CP_Font_DrawText("4) There are 4 stages, advance till the final stage. ", xWidth / 2.0f, xHeight / 2.0f - 180);
 		CP_Font_DrawText("5) Kill the final boss and win!", xWidth / 2.0f, xHeight / 2.0f - 130);
+		CP_Font_DrawText("6) There will be no self health regeneration", xWidth / 2.0f, xHeight / 2.0f - 80);
+
+		//Item drop guide
+		CP_Font_DrawText("Item Drop Guide", xWidth / 2.0f, xHeight / 2.0f );
+		CP_Font_DrawText("- There are health/energy bars around the area", xWidth / 2.0f, xHeight / 2.0f + 70);
+		CP_Font_DrawText("- There are different weapons around the area", xWidth / 2.0f, xHeight / 2.0f + 120);
+		CP_Font_DrawText("- To take the items, simply walk over the it.", xWidth / 2.0f, xHeight / 2.0f + 170);
 		
 
 		//Prompt user to click 'enter' to proceed to game
