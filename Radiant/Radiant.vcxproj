@@ -171,6 +171,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\spawn.c" />
     <ClCompile Include="..\src\splashScreen.c" />
     <ClCompile Include="..\src\utils.c" />
+    <ClCompile Include="level2.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h" />

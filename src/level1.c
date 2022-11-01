@@ -127,9 +127,14 @@ Resolution windowResolution;
 
 char timeString[MAX_LENGTH];
 int min = 0;
-int sec = 0;
+float sec = 0;
+int time = 0;
+int surviveMin = 1;
+int win = 0;
 void level_1_Init()
 {
+	sec = 0;
+	min = 0;
 	//Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -195,11 +200,47 @@ void level_1_Init()
 
 void level_1_Update()
 {
-	elapsedTime += CP_System_GetDt();
 	
-	sprintf_s(timeString, MAX_LENGTH, "%.2f" ,elapsedTime);
-	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-	CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+
+
+	if (min == surviveMin)
+	{
+	
+			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
+			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
+
+
+			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
+			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+			CP_Font_DrawText("Next Level", wWidth / 2.0f, wHeight / 2.0f - 200);
+
+			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
+			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+			CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
+
+			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
+			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+			CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);
+
+			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
+			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+			CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
+
+			win = TRUE;
+		
+	}
+
+
+
 	/*  CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
   CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
   for (int i = 0; i < 3; i++) {
@@ -208,7 +249,7 @@ void level_1_Update()
 
 
 
-	if (CP_Input_KeyTriggered(KEY_ESCAPE))
+	if ((CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE) || win == TRUE)
 	{
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -239,8 +280,17 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f +250);
 
+		if (win == TRUE)
+		{
+		isPaused = TRUE;
+		}
+		else
+		{
+			isPaused = !isPaused;
+		}
 
-		isPaused = !isPaused;
+		
+
 
 	}
 
@@ -250,12 +300,24 @@ void level_1_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			isPaused = !isPaused;
+			if (win == FALSE)
+			{
+				isPaused = !isPaused;
+			}
+			
 		}
+
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			isPaused = !isPaused;
-			level_1_Init();
+			//isPaused = !isPaused;	
+			if (isPaused == TRUE)
+			{
+				win = FALSE;
+				level_1_Init();
+				isPaused = FALSE;			
+			}
+
+
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -272,6 +334,17 @@ void level_1_Update()
 
 	if (!isPaused)
 	{ 
+		sec += CP_System_GetDt();
+
+		if (sec >= 60)
+		{
+			sec = 0;
+			min++;
+		}
+		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+
 		//Spawn Enemies in the spawn positions defined by array index 0
 		for (int i = 0; i < SPAWNSIZE; i++)
 		{			

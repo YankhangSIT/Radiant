@@ -42,6 +42,9 @@
     <ClCompile Include="..\src\characterSelect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="level2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h">
