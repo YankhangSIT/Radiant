@@ -8,7 +8,7 @@ float randFloat(float low, float high)
 }
 
 
-void spawnEnemies( struct Enemy *enemies, int spawnSize, CP_Vector *spawnPositions, int wWidth, int wHeight)
+void spawnEnemies( struct Enemy *enemies, int spawnSize, CP_Vector *spawnPositions, int wWidth, int wHeight )
 {
 	for (int i = 0; i < spawnSize; ++i)
 	{

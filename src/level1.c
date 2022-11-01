@@ -9,7 +9,7 @@
 #include "spawn.h"
 #include "map.h"
 #define PI (3.141592653589793)
-#define SIZE (50)
+#define SIZE (1000)
 //#define SPAWNSIZE (5)
 #define FALSE (0)
 #define TRUE (1)
@@ -38,6 +38,7 @@ CP_Image swordPlayer;
 struct Enemy enemies[SIZE];
 struct Enemy enemy;
 CP_Vector spawnPositions[SPAWNINDEX][SPAWNSIZE];
+//CP_Vector spawnPosition[];
 //
 int isPaused;
 
@@ -122,19 +123,29 @@ static Resolution SetResolution(int width, int height) {
 	res.width = width;
 	res.height = height;
 	return res;
-}
-Resolution windowResolution;
-
+}Resolution windowResolution;
+// string array to use for text display
 char timeString[MAX_LENGTH];
+// time variables
 int min = 0;
 float sec = 0;
-int time = 0;
+// survive condition
 int surviveMin = 1;
+// win condition boolean
 int win = 0;
+float spawnTimer = 0.7f;
+float startSpawnTimer;
+
+int isCompleted = 0;
+int spawnIndex = 0;
+CP_Vector spawnPosition;
 void level_1_Init()
 {
+	startSpawnTimer = spawnTimer;
+	elapsedTime = 0;
 	sec = 0;
 	min = 0;
+	spawnIndex = 0;
 	//Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -148,7 +159,11 @@ void level_1_Init()
 	// random seed
 	srand(1);
 	// spawn enemies
-	spawnEnemies(enemies, SPAWNSIZE, spawnPositions, wWidth, wHeight);
+	//spawnEnemies(enemies, SPAWNSIZE, spawnPositions, wWidth, wHeight);
+
+	spawnPosition = CP_Vector_Set(0, 0);
+	enemies[spawnIndex].pos.x = spawnPosition.x;
+	enemies[spawnIndex].pos.y = spawnPosition.y;
 
 	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
 	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
@@ -203,9 +218,10 @@ void level_1_Update()
 	
 
 
+
+
 	if (min == surviveMin)
 	{
-	
 			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
@@ -235,8 +251,8 @@ void level_1_Update()
 			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 			CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
 
-			win = TRUE;
-		
+			win = TRUE;	
+			isPaused = TRUE;
 	}
 
 
@@ -249,7 +265,7 @@ void level_1_Update()
 
 
 
-	if ((CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE) || win == TRUE)
+	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -279,18 +295,8 @@ void level_1_Update()
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f +250, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f +250);
-
-		if (win == TRUE)
-		{
-		isPaused = TRUE;
-		}
-		else
-		{
-			isPaused = !isPaused;
-		}
-
 		
-
+		isPaused = !isPaused;
 
 	}
 
@@ -334,39 +340,69 @@ void level_1_Update()
 
 	if (!isPaused)
 	{ 
-		sec += CP_System_GetDt();
+		elapsedTime = CP_System_GetDt();
+		sec += elapsedTime;
+
 
 		if (sec >= 60)
 		{
 			sec = 0;
 			min++;
 		}
+
+		
+		spawnTimer -= elapsedTime;
+
+
+		if (min < surviveMin)//!isCompleted)
+		{
+
+			if (spawnTimer <= 0)
+			{
+				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+				enemies[spawnIndex].pos.x = spawnPosition.x;
+				enemies[spawnIndex].pos.y = spawnPosition.y;
+				spawnIndex++;
+				spawnTimer = startSpawnTimer;
+			}
+
+
+
+		}
+
+
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
-
-		//Spawn Enemies in the spawn positions defined by array index 0
-		for (int i = 0; i < SPAWNSIZE; i++)
-		{			
+		for (int i = 0; i < spawnIndex; i++)
+		{
 			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
-	
-		//Spawn Enemies in the spawn positions defined by array index 1
-		for (int i = 0; i < SPAWNSIZE; i++)
-		{		
-			CP_Image_Draw(enemy.enemySprite, enemies[5+i].pos.x, enemies[5+i].pos.y, enemy.width, enemy.height, 255);
-			enemies[5+i].pos = enemyMovement(character.Pos, enemies[5+i].pos);
-		}
 
-		
-		//Spawn Enemies in the spawn positions defined by array index 2
-		for (int i = 0; i < SPAWNSIZE; i++)
-		{			
-			CP_Image_Draw(enemy.enemySprite, enemies[10+i].pos.x, enemies[10+i].pos.y, enemy.width, enemy.height, 255);
-			enemies[10 + i].pos = enemyMovement(character.Pos, enemies[10+i].pos);
-		}
-		
+
+		////Spawn Enemies in the spawn positions defined by array index 0
+		//for (int i = 0; i < SPAWNSIZE; i++)
+		//{				
+		//	CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);			
+		//	enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
+		//}
+	
+		////Spawn Enemies in the spawn positions defined by array index 1
+		//for (int i = 0; i < SPAWNSIZE; i++)
+		//{		
+		//	CP_Image_Draw(enemy.enemySprite, enemies[5+i].pos.x, enemies[5+i].pos.y, enemy.width, enemy.height, 255);
+		//	enemies[5+i].pos = enemyMovement(character.Pos, enemies[5+i].pos);
+		//}
+
+		//
+		////Spawn Enemies in the spawn positions defined by array index 2
+		//for (int i = 0; i < SPAWNSIZE; i++)
+		//{			
+		//	CP_Image_Draw(enemy.enemySprite, enemies[10+i].pos.x, enemies[10+i].pos.y, enemy.width, enemy.height, 255);
+		//	enemies[10 + i].pos = enemyMovement(character.Pos, enemies[10+i].pos);
+		//}
+		//
 
 		if (playerNum == 1)
 		{
