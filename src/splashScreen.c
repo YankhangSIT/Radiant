@@ -45,7 +45,7 @@ void splash_screen_update(void)
 	}
 
 	//Game title
-
+	//. . . . . 
 
 }
 void splash_screen_exit(void)

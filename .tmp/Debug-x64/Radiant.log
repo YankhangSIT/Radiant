@@ -1,28 +1,15 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\darre\OneDrive\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  level1.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(14,1): warning C4005: 'FALSE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71): message : see previous definition of 'FALSE'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(15,1): warning C4005: 'TRUE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75): message : see previous definition of 'TRUE'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(150,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(151,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(168,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(169,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(173,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(174,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(180,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(181,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(186,26): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(186,34): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(434,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(435,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(438,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Donovan\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Howtoplay.c
+C:\Users\Donovan\Documents\GitHub\Radiant\src\Howtoplay.c(60,84): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Donovan\Documents\GitHub\Radiant\src\Howtoplay.c(38,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Donovan\Documents\GitHub\Radiant\src\Howtoplay.c(39,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Donovan\Documents\GitHub\Radiant\src\Howtoplay.c(37,12): warning C4101: 'mouseClickPos': unreferenced local variable
   Generating code
-  3 of 20 functions (15.0%) were compiled, the rest were copied from previous compilation.
+  2 of 23 functions ( 8.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\Donovan\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
   5 File(s) copied
