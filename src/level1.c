@@ -79,7 +79,11 @@ int isCompleted = 0;
 int spawnIndex = 0;
 CP_Vector spawnPosition;
 CP_Vector shootPosition;
+CP_Vector bulletPos;
 CP_Image playerBullet;
+CP_Vector acceleration;
+CP_Vector directionBullet;
+float bulletSpeed = 10;
 float shootDirection;
 void level_1_Init()
 {
@@ -98,6 +102,7 @@ void level_1_Init()
 	//player sprite
 	gunPlayer = CP_Image_Load("Assets/player1.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
+	playerBullet = CP_Image_Load("Assets/playerBullet.png");
 	// random seed
 	//srand(1);
 	// spawn enemies
@@ -279,13 +284,7 @@ void level_1_Update()
 
 	if (!isPaused)
 	{
-		shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height/2);
-
-		if (CP_Input_MouseClicked()) {
-			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-			
-
-		}
+	
 
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
@@ -299,6 +298,24 @@ void level_1_Update()
 
 
 		spawnTimer -= elapsedTime;
+
+
+
+		shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
+
+		if (CP_Input_MouseClicked()) {
+			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+			directionBullet = CP_Vector_Subtract(mouseClickPos, shootPosition);
+			bulletPos = shootPosition;
+			
+			 
+
+		}
+
+		acceleration = CP_Vector_Scale(directionBullet, bulletSpeed * elapsedTime);
+		bulletPos = CP_Vector_Add(bulletPos, acceleration);
+		CP_Image_Draw(playerBullet, bulletPos.x, bulletPos.y, CP_Image_GetWidth(playerBullet), CP_Image_GetWidth(playerBullet), 255);
+		//bulletPos = CP_Vector_Add(shootPosition,
 
 
 		if (min < surviveMin)//!isCompleted)

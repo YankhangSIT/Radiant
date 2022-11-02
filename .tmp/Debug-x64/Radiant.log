@@ -1,84 +1,32 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\darre\OneDrive\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  characterSelect.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(52,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(52,95): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(53,66): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(53,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(59,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(59,90): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(62,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(62,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(62,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(66,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(66,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(69,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(69,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(69,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(42,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(43,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\characterSelect.c(41,12): warning C4101: 'mouseClickPos': unreferenced local variable
-  combat.c
-  Howtoplay.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\Howtoplay.c(67,84): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\Howtoplay.c(38,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\Howtoplay.c(39,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\Howtoplay.c(37,12): warning C4101: 'mouseClickPos': unreferenced local variable
   level1.c
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(17,1): warning C4005: 'FALSE': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71): message : see previous definition of 'FALSE'
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(18,1): warning C4005: 'TRUE': macro redefinition
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75): message : see previous definition of 'TRUE'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(89,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(90,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(107,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(108,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(112,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(113,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(119,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(120,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(125,26): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(125,34): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(148,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(149,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(401,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(402,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(405,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  main.c
-  mainmenu.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\mainmenu.c(28,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\mainmenu.c(29,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\mainmenu.c(76,52): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\mainmenu.c(76,77): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\mainmenu.c(76,100): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\mainmenu.c(47,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\mainmenu.c(48,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  map.c
-  movement.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\movement.c(54,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\movement.c(55,36): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  spawn.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(17,70): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(17,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(17,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(26,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(26,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(26,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(35,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(35,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\spawn.c(35,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-  splashScreen.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\splashScreen.c(40,32): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\splashScreen.c(40,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-  utils.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\utils.c(38,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\utils.c(39,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  level2.c
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(96,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(97,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(115,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(116,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(120,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(121,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(127,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(128,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(133,26): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(133,34): warning C4244: 'function': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(156,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(157,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(317,57): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(317,90): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(431,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(432,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(435,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  29 of 30 functions (96.7%) were compiled, the rest were copied from previous compilation.
+  1 of 30 functions ( 3.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
-  5 File(s) copied
+  6 File(s) copied
