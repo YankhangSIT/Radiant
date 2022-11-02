@@ -77,16 +77,27 @@ float startSpawnTimer;
 
 int isCompleted = 0;
 int spawnIndex = 0;
+//Bullet Struct Contains all the properties of the bullet
+struct Bullet {
+
+	CP_Vector shootPosition;
+	CP_Vector bulletPos;
+	CP_Image bulletSprite;
+	CP_Vector acceleration;
+	CP_Vector directionBullet;
+	float bulletSpeed;
+	float width;
+	float height;
+};
+struct Bullet bullet;
+
+
 CP_Vector spawnPosition;
-CP_Vector shootPosition;
-CP_Vector bulletPos;
-CP_Image playerBullet;
-CP_Vector acceleration;
-CP_Vector directionBullet;
-float bulletSpeed = 10;
-float shootDirection;
+//float shootDirection;
 void level_1_Init()
 {
+	CP_System_Fullscreen();
+	bullet.bulletSpeed = 10;
 	startSpawnTimer = spawnTimer;
 	elapsedTime = 0;
 	sec = 0;
@@ -96,24 +107,25 @@ void level_1_Init()
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 
+	//
+	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
 	enemy.radius = 39;
-
+	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
+	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
 	//player sprite
 	gunPlayer = CP_Image_Load("Assets/player1.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
-	playerBullet = CP_Image_Load("Assets/playerBullet.png");
-	// random seed
-	//srand(1);
-	// spawn enemies
-	//spawnEnemies(enemies, SPAWNSIZE, spawnPositions, wWidth, wHeight);
 
+	//enemy spawn 
 	spawnPosition = CP_Vector_Set(0, 0);
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
-
+	//enemy width and height
 	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
 	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+
+	// player type gun
 	if (playerNum == 1)
 	{
 		character.playerSprite = gunPlayer;
@@ -121,17 +133,17 @@ void level_1_Init()
 		character.height = CP_Image_GetWidth(gunPlayer);
 	}
 
+	// player type sword
 	if (playerNum == 2)
 	{
 		character.playerSprite = swordPlayer;
 		character.width = CP_Image_GetWidth(swordPlayer);
 		character.height = CP_Image_GetWidth(swordPlayer);
 	}
-	//character.width = 
-	//character.height 
+
+
 	//set window size and center it
 	CP_System_SetWindowSize(wWidth, wHeight);
-	//enemy1.pos = CP_Vector_Set(0, wHeight / 5);
 	//set position, colour and direction of the three cars (red, green, blue)
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	character.health = 5; // start with 5 hp
@@ -141,8 +153,8 @@ void level_1_Init()
 	//Character.Color = CP_Color_Create(255, 0, 0, 255);
 	//Char.Direction = 0.0f;
 
-	//enemy1.Pos = CP_Vector_Set(50, 50);
-	shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health/2);
+	//bullet start shoot spawn position
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health/2);
 	isPaused = FALSE;
 
 
@@ -299,23 +311,28 @@ void level_1_Update()
 
 		spawnTimer -= elapsedTime;
 
+		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+
+		//to display character health
+		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
+		CP_Font_DrawText("Health:", 200, 200);
+		CP_Font_DrawText(characterHealthDisplay, 260, 200);
 
 
-		shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
+		bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
 
 		if (CP_Input_MouseClicked()) {
 			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-			directionBullet = CP_Vector_Subtract(mouseClickPos, shootPosition);
-			bulletPos = shootPosition;
-			
-			 
-
+			bullet.directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+			bullet.bulletPos = bullet.shootPosition;
 		}
 
-		acceleration = CP_Vector_Scale(directionBullet, bulletSpeed * elapsedTime);
-		bulletPos = CP_Vector_Add(bulletPos, acceleration);
-		CP_Image_Draw(playerBullet, bulletPos.x, bulletPos.y, CP_Image_GetWidth(playerBullet), CP_Image_GetWidth(playerBullet), 255);
-		//bulletPos = CP_Vector_Add(shootPosition,
+		bullet.acceleration = CP_Vector_Scale(bullet.directionBullet, bullet.bulletSpeed * elapsedTime);
+		bullet.bulletPos = CP_Vector_Add(bullet.bulletPos, bullet.acceleration);
+		CP_Image_Draw(bullet.bulletSprite, bullet.bulletPos.x, bullet.bulletPos.y, bullet.width, bullet.height, 255);
+
 
 
 		if (min < surviveMin)//!isCompleted)
@@ -333,53 +350,22 @@ void level_1_Update()
 		}
 
 
-		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+	
 
-		//to display character health
-		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
-		CP_Font_DrawText("Health:", 200, 200);
-		CP_Font_DrawText(characterHealthDisplay, 260, 200);
-
-
-		CP_Image_Draw(enemy.enemySprite, enemies[0].pos.x, enemies[0].pos.y, enemy.width, enemy.height, 255);
-		enemies[0].pos = enemyMovement(character.Pos, enemies[0].pos);
+		
+		//CP_Image_Draw(enemy.enemySprite, enemies[0].pos.x, enemies[0].pos.y, enemy.width, enemy.height, 255);
+		//enemies[0].pos = enemyMovement(character.Pos, enemies[0].pos);
 
 
 		for (int i = 0; i < spawnIndex; i++)
 		{
+			//Enemy Render
 			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
 
-		
-
-
-
-		////Spawn Enemies in the spawn positions defined by array index 0
-		//for (int i = 0; i < SPAWNSIZE; i++)
-		//{				
-		//	CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);			
-		//	enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
-		//}
-
-		////Spawn Enemies in the spawn positions defined by array index 1
-		//for (int i = 0; i < SPAWNSIZE; i++)
-		//{		
-		//	CP_Image_Draw(enemy.enemySprite, enemies[5+i].pos.x, enemies[5+i].pos.y, enemy.width, enemy.height, 255);
-		//	enemies[5+i].pos = enemyMovement(character.Pos, enemies[5+i].pos);
-		//}
-
-		//
-		////Spawn Enemies in the spawn positions defined by array index 2
-		//for (int i = 0; i < SPAWNSIZE; i++)
-		//{			
-		//	CP_Image_Draw(enemy.enemySprite, enemies[10+i].pos.x, enemies[10+i].pos.y, enemy.width, enemy.height, 255);
-		//	enemies[10 + i].pos = enemyMovement(character.Pos, enemies[10+i].pos);
-		//}
-		//
-
+	
+		// Player Render
 		if (playerNum == 1)
 		{
 			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
