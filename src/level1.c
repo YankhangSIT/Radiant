@@ -61,6 +61,8 @@ float wHeight = 0;
 
 //obstruction obj in map.h
 Obstruction obs;
+//triangle area for sword swing
+Sword swordSwingArea;
 
 // string array to use for text display
 char timeString[MAX_LENGTH];
@@ -170,7 +172,7 @@ void level_1_Init()
 		obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
 	}
 
-
+	swordSwingArea = SetSword(character.Pos.x, character.Pos.y, character.Pos.x + 80.f, character.Pos.y -80.f, character.Pos.x + 80.f, character.Pos.y + 80.f, 360.f);
 }
 
 void level_1_Update()
@@ -379,6 +381,7 @@ void level_1_Update()
 		//CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
+		//draw obstruction
 		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
 		CP_Settings_RectMode(CP_POSITION_CENTER);
 		for (int i = 0; i < 3; i++) {
@@ -386,7 +389,10 @@ void level_1_Update()
 			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
 
 		}
-
+		//draw sword swing area
+		swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos , character.width, character.height);
+		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
+		CP_Graphics_DrawTriangleAdvanced(swordSwingArea.x1, swordSwingArea.y1, swordSwingArea.x2, swordSwingArea.y2, swordSwingArea.x3, swordSwingArea.y3, swordSwingArea.degrees);
 
 		// updates character's positon based off WASD inputs. Function defined in movement.c
 
