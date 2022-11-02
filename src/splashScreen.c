@@ -18,7 +18,7 @@ void splash_screen_init()
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 	CP_System_Fullscreen();
-	CP_Settings_RectMode(CP_POSITION_CENTER);	
+	CP_Settings_RectMode(CP_POSITION_CENTER);
 
 }
 
@@ -28,7 +28,7 @@ void splash_screen_update(void)
 	TimeElapsed += CP_System_GetDt();
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	
+
 
 	float alphatime = 2;
 	if (TimeElapsed >= alphatime)
@@ -38,11 +38,12 @@ void splash_screen_update(void)
 	for (int i = 0; i < 3; i++) {
 		float resulttime = (TimeElapsed / alphatime) * 255;
 		CP_Image_Draw(digipen, 0, 0, CP_Image_GetWidth(digipen), CP_Image_GetHeight(digipen), (int)resulttime);
-	}
 
-	if (CP_Input_KeyDown(KEY_ENTER)) {
-		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 	}
+	CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+	//if (CP_Input_KeyDown(KEY_ENTER)) {
+	//	CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+	//}
 
 	//Game title
 	//. . . . . 

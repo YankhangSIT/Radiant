@@ -4,7 +4,8 @@
 
 CP_Vector charMovement(CP_Vector charPosition)
 {
-	float speed = 210.0;
+	/*float speed = 210.0;*/
+	float speed = 500.0;
 	float dtSpeed = speed * CP_System_GetDt(); //CHARACTER SPEED IS 210 UNITS PER SECOND
 
 	if (CP_Input_KeyDown(KEY_A)) {
@@ -25,7 +26,7 @@ CP_Vector charMovement(CP_Vector charPosition)
 
 CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 {
-	float enemySpeed = 50.0;
+	float enemySpeed = 10.0;
 	float dtEnemySpeed = enemySpeed * CP_System_GetDt(); //ENEMY SPEED IS 100 UNITS PER SECOND
 
 	if (charPosition.x > enemyPosition.x) {
@@ -45,24 +46,6 @@ CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 	return enemyPosition;
 }
 
-//moved to map.c
-
-//CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY) {
-//	if (charPosition.x <= minX) {
-//		charPosition.x = minX;
-//	}
-//	else if (charPosition.x >= maxX) {
-//		charPosition.x = maxX;
-//	}
-//	if (charPosition.y <= minY) {
-//		charPosition.y = minY;
-//	}
-//	else if (charPosition.y >= maxY) {
-//		charPosition.y = maxY;
-//	}
-//	return charPosition;
-//
-//}
 
 //toDisplace(enemy1[i].pos, enemy1[j].pos, enemy.radius);
 float toDisplace(CP_Vector enemy1Pos, CP_Vector enemy2Pos, float radius) {

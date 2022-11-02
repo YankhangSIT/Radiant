@@ -59,79 +59,8 @@ int healthChange;
 float wWidth = 0;
 float wHeight = 0;
 
-
-
-//These are my map logic -JS
-typedef struct Circle
-{
-	float x;
-	float y;
-	float diameter;
-	int clicked;
-}Circle;
-typedef struct Triangle
-{
-	float x1;
-	float y1;
-	float x2;
-	float y2;
-	float x3;
-	float y3;
-	float degrees;
-}Triangle;
-typedef struct Rect
-{
-	float x;
-	float y;
-	float width;
-	float height;
-}Rect;
-typedef struct Obstruction
-{
-	Circle cir_block[3];
-	Triangle tri_block[3];
-	Rect rec_block[3];
-}Obstruction;
-static Triangle SetTriangle(float x1, float y1, float x2, float y2, float x3, float y3, float degree) {
-	Triangle tri;
-	tri.x1 = x1;
-	tri.y1 = y1;
-	tri.x2 = x2;
-	tri.y2 = y2;
-	tri.x3 = x3;
-	tri.y3 = y3;
-	tri.degrees = degree;
-	return tri;
-}
-static Circle SetCircle(float x, float y, float diameter, int clicked) {
-	Circle cir;
-	cir.x = x;
-	cir.y = y;
-	cir.diameter = diameter;
-	cir.clicked = clicked;
-	return cir;
-}
-static Rect SetRect_(float x, float y, float width, float height) {
-	Rect rec;
-	rec.x = x;
-	rec.y = y;
-	rec.width = width;
-	rec.height = height;
-	return rec;
-}
+//obstruction obj in map.h
 Obstruction obs;
-typedef struct Resolution
-{
-	int width;
-	int height;
-}Resolution;
-static Resolution SetResolution(int width, int height) {
-	Resolution res;
-	res.width = width;
-	res.height = height;
-	return res;
-}Resolution windowResolution;
-
 
 // string array to use for text display
 char timeString[MAX_LENGTH];
@@ -162,7 +91,7 @@ void level_1_Init()
 
 	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
 	enemy.radius = 39;
-	
+
 	//player sprite
 	gunPlayer = CP_Image_Load("Assets/player1.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
@@ -209,65 +138,66 @@ void level_1_Init()
 	isPaused = FALSE;
 
 
-//windowResolution = SetResolution(1920,1080);
-//  CP_System_SetWindowSize(windowResolution.width, windowResolution.height);
-//
-  srand(56423);
-  for (int i = 0; i < 3; i++) {
-	
-	  float x = rand() % (int)((wWidth / 3 + 1) + (wWidth / 3));
-	  float y = rand() % (int)((wHeight / 3 + 1) + (wHeight / 3));
-	  obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
-  }
+	//windowResolution = SetResolution(1920,1080);
+	//  CP_System_SetWindowSize(windowResolution.width, windowResolution.height);
+	//
+
+	//initiate obstruction
+	srand(56423);
+	for (int i = 0; i < 3; i++) {
+		float x = rand() % (int)((wWidth / 3 + 1) + (wWidth / 3));
+		float y = rand() % (int)((wHeight / 3 + 1) + (wHeight / 3));
+		obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
+	}
 
 
 }
 
 void level_1_Update()
 {
-	
-	
+
+
 
 
 
 	if (min == surviveMin)
 	{
-			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-			CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
-			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
 
 
-			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
-			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("Next Level", wWidth / 2.0f, wHeight / 2.0f - 200);
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		CP_Font_DrawText("Next Level", wWidth / 2.0f, wHeight / 2.0f - 200);
 
-			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
-			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
 
-			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
-			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);
 
-			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
-			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
 
-			win = TRUE;	
-			isPaused = TRUE;
+		win = TRUE;
+		isPaused = TRUE;
 	}
 
 
 
-	
+
 
 
 
@@ -293,22 +223,22 @@ void level_1_Update()
 		CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
 
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f +100 , 180, 80);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f +100);
+		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);
 
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f +250, 180, 80);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f +250);
-		
+		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
+
 		isPaused = !isPaused;
 
 	}
 
 	if (CP_Input_MouseClicked() && isPaused)
 	{
-		
+
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -316,7 +246,7 @@ void level_1_Update()
 			{
 				isPaused = !isPaused;
 			}
-			
+
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -326,7 +256,7 @@ void level_1_Update()
 			{
 				win = FALSE;
 				level_1_Init();
-				isPaused = FALSE;			
+				isPaused = FALSE;
 			}
 
 
@@ -337,7 +267,7 @@ void level_1_Update()
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f +250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			CP_Engine_Terminate();
 		}
@@ -345,7 +275,7 @@ void level_1_Update()
 	}
 
 	if (!isPaused)
-	{ 
+	{
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
 
@@ -356,7 +286,7 @@ void level_1_Update()
 			min++;
 		}
 
-		
+
 		spawnTimer -= elapsedTime;
 
 
@@ -390,7 +320,7 @@ void level_1_Update()
 		CP_Image_Draw(enemy.enemySprite, enemies[0].pos.x, enemies[0].pos.y, enemy.width, enemy.height, 255);
 		enemies[0].pos = enemyMovement(character.Pos, enemies[0].pos);
 
-		
+
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
@@ -403,7 +333,7 @@ void level_1_Update()
 		//	CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);			
 		//	enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		//}
-	
+
 		////Spawn Enemies in the spawn positions defined by array index 1
 		//for (int i = 0; i < SPAWNSIZE; i++)
 		//{		
@@ -436,29 +366,31 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
 		CP_Settings_RectMode(CP_POSITION_CENTER);
 		for (int i = 0; i < 3; i++) {
-			
+
 			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
-			
+
 		}
 
 
 		// updates character's positon based off WASD inputs. Function defined in movement.c
 
-			character.Pos = charMovement(character.Pos);
+		character.Pos = charMovement(character.Pos);
 		// updates enemy's positon based off character's position. Function defined in movement.c
 		// enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
-			for (int i = 0; i < 3; i++) {
 
-				character.Pos = checkObsCollision(character.Pos, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+			// check for obstructions
+		for (int i = 0; i < 3; i++) {
 
-			}
-			
+			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+
+		}
+
 
 		// check where character going out of bounds
-		character.Pos = checkMapCollision(character.Pos, 0, wWidth - character.width, 0 , wHeight - character.height);
-	
-		
-		
+		character.Pos = checkMapCollision(character.Pos, 0, wWidth - character.width, 0, wHeight - character.height);
+
+
+
 
 		// enemy obstruction
 		for (int i = 0; i < (spawnIndex); ++i) {
@@ -476,10 +408,10 @@ void level_1_Update()
 
 					enemies[j].pos.x += toDisplace * (xDistance) / distance;
 					enemies[j].pos.y += toDisplace * (yDistance) / distance;
-				
+
 				}
 			}
-		}	
+		}
 
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1) { // if not invul, check for damage (collision with mobs) every frame
@@ -493,7 +425,7 @@ void level_1_Update()
 					character.invulState = 1;
 				}
 			}
-			
+
 		}
 
 		// if character is invulnerable, don't take damage
@@ -507,7 +439,7 @@ void level_1_Update()
 				invulElapsedTime = 0;
 			}
 		}
-		
+
 	}
 }
 
