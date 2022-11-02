@@ -2,12 +2,15 @@
 #include "stdio.h"
 #include "utils.h"
 #include "movement.h"
+#include "combat.h"
 #include "mainmenu.h"
 #include "math.h"
 #include "level1.h"
-#include <stdlib.h>
 #include "spawn.h"
 #include "map.h"
+
+#include<stdbool.h>
+#include<stdlib.h>
 #define PI (3.141592653589793)
 #define SIZE (1000)
 //#define SPAWNSIZE (5)
@@ -24,7 +27,9 @@ struct Character {
 	float width;
 	CP_Image playerSprite;
 	int playerType;
-
+	int health;
+	int energy;
+	int invulState;
 } character;
 
 struct Character playerGun;
@@ -49,6 +54,8 @@ int isPaused;
 //float enemySpeed = 100.0;
 int i = -1;
 float elapsedTime;
+float invulElapsedTime;
+int healthChange;
 float wWidth = 0;
 float wHeight = 0;
 
@@ -124,8 +131,11 @@ static Resolution SetResolution(int width, int height) {
 	res.height = height;
 	return res;
 }Resolution windowResolution;
+
+
 // string array to use for text display
 char timeString[MAX_LENGTH];
+char characterHealthDisplay[MAX_LENGTH];
 // time variables
 int min = 0;
 float sec = 0;
@@ -187,6 +197,10 @@ void level_1_Init()
 	//enemy1.pos = CP_Vector_Set(0, wHeight / 5);
 	//set position, colour and direction of the three cars (red, green, blue)
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
+	character.health = 5; // start with 5 hp
+	character.energy = 5; // start with 5 energy
+	character.invulState = 0; // start not invul
+	invulElapsedTime = 0; // timer for invul
 	//Character.Color = CP_Color_Create(255, 0, 0, 255);
 	//Char.Direction = 0.0f;
 
@@ -195,20 +209,16 @@ void level_1_Init()
 	isPaused = FALSE;
 
 
-	/*  windowResolution = SetResolution(1920,1080);
-  CP_System_SetWindowSize(windowResolution.width, windowResolution.height);
-
-  srand(1245585);
+//windowResolution = SetResolution(1920,1080);
+//  CP_System_SetWindowSize(windowResolution.width, windowResolution.height);
+//
+  srand(56423);
   for (int i = 0; i < 3; i++) {
-	  int x = rand() % ((windowResolution.width - 101)+100);
-	  int y = rand() % ((windowResolution.height - 101) + 100);
-	  obs.tri_block[i] = SetTriangle((float)x, (float)y,
-		  (float)(rand() % (x-1)), (float)(rand() % (windowResolution.height - (y + 1)) + y),
-		  (float)(rand() % (x + 100 - (x + 1)) + x), (float)(rand() % (windowResolution.height - (y + 1)) + y),
-		  (float)(rand() % (359)));
-
-
-  }*/
+	
+	  float x = rand() % (int)((wWidth / 3 + 1) + (wWidth / 3));
+	  float y = rand() % (int)((wHeight / 3 + 1) + (wHeight / 3));
+	  obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
+  }
 
 
 }
@@ -216,7 +226,7 @@ void level_1_Init()
 void level_1_Update()
 {
 	
-
+	
 
 
 
@@ -257,11 +267,7 @@ void level_1_Update()
 
 
 
-	/*  CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-  CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
-  for (int i = 0; i < 3; i++) {
-	  CP_Graphics_DrawTriangleAdvanced(obs.tri_block[i].x1, obs.tri_block[i].y1, obs.tri_block[i].x2, obs.tri_block[i].y2, obs.tri_block[i].x3, obs.tri_block[i].y3, obs.tri_block[i].degrees);
-  }*/
+	
 
 
 
@@ -374,12 +380,22 @@ void level_1_Update()
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+
+		//to display character health
+		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
+		CP_Font_DrawText("Health:", 200, 200);
+		CP_Font_DrawText(characterHealthDisplay, 260, 200);
+
+
+		CP_Image_Draw(enemy.enemySprite, enemies[0].pos.x, enemies[0].pos.y, enemy.width, enemy.height, 255);
+		enemies[0].pos = enemyMovement(character.Pos, enemies[0].pos);
+
+		
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
-
 
 		////Spawn Enemies in the spawn positions defined by array index 0
 		//for (int i = 0; i < SPAWNSIZE; i++)
@@ -416,18 +432,37 @@ void level_1_Update()
 
 		//CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	
+
+		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
+		CP_Settings_RectMode(CP_POSITION_CENTER);
+		for (int i = 0; i < 3; i++) {
+			
+			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+			
+		}
+
+
 		// updates character's positon based off WASD inputs. Function defined in movement.c
-		character.Pos = charMovement(character.Pos);
+
+			character.Pos = charMovement(character.Pos);
 		// updates enemy's positon based off character's position. Function defined in movement.c
 		// enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
+			for (int i = 0; i < 3; i++) {
+
+				character.Pos = checkObsCollision(character.Pos, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+
+			}
+			
 
 		// check where character going out of bounds
-		character.Pos = checkMapCollision(character.Pos, 0, wWidth, 0 , wHeight);
+		character.Pos = checkMapCollision(character.Pos, 0, wWidth - character.width, 0 , wHeight - character.height);
+	
+		
+		
 
 		// enemy obstruction
-		for (int i = 0; i < (SPAWNSIZE * 3); ++i) {
-			for (int j = 0; j < (SPAWNSIZE * 3); ++j) {
+		for (int i = 0; i < (spawnIndex); ++i) {
+			for (int j = 0; j < (spawnIndex * 3); ++j) {
 				if (i == j) continue;
 				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
 				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
@@ -445,6 +480,34 @@ void level_1_Update()
 				}
 			}
 		}	
+
+		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
+		if (character.invulState != 1) { // if not invul, check for damage (collision with mobs) every frame
+			for (int i = 0; i < spawnIndex; i++)
+			{
+				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemy.width, enemy.height) == 1) {
+					if (healthChange == 0) {
+						character.health = takeDamage(character.health);
+						healthChange = 1; // telling program health has changed, dont change again in this frame
+					}
+					character.invulState = 1;
+				}
+			}
+			
+		}
+
+		// if character is invulnerable, don't take damage
+		if (character.invulState == 1) { // if invul, it will last for 2 seconds (2000 ms)
+			float currentInvulElapsedTime = CP_System_GetDt();
+			invulElapsedTime += currentInvulElapsedTime;
+			printf("%f\n", invulElapsedTime);
+
+			if (invulElapsedTime >= 2) { // if invul for more than 2 seconds, go back to being vul
+				character.invulState = 0;
+				invulElapsedTime = 0;
+			}
+		}
+		
 	}
 }
 
