@@ -78,6 +78,9 @@ float startSpawnTimer;
 int isCompleted = 0;
 int spawnIndex = 0;
 CP_Vector spawnPosition;
+CP_Vector shootPosition;
+CP_Image playerBullet;
+float shootDirection;
 void level_1_Init()
 {
 	startSpawnTimer = spawnTimer;
@@ -96,7 +99,7 @@ void level_1_Init()
 	gunPlayer = CP_Image_Load("Assets/player1.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
 	// random seed
-	srand(1);
+	//srand(1);
 	// spawn enemies
 	//spawnEnemies(enemies, SPAWNSIZE, spawnPositions, wWidth, wHeight);
 
@@ -134,7 +137,7 @@ void level_1_Init()
 	//Char.Direction = 0.0f;
 
 	//enemy1.Pos = CP_Vector_Set(50, 50);
-
+	shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health/2);
 	isPaused = FALSE;
 
 
@@ -276,6 +279,14 @@ void level_1_Update()
 
 	if (!isPaused)
 	{
+		shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height/2);
+
+		if (CP_Input_MouseClicked()) {
+			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+			
+
+		}
+
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
 
@@ -302,8 +313,6 @@ void level_1_Update()
 				spawnTimer = startSpawnTimer;
 			}
 
-
-
 		}
 
 
@@ -326,6 +335,10 @@ void level_1_Update()
 			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
+
+		
+
+
 
 		////Spawn Enemies in the spawn positions defined by array index 0
 		//for (int i = 0; i < SPAWNSIZE; i++)
