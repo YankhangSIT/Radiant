@@ -16,20 +16,16 @@
 #include "characterSelect.h"
 
 int panelDisplay = 0;
-//CP_Image gunPlayer;
-//CP_Image swordPlayer;
-//CP_Image digipen;
+
 
 float TimeElapsed;
 
 void Main_Menu_Init()
 {
+	CP_System_Fullscreen();
 	//Set window width and height to variables
 	float wWidth = CP_System_GetWindowWidth();
 	float wHeight = CP_System_GetWindowHeight();
-	
-	//gunPlayer = CP_Image_Load("Assets/player1.png");
-	//swordPlayer = CP_Image_Load("Assets/player2.png");
 
 	//align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;

@@ -51,6 +51,9 @@
     <ClCompile Include="..\src\combat.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\loadingScreen.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\combat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\loadingScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

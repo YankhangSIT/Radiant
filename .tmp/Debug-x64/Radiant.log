@@ -1,11 +1,16 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Year1\csd1401\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  combat.c
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Donovan\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  loadingScreen.c
+C:\Users\Donovan\Documents\GitHub\Radiant\src\loadingScreen.c(50,72): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Donovan\Documents\GitHub\Radiant\src\loadingScreen.c(50,103): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Donovan\Documents\GitHub\Radiant\src\loadingScreen.c(31,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Donovan\Documents\GitHub\Radiant\src\loadingScreen.c(32,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Donovan\Documents\GitHub\Radiant\src\loadingScreen.c(35,65): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  2 of 32 functions ( 6.2%) were compiled, the rest were copied from previous compilation.
+  2 of 37 functions ( 5.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Year1\csd1401\Radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\Donovan\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
-  6 File(s) copied
+  8 File(s) copied
