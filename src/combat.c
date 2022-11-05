@@ -17,6 +17,11 @@ int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Ve
 	}
 }
 
+int energyDeplete(int charEnergy) {
+	return charEnergy - 1;
+}
+
+
 int takeDamage(int charHealth) {
 	return charHealth - 1;
 }

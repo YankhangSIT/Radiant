@@ -24,6 +24,16 @@ CP_Vector charMovement(CP_Vector charPosition)
 	return charPosition;
 }
 
+CP_Image charImage(CP_Image charImage) {
+	if (CP_Input_KeyDown(KEY_A)) {
+		charImage = CP_Image_Load("Assets/melee_char_facing_left.png");
+	}
+	else if (CP_Input_KeyDown(KEY_D)) {
+		charImage = CP_Image_Load("Assets/melee_char_facing_right.png");
+	}
+	return charImage;
+}
+
 CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 {
 	float enemySpeed = 10.0;

@@ -22,7 +22,7 @@
 //define struct for character
 struct Character {
 	CP_Vector Pos;
-	CP_Color Color;
+	//CP_Color Color;
 	float height;
 	float width;
 	CP_Image playerSprite;
@@ -55,6 +55,8 @@ int isPaused;
 int i = -1;
 float elapsedTime;
 float invulElapsedTime;
+float energyRechargeTime;
+float stunnedElapsedTime;
 int healthChange;
 float wWidth = 0;
 float wHeight = 0;
@@ -67,6 +69,7 @@ Sword swordSwingArea;
 // string array to use for text display
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
+char characterEnergyDisplay[MAX_LENGTH];
 // time variables
 int min = 0;
 float sec = 0;
@@ -116,7 +119,7 @@ void level_1_Init()
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
 	//player sprite
-	gunPlayer = CP_Image_Load("Assets/player1.png");
+	gunPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
 
 	//enemy spawn 
@@ -142,18 +145,14 @@ void level_1_Init()
 		character.width = CP_Image_GetWidth(swordPlayer);
 		character.height = CP_Image_GetWidth(swordPlayer);
 	}
-
-
-	//set window size and center it
-	CP_System_SetWindowSize(wWidth, wHeight);
 	//set position, colour and direction of the three cars (red, green, blue)
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	character.health = 5; // start with 5 hp
 	character.energy = 5; // start with 5 energy
 	character.invulState = 0; // start not invul
 	invulElapsedTime = 0; // timer for invul
-	//Character.Color = CP_Color_Create(255, 0, 0, 255);
-	//Char.Direction = 0.0f;
+	energyRechargeTime = 0; // timer for energyRecharge
+	stunnedElapsedTime = 0;
 
 	//bullet start shoot spawn position
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health/2);
@@ -177,10 +176,6 @@ void level_1_Init()
 
 void level_1_Update()
 {
-
-
-
-
 
 	if (min == surviveMin)
 	{
@@ -216,11 +211,6 @@ void level_1_Update()
 		win = TRUE;
 		isPaused = TRUE;
 	}
-
-
-
-
-
 
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
@@ -293,23 +283,18 @@ void level_1_Update()
 		{
 			CP_Engine_Terminate();
 		}
-
 	}
 
 	if (!isPaused)
 	{
-	
-
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
-
 
 		if (sec >= 60)
 		{
 			sec = 0;
 			min++;
 		}
-
 
 		spawnTimer -= elapsedTime;
 
@@ -322,19 +307,27 @@ void level_1_Update()
 		CP_Font_DrawText("Health:", 200, 200);
 		CP_Font_DrawText(characterHealthDisplay, 260, 200);
 
+		//to display character energy
+		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
+		CP_Font_DrawText("Energy:", 200, 230);
+		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 
 		bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
 
-		if (CP_Input_MouseClicked()) {
-			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-			bullet.directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
-			bullet.bulletPos = bullet.shootPosition;
-		}
+		if (character.energy > 0) {
+			if (CP_Input_MouseClicked()) {
+				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+				bullet.directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+				bullet.bulletPos = bullet.shootPosition;
 
+				// energy deplete function
+				character.energy = energyDeplete(character.energy);
+			}
+		}
+		
 		bullet.acceleration = CP_Vector_Scale(bullet.directionBullet, bullet.bulletSpeed * elapsedTime);
 		bullet.bulletPos = CP_Vector_Add(bullet.bulletPos, bullet.acceleration);
 		CP_Image_Draw(bullet.bulletSprite, bullet.bulletPos.x, bullet.bulletPos.y, bullet.width, bullet.height, 255);
-
 
 
 		if (min < surviveMin)//!isCompleted)
@@ -350,10 +343,6 @@ void level_1_Update()
 			}
 
 		}
-
-
-	
-
 		
 		//CP_Image_Draw(enemy.enemySprite, enemies[0].pos.x, enemies[0].pos.y, enemy.width, enemy.height, 255);
 		//enemies[0].pos = enemyMovement(character.Pos, enemies[0].pos);
@@ -394,9 +383,7 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
 		CP_Graphics_DrawTriangleAdvanced(swordSwingArea.x1, swordSwingArea.y1, swordSwingArea.x2, swordSwingArea.y2, swordSwingArea.x3, swordSwingArea.y3, swordSwingArea.degrees);
 
-		// updates character's positon based off WASD inputs. Function defined in movement.c
-
-		character.Pos = charMovement(character.Pos);
+		
 		// updates enemy's positon based off character's position. Function defined in movement.c
 		// enemy1[i].pos = enemyMovement(character.Pos, enemy1[i].pos);
 
@@ -434,7 +421,29 @@ void level_1_Update()
 				}
 			}
 		}
+		/*
+		for (int i = 0; i < (spawnIndex); ++i) {
+			for (int j = 0; j < (spawnIndex * 3); ++j) {
+				if (i == j) continue;
+				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
+				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
+				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
+				float toDisplace = 0.5 * distance - (enemy.radius * 2);
 
+				if (distance < enemy.radius * 2) {
+					float toDisplace = 0.5 * (distance - (enemy.radius * 2));
+					enemies[i].pos.x -= toDisplace * (xDistance) / distance;
+					enemies[i].pos.y -= toDisplace * (yDistance) / distance;
+
+					enemies[j].pos.x += toDisplace * (xDistance) / distance;
+					enemies[j].pos.y += toDisplace * (yDistance) / distance;
+
+				}
+			}
+		}
+		*/
+
+		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1) { // if not invul, check for damage (collision with mobs) every frame
 			for (int i = 0; i < spawnIndex; i++)
@@ -452,9 +461,7 @@ void level_1_Update()
 
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1) { // if invul, it will last for 2 seconds (2000 ms)
-			float currentInvulElapsedTime = CP_System_GetDt();
-			invulElapsedTime += currentInvulElapsedTime;
-			printf("%f\n", invulElapsedTime);
+			invulElapsedTime += elapsedTime;
 
 			if (invulElapsedTime >= 2) { // if invul for more than 2 seconds, go back to being vul
 				character.invulState = 0;
@@ -462,6 +469,20 @@ void level_1_Update()
 			}
 		}
 
+		// updates character's positon based off WASD inputs. Function defined in movement.c
+		if (character.energy > 0) {
+			character.Pos = charMovement(character.Pos , gunPlayer); // character movement
+			gunPlayer = charImage(gunPlayer); // changes character sprite based on which direction he is facing
+		}
+
+		if (character.energy < 5) {
+			energyRechargeTime += elapsedTime;
+
+			if (energyRechargeTime >= 3) { // if stunned for more than 2 seconds, go back to being unstunned
+				++character.energy;
+				energyRechargeTime = 0;
+			}
+		}
 	}
 }
 

@@ -23,7 +23,7 @@ CP_Image swordPlayer;
 extern int playerNum = 0;
 void character_Select_Init()
 {
-	gunPlayer = CP_Image_Load("Assets/player1.png");
+	gunPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
 
 	//align texts to center and set font size 35
