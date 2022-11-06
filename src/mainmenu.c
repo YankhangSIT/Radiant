@@ -14,6 +14,7 @@
 #include "stdio.h"
 #include "splashScreen.h"
 #include "characterSelect.h"
+#include "gameOver.h"
 
 int panelDisplay = 0;
 
@@ -63,23 +64,26 @@ void Main_Menu_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 50);
 
+		if (CP_Input_KeyDown(KEY_ENTER))
+			CP_Engine_SetNextGameState(game_Over_init, game_Over_update, game_Over_exit);
+
 		//If click "Play" Button
-	if (CP_Input_MouseClicked()) {
-		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+		if (CP_Input_MouseClicked()) {
+			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
 
-			panelDisplay = 1;
-			CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
-		}
-		//else if click "Exit" button
-		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
-			CP_Engine_Terminate();
-		}
+				panelDisplay = 1;
+				CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
+			}
+			//else if click "Exit" button
+			else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+				CP_Engine_Terminate();
+			}
 
-		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
-			//CP_Engine_SetNextGameState(Settings_Init, Settings_Update, Settings_Exit);
-		}
-
+			else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+				//CP_Engine_SetNextGameState(Settings_Init, Settings_Update, Settings_Exit);
+			}
+			
 		/*if (IsAreaClicked(wWidth / 2.0f - 100, wHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			playerNum = 1;
