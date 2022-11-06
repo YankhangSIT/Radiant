@@ -56,14 +56,14 @@ void character_Select_Update()
 		if (CP_Input_MouseClicked()) {
 			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 			
-				if (IsAreaClicked(zWidth / 2.0f - 100, zHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
+				if (IsAreaClicked(zWidth / 2.0f - 150, zHeight / 2.0f, CP_Image_GetWidth(gunPlayer) + 50, CP_Image_GetHeight(gunPlayer) + 50 , mouseClickPos.x, mouseClickPos.y) == 1)
 				{
 					playerNum = 1;
 					CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
 					/*panelDisplay = 0;*/
 				}
 
-				if (IsAreaClicked(zWidth / 2.0f + 100, zHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
+				if (IsAreaClicked(zWidth / 2.0f + 50, zHeight / 2.0f, CP_Image_GetWidth(swordPlayer) +50, CP_Image_GetHeight(swordPlayer) + 50 , mouseClickPos.x, mouseClickPos.y) == 1)
 				{
 					playerNum = 2;
 					CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);

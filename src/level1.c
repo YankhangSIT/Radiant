@@ -90,24 +90,41 @@ struct Bullet {
 	CP_Image bulletSprite;
 	CP_Vector acceleration;
 	CP_Vector directionBullet;
+	CP_Vector normalizedDirection;
 	float bulletSpeed;
 	float width;
 	float height;
+	float direction;
 };
+
 struct Bullet bullet;
+struct Bullet bulletArray[SIZE];
+int bulletSpawnIndex = 0;
+int isShoot = 0;
+
 
 
 CP_Vector spawnPosition;
-//float shootDirection;
+
+void clear()
+{
+	memset(enemies , 0, sizeof(enemies));
+}
+
+
+
 void level_1_Init()
 {
 	CP_System_Fullscreen();
-	bullet.bulletSpeed = 10;
+	bullet.bulletSpeed = 1000;
+	spawnTimer = 0.7f;
 	startSpawnTimer = spawnTimer;
+	bulletSpawnIndex = 0;
 	elapsedTime = 0;
 	sec = 0;
 	min = 0;
 	spawnIndex = 0;
+	isShoot = 0;
 	//Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -124,8 +141,13 @@ void level_1_Init()
 
 	//enemy spawn 
 	spawnPosition = CP_Vector_Set(0, 0);
+
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
+//	enemies[spawnIndex].pos.x = spawnPosition.x;
+	//enemies[spawnIndex].pos.y = spawnPosition.y;
+
+
 	//enemy width and height
 	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
 	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
@@ -156,6 +178,12 @@ void level_1_Init()
 
 	//bullet start shoot spawn position
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health/2);
+
+	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+	isShoot = 0;
+	
+
+
 	isPaused = FALSE;
 
 
@@ -267,8 +295,8 @@ void level_1_Update()
 			if (isPaused == TRUE)
 			{
 				win = FALSE;
+				clear();
 				level_1_Init();
-				isPaused = FALSE;
 			}
 
 
@@ -312,22 +340,42 @@ void level_1_Update()
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 
-		bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
+		//bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
+		bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
 		if (character.energy > 0) {
 			if (CP_Input_MouseClicked()) {
 				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-				bullet.directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
-				bullet.bulletPos = bullet.shootPosition;
+				++bulletSpawnIndex;
+				printf("Draw Start %d", bulletSpawnIndex);
+				bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+				
 
+				bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+	
+				bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+				bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
+				printf("Click: %d", bulletSpawnIndex);
+				isShoot = 1;
+
+			
 				// energy deplete function
 				character.energy = energyDeplete(character.energy);
 			}
 		}
 		
-		bullet.acceleration = CP_Vector_Scale(bullet.directionBullet, bullet.bulletSpeed * elapsedTime);
-		bullet.bulletPos = CP_Vector_Add(bullet.bulletPos, bullet.acceleration);
-		CP_Image_Draw(bullet.bulletSprite, bullet.bulletPos.x, bullet.bulletPos.y, bullet.width, bullet.height, 255);
+
+		for (int i = 1; i -1 < bulletSpawnIndex; ++i)
+		{
+			bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
+			bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
+			if (isShoot == 1)
+			{
+				CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
+				printf("Drawing %d", bulletSpawnIndex);
+			}
+			
+		}
 
 
 		if (min < surviveMin)//!isCompleted)
@@ -344,9 +392,6 @@ void level_1_Update()
 
 		}
 		
-		//CP_Image_Draw(enemy.enemySprite, enemies[0].pos.x, enemies[0].pos.y, enemy.width, enemy.height, 255);
-		//enemies[0].pos = enemyMovement(character.Pos, enemies[0].pos);
-
 
 		for (int i = 0; i < spawnIndex; i++)
 		{

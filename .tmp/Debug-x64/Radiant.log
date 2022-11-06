@@ -1,32 +1,5 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Artemissed\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  level1.c
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(17,1): warning C4005: 'FALSE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71): message : see previous definition of 'FALSE'
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(18,1): warning C4005: 'TRUE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75): message : see previous definition of 'TRUE'
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(112,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(113,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(119,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(120,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(130,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(131,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(137,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(138,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(145,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(146,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(169,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(170,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(324,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(474,49): warning C4020: 'charMovement': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(410,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(411,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(414,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating code
-  0 of 37 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\darre\OneDrive\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
   11 File(s) copied
