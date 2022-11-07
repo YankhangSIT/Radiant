@@ -39,9 +39,11 @@ void character_Select_Init()
 void character_Select_Update()
 {
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-	float zWidth = CP_System_GetWindowWidth();
-	float zHeight = CP_System_GetWindowHeight();
+	float zWidth = CP_System_GetDisplayWidth();
+	float zHeight = CP_System_GetDisplayHeight();
 		// Create rectangle 
+
+		CP_Settings_RectMode(CP_POSITION_CENTER);
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(zWidth / 2.0f, zHeight / 2.0f - 100, 500, 500);

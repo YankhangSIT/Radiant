@@ -10,6 +10,7 @@
 #include "map.h"
 #include<stdbool.h>
 #include<stdlib.h>
+#include "button.h"
 
 #define PI (3.141592653589793)
 #define SIZE (100)
@@ -95,8 +96,8 @@ struct Bullet {
 struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
 int bulletSpawnIndex = 0;
-int isShoot = 0;
-
+int firstShoot = 0;
+static isShoot = 0;
 CP_Vector spawnPosition;
 
 void clear()
@@ -117,7 +118,7 @@ void level_1_Init()
 	sec = 0;
 	min = 0;
 	spawnIndex = 0;
-	isShoot = 0;
+	firstShoot = 0;
 	//Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -170,7 +171,7 @@ void level_1_Init()
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
 
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
-	isShoot = 0;
+	firstShoot = 0;
 
 	isPaused = FALSE;
 
@@ -196,27 +197,36 @@ void level_1_Update()
 		CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
 
 
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+		/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Next Level", wWidth / 2.0f, wHeight / 2.0f - 200);
+		CP_Font_DrawText("Next Level", wWidth / 2.0f, wHeight / 2.0f - 200);*/
 
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
+		//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		//CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		//CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
+		//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		//CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
 
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+
+		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);
+		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);*/
 
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
+		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+		//CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		//CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
+		//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		//CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
+
+		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		win = TRUE;
 		isPaused = TRUE;
@@ -227,32 +237,41 @@ void level_1_Update()
 	{
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
 
 
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+	/*	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Resume", wWidth / 2.0f, wHeight / 2.0f - 200);
+		CP_Font_DrawText("Resume", wWidth / 2.0f, wHeight / 2.0f - 200);*/
 
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+		/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
+		CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);*/
 
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);
+		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);*/
 
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		Button("Menu", wWidth / 2.0f, wHeight / 2.0f +100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
+		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);*/
+		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		isPaused = !isPaused;
 	}
@@ -325,14 +344,14 @@ void level_1_Update()
 		if (character.energy > 0) {
 			if (CP_Input_MouseClicked()) {
 				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-				if (isShoot == 1)
+				if (firstShoot == 1)
 				{
 					++bulletSpawnIndex;
 				}
 				bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
 				bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 				bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
-				isShoot = 1;
+				firstShoot = 1;
 
 				// energy deplete function
 				character.energy = energyDeplete(character.energy);
@@ -343,7 +362,7 @@ void level_1_Update()
 		{
 			bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
 			bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
-			if (isShoot == 1)
+			if (firstShoot == 1)
 			{
 				CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
 				//printf("Drawing %d", bulletSpawnIndex);
@@ -447,14 +466,21 @@ void level_1_Update()
 				//printf("distance is %f\n", ddistance);
 
 				if (ddistance < enemy.radius * 2) { // less than bullet radius x2
+					
+
+
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x) {
 						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array 
 						 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
+
+
 					for (int y = j; y < spawnIndex; ++y) {
 						enemies[y] = enemies[y + 1]; // similar to above^
 					}
 					--bulletSpawnIndex, --spawnIndex;
+
+
 				}
 			}
 		}

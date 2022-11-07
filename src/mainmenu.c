@@ -22,7 +22,8 @@ int panelDisplay = 0;
 float TimeElapsed;
 CP_Font Alclonia;
 CP_Image main_menu;
-
+float wWidth;
+float wHeight;
 void Main_Menu_Init()
 {
 	CP_System_Fullscreen();
@@ -37,6 +38,8 @@ void Main_Menu_Init()
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
+	wWidth = CP_System_GetWindowWidth();
+	wHeight = CP_System_GetWindowHeight();
 }
 
 
@@ -45,8 +48,7 @@ void Main_Menu_Init()
 void Main_Menu_Update()
 {
 	//Set window width and height to variables
-	float wWidth = CP_System_GetWindowWidth();
-	float wHeight = CP_System_GetWindowHeight();
+
 				
 		//Set background
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -56,11 +58,14 @@ void Main_Menu_Update()
 		CP_Font_Set(Alclonia);
 
 		//Play Button
+		CP_Settings_RectMode(CP_POSITION_CENTER);
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80);
+		CP_Graphics_DrawRect(wWidth/ 2.f  , wHeight /2.f -100, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Play", wWidth / 2.0f, wHeight / 2.0f - 100);
+
+	//	Button("Play", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		//Settings Button
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -68,12 +73,14 @@ void Main_Menu_Update()
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Settings", wWidth / 2.0f, wHeight / 2.0f + 200);
+		//Button("Play", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		//Exit Button
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 50);
+	//	Button("Play", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		if (CP_Input_KeyDown(KEY_ENTER))
 			CP_Engine_SetNextGameState(game_Over_init, game_Over_update, game_Over_exit);
