@@ -21,11 +21,15 @@ int panelDisplay = 0;
 
 float TimeElapsed;
 CP_Font Alclonia;
+CP_Image main_menu;
 
 void Main_Menu_Init()
 {
 	CP_System_Fullscreen();
 	Alclonia = CP_Font_Load("./Assets/Alclonia_Regular.ttf");
+	main_menu = CP_Image_Load("./Assets/main_menu.jpg");
+	CP_Settings_ImageMode(CP_POSITION_CENTER);
+	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
 
 	//align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
@@ -42,7 +46,11 @@ void Main_Menu_Update()
 	//Set window width and height to variables
 	float wWidth = CP_System_GetWindowWidth();
 	float wHeight = CP_System_GetWindowHeight();
-
+				
+		//Set background
+		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		CP_Image_Draw(main_menu, wWidth / 2.0f , wHeight / 2.0f , CP_Image_GetWidth(main_menu), CP_Image_GetHeight(main_menu), 255);
+		
 		//Set font
 		CP_Font_Set(Alclonia);
 
@@ -85,40 +93,10 @@ void Main_Menu_Update()
 			else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
 				//CP_Engine_SetNextGameState(Settings_Init, Settings_Update, Settings_Exit);
 			}
-			
-		/*if (IsAreaClicked(wWidth / 2.0f - 100, wHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
-		{
-			playerNum = 1;
-			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-			panelDisplay = 0;
-
 		}
-
-		if (IsAreaClicked(wWidth / 2.0f + 100, wHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), mouseClickPos.x, mouseClickPos.y) == 1)
-		{
-			playerNum = 2;
-			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-			panelDisplay = 0;
-		}*/
-	}
-
-
-	/*if (panelDisplay == 1)
-	{
-		
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 500);
-		
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Choose your character", wWidth / 2.0f, wHeight / 2.0f - 300);
-		CP_Image_Draw(gunPlayer, wWidth /2.0f -100 , wHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
-		CP_Image_Draw(swordPlayer, wWidth / 2.0f +100, wHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
-	
-	}*/
 }
 
 void Main_Menu_Exit()
 {
-
+	CP_Image_Free(&main_menu);
 }

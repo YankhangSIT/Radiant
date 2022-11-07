@@ -6,6 +6,7 @@
 //#include "mainmenu.h"
 //#include "loadingScreen.h"
 //
+//
 //CP_Image game_Title;
 //float TimeElapsed;
 //float loadingBar = 0;
@@ -18,7 +19,8 @@
 //	//Set the size according to your image size.
 //	TimeElapsed = 0.0f;
 //	game_Title = CP_Image_Load("./Assets/Game_Titlee.png");
-//	CP_Settings_ImageMode(CP_POSITION_CORNER);
+//	
+//	CP_Settings_ImageMode(CP_POSITION_CENTER);
 //	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 //	CP_System_Fullscreen();
 //	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -61,6 +63,7 @@
 //}
 //void loading_Screen_Exit(void)
 //{
-//	//Image would be free from the memory running.
+//	CP_Image_Free(&game_Title);
 //	
 //}
+//	
