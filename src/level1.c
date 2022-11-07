@@ -12,7 +12,7 @@
 #include<stdlib.h>
 
 #define PI (3.141592653589793)
-#define SIZE (50)
+#define SIZE (100)
 #define FALSE (0)
 #define TRUE (1)
 #define SPAWNSIZE (5)
@@ -110,7 +110,7 @@ void level_1_Init()
 {
 	CP_System_Fullscreen();
 	bullet.bulletSpeed = 1000;
-	spawnTimer = 0.7f;
+	spawnTimer = 2.f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -325,7 +325,7 @@ void level_1_Update()
 		if (character.energy > 0) {
 			if (CP_Input_MouseClicked()) {
 				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-				if (bulletSpawnIndex > 0)
+				if (isShoot == 1)
 				{
 					++bulletSpawnIndex;
 				}
