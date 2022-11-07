@@ -335,7 +335,7 @@ void level_1_Update()
 				isShoot = 1;
 
 				// energy deplete function
-				character.energy = energyDeplete(character.energy);
+				character.energy--; //= energyDeplete(character.energy);
 			}
 		}
 		
@@ -449,12 +449,12 @@ void level_1_Update()
 				if (ddistance < enemy.radius * 2) { // less than bullet radius x2
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x) {
 						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array 
-						--bulletSpawnIndex; // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+						// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
 					for (int y = j; y < spawnIndex; ++y) {
 						enemies[y] = enemies[y + 1]; // similar to above^
-						--spawnIndex;
 					}
+					--bulletSpawnIndex, --spawnIndex;
 				}
 			}
 		}
@@ -466,7 +466,7 @@ void level_1_Update()
 			{
 				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemy.width, enemy.height) == 1) {
 					if (healthChange == 0) {
-						character.health = takeDamage(character.health);
+						character.health--; //= takeDamage(character.health);
 						healthChange = 1; // telling program health has changed, dont change again in this frame
 					}
 					character.invulState = 1;
