@@ -20,10 +20,12 @@ int panelDisplay = 0;
 
 
 float TimeElapsed;
+CP_Font Alclonia;
 
 void Main_Menu_Init()
 {
 	CP_System_Fullscreen();
+	Alclonia = CP_Font_Load("./Assets/Alclonia_Regular.ttf");
 
 	//align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
@@ -40,6 +42,9 @@ void Main_Menu_Update()
 	//Set window width and height to variables
 	float wWidth = CP_System_GetWindowWidth();
 	float wHeight = CP_System_GetWindowHeight();
+
+		//Set font
+		CP_Font_Set(Alclonia);
 
 		//Play Button
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
