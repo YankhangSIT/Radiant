@@ -68,6 +68,30 @@ CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, floa
 	}
 	return charPosition;
 }
+
+int checkProjectileMapCollision(CP_Vector bulletPosition, float minX, float maxX, float minY, float maxY)
+{
+	if (bulletPosition.x <= minX)
+	{
+		return 1;
+	}
+	else if (bulletPosition.x >= maxX)
+	{
+		return 1;
+	}
+	else if (bulletPosition.y <= minY)
+	{
+		return 1;
+	}
+	else if (bulletPosition.y >= maxY)
+	{
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height)
 {
 	float speed = 500.0;

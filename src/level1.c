@@ -109,8 +109,8 @@ void clear()
 
 void level_1_Init()
 {
-	// CP_System_Fullscreen();
-	CP_System_SetWindowSize(1000, 1000);
+	CP_System_Fullscreen();
+	//CP_System_SetWindowSize(1000, 1000);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 2.f;
 	startSpawnTimer = spawnTimer;
@@ -200,31 +200,9 @@ void level_1_Update()
 
 		Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Next Level", wWidth / 2.0f, wHeight / 2.0f - 200);*/
-
-		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		// CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		// CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
-		// CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		// CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
-
 		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);*/
-
 		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-		// CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		// CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
-		// CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		// CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
 
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
@@ -242,33 +220,12 @@ void level_1_Update()
 
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		/*	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
-			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("Resume", wWidth / 2.0f, wHeight / 2.0f - 200);*/
-
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-		/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);*/
 
 		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);*/
-
 		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);*/
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		isPaused = !isPaused;
@@ -423,7 +380,18 @@ void level_1_Update()
 		}
 
 		// check where character going out of bounds
-		character.Pos = checkMapCollision(character.Pos, 0, wWidth - character.width, 0, wHeight - character.height);
+		character.Pos = checkMapCollision(character.Pos, 0 + character.width / 2, wWidth - character.width / 2, 0 + character.height / 2, wHeight - character.height / 2);
+
+		// check if projectile out of bounds, if so, delete it.
+		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+		{
+			if (checkProjectileMapCollision(bulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1) {
+				for (int x = i; x - 1 < bulletSpawnIndex; ++x) {
+					bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array 
+				}
+				bulletSpawnIndex--;
+			}
+		}
 
 		// enemy obstruction
 		for (int i = 0; i < (spawnIndex); ++i)
@@ -455,13 +423,13 @@ void level_1_Update()
 		{ // darren's way of implementing bullet spawn for loop
 			for (int j = 0; j < (spawnIndex); ++j)
 			{
-				float xxDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
+				float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 
-				float yyDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
-				float ddistance = sqrt(pow(xxDistance, 2) + pow(yyDistance, 2));
+				float yDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
+				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 				// printf("distance is %f\n", ddistance);
 
-				if (ddistance < enemy.radius * 2)
+				if (distance < enemy.radius * 2)
 				{ // less than bullet radius x2
 
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
