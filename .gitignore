@@ -403,3 +403,6 @@ FodyWeavers.xsd
 .tmp/Debug-x64/Radiant.exe.recipe
 .tmp/Debug-x64/Radiant.log
 .tmp/Debug-x64/Radiant.tlog/Radiant.lastbuildstate
+.tmp/Debug-x64/Radiant.exe.recipe
+.tmp/Debug-x64/Radiant.log
+.tmp/Debug-x64/Radiant.tlog/Radiant.lastbuildstate

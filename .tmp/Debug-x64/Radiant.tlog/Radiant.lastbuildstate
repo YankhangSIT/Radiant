@@ -1,6 +1,10 @@
 PlatformToolSet=v143:VCToolArchitecture=Native64Bit:VCToolsVersion=14.33.31629:TargetPlatformVersion=10.0.19041.0:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Debug|x64|C:\Users\Donovan\Documents\GitHub\Radiant\|
+=======
+Debug|x64|C:\Users\darre\OneDrive\Documents\GitHub\Radiant\|
+>>>>>>> Stashed changes
 =======
 Debug|x64|C:\Users\darre\OneDrive\Documents\GitHub\Radiant\|
 >>>>>>> Stashed changes
