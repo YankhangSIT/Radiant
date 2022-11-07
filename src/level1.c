@@ -325,15 +325,13 @@ void level_1_Update()
 		if (character.energy > 0) {
 			if (CP_Input_MouseClicked()) {
 				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-				++bulletSpawnIndex;
-				//printf("Draw Start %d", bulletSpawnIndex);
+				if (bulletSpawnIndex > 0)
+				{
+					++bulletSpawnIndex;
+				}
 				bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
-
 				bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
-	
-				bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
 				bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
-				//printf("Click: %d", bulletSpawnIndex);
 				isShoot = 1;
 
 				// energy deplete function
@@ -341,7 +339,7 @@ void level_1_Update()
 			}
 		}
 		
-		for (int i = 1; i -1 < bulletSpawnIndex; ++i)
+		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{
 			bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
 			bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
@@ -440,7 +438,7 @@ void level_1_Update()
 
 		// enemies die to bullets
 		///for (int i = 1; i -1 < bulletSpawnIndex; ++i)
-		for (int i = 1; i - 1 < bulletSpawnIndex; ++i) { // darren's way of implementing bullet spawn for loop
+		for (int i = 0; i - 1 < bulletSpawnIndex; ++i) { // darren's way of implementing bullet spawn for loop
 			for (int j = 0; j < (spawnIndex); ++j) {
 				float xxDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 				
