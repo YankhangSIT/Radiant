@@ -12,7 +12,7 @@
 #include<stdlib.h>
 
 #define PI (3.141592653589793)
-#define SIZE (1000)
+#define SIZE (50)
 #define FALSE (0)
 #define TRUE (1)
 #define SPAWNSIZE (5)
