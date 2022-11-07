@@ -76,7 +76,12 @@ CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight,
 	{
 		printf("still in collision!!!");
 	}
-	if ((CP_Input_KeyTriggered(KEY_A) || CP_Input_KeyReleased(KEY_A) || CP_Input_KeyDown(KEY_A)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
+	if ((CP_Input_KeyTriggered(KEY_W) || CP_Input_KeyReleased(KEY_W) || CP_Input_KeyDown(KEY_W)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
+	{
+		printf("key pressed W");
+		charPosition.y = y + height / 2 + cHeight / 2;
+	}
+	else if ((CP_Input_KeyTriggered(KEY_A) || CP_Input_KeyReleased(KEY_A) || CP_Input_KeyDown(KEY_A)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
 	{
 		printf("key pressed A");
 		charPosition.x = x + width / 2 + cWidth / 2;
@@ -86,12 +91,8 @@ CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight,
 		printf("key pressed D");
 		charPosition.x = x - width / 2 - cWidth / 2;
 	}
-	if ((CP_Input_KeyTriggered(KEY_W) || CP_Input_KeyReleased(KEY_W) || CP_Input_KeyDown(KEY_W)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
-	{
-		printf("key pressed W");
-		charPosition.y = y + height / 2 + cHeight / 2;
-	}
-	if ((CP_Input_KeyTriggered(KEY_S) || CP_Input_KeyReleased(KEY_S) || CP_Input_KeyDown(KEY_S)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
+
+	else if ((CP_Input_KeyTriggered(KEY_S) || CP_Input_KeyReleased(KEY_S) || CP_Input_KeyDown(KEY_S)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
 	{
 		printf("key pressed S");
 		charPosition.y = y - height / 2 - cHeight / 2;

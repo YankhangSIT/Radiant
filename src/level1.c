@@ -423,7 +423,7 @@ void level_1_Update()
 		}
 
 		// check where character going out of bounds
-		character.Pos = checkMapCollision(character.Pos, 0, wWidth - character.width, 0, wHeight - character.height);
+		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
 
 		// enemy obstruction
 		for (int i = 0; i < (spawnIndex); ++i)
