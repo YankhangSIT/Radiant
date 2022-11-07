@@ -8,8 +8,8 @@
 #include "level1.h"
 #include "spawn.h"
 #include "map.h"
-#include<stdbool.h>
-#include<stdlib.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #include "button.h"
 
 #define PI (3.141592653589793)
@@ -20,10 +20,11 @@
 #define SPAWNINDEX (4)
 #define MAX_LENGTH (100)
 
-//define struct for character
-struct Character {
+// define struct for character
+struct Character
+{
 	CP_Vector Pos;
-	//CP_Color Color;
+	// CP_Color Color;
 	float height;
 	float width;
 	CP_Image playerSprite;
@@ -36,7 +37,7 @@ struct Character {
 struct Character playerGun;
 struct Character playerSword;
 
-//Sprite Image
+// Sprite Image
 CP_Image gunPlayer;
 CP_Image swordPlayer;
 
@@ -55,9 +56,9 @@ int healthChange;
 float wWidth = 0;
 float wHeight = 0;
 
-//obstruction obj in map.h
+// obstruction obj in map.h
 Obstruction obs;
-//triangle area for sword swing
+// triangle area for sword swing
 Sword swordSwingArea;
 
 // string array to use for text display
@@ -76,8 +77,9 @@ float startSpawnTimer;
 
 int isCompleted = 0;
 int spawnIndex = 0;
-//Bullet Struct Contains all the properties of the bullet
-struct Bullet {
+// Bullet Struct Contains all the properties of the bullet
+struct Bullet
+{
 
 	CP_Vector shootPosition;
 	CP_Vector bulletPos;
@@ -105,11 +107,10 @@ void clear()
 	memset(enemies, 0, sizeof(enemies));
 }
 
-
-
 void level_1_Init()
 {
-	CP_System_Fullscreen();
+	// CP_System_Fullscreen();
+	CP_System_SetWindowSize(1000, 1000);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 2.f;
 	startSpawnTimer = spawnTimer;
@@ -119,27 +120,27 @@ void level_1_Init()
 	min = 0;
 	spawnIndex = 0;
 	firstShoot = 0;
-	//Set window width and height to variables
+	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
-	///CP_System_SetWindowSize(wWidth, wHeight);
+	/// CP_System_SetWindowSize(wWidth, wHeight);
 
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
 	enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
-	//player sprite
+	// player sprite
 	gunPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/player2.png");
 
-	//enemy spawn 
+	// enemy spawn
 	spawnPosition = CP_Vector_Set(0, 0);
 
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
 
-	//enemy width and height
+	// enemy width and height
 	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
 	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
 
@@ -148,7 +149,7 @@ void level_1_Init()
 	{
 		character.playerSprite = gunPlayer;
 		character.width = CP_Image_GetWidth(gunPlayer);
-		character.height = CP_Image_GetWidth(gunPlayer);
+		character.height = CP_Image_GetHeight(gunPlayer);
 	}
 
 	// player type sword
@@ -156,18 +157,18 @@ void level_1_Init()
 	{
 		character.playerSprite = swordPlayer;
 		character.width = CP_Image_GetWidth(swordPlayer);
-		character.height = CP_Image_GetWidth(swordPlayer);
+		character.height = CP_Image_GetHeight(swordPlayer);
 	}
 
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
-	character.health = 5; // start with 5 hp
-	character.energy = 5; // start with 5 energy
+	character.health = 5;	  // start with 5 hp
+	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
-	invulElapsedTime = 0; // timer for invul
-	energyRechargeTime = 0; // timer for energyRecharge
+	invulElapsedTime = 0;	  // timer for invul
+	energyRechargeTime = 0;	  // timer for energyRecharge
 	stunnedElapsedTime = 0;
 
-	//bullet start shoot spawn position
+	// bullet start shoot spawn position
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
 
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
@@ -175,9 +176,10 @@ void level_1_Init()
 
 	isPaused = FALSE;
 
-	//initiate obstruction
+	// initiate obstruction
 	srand(56423);
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++)
+	{
 		float x = rand() % (int)((wWidth / 3 + 1) + (wWidth / 3));
 		float y = rand() % (int)((wHeight / 3 + 1) + (wHeight / 3));
 		obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
@@ -196,7 +198,6 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
 
-
 		Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -205,14 +206,13 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Next Level", wWidth / 2.0f, wHeight / 2.0f - 200);*/
 
-		//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		//CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		//CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
-		//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		//CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
+		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		// CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		// CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80);
+		// CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		// CP_Font_DrawText("Restart", wWidth / 2.0f, wHeight / 2.0f - 50);
 
 		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
 
 		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80);
@@ -221,17 +221,16 @@ void level_1_Update()
 
 		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		//CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		//CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
-		//CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		//CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
+		// CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		// CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
+		// CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		// CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 250);
 
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		win = TRUE;
 		isPaused = TRUE;
 	}
-
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
@@ -241,14 +240,13 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
 
-
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-	/*	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Resume", wWidth / 2.0f, wHeight / 2.0f - 200);*/
+		/*	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+			CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+			CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80);
+			CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+			CP_Font_DrawText("Resume", wWidth / 2.0f, wHeight / 2.0f - 200);*/
 
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
@@ -265,7 +263,7 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Menu", wWidth / 2.0f, wHeight / 2.0f + 100);*/
 
-		Button("Menu", wWidth / 2.0f, wHeight / 2.0f +100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		/*CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80);
@@ -286,12 +284,11 @@ void level_1_Update()
 			{
 				isPaused = !isPaused;
 			}
-
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			//isPaused = !isPaused;	
+			// isPaused = !isPaused;
 			if (isPaused == TRUE)
 			{
 				win = FALSE;
@@ -328,21 +325,23 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
 
-		//to display character health
+		// to display character health
 		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
 		CP_Font_DrawText("Health:", 200, 200);
 		CP_Font_DrawText(characterHealthDisplay, 260, 200);
 
-		//to display character energy
+		// to display character energy
 		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 
-		//bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
+		// bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
 		bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
-		if (character.energy > 0) {
-			if (CP_Input_MouseClicked()) {
+		if (character.energy > 0)
+		{
+			if (CP_Input_MouseClicked())
+			{
 				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 				if (firstShoot == 1)
 				{
@@ -365,12 +364,11 @@ void level_1_Update()
 			if (firstShoot == 1)
 			{
 				CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-				//printf("Drawing %d", bulletSpawnIndex);
+				// printf("Drawing %d", bulletSpawnIndex);
 			}
-
 		}
 
-		if (min < surviveMin)//!isCompleted)
+		if (min < surviveMin) //! isCompleted)
 		{
 
 			if (spawnTimer <= 0)
@@ -381,17 +379,14 @@ void level_1_Update()
 				spawnIndex++;
 				spawnTimer = startSpawnTimer;
 			}
-
 		}
-
 
 		for (int i = 0; i < spawnIndex; i++)
 		{
-			//Enemy Render
+			// Enemy Render
 			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
-
 
 		// Player Render
 		if (playerNum == 1)
@@ -404,123 +399,129 @@ void level_1_Update()
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
 		}
 
-		//CLEAR BACKGROUND
+		// CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-		//draw obstruction
+		// draw obstruction
 		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
 		CP_Settings_RectMode(CP_POSITION_CENTER);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 
 			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
-
 		}
-		//draw sword swing area
+		// draw sword swing area
 		swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
 		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
 		CP_Graphics_DrawTriangleAdvanced(swordSwingArea.x1, swordSwingArea.y1, swordSwingArea.x2, swordSwingArea.y2, swordSwingArea.x3, swordSwingArea.y3, swordSwingArea.degrees);
 
 		// check for obstructions
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 
 			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
-
 		}
-
 
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, 0, wWidth - character.width, 0, wHeight - character.height);
 
-
-
-
 		// enemy obstruction
-		for (int i = 0; i < (spawnIndex); ++i) {
-			for (int j = 0; j < (spawnIndex); ++j) {
-				if (i == j) continue;
+		for (int i = 0; i < (spawnIndex); ++i)
+		{
+			for (int j = 0; j < (spawnIndex); ++j)
+			{
+				if (i == j)
+					continue;
 				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
 				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
 				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 				float toDisplace = 0.5 * distance - (enemy.radius * 2);
 
-				if (distance < enemy.radius * 2) {
+				if (distance < enemy.radius * 2)
+				{
 					float toDisplace = 0.5 * (distance - (enemy.radius * 2));
 					enemies[i].pos.x -= toDisplace * (xDistance) / distance;
 					enemies[i].pos.y -= toDisplace * (yDistance) / distance;
 
 					enemies[j].pos.x += toDisplace * (xDistance) / distance;
 					enemies[j].pos.y += toDisplace * (yDistance) / distance;
-
 				}
 			}
 		}
 
 		// enemies die to bullets
-		///for (int i = 1; i -1 < bulletSpawnIndex; ++i)
-		for (int i = 0; i - 1 < bulletSpawnIndex; ++i) { // darren's way of implementing bullet spawn for loop
-			for (int j = 0; j < (spawnIndex); ++j) {
+		/// for (int i = 1; i -1 < bulletSpawnIndex; ++i)
+		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+		{ // darren's way of implementing bullet spawn for loop
+			for (int j = 0; j < (spawnIndex); ++j)
+			{
 				float xxDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 
 				float yyDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
 				float ddistance = sqrt(pow(xxDistance, 2) + pow(yyDistance, 2));
-				//printf("distance is %f\n", ddistance);
+				// printf("distance is %f\n", ddistance);
 
-				if (ddistance < enemy.radius * 2) { // less than bullet radius x2
-					
+				if (ddistance < enemy.radius * 2)
+				{ // less than bullet radius x2
 
-
-					for (int x = i; x - 1 < bulletSpawnIndex; ++x) {
-						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array 
-						 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+					{
+						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
+															 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
 
-
-					for (int y = j; y < spawnIndex; ++y) {
+					for (int y = j; y < spawnIndex; ++y)
+					{
 						enemies[y] = enemies[y + 1]; // similar to above^
 					}
 					--bulletSpawnIndex, --spawnIndex;
-
-
 				}
 			}
 		}
 
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
-		if (character.invulState != 1) { // if not invul, check for damage (collision with mobs) every frame
+		if (character.invulState != 1)
+		{ // if not invul, check for damage (collision with mobs) every frame
 			for (int i = 0; i < spawnIndex; i++)
 			{
-				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemy.width, enemy.height) == 1) {
-					if (healthChange == 0) {
+				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemy.width, enemy.height) == 1)
+				{
+					if (healthChange == 0)
+					{
 						character.health = takeDamage(character.health);
 						healthChange = 1; // telling program health has changed, dont change again in this frame
 					}
 					character.invulState = 1;
 				}
 			}
-
 		}
 
 		// if character is invulnerable, don't take damage
-		if (character.invulState == 1) { // if invul, it will last for 2 seconds (2000 ms)
+		if (character.invulState == 1)
+		{ // if invul, it will last for 2 seconds (2000 ms)
 			invulElapsedTime += elapsedTime;
 
-			if (invulElapsedTime >= 2) { // if invul for more than 2 seconds, go back to being vul
+			if (invulElapsedTime >= 2)
+			{ // if invul for more than 2 seconds, go back to being vul
 				character.invulState = 0;
 				invulElapsedTime = 0;
 			}
 		}
 
 		// updates character's positon based off WASD inputs. Function defined in movement.c
-		if (character.energy > 0) {
+		if (character.energy > 0)
+		{
 			character.Pos = charMovement(character.Pos, gunPlayer); // character movement
-			gunPlayer = charImage(gunPlayer); // changes character sprite based on which direction he is facing
+			gunPlayer = charImage(gunPlayer);						// changes character sprite based on which direction he is facing
 		}
 
-		if (character.energy < 5) {
+		if (character.energy < 5)
+		{
 			energyRechargeTime += elapsedTime;
 
-			if (energyRechargeTime >= 3) { // if stunned for more than 2 seconds, go back to being unstunned
+			if (energyRechargeTime >= 3)
+			{ // if stunned for more than 2 seconds, go back to being unstunned
 				++character.energy;
 				energyRechargeTime = 0;
 			}
@@ -530,5 +531,4 @@ void level_1_Update()
 
 void level_1_Exit()
 {
-
 }

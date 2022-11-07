@@ -70,27 +70,51 @@ CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, floa
 }
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height)
 {
-	// float speed = 500.0;
-	// float dtSpeed = speed * CP_System_GetDt();
-
-	if (charPosition.x + cWidth / 2 >= x - width / 2 && charPosition.x - cWidth / 2 <= x + width / 2 && charPosition.y + cHeight / 2 >= y - height / 2 && charPosition.y - cHeight / 2 <= y + height / 2)
+	float speed = 500.0;
+	float dtSpeed = speed * CP_System_GetDt();
+	if (charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
 	{
-		if (CP_Input_KeyDown(KEY_A) && fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)))
-		{
-			charPosition.x = (x + width / 2) + cWidth / 2;
-		}
-		if (CP_Input_KeyDown(KEY_D) && fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)))
-		{
-			charPosition.x = (x - width / 2) - cWidth / 2;
-		}
-		if (CP_Input_KeyDown(KEY_W) && fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)))
-		{
-			charPosition.y = (y + height / 2) + cHeight / 2;
-		}
-		if (CP_Input_KeyDown(KEY_S) && fabsf(charPosition.y - (y - height)) < fabsf(charPosition.y - (y + height / 2)))
-		{
-			charPosition.y = (y - height / 2) - cHeight / 2;
-		}
+		printf("still in collision!!!");
 	}
+	if ((CP_Input_KeyTriggered(KEY_A) || CP_Input_KeyReleased(KEY_A) || CP_Input_KeyDown(KEY_A)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
+	{
+		printf("key pressed A");
+		charPosition.x = x + width / 2 + cWidth / 2;
+	}
+	if ((CP_Input_KeyTriggered(KEY_D) || CP_Input_KeyReleased(KEY_D) || CP_Input_KeyDown(KEY_D)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
+	{
+		printf("key pressed D");
+		charPosition.x = x - width / 2 - cWidth / 2;
+	}
+	if ((CP_Input_KeyTriggered(KEY_W) || CP_Input_KeyReleased(KEY_W) || CP_Input_KeyDown(KEY_W)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
+	{
+		printf("key pressed W");
+		charPosition.y = y + height / 2 + cHeight / 2;
+	}
+	if ((CP_Input_KeyTriggered(KEY_S) || CP_Input_KeyReleased(KEY_S) || CP_Input_KeyDown(KEY_S)) && charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
+	{
+		printf("key pressed S");
+		charPosition.y = y - height / 2 - cHeight / 2;
+	}
+
+	// if (charPosition.x + cWidth / 2 >= x - width / 2 && charPosition.x - cWidth / 2 <= x + width / 2 && charPosition.y + cHeight / 2 >= y - height / 2 && charPosition.y - cHeight / 2 <= y + height / 2)
+	// {
+	// 	if (CP_Input_KeyDown(KEY_A) && fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)))
+	// 	{
+	// 		charPosition.x = (x + width / 2) + cWidth / 2;
+	// 	}
+	// 	else if (CP_Input_KeyDown(KEY_D) && fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)))
+	// 	{
+	// 		charPosition.x = (x - width / 2) - cWidth / 2;
+	// 	}
+	// 	else if (CP_Input_KeyDown(KEY_W) && fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)))
+	// 	{
+	// 		charPosition.y = (y + height / 2) + cHeight / 2;
+	// 	}
+	// 	else if (CP_Input_KeyDown(KEY_S) && fabsf(charPosition.y - (y - height)) < fabsf(charPosition.y - (y + height / 2)))
+	// 	{
+	// 		charPosition.y = (y - height / 2) - cHeight / 2;
+	// 	}
+	// }
 	return charPosition;
 }
