@@ -101,7 +101,7 @@ CP_Vector spawnPosition;
 
 void clear()
 {
-	memset(enemies , 0, sizeof(enemies));
+	memset(enemies, 0, sizeof(enemies));
 }
 
 
@@ -167,11 +167,11 @@ void level_1_Init()
 	stunnedElapsedTime = 0;
 
 	//bullet start shoot spawn position
-	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health/2);
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
 
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 	isShoot = 0;
-	
+
 	isPaused = FALSE;
 
 	//initiate obstruction
@@ -182,7 +182,7 @@ void level_1_Init()
 		obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
 	}
 
-	swordSwingArea = SetSword(character.Pos.x, character.Pos.y, character.Pos.x + 80.f, character.Pos.y -80.f, character.Pos.x + 80.f, character.Pos.y + 80.f, 360.f);
+	swordSwingArea = SetSword(character.Pos.x, character.Pos.y, character.Pos.x + 80.f, character.Pos.y - 80.f, character.Pos.x + 80.f, character.Pos.y + 80.f, 360.f);
 }
 
 void level_1_Update()
@@ -338,7 +338,7 @@ void level_1_Update()
 				character.energy = energyDeplete(character.energy);
 			}
 		}
-		
+
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{
 			bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
@@ -348,7 +348,7 @@ void level_1_Update()
 				CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
 				//printf("Drawing %d", bulletSpawnIndex);
 			}
-			
+
 		}
 
 		if (min < surviveMin)//!isCompleted)
@@ -364,7 +364,7 @@ void level_1_Update()
 			}
 
 		}
-		
+
 
 		for (int i = 0; i < spawnIndex; i++)
 		{
@@ -373,7 +373,7 @@ void level_1_Update()
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 		}
 
-	
+
 		// Player Render
 		if (playerNum == 1)
 		{
@@ -397,11 +397,11 @@ void level_1_Update()
 
 		}
 		//draw sword swing area
-		swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos , character.width, character.height);
+		swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
 		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
 		CP_Graphics_DrawTriangleAdvanced(swordSwingArea.x1, swordSwingArea.y1, swordSwingArea.x2, swordSwingArea.y2, swordSwingArea.x3, swordSwingArea.y3, swordSwingArea.degrees);
 
-			// check for obstructions
+		// check for obstructions
 		for (int i = 0; i < 3; i++) {
 
 			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
@@ -441,20 +441,20 @@ void level_1_Update()
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i) { // darren's way of implementing bullet spawn for loop
 			for (int j = 0; j < (spawnIndex); ++j) {
 				float xxDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
-				
+
 				float yyDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
 				float ddistance = sqrt(pow(xxDistance, 2) + pow(yyDistance, 2));
-				printf("distance is %f\n", ddistance);
+				//printf("distance is %f\n", ddistance);
 
 				if (ddistance < enemy.radius * 2) { // less than bullet radius x2
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x) {
 						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array 
-						--bulletSpawnIndex; // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+						 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
 					for (int y = j; y < spawnIndex; ++y) {
 						enemies[y] = enemies[y + 1]; // similar to above^
-						--spawnIndex;
 					}
+					--bulletSpawnIndex, --spawnIndex;
 				}
 			}
 		}
@@ -487,7 +487,7 @@ void level_1_Update()
 
 		// updates character's positon based off WASD inputs. Function defined in movement.c
 		if (character.energy > 0) {
-			character.Pos = charMovement(character.Pos , gunPlayer); // character movement
+			character.Pos = charMovement(character.Pos, gunPlayer); // character movement
 			gunPlayer = charImage(gunPlayer); // changes character sprite based on which direction he is facing
 		}
 
