@@ -107,7 +107,6 @@ CP_Vector spawnPosition;
 
 struct Drop
 {
-
 	CP_Vector pos;
 	CP_Image dropSprite;
 	float width;
@@ -115,9 +114,14 @@ struct Drop
 	int itemId;
 	float dropDespawnTimer;
 	float dropDespawnStartTimer;
+	
 };
 
 struct Drop itemDrop[SIZE];
+struct Drop healthDrop;
+int dropIndex;
+CP_Vector itemSpawn;
+int firstDrop = 0;
 
 void clear()
 {
@@ -138,13 +142,15 @@ void level_1_Init()
 	elapsedTime = 0;
 	sec = 0;
 	min = 0;
+	firstDrop = 0;
 	spawnIndex = 0;
 	firstShoot = 0;
+	dropIndex = 0;
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 	/// CP_System_SetWindowSize(wWidth, wHeight);
-
+	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
 	enemy.radius = 39;
@@ -159,10 +165,13 @@ void level_1_Init()
 
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
-
+	itemDrop[dropIndex].pos.x = 0;
+	itemDrop[dropIndex].pos.y = 0;
 	// enemy width and height
 	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
 	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+	healthDrop.width = CP_Image_GetWidth(healthDrop.dropSprite);
+	healthDrop.height = CP_Image_GetHeight(healthDrop.dropSprite);
 
 	// player type gun
 	if (playerNum == 1)
@@ -468,6 +477,20 @@ void level_1_Update()
 
 				if (distance < enemy.radius * 2)
 				{ // less than bullet radius x2
+			/*		unsigned int randomRate = CP_Random_RangeInt(1, 3);
+					
+					if (randomRate == 2)
+					{
+
+						if (firstDrop == 1)
+						{
+							++dropIndex;
+						}
+						itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+						itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+						firstDrop = 1;
+
+					}*/
 
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 					{
@@ -475,10 +498,14 @@ void level_1_Update()
 															 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
 
+
 					for (int y = j; y < spawnIndex; ++y)
 					{
 						enemies[y] = enemies[y + 1]; // similar to above^
+
 					}
+
+
 					--bulletSpawnIndex, --spawnIndex;
 				}
 			}
@@ -530,6 +557,12 @@ void level_1_Update()
 				++character.energy;
 				energyRechargeTime = 0;
 			}
+		}
+
+
+		for (int i = 0; i - 1 < dropIndex; i++)
+		{
+			CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.x, healthDrop.width, healthDrop.height, 255);
 		}
 	}
 }
