@@ -6,27 +6,6 @@
 #include "level1.h"
 #include "map.h"
 
-Triangle SetTriangle(float x1, float y1, float x2, float y2, float x3, float y3, float degree)
-{
-	Triangle tri;
-	tri.x1 = x1;
-	tri.y1 = y1;
-	tri.x2 = x2;
-	tri.y2 = y2;
-	tri.x3 = x3;
-	tri.y3 = y3;
-	tri.degrees = degree;
-	return tri;
-}
-Circle SetCircle(float x, float y, float diameter, int clicked)
-{
-	Circle cir;
-	cir.x = x;
-	cir.y = y;
-	cir.diameter = diameter;
-	cir.clicked = clicked;
-	return cir;
-}
 Rect SetRect_(float x, float y, float width, float height)
 {
 	Rect rec;
@@ -36,17 +15,6 @@ Rect SetRect_(float x, float y, float width, float height)
 	rec.height = height;
 	return rec;
 }
-// typedef struct Resolution
-//{
-//	int width;
-//	int height;
-// }Resolution;
-// static Resolution SetResolution(int width, int height) {
-//	Resolution res;
-//	res.width = width;
-//	res.height = height;
-//	return res;
-// }Resolution windowResolution;
 
 CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY)
 {
@@ -68,26 +36,72 @@ CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, floa
 	}
 	return charPosition;
 }
+
+int checkProjectileMapCollision(CP_Vector bulletPosition, float minX, float maxX, float minY, float maxY)
+{
+	if (bulletPosition.x <= minX)
+	{
+		return 1;
+	}
+	else if (bulletPosition.x >= maxX)
+	{
+		return 1;
+	}
+	else if (bulletPosition.y <= minY)
+	{
+		return 1;
+	}
+	else if (bulletPosition.y >= maxY)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height)
 {
-	// float speed = 500.0;
-	// float dtSpeed = speed * CP_System_GetDt();
-
-	if (charPosition.x + cWidth / 2 >= x - width / 2 && charPosition.x - cWidth / 2 <= x + width / 2 && charPosition.y + cHeight / 2 >= y - height / 2 && charPosition.y - cHeight / 2 <= y + height / 2)
+	if (charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
 	{
-		if (CP_Input_KeyDown(KEY_A) && fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)))
+		float collideWidth = 0.0f;
+		float collideHeight = 0.0f;
+		if (fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)))
 		{
+			collideWidth = (charPosition.x + cWidth / 2) - (x - width / 2);
+			printf("collide from right collided width is %f\n", collideWidth);
+		}
+		if (fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)))
+		{
+			collideWidth = (x + width / 2) - (charPosition.x - cWidth / 2);
+			printf("collide from left collided width is %f\n", collideWidth);
+		}
+		if (fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)))
+		{
+			collideHeight = (charPosition.y + cHeight / 2) - (y - height / 2);
+			printf("collide from bottom collided height is %f\n", collideHeight);
+		}
+		if (fabsf(charPosition.y - (y - height / 2)) < fabsf(charPosition.y - (y + height / 2)))
+		{
+			collideHeight = (y + height / 2) - (charPosition.y - cHeight / 2);
+			printf("collide from top collided height is %f\n", collideHeight);
+		}
+
+		if (fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)) && collideWidth > collideHeight)
+		{
+			// charPosition.x += (width + cWidth) - collideWidth;
 			charPosition.x = (x + width / 2) + cWidth / 2;
 		}
-		if (CP_Input_KeyDown(KEY_D) && fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)))
+		if (fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)) && collideWidth > collideHeight)
 		{
 			charPosition.x = (x - width / 2) - cWidth / 2;
 		}
-		if (CP_Input_KeyDown(KEY_W) && fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)))
+		if (fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)) && collideHeight > collideWidth)
 		{
 			charPosition.y = (y + height / 2) + cHeight / 2;
 		}
-		if (CP_Input_KeyDown(KEY_S) && fabsf(charPosition.y - (y - height)) < fabsf(charPosition.y - (y + height / 2)))
+		if (fabsf(charPosition.y - (y - height / 2)) < fabsf(charPosition.y - (y + height / 2)) && collideHeight > collideWidth)
 		{
 			charPosition.y = (y - height / 2) - cHeight / 2;
 		}
