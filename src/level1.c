@@ -151,7 +151,7 @@ void level_1_Init()
 	/// CP_System_SetWindowSize(wWidth, wHeight);
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-	enemy.enemySprite = CP_Image_Load("Assets/testEnemy.png");
+	enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
