@@ -99,7 +99,7 @@ struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
 int bulletSpawnIndex = 0;
 int firstShoot = 0;
-int canShoot = 0;	
+int canShoot = 0;
 float delayShootTime = 0;
 float delayShootStart = 0;
 CP_Vector spawnPosition;
@@ -155,7 +155,7 @@ void level_1_Init()
 		character.playerSprite = gunPlayer;
 		character.width = CP_Image_GetWidth(gunPlayer);
 		character.height = CP_Image_GetHeight(gunPlayer);
-		//canShoot = 1;
+		// canShoot = 1;
 	}
 
 	// player type sword
@@ -227,7 +227,7 @@ void level_1_Update()
 
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-	//	Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		//	Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
@@ -293,10 +293,9 @@ void level_1_Update()
 			}
 			else if (delayShootTime < 0.f)
 			{
-				canShoot = 1;			
+				canShoot = 1;
 			}
 		}
-
 
 		spawnTimer -= elapsedTime;
 
@@ -390,9 +389,9 @@ void level_1_Update()
 			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
 		}
 		// draw sword swing area
-		swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
-		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
-		CP_Graphics_DrawTriangleAdvanced(swordSwingArea.x1, swordSwingArea.y1, swordSwingArea.x2, swordSwingArea.y2, swordSwingArea.x3, swordSwingArea.y3, swordSwingArea.degrees);
+		// swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
+		// CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
+		// CP_Graphics_DrawTriangleAdvanced(swordSwingArea.x1, swordSwingArea.y1, swordSwingArea.x2, swordSwingArea.y2, swordSwingArea.x3, swordSwingArea.y3, swordSwingArea.degrees);
 
 		// check for obstructions
 		for (int i = 0; i < 3; i++)
@@ -403,7 +402,7 @@ void level_1_Update()
 
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
-
+		CP_Graphics_DrawCircle(character.Pos.x, character.Pos.y, 20.0f);
 		// check if projectile out of bounds, if so, delete it.
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{
