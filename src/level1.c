@@ -118,7 +118,7 @@ struct Drop
 
 struct Drop itemDrop[SIZE];
 struct Drop healthDrop;
-int dropIndex;
+int dropIndex = 0;
 CP_Vector itemSpawn;
 int firstDrop = 0;
 
@@ -164,8 +164,8 @@ void level_1_Init()
 
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
-	itemDrop[dropIndex].pos.x = 0;
-	itemDrop[dropIndex].pos.y = 0;
+	itemDrop[dropIndex].pos.x = spawnPosition.x;
+	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	// enemy width and height
 	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
 	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
@@ -473,20 +473,20 @@ void level_1_Update()
 
 				if (distance < enemy.radius * 2)
 				{ // less than bullet radius x2
-					/*		unsigned int randomRate = CP_Random_RangeInt(1, 3);
+					enemies[j].isDead = 1;
+					unsigned int randomRate = CP_Random_RangeInt(1, 3);
 
-							if (randomRate == 2)
-							{
-
-								if (firstDrop == 1)
-								{
-									++dropIndex;
-								}
-								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-								firstDrop = 1;
-
-							}*/
+					if (randomRate == 2 && enemies[j].isDead)
+					{
+						;
+						if (firstDrop == 1 )
+						{
+							++dropIndex;
+						}
+						itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+						itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+						firstDrop = 1;
+					}
 
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 					{
@@ -497,8 +497,9 @@ void level_1_Update()
 					for (int y = j; y < spawnIndex; ++y)
 					{
 						enemies[y] = enemies[y + 1]; // similar to above^
+						
 					}
-
+								
 					--bulletSpawnIndex, --spawnIndex;
 				}
 			}
@@ -552,9 +553,12 @@ void level_1_Update()
 			}
 		}
 
-		for (int i = 0; i - 1 < dropIndex; i++)
+		if (firstDrop == 1)
 		{
-			CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.x, healthDrop.width, healthDrop.height, 255);
+			for (int i = 0; i - 1 < dropIndex; ++i)
+			{
+				CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
+			}
 		}
 	}
 }

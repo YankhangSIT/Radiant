@@ -12,6 +12,7 @@ struct Enemy {
 	float width;
 	float Direction;
 	float Speed;
+	int isDead;
 
 };
 
