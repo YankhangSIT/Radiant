@@ -63,7 +63,7 @@ int checkProjectileMapCollision(CP_Vector bulletPosition, float minX, float maxX
 
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height)
 {
-	if (charPosition.x + cWidth / 2 >= x - width / 2 && charPosition.x - cWidth / 2 <= x + width / 2 && charPosition.y + cHeight / 2 >= y - height / 2 && charPosition.y - cHeight / 2 <= y + height / 2)
+	if (charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
 	{
 		float collideWidth = 0.0f;
 		float collideHeight = 0.0f;

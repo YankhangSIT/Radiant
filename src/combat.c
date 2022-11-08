@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "map.h"
 #include "combat.h"
+#include <stdbool.h>
 bool faceLeft;
 
 int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Vector enemyPosition, float enemyWidth, float enemyHeight)
@@ -29,19 +30,16 @@ int takeDamage(int charHealth)
 {
 	return charHealth - 1;
 }
-Sword SetSword(float x1, float y1, float x2, float y2, float x3, float y3, float degree)
+Sword SetSword(float x, float y, float width, float height)
 {
-	Sword tri;
-	tri.x1 = x1;
-	tri.y1 = y1;
-	tri.x2 = x2;
-	tri.y2 = y2;
-	tri.x3 = x3;
-	tri.y3 = y3;
-	tri.degrees = degree;
-	return tri;
+	Sword sword;
+	sword.x = x;
+	sword.y = y;
+	sword.width = width;
+	sword.height = height;
+	return sword;
 }
-Sword UpdateSwordSwing(Sword tri, CP_Vector charPosition, float cWidth, float cHeight)
+Sword UpdateSwordSwing(Sword sword, CP_Vector charPosition, float cWidth, float cHeight)
 {
 	if (CP_Input_KeyDown(KEY_D))
 	{
@@ -52,25 +50,25 @@ Sword UpdateSwordSwing(Sword tri, CP_Vector charPosition, float cWidth, float cH
 		faceLeft = true;
 	}
 
-	tri.x1 = charPosition.x + cWidth / 2;
-	tri.y1 = charPosition.y + cHeight / 2;
 	if (faceLeft)
 	{
-
-		tri.x2 = tri.x1 - 80.f;
-		tri.y2 = tri.y1 - 80.f;
-		tri.x3 = tri.x1 - 80.f;
-		tri.y3 = tri.y1 + 80.f;
+		sword.x = charPosition.x - cWidth / 2 - sword.width / 2;
 	}
 	else
 	{
-
-		tri.x2 = tri.x1 + 80.f;
-		tri.y2 = tri.y1 - 80.f;
-		tri.x3 = tri.x1 + 80.f;
-		tri.y3 = tri.y1 + 80.f;
+		sword.x = charPosition.x + cWidth / 2 + sword.width / 2;
 	}
-	// if(CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT)){
+	sword.y = charPosition.y;
 
-	return tri;
+	return sword;
+}
+bool swordSwingEnemey(Sword sword, CP_Vector enemyPosition, float enemyRaduis)
+{
+
+	if (enemyPosition.x + enemyRaduis > sword.x - sword.width / 2 && enemyPosition.x - enemyRaduis < sword.x + sword.width / 2 && enemyPosition.y + enemyRaduis > sword.y - sword.height && enemyPosition.y - enemyRaduis < sword.y + sword.height)
+	{
+		return true;
+	}
+
+	return false;
 }
