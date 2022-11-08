@@ -1,36 +1,13 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\darre\OneDrive\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  level1.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(17,1): warning C4005: 'FALSE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71): message : see previous definition of 'FALSE'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(18,1): warning C4005: 'TRUE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75): message : see previous definition of 'TRUE'
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(149,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(150,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(156,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(157,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(170,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(171,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(172,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(173,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(179,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(180,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(188,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(189,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(217,100): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(213,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(214,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(356,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(541,48): warning C4020: 'charMovement': too many actual parameters
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(447,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(448,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(452,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(471,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Artemissed\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  movement.c
+C:\Users\Artemissed\source\repos\Radiant\src\movement.c(61,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\movement.c(62,36): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  0 of 38 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  2 of 38 functions ( 5.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
   20 File(s) copied
