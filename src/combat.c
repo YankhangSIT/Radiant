@@ -4,8 +4,12 @@
 #include "map.h"
 #include "combat.h"
 #include <stdbool.h>
-bool faceLeft;
-
+enum direction
+{
+	left,
+	right
+};
+int charDirection = left;
 int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Vector enemyPosition, float enemyWidth, float enemyHeight)
 {
 	if (charPosition.x < enemyPosition.x + enemyWidth &&
@@ -43,20 +47,21 @@ Sword UpdateSwordSwing(Sword sword, CP_Vector charPosition, float cWidth, float 
 {
 	if (CP_Input_KeyDown(KEY_D))
 	{
-		faceLeft = false;
+		charDirection = right;
 	}
 	if (CP_Input_KeyDown(KEY_A))
 	{
-		faceLeft = true;
+		charDirection = left;
 	}
 
-	if (faceLeft)
+	if (charDirection == left)
 	{
-		sword.x = charPosition.x - cWidth / 2 - sword.width / 2;
+
+		sword.x = charPosition.x - cWidth / 2;
 	}
-	else
+	if (charDirection == right)
 	{
-		sword.x = charPosition.x + cWidth / 2 + sword.width / 2;
+		sword.x = charPosition.x + cWidth / 2;
 	}
 	sword.y = charPosition.y;
 

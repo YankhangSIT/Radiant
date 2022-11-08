@@ -70,22 +70,18 @@ CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight,
 		if (fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)))
 		{
 			collideWidth = (charPosition.x + cWidth / 2) - (x - width / 2);
-			printf("collide from right collided width is %f\n", collideWidth);
 		}
 		if (fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)))
 		{
 			collideWidth = (x + width / 2) - (charPosition.x - cWidth / 2);
-			printf("collide from left collided width is %f\n", collideWidth);
 		}
 		if (fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)))
 		{
 			collideHeight = (charPosition.y + cHeight / 2) - (y - height / 2);
-			printf("collide from bottom collided height is %f\n", collideHeight);
 		}
 		if (fabsf(charPosition.y - (y - height / 2)) < fabsf(charPosition.y - (y + height / 2)))
 		{
 			collideHeight = (y + height / 2) - (charPosition.y - cHeight / 2);
-			printf("collide from top collided height is %f\n", collideHeight);
 		}
 
 		if (fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)) && collideWidth > collideHeight)

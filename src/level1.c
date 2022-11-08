@@ -98,9 +98,6 @@ struct Bullet
 struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
 
-float swordWidth = 54;
-float swordHeight = 78;
-
 int bulletSpawnIndex = 0;
 int firstShoot = 0;
 int canShoot = 0;
@@ -117,7 +114,6 @@ struct Drop
 	int itemId;
 	float dropDespawnTimer;
 	float dropDespawnStartTimer;
-	
 };
 
 struct Drop itemDrop[SIZE];
@@ -133,11 +129,11 @@ void clear()
 
 void level_1_Init()
 {
-	// CP_System_Fullscreen();
+	CP_System_Fullscreen();
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_SetWindowSize(1000, 1000);
+	// CP_System_SetWindowSize(1000, 1000);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 2.f;
 	startSpawnTimer = spawnTimer;
@@ -211,14 +207,14 @@ void level_1_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-	srand(56423);
-	for (int i = 0; i < 3; i++)
+	srand(342421);
+	for (int i = 0; i < 20; i++)
 	{
-		float x = rand() % (int)((wWidth / 3 + 1) + (wWidth / 3));
-		float y = rand() % (int)((wHeight / 3 + 1) + (wHeight / 3));
+		float x = rand() % (int)(wWidth + 1);
+		float y = rand() % (int)(wHeight + 1);
 		obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
 	}
-	swordSwingArea = SetSword(character.Pos.x + character.width / 2 + swordWidth / 2, character.Pos.y, swordWidth, swordHeight);
+	swordSwingArea = SetSword(character.Pos.x + character.width / 2, character.Pos.y, character.width * 1.2, character.height * 2);
 }
 
 void level_1_Update()
@@ -410,24 +406,20 @@ void level_1_Update()
 		// CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-		// draw obstruction
 		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
 		CP_Settings_RectMode(CP_POSITION_CENTER);
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 20; i++)
 		{
-
+			// draw obstruction
 			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+			// check for obstructions
+			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
 		}
 		//! draw sword swing area
 		swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
-		CP_Settings_Fill(CP_Color_Create(222, 123, 11, 255));
+		CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
 		CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 
-		// check for obstructions
-		for (int i = 0; i < 3; i++)
-		{
-			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
-		}
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
 		// check if projectile out of bounds, if so, delete it.
@@ -481,20 +473,20 @@ void level_1_Update()
 
 				if (distance < enemy.radius * 2)
 				{ // less than bullet radius x2
-			/*		unsigned int randomRate = CP_Random_RangeInt(1, 3);
-					
-					if (randomRate == 2)
-					{
+					/*		unsigned int randomRate = CP_Random_RangeInt(1, 3);
 
-						if (firstDrop == 1)
-						{
-							++dropIndex;
-						}
-						itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-						itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-						firstDrop = 1;
+							if (randomRate == 2)
+							{
 
-					}*/
+								if (firstDrop == 1)
+								{
+									++dropIndex;
+								}
+								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+								firstDrop = 1;
+
+							}*/
 
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 					{
@@ -502,13 +494,10 @@ void level_1_Update()
 															 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
 
-
 					for (int y = j; y < spawnIndex; ++y)
 					{
 						enemies[y] = enemies[y + 1]; // similar to above^
-
 					}
-
 
 					--bulletSpawnIndex, --spawnIndex;
 				}
@@ -562,7 +551,6 @@ void level_1_Update()
 				energyRechargeTime = 0;
 			}
 		}
-
 
 		for (int i = 0; i - 1 < dropIndex; i++)
 		{

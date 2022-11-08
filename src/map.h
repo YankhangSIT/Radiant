@@ -11,6 +11,6 @@ typedef struct Rect
 } Rect;
 typedef struct Obstruction
 {
-	Rect rec_block[3];
+	Rect rec_block[20];
 } Obstruction;
 Rect SetRect_(float x, float y, float width, float height);
