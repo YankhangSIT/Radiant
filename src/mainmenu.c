@@ -15,6 +15,7 @@
 #include "splashScreen.h"
 #include "characterSelect.h"
 #include "gameOver.h"
+#include "button.h"
 
 int panelDisplay = 0;
 
@@ -53,30 +54,20 @@ void Main_Menu_Update()
 	// Set font
 	CP_Font_Set(Alclonia);
 
-	// Play Button
+	
 	CP_Settings_RectMode(CP_POSITION_CENTER);
-	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Graphics_DrawRect(wWidth / 2.f, wHeight / 2.f - 100, 180, 80);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Play", wWidth / 2.0f, wHeight / 2.0f - 100);
 
-	//	Button("Play", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	// Play Button
+	Button("Play", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 	// Settings Button
-	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Settings", wWidth / 2.0f, wHeight / 2.0f + 200);
-	// Button("Play", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	Button("Settings", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 	// Exit Button
-	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80);
-	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Exit", wWidth / 2.0f, wHeight / 2.0f + 50);
-	//	Button("Play", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	 Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+
+	
 
 	if (CP_Input_KeyDown(KEY_ENTER))
 		CP_Engine_SetNextGameState(game_Over_init, game_Over_update, game_Over_exit);
@@ -92,7 +83,7 @@ void Main_Menu_Update()
 			CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
 		}
 		// else if click "Exit" button
-		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			CP_Engine_Terminate();
 		}

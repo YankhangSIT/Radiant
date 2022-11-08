@@ -99,7 +99,9 @@ struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
 int bulletSpawnIndex = 0;
 int firstShoot = 0;
-static isShoot = 0;
+int canShoot = 0;	
+float delayShootTime = 0;
+float delayShootStart = 0;
 CP_Vector spawnPosition;
 
 void clear()
@@ -110,6 +112,9 @@ void clear()
 void level_1_Init()
 {
 	CP_System_Fullscreen();
+	delayShootTime = 0.1f;
+	delayShootStart = delayShootTime;
+	delayShootTime = delayShootStart;
 	// CP_System_SetWindowSize(1000, 1000);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 2.f;
@@ -150,6 +155,7 @@ void level_1_Init()
 		character.playerSprite = gunPlayer;
 		character.width = CP_Image_GetWidth(gunPlayer);
 		character.height = CP_Image_GetHeight(gunPlayer);
+		//canShoot = 1;
 	}
 
 	// player type sword
@@ -158,6 +164,7 @@ void level_1_Init()
 		character.playerSprite = swordPlayer;
 		character.width = CP_Image_GetWidth(swordPlayer);
 		character.height = CP_Image_GetHeight(swordPlayer);
+		canShoot = 0;
 	}
 
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
@@ -220,7 +227,7 @@ void level_1_Update()
 
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	//	Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
@@ -239,6 +246,7 @@ void level_1_Update()
 		{
 			if (win == FALSE)
 			{
+				delayShootTime = delayShootStart;
 				isPaused = !isPaused;
 			}
 		}
@@ -276,6 +284,20 @@ void level_1_Update()
 			min++;
 		}
 
+		if (playerNum == 1)
+		{
+			canShoot = 0;
+			if (delayShootTime > 0.f)
+			{
+				delayShootTime -= elapsedTime;
+			}
+			else if (delayShootTime < 0.f)
+			{
+				canShoot = 1;			
+			}
+		}
+
+
 		spawnTimer -= elapsedTime;
 
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
@@ -297,7 +319,7 @@ void level_1_Update()
 
 		if (character.energy > 0)
 		{
-			if (CP_Input_MouseClicked())
+			if (CP_Input_MouseClicked() && canShoot == 1)
 			{
 				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 				if (firstShoot == 1)

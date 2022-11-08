@@ -21,6 +21,8 @@ CP_Image gunPlayer;
 CP_Image swordPlayer;
 
 extern int playerNum = 0;
+float zWidth;
+float zHeight;
 void character_Select_Init()
 {
 	gunPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
@@ -31,6 +33,8 @@ void character_Select_Init()
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
+	zWidth = CP_System_GetWindowWidth();
+	zHeight = CP_System_GetWindowHeight();
 }
 
 
@@ -39,33 +43,32 @@ void character_Select_Init()
 void character_Select_Update()
 {
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-	float zWidth = CP_System_GetDisplayWidth();
-	float zHeight = CP_System_GetDisplayHeight();
+
 		// Create rectangle 
 
 		CP_Settings_RectMode(CP_POSITION_CENTER);
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(zWidth / 2.0f, zHeight / 2.0f - 100, 500, 500);
+		CP_Graphics_DrawRect(zWidth / 2.0f, zHeight / 2.0f , 700, 700);
 
 		// Set up the character select screen 
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Choose your character", zWidth / 2.0f, zHeight / 2.0f - 300);
-		CP_Image_Draw(gunPlayer, zWidth / 2.0f - 150, zHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
-		CP_Image_Draw(swordPlayer, zWidth / 2.0f + 50, zHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
+		CP_Font_DrawText("Choose your character", zWidth / 2.0f, zHeight / 2.0f - 200);
+		CP_Image_Draw(gunPlayer, zWidth / 2.0f - 100, zHeight / 2.0f, CP_Image_GetWidth(gunPlayer), CP_Image_GetHeight(gunPlayer), 255);
+		CP_Image_Draw(swordPlayer, zWidth / 2.0f + 100, zHeight / 2.0f, CP_Image_GetWidth(swordPlayer), CP_Image_GetHeight(swordPlayer), 255);
 	
 		//Pick the character, then proceed to Howtoplay page.
 		if (CP_Input_MouseClicked()) {
 			CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 			
-				if (IsAreaClicked(zWidth / 2.0f - 150, zHeight / 2.0f, CP_Image_GetWidth(gunPlayer) + 50, CP_Image_GetHeight(gunPlayer) + 50 , mouseClickPos.x, mouseClickPos.y) == 1)
+				if (IsAreaClicked(zWidth / 2.0f - 100, zHeight / 2.0f, CP_Image_GetWidth(gunPlayer) + 10, CP_Image_GetHeight(gunPlayer) + 10 , mouseClickPos.x, mouseClickPos.y) == 1)
 				{
 					playerNum = 1;
 					CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
 					/*panelDisplay = 0;*/
 				}
 
-				if (IsAreaClicked(zWidth / 2.0f + 50, zHeight / 2.0f, CP_Image_GetWidth(swordPlayer) +50, CP_Image_GetHeight(swordPlayer) + 50 , mouseClickPos.x, mouseClickPos.y) == 1)
+				if (IsAreaClicked(zWidth / 2.0f + 100, zHeight / 2.0f, CP_Image_GetWidth(swordPlayer) +10, CP_Image_GetHeight(swordPlayer) + 10 , mouseClickPos.x, mouseClickPos.y) == 1)
 				{
 					playerNum = 2;
 					CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
