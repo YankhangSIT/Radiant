@@ -97,12 +97,31 @@ struct Bullet
 
 struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
+
+
+
 int bulletSpawnIndex = 0;
 int firstShoot = 0;
 int canShoot = 0;
 float delayShootTime = 0;
 float delayShootStart = 0;
 CP_Vector spawnPosition;
+
+struct Drop
+{
+
+	CP_Vector pos;
+	CP_Image dropSprite;
+	float width;
+	float height;
+	int itemId;
+	float dropDespawnTimer;
+	float dropDespawnStartTimer;
+	
+};
+
+struct Drop itemDrop[SIZE];
+
 
 void clear()
 {
