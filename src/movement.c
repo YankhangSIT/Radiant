@@ -4,31 +4,38 @@
 
 CP_Vector charMovement(CP_Vector charPosition)
 {
-	/*float speed = 210.0;*/
-	float speed = 500.0;
-	float dtSpeed = speed * CP_System_GetDt(); //CHARACTER SPEED IS 210 UNITS PER SECOND
+	float speed = 210.0;
+	// float speed = 500.0;
+	float dtSpeed = speed * CP_System_GetDt(); // CHARACTER SPEED IS 210 UNITS PER SECOND
 
-	if (CP_Input_KeyDown(KEY_A)) {
+	if (CP_Input_KeyDown(KEY_A))
+	{
 		charPosition.x -= dtSpeed;
 	}
-	else if (CP_Input_KeyDown(KEY_D)) {
+	else if (CP_Input_KeyDown(KEY_D))
+	{
 		charPosition.x += dtSpeed;
 	}
-	if (CP_Input_KeyDown(KEY_W)) {
+	if (CP_Input_KeyDown(KEY_W))
+	{
 		charPosition.y -= dtSpeed;
 	}
-	else if (CP_Input_KeyDown(KEY_S)) {
+	else if (CP_Input_KeyDown(KEY_S))
+	{
 		charPosition.y += dtSpeed;
 	}
 
 	return charPosition;
 }
 
-CP_Image charImage(CP_Image charImage) {
-	if (CP_Input_KeyDown(KEY_A)) {
+CP_Image charImage(CP_Image charImage)
+{
+	if (CP_Input_KeyDown(KEY_A))
+	{
 		charImage = CP_Image_Load("Assets/melee_char_facing_left.png");
 	}
-	else if (CP_Input_KeyDown(KEY_D)) {
+	else if (CP_Input_KeyDown(KEY_D))
+	{
 		charImage = CP_Image_Load("Assets/melee_char_facing_right.png");
 	}
 	return charImage;
@@ -37,34 +44,36 @@ CP_Image charImage(CP_Image charImage) {
 CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
 {
 	float enemySpeed = 10.0;
-	float dtEnemySpeed = enemySpeed * CP_System_GetDt(); //ENEMY SPEED IS 100 UNITS PER SECOND
+	float dtEnemySpeed = enemySpeed * CP_System_GetDt(); // ENEMY SPEED IS 100 UNITS PER SECOND
 
-	if (charPosition.x > enemyPosition.x) {
+	if (charPosition.x > enemyPosition.x)
+	{
 		enemyPosition.x += dtEnemySpeed;
 	}
-	if (charPosition.x < enemyPosition.x) {
+	if (charPosition.x < enemyPosition.x)
+	{
 		enemyPosition.x -= dtEnemySpeed;
 	}
 
-	if (charPosition.y > enemyPosition.y) {
+	if (charPosition.y > enemyPosition.y)
+	{
 		enemyPosition.y += dtEnemySpeed;
 	}
-	if (charPosition.y < enemyPosition.y) {
+	if (charPosition.y < enemyPosition.y)
+	{
 		enemyPosition.y -= dtEnemySpeed;
 	}
 
 	return enemyPosition;
 }
 
-
-//toDisplace(enemy1[i].pos, enemy1[j].pos, enemy.radius);
-float toDisplace(CP_Vector enemy1Pos, CP_Vector enemy2Pos, float radius) {
+// toDisplace(enemy1[i].pos, enemy1[j].pos, enemy.radius);
+float toDisplace(CP_Vector enemy1Pos, CP_Vector enemy2Pos, float radius)
+{
 	float xDistance = enemy1Pos.x - enemy2Pos.x;
 	float yDistance = enemy1Pos.y - enemy2Pos.y;
 	float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 	float toDisplace = 0.5 * distance - (radius * 2);
-
-
 }
 
 /*

@@ -98,8 +98,6 @@ struct Bullet
 struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
 
-
-
 int bulletSpawnIndex = 0;
 int firstShoot = 0;
 int canShoot = 0;
@@ -117,11 +115,9 @@ struct Drop
 	int itemId;
 	float dropDespawnTimer;
 	float dropDespawnStartTimer;
-	
 };
 
 struct Drop itemDrop[SIZE];
-
 
 void clear()
 {
@@ -421,7 +417,6 @@ void level_1_Update()
 
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
-		CP_Graphics_DrawCircle(character.Pos.x, character.Pos.y, 20.0f);
 		// check if projectile out of bounds, if so, delete it.
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{
