@@ -409,3 +409,8 @@ FodyWeavers.xsd
 .tmp/Debug-x64/Radiant.tlog/link.command.1.tlog
 .vs/Radiant/v17/ipch/AutoPCH/84e5074d4c8a4d2b/MAINMENU.ipch
 .tmp/Debug-x64/Radiant.log
+.tmp/Debug-x64/Radiant.exe.recipe
+.tmp/Debug-x64/Radiant.exe.recipe
+.tmp/Debug-x64/Radiant.log
+*.lastbuildstate
+.tmp/Debug-x64/Radiant.log
