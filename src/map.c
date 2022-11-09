@@ -65,39 +65,40 @@ CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight,
 {
 	if (charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)
 	{
-		float collideWidth = 0.0f;
-		float collideHeight = 0.0f;
+		float deltaLeft = 100;
+		float deltaRight = 100;
+		float deltaUp = 100;
+		float deltaDown = 100;
 		if (fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)))
 		{
-			collideWidth = (charPosition.x + cWidth / 2) - (x - width / 2);
+			deltaRight = (width + cWidth) - ((charPosition.x + cWidth / 2) - (x - width / 2));
 		}
 		if (fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)))
 		{
-			collideWidth = (x + width / 2) - (charPosition.x - cWidth / 2);
+			deltaLeft = (width + cWidth) - ((x + width / 2) - (charPosition.x - cWidth / 2));
 		}
 		if (fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)))
 		{
-			collideHeight = (charPosition.y + cHeight / 2) - (y - height / 2);
+			deltaDown = (height + cHeight) - ((charPosition.y + cHeight / 2) - (y - height / 2));
 		}
 		if (fabsf(charPosition.y - (y - height / 2)) < fabsf(charPosition.y - (y + height / 2)))
 		{
-			collideHeight = (y + height / 2) - (charPosition.y - cHeight / 2);
+			deltaUp = (height + cHeight) - ((y + height / 2) - (charPosition.y - cHeight / 2));
 		}
 
-		if (fabsf(charPosition.x - (x - width / 2)) > fabsf(charPosition.x - (x + width / 2)) && collideWidth > collideHeight)
+		if (fabsf(deltaRight) < fabsf(deltaLeft) && fabsf(deltaRight) < fabsf(deltaDown) && fabsf(deltaRight) < fabsf(deltaUp))
 		{
-			// charPosition.x += (width + cWidth) - collideWidth;
 			charPosition.x = (x + width / 2) + cWidth / 2;
 		}
-		if (fabsf(charPosition.x - (x - width / 2)) < fabsf(charPosition.x - (x + width / 2)) && collideWidth > collideHeight)
+		if (fabsf(deltaLeft) < fabsf(deltaRight) && fabsf(deltaLeft) < fabsf(deltaDown) && fabsf(deltaLeft) < fabsf(deltaUp))
 		{
 			charPosition.x = (x - width / 2) - cWidth / 2;
 		}
-		if (fabsf(charPosition.y - (y - height / 2)) > fabsf(charPosition.y - (y + height / 2)) && collideHeight > collideWidth)
+		if (fabsf(deltaDown) < fabsf(deltaLeft) && fabsf(deltaDown) < fabsf(deltaRight) && fabsf(deltaDown) < fabsf(deltaUp))
 		{
 			charPosition.y = (y + height / 2) + cHeight / 2;
 		}
-		if (fabsf(charPosition.y - (y - height / 2)) < fabsf(charPosition.y - (y + height / 2)) && collideHeight > collideWidth)
+		if (fabsf(deltaUp) < fabsf(deltaLeft) && fabsf(deltaUp) < fabsf(deltaDown) && fabsf(deltaUp) < fabsf(deltaRight))
 		{
 			charPosition.y = (y - height / 2) - cHeight / 2;
 		}
