@@ -234,6 +234,13 @@ void level_1_Init()
 		float y = rand() % (int)(wHeight + 1);
 		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")), CP_Image_Load("Assets/obstruction2.png"));
 	}
+	srand(568567);
+	for (int i = 20; i < 30; i++)
+	{
+		float x = rand() % (int)(wWidth + 1);
+		float y = rand() % (int)(wHeight + 1);
+		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
+	}
 	swordSwingArea = SetSword(character.Pos.x + character.width / 2, character.Pos.y, character.width * 1.2, character.height * 2);
 }
 
@@ -479,7 +486,7 @@ void level_1_Update()
 
 		// CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);

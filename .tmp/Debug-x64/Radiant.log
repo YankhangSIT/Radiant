@@ -22,27 +22,32 @@ C:\Year1\csd1401\radiant\src\level1.c(228,160): warning C4020: 'SetRect_': too m
 C:\Year1\csd1401\radiant\src\level1.c(235,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(235,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(235,160): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(237,100): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(242,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(242,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(242,160): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level1.c(244,100): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(226,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(227,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(233,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(234,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(397,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Year1\csd1401\radiant\src\level1.c(436,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(437,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(442,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(443,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(611,48): warning C4020: 'charMovement': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(518,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(519,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(523,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(542,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(240,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(241,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(404,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Year1\csd1401\radiant\src\level1.c(443,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(444,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(449,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(450,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(618,48): warning C4020: 'charMovement': too many actual parameters
+C:\Year1\csd1401\radiant\src\level1.c(525,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(526,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(530,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(549,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  4 of 41 functions ( 9.8%) were compiled, the rest were copied from previous compilation.
+  1 of 41 functions ( 2.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Radiant.vcxproj -> C:\Year1\csd1401\radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
-  24 File(s) copied
+  25 File(s) copied
