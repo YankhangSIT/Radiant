@@ -29,8 +29,8 @@ void Main_Menu_Init()
 
 	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
-	Alclonia = CP_Font_Load("./Assets/Alclonia_Regular.ttf");
-	main_menu = CP_Image_Load("./Assets/main_menu.jpg");
+	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
+	main_menu = CP_Image_Load("Assets/main_menu.jpg");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
 
@@ -54,7 +54,6 @@ void Main_Menu_Update()
 	// Set font
 	CP_Font_Set(Alclonia);
 
-	
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 
 	// Play Button
@@ -64,10 +63,7 @@ void Main_Menu_Update()
 	Button("Settings", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 	// Exit Button
-	 Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-
-	
+	Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 	if (CP_Input_KeyDown(KEY_ENTER))
 		CP_Engine_SetNextGameState(game_Over_init, game_Over_update, game_Over_exit);

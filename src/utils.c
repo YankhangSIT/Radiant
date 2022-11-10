@@ -10,10 +10,12 @@ int IsAreaClicked(float area_center_x, float area_center_y, float area_width, fl
 	float minY = area_center_y - area_height / 2;
 	float maxY = area_center_y + area_height / 2;
 
-	if ((minX <= click_x && click_x <= maxX) && (minY <= click_y && click_y <= maxY)) {
+	if ((minX <= click_x && click_x <= maxX) && (minY <= click_y && click_y <= maxY))
+	{
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
@@ -25,10 +27,12 @@ int IsCircleClicked(float circle_center_x, float circle_center_y, float diameter
 	float radius = diameter / 2;
 	float dist = CP_Vector_Distance(circleCenter, clickPos);
 
-	if (dist <= radius) {
+	if (dist <= radius)
+	{
 		return 1;
 	}
-	else {
+	else
+	{
 		return 0;
 	}
 }
@@ -43,5 +47,4 @@ CP_Vector AngleToVector(float radian_angle)
 
 CP_Vector moveCar(CP_Vector position, CP_Vector direction, float speed)
 {
-
 }
