@@ -25,8 +25,8 @@ float zWidth;
 float zHeight;
 void character_Select_Init()
 {
-	gunPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
-	swordPlayer = CP_Image_Load("Assets/player2.png");
+	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
+	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 
 	//align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;

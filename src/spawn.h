@@ -11,7 +11,7 @@ struct Enemy {
 	float height;
 	float width;
 	float Direction;
-	float Speed;
+	float speed;
 	int isDead;
 	int health;
 	int id;

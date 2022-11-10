@@ -23,17 +23,17 @@
 // define struct for character
 struct Character
 {
+	CP_Image playerSprite;
 	CP_Vector Pos;
-	// CP_Color Color;
 	float height;
 	float width;
-	CP_Image playerSprite;
+	float speed;
 	int playerType;
 	int health;
 	int energy;
 	int invulState;
 } character;
-
+/// CAN PUT IN .H FILE
 struct Character playerGun;
 struct Character playerSword;
 
@@ -41,20 +41,21 @@ struct Character playerSword;
 CP_Image gunPlayer;
 CP_Image swordPlayer;
 
-//
+/// CAN PUT IN .H FILE
 struct Enemy enemies[SIZE];
 struct Enemy enemy;
 CP_Vector spawnPositions[SPAWNINDEX][SPAWNSIZE];
-int isPaused;
 
-int i = -1;
+int isPaused;
 float elapsedTime;
 float invulElapsedTime;
 float energyRechargeTime;
 float stunnedElapsedTime;
 int healthChange;
-float wWidth = 0;
-float wHeight = 0;
+float wWidth;
+float wHeight;
+/// WHY???
+int i = -1;
 
 // obstruction obj in map.h
 Obstruction obs;
@@ -170,8 +171,8 @@ void level_1_Init()
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
 	// player sprite
-	gunPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
-	swordPlayer = CP_Image_Load("Assets/player2.png");
+	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
+	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 
 	// enemy spawn
 	spawnPosition = CP_Vector_Set(0, 0);
@@ -183,6 +184,7 @@ void level_1_Init()
 	// enemy width and height
 	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
 	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+	enemy.speed = 70;
 	healthDrop.width = CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = CP_Image_GetHeight(healthDrop.dropSprite);
 
@@ -208,6 +210,7 @@ void level_1_Init()
 	character.health = 5;	  // start with 5 hp
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
+	character.speed = 210;
 	invulElapsedTime = 0;	  // timer for invul
 	energyRechargeTime = 0;	  // timer for energyRecharge
 	stunnedElapsedTime = 0;
@@ -462,7 +465,7 @@ void level_1_Update()
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 
 			// CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
-			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
+			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 			for (int o = 0; o < 20; o++)
 			{
 				// check for obstructions
@@ -618,8 +621,9 @@ void level_1_Update()
 		// updates character's positon based off WASD inputs. Function defined in movement.c
 		if (character.energy > 0)
 		{
-			character.Pos = charMovement(character.Pos, gunPlayer); // character movement
-			gunPlayer = charImage(gunPlayer);						// changes character sprite based on which direction he is facing
+			character.Pos = charMovement(character.Pos, character.speed); // character movement
+			if (playerNum = 1) gunPlayer = charImageRanged(gunPlayer);
+			else if (playerNum = 2) swordPlayer = charImageMelee(swordPlayer); // changes character sprite based on which direction he is facing
 		}
 
 		if (character.energy < 5)

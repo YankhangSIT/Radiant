@@ -2,11 +2,9 @@
 #include "math.h"
 #include "stdio.h"
 
-CP_Vector charMovement(CP_Vector charPosition)
+CP_Vector charMovement(CP_Vector charPosition, float charSpeed)
 {
-	float speed = 210.0;
-	// float speed = 500.0;
-	float dtSpeed = speed * CP_System_GetDt(); // CHARACTER SPEED IS 210 UNITS PER SECOND
+	float dtSpeed = charSpeed * CP_System_GetDt(); // CHARACTER SPEED IS 210 UNITS PER SECOND
 
 	if (CP_Input_KeyDown(KEY_A))
 	{
@@ -24,11 +22,10 @@ CP_Vector charMovement(CP_Vector charPosition)
 	{
 		charPosition.y += dtSpeed;
 	}
-
 	return charPosition;
 }
 
-CP_Image charImage(CP_Image charImage)
+CP_Image charImageMelee(CP_Image charImage)
 {
 	if (CP_Input_KeyDown(KEY_A))
 	{
@@ -41,9 +38,21 @@ CP_Image charImage(CP_Image charImage)
 	return charImage;
 }
 
-CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition)
+CP_Image charImageRanged(CP_Image charImage)
 {
-	float enemySpeed = 70.0;
+	if (CP_Input_KeyDown(KEY_A))
+	{
+		charImage = CP_Image_Load("Assets/ranged_char_facing_left.png");
+	}
+	else if (CP_Input_KeyDown(KEY_D))
+	{
+		charImage = CP_Image_Load("Assets/ranged_char_facing_right.png");
+	}
+	return charImage;
+}
+
+CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition , float enemySpeed)
+{
 	float dtEnemySpeed = enemySpeed * CP_System_GetDt(); // ENEMY SPEED IS 100 UNITS PER SECOND
 
 	CP_Vector directionNorm = CP_Vector_Normalize(CP_Vector_Subtract(charPosition, enemyPosition));
