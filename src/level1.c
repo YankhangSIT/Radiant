@@ -135,7 +135,7 @@ void clear()
 {
 	memset(enemies, 0, sizeof(enemies));
 }
-
+CP_Image map_background;
 void level_1_Init()
 {
 	CP_System_Fullscreen();
@@ -158,6 +158,7 @@ void level_1_Init()
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
+	map_background = CP_Image_Load("Assets/map_background.jpg");
 	/// CP_System_SetWindowSize(wWidth, wHeight);
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
@@ -246,6 +247,7 @@ void level_1_Init()
 
 void level_1_Update()
 {
+
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -345,6 +347,7 @@ void level_1_Update()
 
 	if (!isPaused)
 	{
+		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
 
@@ -485,7 +488,7 @@ void level_1_Update()
 		}
 
 		// CLEAR BACKGROUND
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
 		for (int i = 0; i < 30; i++)
 		{
 			// draw obstruction
