@@ -463,7 +463,7 @@ void level_1_Update()
 		/// for (int i = 1; i -1 < bulletSpawnIndex; ++i)
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{ // darren's way of implementing bullet spawn for loop
-			for (int j = 0; j < (spawnIndex); ++j)
+			for (int j = 0; j -1 < (spawnIndex); ++j)
 			{
 				float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 

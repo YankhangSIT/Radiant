@@ -6,6 +6,7 @@
 #include "mainmenu.h"
 #include "loadingScreen.h"
 #include "gameOver.h"
+#include "gameOverpage.h"
 
 CP_Image gameOver;
 float TimeElapsed;
@@ -34,16 +35,17 @@ void game_Over_update(void)
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-
 	float alphatime = 2;
 	if (TimeElapsed >= alphatime)
 	{
 		TimeElapsed = 0;
-		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+		CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 	}
 	
 		float resulttime = (TimeElapsed / alphatime) * 255;
 		CP_Image_Draw(gameOver, gWidth / 4.0f + 100, (gHeight / 2.0f - 100), CP_Image_GetWidth(gameOver), CP_Image_GetHeight(gameOver), (int)resulttime);
+		
+
 }
 void game_Over_exit(void)
 {
