@@ -30,7 +30,7 @@ void Main_Menu_Init()
 	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
-	main_menu = CP_Image_Load("Assets/main_menu.jpg");
+	main_menu = CP_Image_Load("Assets/Main_menu.jpg");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
 
