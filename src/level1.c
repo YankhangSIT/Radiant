@@ -162,7 +162,7 @@ void level_1_Init()
 	/// CP_System_SetWindowSize(wWidth, wHeight);
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-	enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
+	//enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 
@@ -322,11 +322,13 @@ void level_1_Update()
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			clear();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			clear();
 			CP_Engine_Terminate();
 		}
 	}
