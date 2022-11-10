@@ -77,6 +77,7 @@ float startSpawnTimer;
 
 int isCompleted = 0;
 int spawnIndex = 0;
+
 // Bullet Struct Contains all the properties of the bullet
 struct Bullet
 {
@@ -116,12 +117,21 @@ struct Drop
 	float dropDespawnStartTimer;
 };
 
+struct Button
+{
+	CP_Vector pos;
+
+};
+
 struct Drop itemDrop[SIZE];
 struct Drop healthDrop;
 int dropIndex = 0;
 CP_Vector itemSpawn;
 int firstDrop = 0;
-
+CP_Image enemySprite1;
+CP_Image enemySprite2;
+unsigned int randomId;
+int lose = 0;
 void clear()
 {
 	memset(enemies, 0, sizeof(enemies));
@@ -145,13 +155,17 @@ void level_1_Init()
 	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
+	lose = 0;
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 	/// CP_System_SetWindowSize(wWidth, wHeight);
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-	enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
+	//enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
+	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
+	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
+
 	enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
@@ -219,23 +233,39 @@ void level_1_Init()
 
 void level_1_Update()
 {
-	if (min == surviveMin)
+	if (min == surviveMin || lose == 1)
 	{
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
+		if (lose == 0)
+		{
+			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
+			Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		}
+		else
+		{
+			CP_Font_DrawText("You died!", wWidth / 2.0f, wHeight / 2.0f - 300);
+			Button("Restart", wWidth / 2.0f, wHeight / 2.0f -50 , wWidth / 2.0f, wHeight / 2.0f -50 , 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		}
 
-		win = TRUE;
+		//Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+		
+		if (lose == 0)
+		{
+			win = TRUE;
+		}
 		isPaused = TRUE;
 	}
 
@@ -264,12 +294,18 @@ void level_1_Update()
 	{
 
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (lose == 0)
 		{
-			if (win == FALSE)
+			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
-				delayShootTime = delayShootStart;
-				isPaused = !isPaused;
+				if (win == FALSE)
+				{
+					delayShootTime = delayShootStart;
+
+
+					isPaused = !isPaused;
+
+				}
 			}
 		}
 
@@ -286,11 +322,13 @@ void level_1_Update()
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			clear();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			clear();
 			CP_Engine_Terminate();
 		}
 	}
@@ -376,15 +414,46 @@ void level_1_Update()
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
+				randomId = CP_Random_RangeInt(1, 2);
+				enemies[spawnIndex].id = randomId;
+				printf("%d\n", enemies[i].id);
 				spawnIndex++;
+
 				spawnTimer = startSpawnTimer;
 			}
 		}
 
-		for (int i = 0; i < spawnIndex; i++)
+		for (int i = 0; i-1 < spawnIndex; i++)
 		{
 			// Enemy Render
-			CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
+	
+
+			if (enemies[i].id == 1)
+			{
+				enemies[i].enemySprite = enemySprite1;
+				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
+				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
+
+			}
+			else if (enemies[i].id == 2)
+			{
+				enemies[i].enemySprite = enemySprite2;
+				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
+				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
+			}
+			//else if (enemies[i].id == 3)
+			//{
+				//	enemies[i].enemySprite = enmySprite3;
+			//}
+
+			
+		
+
+				printf("%d\n", enemies[i].id);
+
+			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+
+			//CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
 			if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
 			{
@@ -468,7 +537,7 @@ void level_1_Update()
 				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 				// printf("distance is %f\n", ddistance);
 
-				if (distance < enemy.radius * 2)
+				if (distance < enemies[j].width * 2)
 				{ // less than bullet radius x2
 					enemies[j].isDead = 1;
 					unsigned int randomRate = CP_Random_RangeInt(1, 3);
@@ -507,7 +576,7 @@ void level_1_Update()
 		{ // if not invul, check for damage (collision with mobs) every frame
 			for (int i = 0; i < spawnIndex; i++)
 			{
-				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemy.width, enemy.height) == 1)
+				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemies[i].width, enemies[i].height) == 1)
 				{
 					if (healthChange == 0)
 					{
@@ -551,11 +620,17 @@ void level_1_Update()
 
 		if (firstDrop == 1)
 		{
-			for (int i = 0; i - 1 < dropIndex; ++i)
+			for (int i = 0; i -1 < dropIndex; ++i)
 			{
 				CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
 			}
 		}
+
+		if (character.health <= 0)
+		{
+			lose = 1;
+		}
+
 	}
 }
 
