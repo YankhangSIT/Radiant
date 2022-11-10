@@ -120,7 +120,6 @@ struct Drop
 struct Button
 {
 	CP_Vector pos;
-
 };
 
 struct Drop itemDrop[SIZE];
@@ -162,7 +161,7 @@ void level_1_Init()
 	/// CP_System_SetWindowSize(wWidth, wHeight);
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-	//enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
+	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 
@@ -252,16 +251,15 @@ void level_1_Update()
 		else
 		{
 			CP_Font_DrawText("You died!", wWidth / 2.0f, wHeight / 2.0f - 300);
-			Button("Restart", wWidth / 2.0f, wHeight / 2.0f -50 , wWidth / 2.0f, wHeight / 2.0f -50 , 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		}
 
-		//Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		// Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		
 		if (lose == 0)
 		{
 			win = TRUE;
@@ -302,9 +300,7 @@ void level_1_Update()
 				{
 					delayShootTime = delayShootStart;
 
-
 					isPaused = !isPaused;
-
 				}
 			}
 		}
@@ -423,17 +419,15 @@ void level_1_Update()
 			}
 		}
 
-		for (int i = 0; i-1 < spawnIndex; i++)
+		for (int i = 0; i - 1 < spawnIndex; i++)
 		{
 			// Enemy Render
-	
 
 			if (enemies[i].id == 1)
 			{
 				enemies[i].enemySprite = enemySprite1;
 				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
 				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-
 			}
 			else if (enemies[i].id == 2)
 			{
@@ -441,20 +435,24 @@ void level_1_Update()
 				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
 				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
 			}
-			//else if (enemies[i].id == 3)
+			// else if (enemies[i].id == 3)
 			//{
-				//	enemies[i].enemySprite = enmySprite3;
+			//	enemies[i].enemySprite = enmySprite3;
 			//}
 
-			
-		
-
-				printf("%d\n", enemies[i].id);
+			printf("%d\n", enemies[i].id);
 
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 
-			//CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
+			// CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos);
+			for (int o = 0; o < 20; o++)
+			{
+				// check for obstructions
+				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
+			}
+
+			//! sword swing attack enemy TO DO!!
 			if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
 			{
 				printf("sword hits enemy !!! yay \n");
@@ -620,7 +618,7 @@ void level_1_Update()
 
 		if (firstDrop == 1)
 		{
-			for (int i = 0; i -1 < dropIndex; ++i)
+			for (int i = 0; i - 1 < dropIndex; ++i)
 			{
 				CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
 			}
@@ -630,7 +628,6 @@ void level_1_Update()
 		{
 			lose = 1;
 		}
-
 	}
 }
 
