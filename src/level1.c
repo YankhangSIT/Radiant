@@ -221,11 +221,18 @@ void level_1_Init()
 
 	// initiate obstruction
 	srand(342421);
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		float x = rand() % (int)(wWidth + 1);
 		float y = rand() % (int)(wHeight + 1);
 		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
+	}
+	srand(1213243);
+	for (int i = 10; i < 20; i++)
+	{
+		float x = rand() % (int)(wWidth + 1);
+		float y = rand() % (int)(wHeight + 1);
+		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")), CP_Image_Load("Assets/obstruction2.png"));
 	}
 	swordSwingArea = SetSword(character.Pos.x + character.width / 2, character.Pos.y, character.width * 1.2, character.height * 2);
 }
