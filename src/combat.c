@@ -45,11 +45,11 @@ Sword SetSword(float x, float y, float width, float height)
 }
 Sword UpdateSwordSwing(Sword sword, CP_Vector charPosition, float cWidth, float cHeight)
 {
-	if (CP_Input_KeyDown(KEY_D))
+	if (CP_Input_GetMouseX() > charPosition.x)
 	{
 		charDirection = right;
 	}
-	if (CP_Input_KeyDown(KEY_A))
+	if (CP_Input_GetMouseX() < charPosition.x)
 	{
 		charDirection = left;
 	}
