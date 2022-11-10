@@ -8,6 +8,7 @@ typedef struct Rect
 	float y;
 	float width;
 	float height;
+	CP_Image spriteImage;
 } Rect;
 typedef struct Obstruction
 {

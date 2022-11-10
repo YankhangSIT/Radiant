@@ -212,7 +212,7 @@ void level_1_Init()
 	{
 		float x = rand() % (int)(wWidth + 1);
 		float y = rand() % (int)(wHeight + 1);
-		obs.rec_block[i] = SetRect_(x, y, 100.f, 100.f);
+		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
 	}
 	swordSwingArea = SetSword(character.Pos.x + character.width / 2, character.Pos.y, character.width * 1.2, character.height * 2);
 }
@@ -405,13 +405,10 @@ void level_1_Update()
 
 		// CLEAR BACKGROUND
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-
-		CP_Settings_Fill(CP_Color_Create(5, 50, 250, 255));
-		CP_Settings_RectMode(CP_POSITION_CENTER);
 		for (int i = 0; i < 20; i++)
 		{
 			// draw obstruction
-			CP_Graphics_DrawRect(obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
 			// check for obstructions
 			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
 		}
@@ -463,7 +460,7 @@ void level_1_Update()
 		/// for (int i = 1; i -1 < bulletSpawnIndex; ++i)
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{ // darren's way of implementing bullet spawn for loop
-			for (int j = 0; j -1 < (spawnIndex); ++j)
+			for (int j = 0; j - 1 < (spawnIndex); ++j)
 			{
 				float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 
@@ -479,7 +476,7 @@ void level_1_Update()
 					if (randomRate == 2 && enemies[j].isDead)
 					{
 						;
-						if (firstDrop == 1 )
+						if (firstDrop == 1)
 						{
 							++dropIndex;
 						}
@@ -497,9 +494,8 @@ void level_1_Update()
 					for (int y = j; y < spawnIndex; ++y)
 					{
 						enemies[y] = enemies[y + 1]; // similar to above^
-						
 					}
-								
+
 					--bulletSpawnIndex, --spawnIndex;
 				}
 			}

@@ -6,13 +6,15 @@
 #include "level1.h"
 #include "map.h"
 
-Rect SetRect_(float x, float y, float width, float height)
+Rect SetRect_(float x, float y, float width, float height, CP_Image sprite)
 {
 	Rect rec;
 	rec.x = x;
 	rec.y = y;
 	rec.width = width;
 	rec.height = height;
+	rec.spriteImage = sprite;
+
 	return rec;
 }
 
