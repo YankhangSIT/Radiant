@@ -54,9 +54,6 @@
     <ClCompile Include="..\src\loadingScreen.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\gameOver.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\button.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +99,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\loadingScreen.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\gameOver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\button.h">

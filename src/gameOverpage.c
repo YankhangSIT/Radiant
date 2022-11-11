@@ -9,7 +9,8 @@
 #include "button.h"
 #include "characterSelect.h"
 
-
+CP_Image gameOver;
+float TimeElapsed;
 
 void game_Over_page_init(void)
 {
@@ -19,6 +20,17 @@ void game_Over_page_init(void)
 	//Set the size according to your image size.
 	CP_System_Fullscreen();
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
+	CP_Settings_RectMode(CP_POSITION_CENTER);
+
+	// Set TimeElapsed to float 0
+	// Load your image
+	// Position your image to the corner of top left
+	// Set the size according to your image size.
+	TimeElapsed = 0.0f;
+	gameOver = CP_Image_Load("Assets/Gameover.png");
+	CP_Settings_ImageMode(CP_POSITION_CORNER);
+	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
+	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 
 	//Set text alignment and font size
@@ -38,11 +50,29 @@ void game_Over_page_update(void)
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 
-	Button("Restart", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	float gWidth = CP_System_GetWindowWidth();
+	float gHeight = CP_System_GetWindowHeight();
 
-	Button("Menu", pWidth / 2.0f, pHeight / 2.0f + 100, pWidth / 2.0f, pHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	// Buffer time for splashscreen image & cursor creation
+	TimeElapsed += CP_System_GetDt();
+	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-	Button("Exit", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	float alphatime = 2;
+	if (TimeElapsed >= alphatime + 1)
+	{
+		TimeElapsed = 0;
+		
+	}
+
+	float resulttime = (TimeElapsed / alphatime) * 255;
+	CP_Image_Draw(gameOver, gWidth / 4.0f + 100, (gHeight / 2.0f - 300), CP_Image_GetWidth(gameOver), CP_Image_GetHeight(gameOver), (int)resulttime);
+
+	Button("Restart", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, 255, 0, 0, 0, 0, 0, 255);
+
+	Button("Menu", pWidth / 2.0f, pHeight / 2.0f + 100, pWidth / 2.0f, pHeight / 2.0f + 100, 180, 80, 255, 0, 0, 0, 0, 0, 255);
+
+	Button("Exit", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 250, 180, 80, 255, 0, 0, 0, 0, 0, 255);
 
 
 	if (CP_Input_MouseClicked()) {
@@ -67,7 +97,8 @@ void game_Over_page_update(void)
 }
 void game_Over_page_exit(void)
 {
-	
+	// Image would be free from the memory running.
+	CP_Image_Free(&gameOver);
 	
 }
 

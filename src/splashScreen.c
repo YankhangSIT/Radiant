@@ -8,6 +8,7 @@
 //
 CP_Image digipen;
 float TimeElapsed;
+int fadeout = FALSE;
 void splash_screen_init()
 {
 	// Set TimeElapsed to float 0
@@ -28,23 +29,26 @@ void splash_screen_update(void)
 	TimeElapsed += CP_System_GetDt();
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	float alphatime = 3;
+	float resulttime = (TimeElapsed / alphatime) * 255; // Fade in formula
 
-	float alphatime = 0;
-	if (alphatime >= TimeElapsed)
+	if (fadeout == TRUE)
 	{
-		alphatime = 2;
-		/*CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);*/
+		resulttime = 255 - (TimeElapsed / alphatime) * 255; // Fade out formula
+		if (TimeElapsed >= alphatime) {
+			CP_Engine_SetNextGameState(loading_Screen_Init, loading_Screen_Update, loading_Screen_Exit);
+		}
 	}
 
-	alphatime = 2;
 	if (TimeElapsed >= alphatime)
 	{
 		TimeElapsed = 0;
-		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+		fadeout = TRUE;
+		alphatime = 3;
 	}
 
-	float resulttime = (TimeElapsed / alphatime) * 255;
-	CP_Image_Draw(digipen, 0, 0, CP_Image_GetWidth(digipen), CP_Image_GetHeight(digipen), (int)resulttime);
+	
+	CP_Image_Draw(digipen, 0, 0, CP_Image_GetWidth(digipen), CP_Image_GetHeight(digipen), (int)resulttime); // Draw splashscreen image
 }
 void splash_screen_exit(void)
 {

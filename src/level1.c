@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "button.h"
+#include "gameOverpage.h"
 
 #define PI (3.141592653589793)
 #define SIZE (100)
@@ -55,7 +56,7 @@ int healthChange;
 float wWidth;
 float wHeight;
 /// WHY???
-int i = -1;
+//int i = -1;
 
 // obstruction obj in map.h
 Obstruction obs;
@@ -73,8 +74,8 @@ float sec = 0;
 int surviveMin = 1;
 // win condition boolean
 int win = 0;
-float spawnTimer = 0.7f;
-float startSpawnTimer;
+float spawnTimer = 0.f;
+float startSpawnTimer = 0.f;
 
 int isCompleted = 0;
 int spawnIndex = 0;
@@ -149,6 +150,7 @@ void level_1_Init()
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
+	surviveMin = 1;
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
@@ -156,6 +158,7 @@ void level_1_Init()
 	firstShoot = 0;
 	dropIndex = 0;
 	lose = 0;
+	canShoot = 0;
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -250,10 +253,10 @@ void level_1_Init()
 
 void level_1_Update()
 {
-
+	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	
 	if (min == surviveMin || lose == 1)
 	{
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
@@ -269,13 +272,15 @@ void level_1_Update()
 		}
 		else
 		{
-			CP_Font_DrawText("You died!", wWidth / 2.0f, wHeight / 2.0f - 300);
+
+			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
+			/*CP_Font_DrawText("You died!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		}
+		*/}
 
 		// Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
@@ -286,9 +291,14 @@ void level_1_Update()
 		isPaused = TRUE;
 	}
 
-	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
+	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE )
 	{
-		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+		
+		isPaused = !isPaused;
+	}
+
+	if (isPaused) {
+		//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
@@ -303,8 +313,6 @@ void level_1_Update()
 		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-		isPaused = !isPaused;
 	}
 
 	if (CP_Input_MouseClicked() && isPaused)
@@ -432,7 +440,7 @@ void level_1_Update()
 				enemies[spawnIndex].pos.y = spawnPosition.y;
 				randomId = CP_Random_RangeInt(1, 2);
 				enemies[spawnIndex].id = randomId;
-				printf("%d\n", enemies[i].id);
+				
 				spawnIndex++;
 
 				spawnTimer = startSpawnTimer;
@@ -648,6 +656,10 @@ void level_1_Update()
 		if (character.health <= 0)
 		{
 			lose = 1;
+		}
+		else
+		{
+			lose = 0;
 		}
 	}
 }

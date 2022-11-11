@@ -17,10 +17,8 @@
 #include "level1.h"
 #include "splashScreen.h"
 #include "characterSelect.h"
-//yk was here
-//darren was here
-//don was here
-//js here
+#include "loadingScreen.h"
+#include "gameOverpage.h"
 
 int main(void)
 {
