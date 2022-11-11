@@ -12,132 +12,42 @@
 #include <stdlib.h>
 #include "button.h"
 #include "gameOverpage.h"
+#include "global.h"
 
-#define PI (3.141592653589793)
-#define SIZE (100)
-#define FALSE (0)
-#define TRUE (1)
-#define SPAWNSIZE (5)
-#define SPAWNINDEX (4)
-#define MAX_LENGTH (100)
 
 // define struct for character
-struct Character
-{
-	CP_Image playerSprite;
-	CP_Vector Pos;
-	float height;
-	float width;
-	float speed;
-	int playerType;
-	int health;
-	int energy;
-	int invulState;
-} character;
+
 /// CAN PUT IN .H FILE
-struct Character playerGun;
-struct Character playerSword;
+ struct Character playerGun;
+ struct Character playerSword;
 
 // Sprite Image
-CP_Image gunPlayer;
-CP_Image swordPlayer;
+ CP_Image gunPlayer;
+ CP_Image swordPlayer;
 
 /// CAN PUT IN .H FILE
-struct Enemy enemies[SIZE];
-struct Enemy enemy;
-CP_Vector spawnPositions[SPAWNINDEX][SPAWNSIZE];
-
-int isPaused;
-float elapsedTime;
-float invulElapsedTime;
-float energyRechargeTime;
-float stunnedElapsedTime;
-int healthChange;
-float wWidth;
-float wHeight;
+ int isPaused;
+ float elapsedTime;
+ float invulElapsedTime;
+ float energyRechargeTime;
+ float stunnedElapsedTime;
+ int healthChange;
+ float wWidth;
+ float wHeight;
 /// WHY???
 // int i = -1;
-
 // obstruction obj in map.h
-Obstruction obs;
-const int obstructionCount = MAX_Obs;
+ Obstruction obs;
+
 // triangle area for sword swing
-Sword swordSwingArea;
+ Sword swordSwingArea;
 
 // string array to use for text display
-char timeString[MAX_LENGTH];
-char characterHealthDisplay[MAX_LENGTH];
-char characterEnergyDisplay[MAX_LENGTH];
-// time variables
-int min = 0;
-float sec = 0;
-// survive condition
-int surviveMin = 1;
-// win condition boolean
-int win = 0;
-float spawnTimer = 0.f;
-float startSpawnTimer = 0.f;
+ char timeString[MAX_LENGTH];
+ char characterHealthDisplay[MAX_LENGTH];
+ char characterEnergyDisplay[MAX_LENGTH];
 
-int isCompleted = 0;
-int spawnIndex = 0;
 
-// Bullet Struct Contains all the properties of the bullet
-struct Bullet
-{
-
-	CP_Vector shootPosition;
-	CP_Vector bulletPos;
-	CP_Image bulletSprite;
-	CP_Vector acceleration;
-	CP_Vector directionBullet;
-	CP_Vector normalizedDirection;
-	float bulletSpeed;
-	float width;
-	float height;
-	float direction;
-
-	int isAlive;
-};
-
-struct Bullet bullet;
-struct Bullet bulletArray[SIZE];
-
-int bulletSpawnIndex = 0;
-int firstShoot = 0;
-int canShoot = 0;
-float delayShootTime = 0;
-float delayShootStart = 0;
-CP_Vector spawnPosition;
-
-struct Drop
-{
-	CP_Vector pos;
-	CP_Image dropSprite;
-	float width;
-	float height;
-	int itemId;
-	float dropDespawnTimer;
-	float dropDespawnStartTimer;
-};
-
-struct Button
-{
-	CP_Vector pos;
-};
-
-struct Drop itemDrop[SIZE];
-struct Drop healthDrop;
-int dropIndex = 0;
-CP_Vector itemSpawn;
-int firstDrop = 0;
-CP_Image enemySprite1;
-CP_Image enemySprite2;
-unsigned int randomId;
-int lose = 0;
-void clear()
-{
-	memset(enemies, 0, sizeof(enemies));
-}
 CP_Image map_background;
 void level_1_Init()
 {
@@ -160,11 +70,12 @@ void level_1_Init()
 	dropIndex = 0;
 	lose = 0;
 	canShoot = 0;
+	
+
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background.jpg");
-	/// CP_System_SetWindowSize(wWidth, wHeight);
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
@@ -186,12 +97,14 @@ void level_1_Init()
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	// enemy width and height
-	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
-	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+	//enemy.width = CP_Image_GetWidth(enemy.enemySprite);
+	//enemy.height = CP_Image_GetHeight(enemy.enemySprite);
 	enemy.speed = 70;
 	healthDrop.width = CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = CP_Image_GetHeight(healthDrop.dropSprite);
 
+	nextLevel.pos.x = wWidth / 2.0f;
+	nextLevel.pos.y = wHeight / 2.0f -200;
 	// player type gun
 	if (playerNum == 1)
 	{
@@ -256,41 +169,7 @@ void level_1_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-	if (min == surviveMin || lose == 1)
-	{
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
-		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		if (lose == 0)
-		{
-			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
-			Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		}
-		else
-		{
-
-			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
-			/*CP_Font_DrawText("You died!", wWidth / 2.0f, wHeight / 2.0f - 300);
-			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		*/}
-
-			// Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-			if (lose == 0)
-			{
-				win = TRUE;
-			}
-			isPaused = TRUE;
-	}
+	
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
@@ -298,7 +177,7 @@ void level_1_Update()
 		isPaused = !isPaused;
 	}
 
-	if (isPaused)
+	if (isPaused && win == FALSE )
 	{
 		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -317,12 +196,64 @@ void level_1_Update()
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	}
 
+	if (min == surviveMin || lose == 1)
+	{
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		if (lose == 0)
+		{
+
+			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
+			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		}
+		else
+		{
+
+			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
+			/*CP_Font_DrawText("You died!", wWidth / 2.0f, wHeight / 2.0f - 300);
+			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		*/
+		}
+
+
+
+		if (lose == 0)
+		{
+			win = TRUE;
+		}
+		isPaused = TRUE;
+
+	}
+
+
 	if (CP_Input_MouseClicked() && isPaused)
 	{
-
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
+			if (win == TRUE)
+			{
+				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+				{
+					delayShootTime = delayShootStart;
+					//isPaused = !isPaused;
+					clear();
+					printf("next Level");
+					level_2_Init();
+					
+				}
+			}
+
 			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
 				if (win == FALSE)
@@ -360,6 +291,7 @@ void level_1_Update()
 
 	if (!isPaused)
 	{
+		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
@@ -421,7 +353,7 @@ void level_1_Update()
 			}
 		}
 
-		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+		for (int i = 0; i -1  < bulletSpawnIndex; ++i)
 		{
 			bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
 			bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
@@ -517,7 +449,7 @@ void level_1_Update()
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
 		// check if projectile out of bounds, if so, delete it.
-		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+		for (int i = 0; i -1  < bulletSpawnIndex; ++i)
 		{
 			if (checkProjectileMapCollision(bulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 			{
@@ -555,7 +487,7 @@ void level_1_Update()
 
 		// enemies die to bullets
 		/// for (int i = 1; i -1 < bulletSpawnIndex; ++i)
-		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+		for (int i = 0; i -1  < bulletSpawnIndex; ++i)
 		{ // darren's way of implementing bullet spawn for loop
 			for (int j = 0; j < (spawnIndex); ++j)
 			{

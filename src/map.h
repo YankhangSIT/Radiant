@@ -17,3 +17,4 @@ typedef struct Obstruction
 	Rect rec_block[MAX_Obs];
 } Obstruction;
 Rect SetRect_(float x, float y, float width, float height);
+const int obstructionCount;

@@ -42,9 +42,6 @@
     <ClCompile Include="..\src\characterSelect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="level2.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Howtoplay.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -58,6 +55,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\gameOverpage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\level2.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\gameOverpage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\level2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
