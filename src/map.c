@@ -62,7 +62,14 @@ int checkProjectileMapCollision(CP_Vector bulletPosition, float minX, float maxX
 		return 0;
 	}
 }
-
+bool checkProjectileObsCollision(CP_Vector bulletPosition, float bulletWidth, float bulletHeight, float x, float y, float width, float height)
+{
+	if (bulletPosition.x + bulletWidth / 2 > x - width / 2 && bulletPosition.x - bulletWidth / 2 < x + width / 2 && bulletPosition.y + bulletHeight / 2 > y - height / 2 && bulletPosition.y - bulletHeight / 2 < y + height / 2)
+	{
+		return true;
+	}
+	return false;
+}
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height)
 {
 	if (charPosition.x + cWidth / 2 > x - width / 2 && charPosition.x - cWidth / 2 < x + width / 2 && charPosition.y + cHeight / 2 > y - height / 2 && charPosition.y - cHeight / 2 < y + height / 2)

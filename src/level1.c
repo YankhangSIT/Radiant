@@ -564,6 +564,18 @@ void level_1_Update()
 				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 				// printf("distance is %f\n", ddistance);
 
+				for (int o = 0; o < 30; o++)
+				{
+					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
+					{
+						// check for obstructions
+						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+						{
+							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+						}
+					}
+				}
 				if (distance < enemies[j].width * 2)
 				{ // less than bullet radius x2
 					enemies[j].isDead = 1;
