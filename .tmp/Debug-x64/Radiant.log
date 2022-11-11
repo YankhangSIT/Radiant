@@ -1,5 +1,122 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Donovan\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Radiant.vcxproj -> C:\Users\Donovan\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Year1\csd1401\radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  button.c
+C:\Year1\csd1401\radiant\src\button.c(15,35): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\button.c(15,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  characterSelect.c
+C:\Year1\csd1401\radiant\src\characterSelect.c(36,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(37,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(57,65): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(57,95): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(58,67): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(58,99): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(64,89): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(64,125): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(67,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(67,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(67,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(71,91): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(71,128): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\characterSelect.c(74,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(74,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(74,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(45,12): warning C4101: 'mouseClickPos': unreferenced local variable
+  combat.c
+  gameOverpage.c
+C:\Year1\csd1401\radiant\src\gameOverpage.c(69,71): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\gameOverpage.c(69,100): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\gameOverpage.c(46,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\gameOverpage.c(47,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\gameOverpage.c(53,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\gameOverpage.c(54,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Howtoplay.c
+C:\Year1\csd1401\radiant\src\Howtoplay.c(70,83): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\Howtoplay.c(38,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\Howtoplay.c(39,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\Howtoplay.c(37,12): warning C4101: 'mouseClickPos': unreferenced local variable
+  level1.c
+C:\Year1\csd1401\radiant\src\level1.c(18,1): warning C4005: 'FALSE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71,1): message : see previous definition of 'FALSE'
+C:\Year1\csd1401\radiant\src\level1.c(19,1): warning C4005: 'TRUE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75,1): message : see previous definition of 'TRUE'
+C:\Year1\csd1401\radiant\src\level1.c(163,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(164,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(174,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(175,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(188,16): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(189,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(191,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(192,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(198,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(199,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(207,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(208,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(235,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(235,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(235,160): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level1.c(242,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(242,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(242,160): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level1.c(249,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(249,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(249,160): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level1.c(251,100): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(233,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(234,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(240,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(241,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(247,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(248,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(418,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Year1\csd1401\radiant\src\level1.c(457,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(458,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(463,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(464,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(539,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(540,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(544,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(563,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  loadingScreen.c
+C:\Year1\csd1401\radiant\src\loadingScreen.c(47,58): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\loadingScreen.c(58,67): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\loadingScreen.c(58,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\loadingScreen.c(33,17): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\loadingScreen.c(34,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  main.c
+  mainmenu.c
+C:\Year1\csd1401\radiant\src\mainmenu.c(43,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\mainmenu.c(44,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\mainmenu.c(53,58): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\mainmenu.c(53,88): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\mainmenu.c(80,52): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\mainmenu.c(80,77): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\mainmenu.c(80,100): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+  map.c
+C:\Year1\csd1401\radiant\src\map.c(10,1): warning C4029: declared formal parameter list different from definition
+  movement.c
+C:\Year1\csd1401\radiant\src\movement.c(70,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\movement.c(71,36): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  spawn.c
+C:\Year1\csd1401\radiant\src\spawn.c(17,70): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(17,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(17,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(26,60): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(26,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(26,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(35,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(35,75): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\spawn.c(35,92): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  splashScreen.c
+C:\Year1\csd1401\radiant\src\splashScreen.c(51,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\splashScreen.c(51,59): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  utils.c
+C:\Year1\csd1401\radiant\src\utils.c(42,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\utils.c(43,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  level2.c
+  Generating code
+  Previous IPDB was built with incompatible compiler, fall back to full compilation.
+  All 44 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Radiant.vcxproj -> C:\Year1\csd1401\radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
   29 File(s) copied

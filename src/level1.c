@@ -56,7 +56,7 @@ int healthChange;
 float wWidth;
 float wHeight;
 /// WHY???
-//int i = -1;
+// int i = -1;
 
 // obstruction obj in map.h
 Obstruction obs;
@@ -214,8 +214,8 @@ void level_1_Init()
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
 	character.speed = 210;
-	invulElapsedTime = 0;	  // timer for invul
-	energyRechargeTime = 0;	  // timer for energyRecharge
+	invulElapsedTime = 0;	// timer for invul
+	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
 
 	// bullet start shoot spawn position
@@ -254,7 +254,7 @@ void level_1_Init()
 void level_1_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	
+
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -282,23 +282,24 @@ void level_1_Update()
 			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		*/}
 
-		// Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			// Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-		if (lose == 0)
-		{
-			win = TRUE;
-		}
-		isPaused = TRUE;
+			if (lose == 0)
+			{
+				win = TRUE;
+			}
+			isPaused = TRUE;
 	}
 
-	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE )
+	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
-		
+
 		isPaused = !isPaused;
 	}
 
-	if (isPaused) {
-		//CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	if (isPaused)
+	{
+		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
@@ -440,14 +441,14 @@ void level_1_Update()
 				enemies[spawnIndex].pos.y = spawnPosition.y;
 				randomId = CP_Random_RangeInt(1, 2);
 				enemies[spawnIndex].id = randomId;
-				
+
 				spawnIndex++;
 
 				spawnTimer = startSpawnTimer;
 			}
 		}
 
-		for (int i = 0; i  < spawnIndex; i++)
+		for (int i = 0; i < spawnIndex; i++)
 		{
 			// Enemy Render
 
@@ -474,7 +475,7 @@ void level_1_Update()
 
 			// CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < 20; o++)
+			for (int o = 0; o < 30; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -555,7 +556,7 @@ void level_1_Update()
 		/// for (int i = 1; i -1 < bulletSpawnIndex; ++i)
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{ // darren's way of implementing bullet spawn for loop
-			for (int j = 0; j  < (spawnIndex); ++j)
+			for (int j = 0; j < (spawnIndex); ++j)
 			{
 				float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 
@@ -630,8 +631,10 @@ void level_1_Update()
 		if (character.energy > 0)
 		{
 			character.Pos = charMovement(character.Pos, character.speed); // character movement
-			if (playerNum = 1) gunPlayer = charImageRanged(gunPlayer);
-			else if (playerNum = 2) swordPlayer = charImageMelee(swordPlayer); // changes character sprite based on which direction he is facing
+			if (playerNum = 1)
+				gunPlayer = charImageRanged(gunPlayer);
+			else if (playerNum = 2)
+				swordPlayer = charImageMelee(swordPlayer); // changes character sprite based on which direction he is facing
 		}
 
 		if (character.energy < 5)
