@@ -60,6 +60,7 @@ float wHeight;
 
 // obstruction obj in map.h
 Obstruction obs;
+const int obstructionCount = MAX_Obs;
 // triangle area for sword swing
 Sword swordSwingArea;
 
@@ -242,7 +243,7 @@ void level_1_Init()
 		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")), CP_Image_Load("Assets/obstruction2.png"));
 	}
 	srand(568567);
-	for (int i = 20; i < 30; i++)
+	for (int i = 20; i < obstructionCount; i++)
 	{
 		float x = rand() % (int)(wWidth + 1);
 		float y = rand() % (int)(wHeight + 1);
@@ -475,7 +476,7 @@ void level_1_Update()
 
 			// CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < 30; o++)
+			for (int o = 0; o < obstructionCount; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -501,7 +502,7 @@ void level_1_Update()
 
 		// CLEAR BACKGROUND
 
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < obstructionCount; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -564,7 +565,7 @@ void level_1_Update()
 				float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 				// printf("distance is %f\n", ddistance);
 
-				for (int o = 0; o < 30; o++)
+				for (int o = 0; o < obstructionCount; o++)
 				{
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
