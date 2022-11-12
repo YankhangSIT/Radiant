@@ -80,7 +80,7 @@ void level_1_Init()
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
-	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
+	//enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 
 	enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
@@ -97,8 +97,8 @@ void level_1_Init()
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	// enemy width and height
-	//enemy.width = CP_Image_GetWidth(enemy.enemySprite);
-	//enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
+	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
 	enemy.speed = 70;
 	healthDrop.width = CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = CP_Image_GetHeight(healthDrop.dropSprite);
@@ -375,8 +375,8 @@ void level_1_Update()
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				randomId = CP_Random_RangeInt(1, 4);
-				enemies[spawnIndex].id = randomId;
+				//randomId = CP_Random_RangeInt(1, 4);
+				//enemies[spawnIndex].id = randomId;
 
 				spawnIndex++;
 
@@ -388,18 +388,18 @@ void level_1_Update()
 		{
 			// Enemy Render
 
-			if (enemies[i].id == 1)
-			{
+			//if (enemies[i].id == 1)
+			//{
 				enemies[i].enemySprite = enemySprite1;
 				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
 				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-			}
-			else if (enemies[i].id == 2)
+			//}
+			/*else if (enemies[i].id == 2)
 			{
 				enemies[i].enemySprite = enemySprite2;
 				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
 				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-			}
+			}*/
 			// else if (enemies[i].id == 3)
 			//{
 			//	enemies[i].enemySprite = enmySprite3;
@@ -511,7 +511,7 @@ void level_1_Update()
 						}
 					}
 				}
-				if (distance < enemies[j].width * 2)
+				if (distance < enemies[j].width)
 				{ // less than bullet radius x2
 					enemies[j].isDead = 1;
 					unsigned int randomRate = CP_Random_RangeInt(1, 3);
@@ -613,7 +613,7 @@ void level_1_Update()
 
 		if (character.health <= 0)
 		{
-			lose = 1;
+			//lose = 1;
 		}
 		else
 		{

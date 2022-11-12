@@ -565,9 +565,9 @@ void level_2_Update()
 		if (character.energy > 0)
 		{
 			character.Pos = charMovement(character.Pos, character.speed); // character movement
-			if (playerNum = 1)
+			if (playerNum == 1)
 				gunPlayer = charImageRanged(gunPlayer);
-			else if (playerNum = 2)
+			else if (playerNum == 2)
 				swordPlayer = charImageMelee(swordPlayer); // changes character sprite based on which direction he is facing
 		}
 
