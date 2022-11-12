@@ -76,7 +76,7 @@ void level_2_Init()
 	lose = 0;
 	canShoot = 0;
 	win = 0;
-	isPaused = 0;
+;
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -140,10 +140,9 @@ void level_2_Init()
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
 
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
-	firstShoot = 0;
 
 	isPaused = FALSE;
-
+	printf("paused screen state init lv2 %d", isPaused);
 	// initiate obstruction
 	srand(342421);
 	for (int i = 0; i < 10; i++)
@@ -217,6 +216,7 @@ void level_2_Update()
 
 	if (isPaused && win == FALSE)
 	{
+		printf("paused screen state  lv2 %d", isPaused);
 		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
@@ -256,6 +256,7 @@ void level_2_Update()
 			// isPaused = !isPaused;
 			if (isPaused == TRUE)
 			{
+				printf("paused state win lv2 %d",isPaused);
 				win = FALSE;
 				clear();
 				level_2_Init();

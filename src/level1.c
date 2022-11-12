@@ -179,6 +179,7 @@ void level_1_Update()
 
 	if (isPaused && win == FALSE )
 	{
+		printf("paused screen state lv1 %d", isPaused);
 		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
@@ -246,10 +247,12 @@ void level_1_Update()
 				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
 					delayShootTime = delayShootStart;
-					//isPaused = !isPaused;
+				
 					clear();
 					printf("next Level");
-					level_2_Init();
+					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+					//level_2_Init();	
+					printf("pause  state win lv1 %d", isPaused);
 					
 				}
 			}
@@ -372,7 +375,7 @@ void level_1_Update()
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				randomId = CP_Random_RangeInt(1, 2);
+				randomId = CP_Random_RangeInt(1, 4);
 				enemies[spawnIndex].id = randomId;
 
 				spawnIndex++;
@@ -551,7 +554,7 @@ void level_1_Update()
 
 				for (int i = 0; i -1 < dropIndex; ++i)
 				{				
-						printf("enemy dead2");
+						//printf("enemy dead2");
 						CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
 				}
 		}
