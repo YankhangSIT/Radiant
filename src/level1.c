@@ -401,8 +401,7 @@ void level_1_Update()
 			//{
 			//	enemies[i].enemySprite = enmySprite3;
 			//}
-
-			printf("%d\n", enemies[i].id);
+			//printf("%d\n", enemies[i].id);
 
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 
@@ -449,7 +448,7 @@ void level_1_Update()
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
 		// check if projectile out of bounds, if so, delete it.
-		for (int i = 0; i -1  < bulletSpawnIndex; ++i)
+		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{
 			if (checkProjectileMapCollision(bulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 			{
@@ -457,7 +456,7 @@ void level_1_Update()
 				{
 					bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
 				}
-				bulletSpawnIndex--;
+				--bulletSpawnIndex;
 			}
 		}
 
@@ -513,17 +512,17 @@ void level_1_Update()
 				{ // less than bullet radius x2
 					enemies[j].isDead = 1;
 					unsigned int randomRate = CP_Random_RangeInt(1, 3);
-
+					//printf("enemy dead");
 					if (randomRate == 2 && enemies[j].isDead)
 					{
-						;
+						
 						if (firstDrop == 1)
-						{
+						{						
 							++dropIndex;
 						}
 						itemDrop[dropIndex].pos.x = enemies[j].pos.x;
 						itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-						firstDrop = 1;
+						firstDrop =1;
 					}
 
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
@@ -536,12 +535,26 @@ void level_1_Update()
 					{
 						enemies[y] = enemies[y + 1]; // similar to above^
 					}
-
-					--bulletSpawnIndex, --spawnIndex;
+					
+					if (enemies[j].isDead = 1)
+					{	
+						
+						--bulletSpawnIndex, --spawnIndex;
+	
+					}
 				}
 			}
 		}
 
+		if (firstDrop == 1)
+		{
+
+				for (int i = 0; i -1 < dropIndex; ++i)
+				{				
+						printf("enemy dead2");
+						CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
+				}
+		}
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1)
@@ -592,14 +605,8 @@ void level_1_Update()
 				energyRechargeTime = 0;
 			}
 		}
-
-		if (firstDrop == 1)
-		{
-			for (int i = 0; i - 1 < dropIndex; ++i)
-			{
-				CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
-			}
-		}
+		
+	
 
 		if (character.health <= 0)
 		{

@@ -30,13 +30,16 @@ int surviveMin = 1;
 // win condition boolean
 int win = 0;
 //float spawnTimer = 0.f;
-int lose;
+int lose = 0;
 struct Button nextLevel;
 struct Button restart;
 struct Button menu;
 struct Button exitLevel;
 
+
 void clear()
 {
 	memset(enemies, 0, sizeof(enemies));
+	memset(bulletArray, 0 ,sizeof(bulletArray));
+	memset(itemDrop, 0, sizeof(itemDrop));
 }

@@ -128,6 +128,10 @@
       <AdditionalLibraryDirectories>$(SolutionDir)Extern\CProcessing\lib\x64</AdditionalLibraryDirectories>
       <AdditionalDependencies>CProcessingd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <PerUserRedirection>false</PerUserRedirection>
+      <OptimizeReferences>
+      </OptimizeReferences>
+      <EnableCOMDATFolding>
+      </EnableCOMDATFolding>
     </Link>
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)Extern\CProcessing\lib\x64\CProcessingd.dll" "$(OutDir)" /s /r /y /q

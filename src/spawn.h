@@ -31,6 +31,7 @@ struct Drop
 	int itemId;
 	float dropDespawnTimer;
 	float dropDespawnStartTimer;
+	int dropTrue;
 };
 
 struct Button

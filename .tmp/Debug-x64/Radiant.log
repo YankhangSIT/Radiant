@@ -35,14 +35,14 @@ C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(391,24): warning C
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(392,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(397,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(398,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(473,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(474,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(478,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(497,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(472,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(473,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(477,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level1.c(496,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  1 of 46 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
+  0 of 46 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
