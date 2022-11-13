@@ -49,7 +49,7 @@ Sword UpdateSwordSwing(Sword sword, CP_Vector charPosition, float cWidth, float 
 	{
 		charDirection = right;
 	}
-	if (CP_Input_GetMouseX() < charPosition.x)
+	else if (CP_Input_GetMouseX() < charPosition.x)
 	{
 		charDirection = left;
 	}

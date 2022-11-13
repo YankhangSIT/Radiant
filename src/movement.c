@@ -25,40 +25,40 @@ CP_Vector charMovement(CP_Vector charPosition, float charSpeed)
 	return charPosition;
 }
 
-CP_Image charImageMelee(CP_Image charImage)
+CP_Image charImageMelee(CP_Image charImage, CP_Vector charPosition)
 {
-	if (CP_Input_KeyDown(KEY_A))
+	if (CP_Input_GetMouseX() < charPosition.x)
 	{
 		charImage = CP_Image_Load("Assets/melee_char_facing_left.png");
 	}
-	else if (CP_Input_KeyDown(KEY_D))
+	else if (CP_Input_GetMouseX() > charPosition.x)
 	{
 		charImage = CP_Image_Load("Assets/melee_char_facing_right.png");
 	}
 	return charImage;
 }
 
-CP_Image charImageRanged(CP_Image charImage)
+CP_Image charImageRanged(CP_Image charImage, CP_Vector charPosition)
 {
-	if (CP_Input_KeyDown(KEY_A))
+	if (CP_Input_GetMouseX() < charPosition.x)
 	{
 		charImage = CP_Image_Load("Assets/ranged_char_facing_left.png");
 	}
-	else if (CP_Input_KeyDown(KEY_D))
+	else if (CP_Input_GetMouseX() > charPosition.x)
 	{
 		charImage = CP_Image_Load("Assets/ranged_char_facing_right.png");
 	}
 	return charImage;
 }
 
-CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition , float enemySpeed)
+CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition, float enemySpeed)
 {
 	float dtEnemySpeed = enemySpeed * CP_System_GetDt(); // ENEMY SPEED IS 100 UNITS PER SECOND
 
 	CP_Vector directionNorm = CP_Vector_Normalize(CP_Vector_Subtract(charPosition, enemyPosition));
 
 	enemyPosition = CP_Vector_Add(enemyPosition, CP_Vector_Scale(directionNorm, dtEnemySpeed));
-	
+
 	return enemyPosition;
 }
 

@@ -14,7 +14,6 @@
 #include "gameOverpage.h"
 #include "global.h"
 
-
 // define struct for character
 
 /// CAN PUT IN .H FILE
@@ -51,8 +50,6 @@ char characterEnergyDisplay[MAX_LENGTH];
 
 // Bullet Struct Contains all the properties of the bullet
 
-
-
 CP_Image map_background;
 void level_2_Init()
 {
@@ -76,7 +73,7 @@ void level_2_Init()
 	lose = 0;
 	canShoot = 0;
 	win = 0;
-;
+	;
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -256,7 +253,7 @@ void level_2_Update()
 			// isPaused = !isPaused;
 			if (isPaused == TRUE)
 			{
-				printf("paused state win lv2 %d",isPaused);
+				printf("paused state win lv2 %d", isPaused);
 				win = FALSE;
 				clear();
 				level_2_Init();
@@ -391,7 +388,7 @@ void level_2_Update()
 			//	enemies[i].enemySprite = enmySprite3;
 			//}
 
-			//printf("%d\n", enemies[i].id);
+			// printf("%d\n", enemies[i].id);
 
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 
@@ -494,7 +491,7 @@ void level_2_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 					}
 				}
@@ -518,7 +515,7 @@ void level_2_Update()
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 					{
 						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-						// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+															 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
 
 					for (int y = j; y < spawnIndex; ++y)
@@ -566,9 +563,9 @@ void level_2_Update()
 		{
 			character.Pos = charMovement(character.Pos, character.speed); // character movement
 			if (playerNum == 1)
-				gunPlayer = charImageRanged(gunPlayer);
+				gunPlayer = charImageRanged(gunPlayer, character.Pos);
 			else if (playerNum == 2)
-				swordPlayer = charImageMelee(swordPlayer); // changes character sprite based on which direction he is facing
+				swordPlayer = charImageMelee(swordPlayer, character.Pos); // changes character sprite based on which direction he is facing
 		}
 
 		if (character.energy < 5)

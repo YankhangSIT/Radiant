@@ -14,33 +14,32 @@
 #include "gameOverpage.h"
 #include "global.h"
 
- struct Character playerGun;
- struct Character playerSword;
+struct Character playerGun;
+struct Character playerSword;
 
 // Sprite Image
- CP_Image gunPlayer;
- CP_Image swordPlayer;
+CP_Image gunPlayer;
+CP_Image swordPlayer;
 
- int isPaused;
- float elapsedTime;
- float invulElapsedTime;
- float energyRechargeTime;
- float stunnedElapsedTime;
- int healthChange;
- float wWidth;
- float wHeight;
+int isPaused;
+float elapsedTime;
+float invulElapsedTime;
+float energyRechargeTime;
+float stunnedElapsedTime;
+int healthChange;
+float wWidth;
+float wHeight;
 
 // obstruction obj in map.h
- Obstruction obs;
+Obstruction obs;
 
 // triangle area for sword swing
- Sword swordSwingArea;
+Sword swordSwingArea;
 
 // string array to use for text display
- char timeString[MAX_LENGTH];
- char characterHealthDisplay[MAX_LENGTH];
- char characterEnergyDisplay[MAX_LENGTH];
-
+char timeString[MAX_LENGTH];
+char characterHealthDisplay[MAX_LENGTH];
+char characterEnergyDisplay[MAX_LENGTH];
 
 CP_Image map_background;
 void level_1_Init()
@@ -64,7 +63,7 @@ void level_1_Init()
 	dropIndex = 0;
 	lose = 0;
 	canShoot = 0;
-	
+
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
@@ -73,7 +72,7 @@ void level_1_Init()
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 
-	//enemy.radius = 39;
+	// enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
 	// player sprite
@@ -88,14 +87,14 @@ void level_1_Init()
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	// enemy width and height
-	enemy.width = CP_Image_GetWidth(enemySprite1) - 2.0; // 2.0 for polishing purposes
+	enemy.width = CP_Image_GetWidth(enemySprite1) - 2.0;   // 2.0 for polishing purposes
 	enemy.height = CP_Image_GetHeight(enemySprite1) - 2.0; // 2.0 for polishing purposes
 	enemy.speed = 70;
 	healthDrop.width = CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = CP_Image_GetHeight(healthDrop.dropSprite);
 
 	nextLevel.pos.x = wWidth / 2.0f;
-	nextLevel.pos.y = wHeight / 2.0f -200;
+	nextLevel.pos.y = wHeight / 2.0f - 200;
 	// player type gun
 	if (playerNum == 1)
 	{
@@ -153,7 +152,7 @@ void level_1_Init()
 		float y = rand() % (int)(wHeight + 1);
 		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
 	}
-	swordSwingArea = SetSword(character.Pos.x + character.width / 2, character.Pos.y, character.width * 1.2, character.height * 2);
+	swordSwingArea = SetSword(character.Pos.x - character.width / 2, character.Pos.y, character.width * 2, character.height * 2.5);
 }
 
 void level_1_Update()
@@ -167,7 +166,7 @@ void level_1_Update()
 
 	if (isPaused && win == FALSE)
 	{
-		//printf("paused screen state lv1 %d", isPaused);
+		// printf("paused screen state lv1 %d", isPaused);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
@@ -219,9 +218,8 @@ void level_1_Update()
 					clear();
 					printf("next Level");
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
-					//level_2_Init();	
-					//printf("pause  state win lv1 %d", isPaused);
-
+					// level_2_Init();
+					// printf("pause  state win lv1 %d", isPaused);
 				}
 			}
 
@@ -301,7 +299,8 @@ void level_1_Update()
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 
-		if (playerNum == 1) { // IF RANGED CHAR
+		if (playerNum == 1)
+		{ // IF RANGED CHAR
 			bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
 			// SHOOT PROJECTILE MECHANIC
@@ -344,7 +343,8 @@ void level_1_Update()
 			}
 
 			// enemies die to bullets
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i) {
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
 				for (int j = 0; j < (spawnIndex); ++j)
 				{
 					float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
@@ -359,7 +359,7 @@ void level_1_Update()
 							for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 							{
 								bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-								// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																	 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 							}
 							--bulletSpawnIndex;
 						}
@@ -369,7 +369,7 @@ void level_1_Update()
 					{ // less than bullet radius x2
 						enemies[j].isDead = 1;
 						unsigned int randomRate = CP_Random_RangeInt(1, 3);
-						//printf("enemy dead");
+						// printf("enemy dead");
 						if (randomRate == 2 && enemies[j].isDead)
 						{
 							if (firstDrop == 1)
@@ -408,8 +408,8 @@ void level_1_Update()
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				//randomId = CP_Random_RangeInt(1, 4);
-				//enemies[spawnIndex].id = randomId;
+				// randomId = CP_Random_RangeInt(1, 4);
+				// enemies[spawnIndex].id = randomId;
 
 				spawnIndex++;
 
@@ -421,7 +421,7 @@ void level_1_Update()
 		{
 			// Enemy Render
 
-			//if (enemies[i].id == 1)
+			// if (enemies[i].id == 1)
 			//{
 			enemies[i].enemySprite = enemySprite1;
 			enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
@@ -437,7 +437,7 @@ void level_1_Update()
 			//{
 			//	enemies[i].enemySprite = enmySprite3;
 			//}
-			//printf("%d\n", enemies[i].id);
+			// printf("%d\n", enemies[i].id);
 
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 			for (int o = 0; o < obstructionCount; o++)
@@ -447,13 +447,15 @@ void level_1_Update()
 			}
 		}
 
-		if (playerNum == 2) { // MELEE CHAR
-			if (character.energy > 0) {
-				for (int i = 0; i < spawnIndex; i++) {
+		if (playerNum == 2)
+		{ // MELEE CHAR
+			if (character.energy > 0)
+			{
+				for (int i = 0; i < spawnIndex; i++)
+				{
 					//! sword swing attack enemy TO DO!!
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
 					{
-						//printf("sword hits enemy !!! yay \n");
 						enemies[i].isDead = 1;
 						for (int y = i; y < spawnIndex; ++y)
 						{
@@ -470,11 +472,12 @@ void level_1_Update()
 					character.energy = energyDeplete(character.energy);
 				}
 			}
-			
-			//! draw sword swing area
+			// update sword swing area to follow character position
 			swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
-			CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
-			CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
+
+			// draw sword swing area
+			// CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
+			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
 		for (int i = 0; i < obstructionCount; i++)
@@ -485,11 +488,8 @@ void level_1_Update()
 			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
 		}
 
-
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
-
-
 
 		// enemy obstruction
 		for (int i = 0; i < (spawnIndex); ++i)
@@ -515,14 +515,12 @@ void level_1_Update()
 			}
 		}
 
-
-
 		if (firstDrop == 1)
 		{
 
 			for (int i = 0; i - 1 < dropIndex; ++i)
 			{
-				//printf("enemy dead2");
+				// printf("enemy dead2");
 				CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
 			}
 		}
@@ -562,9 +560,9 @@ void level_1_Update()
 		{
 			character.Pos = charMovement(character.Pos, character.speed); // character movement
 			if (playerNum == 1)
-				gunPlayer = charImageRanged(gunPlayer);
+				gunPlayer = charImageRanged(gunPlayer, character.Pos);
 			else if (playerNum == 2)
-				swordPlayer = charImageMelee(swordPlayer); // changes character sprite based on which direction he is facing
+				swordPlayer = charImageMelee(swordPlayer, character.Pos); // changes character sprite based on which direction he is facing
 		}
 
 		// recharge energy if < 5
@@ -582,24 +580,25 @@ void level_1_Update()
 		// if char dies
 		if (character.health <= 0)
 		{
-			//lose = 1;
+			// lose = 1;
 		}
 		else
 		{
 			lose = 0;
 		}
 
-		//draw enemy
-		for (int i = 0; i < spawnIndex; i++) {
+		// draw enemy
+		for (int i = 0; i < spawnIndex; i++)
+		{
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 		}
 
-		//draw player
+		// draw player
 		if (playerNum == 1)
 		{
 			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
 
-			//draw projectile
+			// draw projectile
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
 				if (firstShoot == 1)
