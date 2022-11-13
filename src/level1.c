@@ -58,7 +58,9 @@ void level_1_Init()
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
-	spawnIndex = 0;
+	///spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
+	enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
+	spawnIndex = 1;
 	firstShoot = 0;
 	dropIndex = 0;
 	lose = 0;
@@ -328,7 +330,7 @@ void level_1_Update()
 				// randomId = CP_Random_RangeInt(1, 4);
 				// enemies[spawnIndex].id = randomId;
 
-				spawnIndex++;
+				///spawnIndex++; /// YK TESTING HP SYSTEM HERE
 
 				spawnTimer = startSpawnTimer;
 			}
@@ -407,7 +409,7 @@ void level_1_Update()
 				}
 			}
 
-			// enemies die to bullets
+			//enemy obstruction collision
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
 				for (int j = 0; j < (spawnIndex); ++j)
@@ -416,23 +418,26 @@ void level_1_Update()
 					float yDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
 					float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 
-					for (int o = 0; o < obstructionCount; o++)
-					{ // check if projectile hits obstructions, if so, delete it.
-						if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
-						{
-							// check for obstructions
-							for (int x = i; x - 1 < bulletSpawnIndex; ++x)
-							{
-								bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-																	 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
-							}
-							--bulletSpawnIndex;
-						}
-					}
+					/// REDUNDANT. SEPARATE ENEMY DAMAGE DEALING WITH YOUR BULLET OBSTRUCTION! MOVED BELOW.
+					//for (int o = 0; o < obstructionCount; o++)
+					//{ // check if projectile hits obstructions, if so, delete it.
+					//	if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
+					//	{
+					//		// check for obstructions
+					//		for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+					//		{
+					//			bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
+					//												 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+					//		}
+					//		--bulletSpawnIndex;
+					//	}
+					//}
 
+					// enemies die to bullets
 					if (distance < enemies[j].width)
 					{ // less than bullet radius x2
-						enemies[j].isDead = 1;
+						--enemies[j].health;
+						///enemies[j].isDead = 1;
 						unsigned int randomRate = CP_Random_RangeInt(1, 5);
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
 						itemDrop[dropIndex].itemId = dropId;
@@ -464,38 +469,65 @@ void level_1_Update()
 						{
 							bulletArray[x] = bulletArray[x + 1];
 						}
+						--bulletSpawnIndex; // deletion of projectile after hitting enemy
 
-						for (int y = j; y < spawnIndex; ++y)
-						{
-							enemies[y] = enemies[y + 1]; // similar to above^
-						}
+						if (enemies[j].health <= 0) {
+							enemies[j].isDead = 1; /// redundant?
+							for (int y = j; y < spawnIndex; ++y)
+							{
+								enemies[y] = enemies[y + 1]; // similar to above^
+							}
 
-						if (enemies[j].isDead = 1)
-						{
-							--bulletSpawnIndex, --spawnIndex;
+							if (enemies[j].isDead = 1)
+							{
+								--spawnIndex;
+							}
 						}
 					}
 				}
 			}
+
+			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
+				for (int o = 0; o < obstructionCount; o++)
+				{ // check if projectile hits obstructions, if so, delete it.
+					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
+					{
+						// check for obstructions
+						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+						{
+							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
+							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+						}
+						--bulletSpawnIndex;
+					}
+				}
+			}
 		}
+
+
+
 
 		if (playerNum == 2)
 		{ // MELEE CHAR
 			if (character.energy > 0)
 			{
 				for (int i = 0; i < spawnIndex; i++)
-				{
-					//! sword swing attack enemy TO DO!!
+				{ // SWORD SWING
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
 					{
-						enemies[i].isDead = 1;
-						for (int y = i; y < spawnIndex; ++y)
-						{
-							enemies[y] = enemies[y + 1]; // similar to above^
-						}
-						if (enemies[i].isDead = 1)
-						{
-							--spawnIndex;
+						--enemies[i].health;
+						if (enemies[i].health <= 0) {
+							enemies[i].isDead = 1;
+							for (int y = i; y < spawnIndex; ++y)
+							{
+								enemies[y] = enemies[y + 1]; // similar to above^
+							}
+							if (enemies[i].isDead = 1)
+							{
+								--spawnIndex;
+							}
 						}
 					}
 				}
