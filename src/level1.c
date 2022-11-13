@@ -44,11 +44,11 @@ char characterEnergyDisplay[MAX_LENGTH];
 CP_Image map_background;
 void level_1_Init()
 {
-	CP_System_Fullscreen();
+	// CP_System_Fullscreen();
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	// CP_System_SetWindowSize(1000, 1000);
+	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 2.f;
 	startSpawnTimer = spawnTimer;
@@ -67,7 +67,7 @@ void level_1_Init()
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
-	map_background = CP_Image_Load("Assets/map_background.jpg");
+	map_background = CP_Image_Load("Assets/map_background.png");
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
@@ -131,34 +131,51 @@ void level_1_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-	srand(342421);
-	for (int i = 0; i < 10; i++)
+	for (int i = 0, x = 0, y = 0; i < 6; i++)
 	{
-		float x = rand() % (int)(wWidth + 1);
-		float y = rand() % (int)(wHeight + 1);
+
+		obs.rec_block[i] = SetRect_(wWidth / 4 + x, wHeight / 4 + y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
+		y += obs.rec_block[i].height;
+		if (i == 2)
+		{
+			x = obs.rec_block[i].width;
+			y = 0;
+		}
+	}
+	// obstruction surrounding the jet
+	obs.rec_block[6] = SetRect_(940, 277, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
+	obs.rec_block[7] = SetRect_(1240, 277, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
+	obs.rec_block[8] = SetRect_(990, 347, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+	obs.rec_block[9] = SetRect_(1090, 347, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+	obs.rec_block[10] = SetRect_(1190, 347, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+	obs.rec_block[11] = SetRect_(990, 207, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+	obs.rec_block[12] = SetRect_(1090, 207, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+	obs.rec_block[13] = SetRect_(1190, 207, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+
+	// obstruction surrounding the planet
+	for (int i = 14, x = 195, y = 128; i < 32; i++)
+	{
 		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
+		x += 60;
+		if (i == 22)
+		{
+			y = 667;
+			x = 195;
+		}
 	}
-	srand(1213243);
-	for (int i = 10; i < 20; i++)
+	for (int i = 32, x = 128, y = 128; i < obstructionCount; i++)
 	{
-		float x = rand() % (int)(wWidth + 1);
-		float y = rand() % (int)(wHeight + 1);
-		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")), CP_Image_Load("Assets/obstruction2.png"));
+		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
+		y += 60;
 	}
-	srand(568567);
-	for (int i = 20; i < obstructionCount; i++)
-	{
-		float x = rand() % (int)(wWidth + 1);
-		float y = rand() % (int)(wHeight + 1);
-		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
-	}
+
 	swordSwingArea = SetSword(character.Pos.x - character.width / 2, character.Pos.y, character.width * 2, character.height * 2.5);
 }
 
 void level_1_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-
+	printf("x=%f y=%f\n", CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
 		isPaused = !isPaused;
