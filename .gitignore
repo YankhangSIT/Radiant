@@ -432,3 +432,6 @@ FodyWeavers.xsd
 .tmp/Debug-x64/splashscreen.obj
 .tmp/Debug-x64/vc143.pdb
 .tmp/Debug-x64/utils.obj
+.tmp/Debug-x64/Radiant.tlog/CL.command.1.tlog
+.vs/Radiant/v17/.suo
+.vs/Radiant/v17/Browse.VC.db

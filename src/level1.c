@@ -54,7 +54,7 @@ void level_1_Init()
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
-	surviveMin = 1;
+	surviveMin = 0;
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
@@ -68,7 +68,7 @@ void level_1_Init()
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background.jpg");
-	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
+	//healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
@@ -418,7 +418,7 @@ void level_1_Update()
 					if (distance < enemies[j].width)
 					{ // less than bullet radius x2
 						enemies[j].isDead = 1;
-						unsigned int randomRate = CP_Random_RangeInt(2, 2);
+						unsigned int randomRate = CP_Random_RangeInt(1, 5);
 						unsigned int dropId= CP_Random_RangeInt(1, 2);
 						itemDrop[dropIndex].itemId = dropId;
 
@@ -628,18 +628,16 @@ void level_1_Update()
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
 		}
 
-		//if (firstDrop == 1)
-	//	{
+
 		
 			for (int i = 0; i < dropIndex; ++i)
 			{
-				//printf("enemy dead2");
 				if (itemDrop[i].dropTrue == 1)
 				{
 					CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 				}
 			}
-		//}
+
 
 	}
 
