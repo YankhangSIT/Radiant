@@ -54,7 +54,7 @@ void level_1_Init()
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
-	surviveMin = 0;
+	surviveMin = 1;
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
@@ -177,7 +177,6 @@ void level_1_Init()
 void level_1_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	printf("x=%f y=%f\n", CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
 		isPaused = !isPaused;
