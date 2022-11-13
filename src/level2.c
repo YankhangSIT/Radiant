@@ -59,7 +59,7 @@ void level_2_Init()
 	delayShootTime = delayShootStart;
 	// CP_System_SetWindowSize(1000, 1000);
 	bullet.bulletSpeed = 1000;
-	spawnTimer = 2.f;
+	spawnTimer = 1.f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -84,6 +84,8 @@ void level_2_Init()
 	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
+	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
+	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 
 	enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
@@ -100,8 +102,8 @@ void level_2_Init()
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	// enemy width and height
-	enemy.width = CP_Image_GetWidth(enemy.enemySprite);
-	enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+	//enemy.width = CP_Image_GetWidth(enemy.enemySprite);
+	//enemy.height = CP_Image_GetHeight(enemy.enemySprite);
 	enemy.speed = 70;
 	healthDrop.width = CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = CP_Image_GetHeight(healthDrop.dropSprite);
@@ -512,36 +514,58 @@ void level_2_Update()
 					}
 				}
 				if (distance < enemies[j].width * 2)
-				{ // less than bullet radius x2
+				{ 
+					printf("enemy health before: %d", enemies[j].health);
+					//--enemies[j].health;
+					printf("enemy health after: %d", enemies[j].health);
 					enemies[j].isDead = 1;
-					unsigned int randomRate = CP_Random_RangeInt(1, 3);
+					unsigned int randomRate = CP_Random_RangeInt(1, 5);
+					unsigned int dropId = CP_Random_RangeInt(1, 2);
+					itemDrop[dropIndex].itemId = dropId;
 
 					if (randomRate == 2 && enemies[j].isDead)
 					{
-						;
-						if (firstDrop == 1)
+
+						itemDrop[dropIndex].dropTrue = 1;
+
+						if (itemDrop[dropIndex].itemId == 1)
 						{
-							++dropIndex;
+							itemDrop[dropIndex].dropSprite = dropHealthSprite;
+							itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
+							itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
 						}
+						else if (itemDrop[dropIndex].itemId == 2)
+						{
+							itemDrop[dropIndex].dropSprite = dropEnergySprite;
+							itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
+							itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
+
+						}
+
 						itemDrop[dropIndex].pos.x = enemies[j].pos.x;
 						itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-						firstDrop = 1;
+						++dropIndex;
 					}
-
+					//if (enemies[j].isDead)
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 					{
 						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
 															 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
+						for (int y = j; y < spawnIndex; ++y)
+						{
+							enemies[y] = enemies[y + 1]; // similar to above^
+						}
 
-					for (int y = j; y < spawnIndex; ++y)
-					{
-						enemies[y] = enemies[y + 1]; // similar to above^
-					}
 
-					--bulletSpawnIndex, --spawnIndex;
+						--bulletSpawnIndex, --spawnIndex;
+					//}
+					
 				}
+
 			}
+			
+
 		}
 
 		// damage taking and 2 second invulnerability after code.
@@ -595,11 +619,11 @@ void level_2_Update()
 			}
 		}
 
-		if (firstDrop == 1)
+		for (int i = 0; i < dropIndex; ++i)
 		{
-			for (int i = 0; i - 1 < dropIndex; ++i)
+			if (itemDrop[i].dropTrue == 1)
 			{
-				CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
+				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
 

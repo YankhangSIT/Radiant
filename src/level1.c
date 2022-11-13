@@ -54,7 +54,7 @@ void level_1_Init()
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
-	surviveMin = 1;
+	surviveMin = 0;
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
@@ -68,9 +68,11 @@ void level_1_Init()
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background.png");
-	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
+	// healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
+	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
+	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 
 	// enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
@@ -316,6 +318,53 @@ void level_1_Update()
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 
+		if (min < surviveMin) //! isCompleted)
+		{
+
+			if (spawnTimer <= 0)
+			{
+				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+				enemies[spawnIndex].pos.x = spawnPosition.x;
+				enemies[spawnIndex].pos.y = spawnPosition.y;
+				// randomId = CP_Random_RangeInt(1, 4);
+				// enemies[spawnIndex].id = randomId;
+
+				spawnIndex++;
+
+				spawnTimer = startSpawnTimer;
+			}
+		}
+
+		for (int i = 0; i < spawnIndex; i++)
+		{
+			// Enemy Render
+
+			// if (enemies[i].id == 1)
+			//{
+			enemies[i].enemySprite = enemySprite1;
+			enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
+			enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
+			//}
+			/*else if (enemies[i].id == 2)
+			{
+				enemies[i].enemySprite = enemySprite2;
+				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
+				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
+			}*/
+			// else if (enemies[i].id == 3)
+			//{
+			//	enemies[i].enemySprite = enmySprite3;
+			//}
+			// printf("%d\n", enemies[i].id);
+
+			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
+			for (int o = 0; o < obstructionCount; o++)
+			{
+				// check for obstructions
+				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
+			}
+		}
+
 		if (playerNum == 1)
 		{ // IF RANGED CHAR
 			bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
@@ -385,17 +434,31 @@ void level_1_Update()
 					if (distance < enemies[j].width)
 					{ // less than bullet radius x2
 						enemies[j].isDead = 1;
-						unsigned int randomRate = CP_Random_RangeInt(1, 3);
-						// printf("enemy dead");
+						unsigned int randomRate = CP_Random_RangeInt(1, 5);
+						unsigned int dropId = CP_Random_RangeInt(1, 2);
+						itemDrop[dropIndex].itemId = dropId;
+
 						if (randomRate == 2 && enemies[j].isDead)
 						{
-							if (firstDrop == 1)
+
+							itemDrop[dropIndex].dropTrue = 1;
+
+							if (itemDrop[dropIndex].itemId == 1)
 							{
-								++dropIndex;
+								itemDrop[dropIndex].dropSprite = dropHealthSprite;
+								itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
+								itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
 							}
+							else if (itemDrop[dropIndex].itemId == 2)
+							{
+								itemDrop[dropIndex].dropSprite = dropEnergySprite;
+								itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
+								itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
+							}
+
 							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
 							itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-							firstDrop = 1;
+							++dropIndex;
 						}
 
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
@@ -414,53 +477,6 @@ void level_1_Update()
 						}
 					}
 				}
-			}
-		}
-
-		if (min < surviveMin) //! isCompleted)
-		{
-
-			if (spawnTimer <= 0)
-			{
-				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
-				enemies[spawnIndex].pos.x = spawnPosition.x;
-				enemies[spawnIndex].pos.y = spawnPosition.y;
-				// randomId = CP_Random_RangeInt(1, 4);
-				// enemies[spawnIndex].id = randomId;
-
-				spawnIndex++;
-
-				spawnTimer = startSpawnTimer;
-			}
-		}
-
-		for (int i = 0; i < spawnIndex; i++)
-		{
-			// Enemy Render
-
-			// if (enemies[i].id == 1)
-			//{
-			enemies[i].enemySprite = enemySprite1;
-			enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
-			enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-			//}
-			/*else if (enemies[i].id == 2)
-			{
-				enemies[i].enemySprite = enemySprite2;
-				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
-				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-			}*/
-			// else if (enemies[i].id == 3)
-			//{
-			//	enemies[i].enemySprite = enmySprite3;
-			//}
-			// printf("%d\n", enemies[i].id);
-
-			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < obstructionCount; o++)
-			{
-				// check for obstructions
-				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
 			}
 		}
 
@@ -532,16 +548,6 @@ void level_1_Update()
 			}
 		}
 
-		if (firstDrop == 1)
-		{
-
-			for (int i = 0; i - 1 < dropIndex; ++i)
-			{
-				// printf("enemy dead2");
-				CP_Image_Draw(healthDrop.dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, healthDrop.width, healthDrop.height, 255);
-			}
-		}
-
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1)
@@ -597,7 +603,7 @@ void level_1_Update()
 		// if char dies
 		if (character.health <= 0)
 		{
-			// lose = 1;
+			lose = 1;
 		}
 		else
 		{
@@ -628,6 +634,14 @@ void level_1_Update()
 		if (playerNum == 2)
 		{
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
+		}
+
+		for (int i = 0; i < dropIndex; ++i)
+		{
+			if (itemDrop[i].dropTrue == 1)
+			{
+				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
+			}
 		}
 	}
 }

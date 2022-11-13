@@ -87,6 +87,9 @@ int firstDrop;
 CP_Image enemySprite1;
 CP_Image enemySprite2;
 unsigned int randomId;
+CP_Image dropHealthSprite;
+CP_Image dropEnergySprite;
+CP_Vector dropPositions;
 
 int min;
 float sec;
