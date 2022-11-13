@@ -44,11 +44,11 @@ char characterEnergyDisplay[MAX_LENGTH];
 CP_Image map_background;
 void level_1_Init()
 {
-	// CP_System_Fullscreen();
+	CP_System_Fullscreen();
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_SetWindowSize(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 2.f;
 	startSpawnTimer = spawnTimer;

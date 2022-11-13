@@ -68,9 +68,9 @@ C:\Year1\csd1401\radiant\src\level1.c(535,22): warning C4244: 'initializing': co
 C:\Year1\csd1401\radiant\src\level1.c(536,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(540,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  6 of 48 functions (12.5%) were compiled, the rest were copied from previous compilation.
+  0 of 48 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Radiant.vcxproj -> C:\Year1\csd1401\radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
