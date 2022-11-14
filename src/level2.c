@@ -41,11 +41,6 @@ float wHeight;
 Obstruction obs;
 // triangle area for sword swing
 Sword swordSwingArea;
-float swordSwingTime;
-bool swingSword;
-int *characterFacing;
-CP_Image swordSwingSprite1;
-CP_Image swordSwingSprite2;
 
 // string array to use for text display
 char timeString[MAX_LENGTH];
@@ -91,8 +86,6 @@ void level_2_Init()
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
-	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
-	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
 
 	enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
@@ -109,8 +102,8 @@ void level_2_Init()
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	// enemy width and height
-	// enemy.width = CP_Image_GetWidth(enemy.enemySprite);
-	// enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+	//enemy.width = CP_Image_GetWidth(enemy.enemySprite);
+	//enemy.height = CP_Image_GetHeight(enemy.enemySprite);
 	enemy.speed = 70;
 	healthDrop.width = CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = CP_Image_GetHeight(healthDrop.dropSprite);
@@ -187,10 +180,7 @@ void level_2_Init()
 		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
 		y += 60;
 	}
-	swordSwingArea = SetSword(character.Pos.x - (character.width * 3) / 2, character.Pos.y, character.width * 3, character.height * 2.5);
-	swordSwingTime = 0;
-	swingSword = false;
-	characterFacing = 0;
+	swordSwingArea = SetSword(character.Pos.x + character.width / 2, character.Pos.y, character.width * 1.2, character.height * 2);
 }
 
 void level_2_Update()
@@ -524,7 +514,7 @@ void level_2_Update()
 					}
 				}
 				if (distance < enemies[j].width * 2)
-				{
+				{ 
 					printf("enemy health before: %d", enemies[j].health);
 					//--enemies[j].health;
 					printf("enemy health after: %d", enemies[j].health);
@@ -549,27 +539,33 @@ void level_2_Update()
 							itemDrop[dropIndex].dropSprite = dropEnergySprite;
 							itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
 							itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
+
 						}
 
 						itemDrop[dropIndex].pos.x = enemies[j].pos.x;
 						itemDrop[dropIndex].pos.y = enemies[j].pos.y;
 						++dropIndex;
 					}
-					// if (enemies[j].isDead)
+					//if (enemies[j].isDead)
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 					{
 						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
 															 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
-					for (int y = j; y < spawnIndex; ++y)
-					{
-						enemies[y] = enemies[y + 1]; // similar to above^
-					}
+						for (int y = j; y < spawnIndex; ++y)
+						{
+							enemies[y] = enemies[y + 1]; // similar to above^
+						}
 
-					--bulletSpawnIndex, --spawnIndex;
+
+						--bulletSpawnIndex, --spawnIndex;
 					//}
+					
 				}
+
 			}
+			
+
 		}
 
 		// damage taking and 2 second invulnerability after code.
@@ -609,7 +605,7 @@ void level_2_Update()
 			if (playerNum == 1)
 				gunPlayer = charImageRanged(gunPlayer, character.Pos);
 			else if (playerNum == 2)
-				swordPlayer = charImageMelee(swordPlayer, character.Pos, *characterFacing); // changes character sprite based on which direction he is facing
+				swordPlayer = charImageMelee(swordPlayer, character.Pos); // changes character sprite based on which direction he is facing
 		}
 
 		if (character.energy < 5)
