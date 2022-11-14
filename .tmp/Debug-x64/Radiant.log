@@ -1,78 +1,78 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Users\Artemissed\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  level1.c
-C:\Users\Artemissed\source\repos\Radiant\src\level1.h(12,1): warning C4005: 'FALSE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\shared\minwindef.h(71,1): message : see previous definition of 'FALSE'
-C:\Users\Artemissed\source\repos\Radiant\src\level1.h(13,1): warning C4005: 'TRUE': macro redefinition
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.22000.0\shared\minwindef.h(75,1): message : see previous definition of 'TRUE'
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(70,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(71,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(80,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(81,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(94,48): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(95,50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(97,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(98,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(106,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(107,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(115,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(116,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(141,64): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(141,125): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(141,187): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(142,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(145,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(150,100): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(150,105): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(150,167): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(151,101): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(151,106): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(151,168): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(152,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(152,162): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(152,167): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(153,41): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(153,163): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(153,168): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(154,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(154,164): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(154,169): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(155,41): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(155,163): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(155,168): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(156,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(156,164): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(156,169): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(157,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(157,164): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(157,169): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(162,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(162,34): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(162,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(162,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(162,160): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(172,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(172,34): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(172,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(172,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(172,160): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(176,122): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(346,23): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(347,24): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(389,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(453,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(454,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(459,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(460,38): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(419,23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(567,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(568,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(572,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\darre\OneDrive\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  level2.c
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.h(14,1): warning C4005: 'FALSE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(71): message : see previous definition of 'FALSE'
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.h(15,1): warning C4005: 'TRUE': macro redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(75): message : see previous definition of 'TRUE'
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(79,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(80,12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(92,17): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(93,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(109,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(110,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(116,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(117,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(125,21): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(126,22): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(150,64): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(150,125): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(150,187): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(151,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(154,24): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(159,100): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(159,105): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(159,167): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(160,101): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(160,106): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(160,168): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(161,40): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(161,162): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(161,167): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(162,41): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(162,163): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(162,168): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(163,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(163,164): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(163,169): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(164,41): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(164,163): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(164,168): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(165,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(165,164): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(165,169): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(166,42): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(166,164): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(166,169): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(171,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(171,34): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(171,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(171,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(171,160): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(181,31): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(181,34): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(181,37): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(181,98): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(181,160): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(184,100): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(355,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(392,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(393,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(399,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(400,35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(562,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(563,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(568,36): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(569,37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(507,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(508,39): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(512,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level2.c(531,22): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  1 of 48 functions ( 2.1%) were compiled, the rest were copied from previous compilation.
+  2 of 48 functions ( 4.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    3 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
-  32 File(s) copied
+  34 File(s) copied

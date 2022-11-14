@@ -57,9 +57,10 @@ void level_2_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	// CP_System_SetWindowSize(1000, 1000);
+	// CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 1.f;
+
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -73,12 +74,11 @@ void level_2_Init()
 	lose = 0;
 	canShoot = 0;
 	win = 0;
-	;
+	
 	// Set window width and height to variables
 	wWidth = CP_System_GetWindowWidth();
 	wHeight = CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background.png");
-	/// CP_System_SetWindowSize(wWidth, wHeight);
 	healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
@@ -231,7 +231,7 @@ void level_2_Update()
 
 	if (isPaused && win == FALSE)
 	{
-		printf("paused screen state  lv2 %d", isPaused);
+	//	printf("paused screen state  lv2 %d", isPaused);
 		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
@@ -271,7 +271,7 @@ void level_2_Update()
 			// isPaused = !isPaused;
 			if (isPaused == TRUE)
 			{
-				printf("paused state win lv2 %d", isPaused);
+			//	printf("paused state win lv2 %d", isPaused);
 				win = FALSE;
 				clear();
 				level_2_Init();
@@ -362,7 +362,6 @@ void level_2_Update()
 			if (firstShoot == 1)
 			{
 				CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-				// printf("Drawing %d", bulletSpawnIndex);
 			}
 		}
 
@@ -374,55 +373,48 @@ void level_2_Update()
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				randomId = CP_Random_RangeInt(1, 2);
-				enemies[spawnIndex].id = randomId;
+				enemies[spawnIndex].isDead = 0;
 
 				spawnIndex++;
-
-				spawnTimer = startSpawnTimer;
+				spawnTimer = startSpawnTimer;					
 			}
-		}
 
-		for (int i = 0; i < spawnIndex; i++)
-		{
-			// Enemy Render
 
-			if (enemies[i].id == 1)
+
+			for (int i = 0; i < spawnIndex; i++)
 			{
-				enemies[i].enemySprite = enemySprite1;
-				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
-				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-				enemies[i].health = 1;
-			}
-			else if (enemies[i].id == 2)
-			{
-				enemies[i].enemySprite = enemySprite2;
-				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
-				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-				enemies[i].health = 2;
-			}
-			// else if (enemies[i].id == 3)
-			//{
-			//	enemies[i].enemySprite = enmySprite3;
-			//}
+				randomId = CP_Random_RangeInt(1, 2);
+				enemies[spawnIndex].id = randomId;
+				if (enemies[spawnIndex].id == 1)
+				{
+					enemies[spawnIndex].enemySprite = enemySprite1;
+					enemies[spawnIndex].width = CP_Image_GetWidth(enemies[i].enemySprite);
+					enemies[spawnIndex].height = CP_Image_GetHeight(enemies[i].enemySprite);
+					enemies[spawnIndex].health = 1;
+				}
+				else if (enemies[spawnIndex].id == 2)
+				{
+					enemies[spawnIndex].enemySprite = enemySprite2;
+					enemies[spawnIndex].width = CP_Image_GetWidth(enemies[i].enemySprite);
+					enemies[spawnIndex].height = CP_Image_GetHeight(enemies[i].enemySprite);
+					enemies[spawnIndex].health = 2;
+				}
 
-			// printf("%d\n", enemies[i].id);
+				if (enemies[i].health > 0)
+				{
+					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+				}
+				enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
-			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+				for (int o = 0; o < obstructionCount; o++)
+				{
+					// check for obstructions
+					enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
+				}
 
-			// CP_Image_Draw(enemy.enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemy.width, enemy.height, 255);
-			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < obstructionCount; o++)
-			{
-				// check for obstructions
-				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
-			}
 
-			//! sword swing attack enemy TO DO!!
-			if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
-			{
-				printf("sword hits enemy !!! yay \n");
-			}
+			}			
+
 		}
 
 		// Player Render
@@ -446,9 +438,9 @@ void level_2_Update()
 			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
 		}
 		//! draw sword swing area
-		swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
-		CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
-		CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
+		//swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
+		//CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
+		//CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
@@ -464,6 +456,43 @@ void level_2_Update()
 				bulletSpawnIndex--;
 			}
 		}
+
+		if (playerNum == 2)
+		{ // MELEE CHAR
+			if (character.energy > 0)
+			{
+				for (int i = 0; i < spawnIndex; i++)
+				{ // SWORD SWING
+					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
+					{
+						--enemies[i].health;
+						if (enemies[i].health <= 0) {
+							enemies[i].isDead = 1;
+							for (int y = i; y < spawnIndex; ++y)
+							{
+								enemies[y] = enemies[y + 1]; // similar to above^
+							}
+							if (enemies[i].isDead = 1)
+							{
+								--spawnIndex;
+							}
+						}
+					}
+				}
+				if (CP_Input_MouseClicked())
+				{
+					character.energy = energyDeplete(character.energy);
+				}
+			}
+			// update sword swing area to follow character position
+			swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
+
+			// draw sword swing area
+			// CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
+			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
+		}
+
+
 
 		// enemy obstruction
 		for (int i = 0; i < (spawnIndex); ++i)
@@ -515,10 +544,8 @@ void level_2_Update()
 				}
 				if (distance < enemies[j].width * 2)
 				{ 
-					printf("enemy health before: %d", enemies[j].health);
-					//--enemies[j].health;
-					printf("enemy health after: %d", enemies[j].health);
-					enemies[j].isDead = 1;
+					--enemies[j].health;
+					//enemies[j].isDead = 1;
 					unsigned int randomRate = CP_Random_RangeInt(1, 5);
 					unsigned int dropId = CP_Random_RangeInt(1, 2);
 					itemDrop[dropIndex].itemId = dropId;
@@ -552,14 +579,24 @@ void level_2_Update()
 						bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
 															 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 					}
+						
+
+					--bulletSpawnIndex;
+					
+					if (enemies[j].health <= 0) {
+						enemies[j].isDead = 1; /// redundant?
 						for (int y = j; y < spawnIndex; ++y)
 						{
 							enemies[y] = enemies[y + 1]; // similar to above^
 						}
 
+						if (enemies[j].isDead = 1)
+						{
+							--spawnIndex;
+						}
+					}
 
-						--bulletSpawnIndex, --spawnIndex;
-					//}
+
 					
 				}
 

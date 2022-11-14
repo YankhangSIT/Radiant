@@ -29,7 +29,7 @@ float sec = 0;
 int surviveMin = 1;
 // win condition boolean
 int win = 0;
-//float spawnTimer = 0.f;
+float spawnTimer = 0.f;
 int lose = 0;
 struct Button nextLevel;
 struct Button restart;
