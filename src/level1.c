@@ -306,19 +306,7 @@ void level_1_Update()
 
 		spawnTimer -= elapsedTime;
 
-		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
-
-		// to display character health
-		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
-		CP_Font_DrawText("Health:", 200, 200);
-		CP_Font_DrawText(characterHealthDisplay, 260, 200);
-
-		// to display character energy
-		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
-		CP_Font_DrawText("Energy:", 200, 230);
-		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
+	
 
 		if (min < surviveMin) //! isCompleted)
 		{
@@ -442,8 +430,8 @@ void level_1_Update()
 							else if (itemDrop[dropIndex].itemId == 2)
 							{
 								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
-								itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
+								itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[dropIndex].dropSprite);
+								itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[dropIndex].dropSprite);
 							}
 
 							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
@@ -660,6 +648,21 @@ void level_1_Update()
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
+
+		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+
+		// to display character health
+		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
+		CP_Font_DrawText("Health:", 200, 200);
+		CP_Font_DrawText(characterHealthDisplay, 260, 200);
+
+		// to display character energy
+		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
+		CP_Font_DrawText("Energy:", 200, 230);
+		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
+
 	}
 }
 

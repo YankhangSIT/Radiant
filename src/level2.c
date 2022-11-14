@@ -84,9 +84,12 @@ void level_2_Init()
 	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
+	damagedSprite1 = CP_Image_Load("Assets/enemy1Damaged.png");
+	damagedSprite2 = CP_Image_Load("Assets/Monster_2_Damaged.png");
+
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
-
+	
 	enemy.radius = 39;
 	bullet.width = CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = CP_Image_GetWidth(bullet.bulletSprite);
@@ -319,19 +322,6 @@ void level_2_Update()
 
 		spawnTimer -= elapsedTime;
 
-		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
-
-		// to display character health
-		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
-		CP_Font_DrawText("Health:", 200, 200);
-		CP_Font_DrawText(characterHealthDisplay, 260, 200);
-
-		// to display character energy
-		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
-		CP_Font_DrawText("Energy:", 200, 230);
-		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 
 		// bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
 		bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
@@ -388,23 +378,23 @@ void level_2_Update()
 				if (enemies[spawnIndex].id == 1)
 				{
 					enemies[spawnIndex].enemySprite = enemySprite1;
-					enemies[spawnIndex].width = CP_Image_GetWidth(enemies[i].enemySprite);
-					enemies[spawnIndex].height = CP_Image_GetHeight(enemies[i].enemySprite);
+					enemies[spawnIndex].width = CP_Image_GetWidth(enemies[spawnIndex].enemySprite);
+					enemies[spawnIndex].height = CP_Image_GetHeight(enemies[spawnIndex].enemySprite);
 					enemies[spawnIndex].health = 1;
 				}
 				else if (enemies[spawnIndex].id == 2)
 				{
 					enemies[spawnIndex].enemySprite = enemySprite2;
-					enemies[spawnIndex].width = CP_Image_GetWidth(enemies[i].enemySprite);
-					enemies[spawnIndex].height = CP_Image_GetHeight(enemies[i].enemySprite);
+					enemies[spawnIndex].width = CP_Image_GetWidth(enemies[spawnIndex].enemySprite);
+					enemies[spawnIndex].height = CP_Image_GetHeight(enemies[spawnIndex].enemySprite);
 					enemies[spawnIndex].health = 2;
 				}
 
-				if (enemies[i].health > 0)
+			/*	if (enemies[i].health > 0)
 				{
 					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 				}
-				enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
+				enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);*/
 
 				for (int o = 0; o < obstructionCount; o++)
 				{
@@ -545,6 +535,9 @@ void level_2_Update()
 				if (distance < enemies[j].width * 2)
 				{ 
 					--enemies[j].health;
+					enemies[j].takeDamage = 1.0f;
+					
+				//	CP_Image_UpdatePixelData(enemies[j].enemySprite, colorArray);
 					//enemies[j].isDead = 1;
 					unsigned int randomRate = CP_Random_RangeInt(1, 5);
 					unsigned int dropId = CP_Random_RangeInt(1, 2);
@@ -558,14 +551,14 @@ void level_2_Update()
 						if (itemDrop[dropIndex].itemId == 1)
 						{
 							itemDrop[dropIndex].dropSprite = dropHealthSprite;
-							itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
-							itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
+							itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[dropIndex].dropSprite);
+							itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[dropIndex].dropSprite);
 						}
 						else if (itemDrop[dropIndex].itemId == 2)
 						{
 							itemDrop[dropIndex].dropSprite = dropEnergySprite;
-							itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
-							itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
+							itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[dropIndex].dropSprite);
+							itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[dropIndex].dropSprite);
 
 						}
 
@@ -585,6 +578,9 @@ void level_2_Update()
 					
 					if (enemies[j].health <= 0) {
 						enemies[j].isDead = 1; /// redundant?
+						
+
+
 						for (int y = j; y < spawnIndex; ++y)
 						{
 							enemies[y] = enemies[y + 1]; // similar to above^
@@ -656,6 +652,53 @@ void level_2_Update()
 			}
 		}
 
+		for (int i = 0; i < spawnIndex; i++)
+		{
+			if (enemies[i].takeDamage == 1.0f)
+			{
+					
+				printf("take damage time %f", enemies[i].takeDamage);
+				if (enemies[i].id == 1)
+				{
+					enemies[i].enemySprite = damagedSprite1;
+					printf("sprite id : %d\n", enemies[i].id);
+					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+				//	enemies[i].enemySprite = enemySprite1;
+				}
+				else if (enemies[i].id == 2)
+				{
+					enemies[i].enemySprite = damagedSprite2;
+					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+				//	enemies[i].enemySprite = enemySprite2;
+				}	
+				enemies[i].takeDamage -= elapsedTime;	
+				printf("take damage time %f", enemies[i].takeDamage);
+			}
+			else 
+			{
+				if (enemies[i].id == 1)
+				{
+						enemies[i].enemySprite = enemySprite1;
+				}
+				else if (enemies[i].id == 2)
+				{		
+						enemies[i].enemySprite = enemySprite2;
+				}
+				//enemies[i].takeDamage == 0;
+			}
+
+
+			if (enemies[i].health > 0)
+			{
+				CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+			}
+				
+
+
+			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed); 
+		}
+
+
 		for (int i = 0; i < dropIndex; ++i)
 		{
 			if (itemDrop[i].dropTrue == 1)
@@ -672,6 +715,22 @@ void level_2_Update()
 		{
 			lose = 0;
 		}
+
+
+		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+
+		// to display character health
+		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
+		CP_Font_DrawText("Health:", 200, 200);
+		CP_Font_DrawText(characterHealthDisplay, 260, 200);
+
+		// to display character energy
+		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
+		CP_Font_DrawText("Energy:", 200, 230);
+		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
+
 	}
 }
 
