@@ -25,15 +25,17 @@ CP_Vector charMovement(CP_Vector charPosition, float charSpeed)
 	return charPosition;
 }
 
-CP_Image charImageMelee(CP_Image charImage, CP_Vector charPosition)
+CP_Image charImageMelee(CP_Image charImage, CP_Vector charPosition, int *characterFacing)
 {
 	if (CP_Input_GetMouseX() < charPosition.x)
 	{
 		charImage = CP_Image_Load("Assets/melee_char_facing_left.png");
+		*characterFacing = 0;
 	}
 	else if (CP_Input_GetMouseX() > charPosition.x)
 	{
 		charImage = CP_Image_Load("Assets/melee_char_facing_right.png");
+		*characterFacing = 1;
 	}
 	return charImage;
 }

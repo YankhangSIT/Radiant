@@ -30,25 +30,29 @@ int healthChange;
 float wWidth;
 float wHeight;
 
+float swordSwingTime;
+bool swingSword;
 // obstruction obj in map.h
 Obstruction obs;
 
 // triangle area for sword swing
 Sword swordSwingArea;
-
+int characterFacing;
 // string array to use for text display
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
 
 CP_Image map_background;
+CP_Image swordSwingSprite1;
+CP_Image swordSwingSprite2;
 void level_1_Init()
 {
-	CP_System_Fullscreen();
+	// CP_System_Fullscreen();
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	// CP_System_SetWindowSize(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 2.f;
 	startSpawnTimer = spawnTimer;
@@ -58,7 +62,7 @@ void level_1_Init()
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
-	///spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
+	/// spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
 	enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
 	spawnIndex = 1;
 	firstShoot = 0;
@@ -82,6 +86,8 @@ void level_1_Init()
 	// player sprite
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
+	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
+	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
 
 	// enemy spawn
 	spawnPosition = CP_Vector_Set(0, 0);
@@ -135,50 +141,41 @@ void level_1_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-	for (int i = 0, x = 0, y = 0; i < 6; i++)
+	for (int i = 0, x = 0; i < 6; i++, x += CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
 	{
-
-		obs.rec_block[i] = SetRect_(wWidth / 4 + x, wHeight / 4 + y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
-		y += obs.rec_block[i].height;
-		if (i == 2)
-		{
-			x = obs.rec_block[i].width;
-			y = 0;
-		}
+		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight / 8, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
 	}
-	// obstruction surrounding the jet
-	obs.rec_block[6] = SetRect_(940, 277, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
-	obs.rec_block[7] = SetRect_(1240, 277, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
-	obs.rec_block[8] = SetRect_(990, 347, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	obs.rec_block[9] = SetRect_(1090, 347, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	obs.rec_block[10] = SetRect_(1190, 347, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	obs.rec_block[11] = SetRect_(990, 207, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	obs.rec_block[12] = SetRect_(1090, 207, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	obs.rec_block[13] = SetRect_(1190, 207, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-
-	// obstruction surrounding the planet
-	for (int i = 14, x = 195, y = 128; i < 32; i++)
+	for (int i = 6, x = 0; i < 12; i++, x -= CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
 	{
-		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
-		x += 60;
-		if (i == 22)
-		{
-			y = 667;
-			x = 195;
-		}
+		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight / 8, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
 	}
-	for (int i = 32, x = 128, y = 128; i < obstructionCount; i++)
+	for (int i = 12, x = 0; i < 18; i++, x += CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
 	{
-		obs.rec_block[i] = SetRect_(x, y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction1.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction1.png")), CP_Image_Load("Assets/obstruction1.png"));
-		y += 60;
+		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight * 7 / 8, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+	}
+	for (int i = 18, x = 0; i < 24; i++, x -= CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight * 7 / 8, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
+	}
+	for (int i = 24, y = 0; i < 27; i++, y += CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")))
+	{
+		obs.rec_block[i] = SetRect_(wWidth / 10 - CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")) / 2 + CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) / 2, wHeight / 8 + CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")) / 2 + y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
+	}
+	for (int i = 27, y = 0; i < 30; i++, y += CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")))
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")) / 2 - CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) / 2, wHeight / 8 + CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")) / 2 + y, CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
 	}
 
-	swordSwingArea = SetSword(character.Pos.x - character.width / 2, character.Pos.y, character.width * 2, character.height * 2.5);
+	swordSwingArea = SetSword(character.Pos.x - (character.width * 3) / 2, character.Pos.y, character.width * 3, character.height * 2.5);
+	swordSwingTime = 0;
+	swingSword = false;
+	characterFacing = 0;
 }
 
 void level_1_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
 		isPaused = !isPaused;
@@ -283,24 +280,10 @@ void level_1_Update()
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
-
 		if (sec >= 60)
 		{
 			sec = 0;
 			min++;
-		}
-
-		if (playerNum == 1)
-		{
-			canShoot = 0;
-			if (delayShootTime > 0.f)
-			{
-				delayShootTime -= elapsedTime;
-			}
-			else if (delayShootTime < 0.f)
-			{
-				canShoot = 1;
-			}
 		}
 
 		spawnTimer -= elapsedTime;
@@ -330,7 +313,7 @@ void level_1_Update()
 				// randomId = CP_Random_RangeInt(1, 4);
 				// enemies[spawnIndex].id = randomId;
 
-				///spawnIndex++; /// YK TESTING HP SYSTEM HERE
+				/// spawnIndex++; /// YK TESTING HP SYSTEM HERE
 
 				spawnTimer = startSpawnTimer;
 			}
@@ -367,7 +350,29 @@ void level_1_Update()
 		}
 
 		if (playerNum == 1)
-		{ // IF RANGED CHAR
+		{
+			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
+
+			// draw projectile
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
+				if (firstShoot == 1)
+				{
+					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
+					// printf("Drawing %d", bulletSpawnIndex);
+				}
+			}
+			canShoot = 0;
+			if (delayShootTime > 0.f)
+			{
+				delayShootTime -= elapsedTime;
+			}
+			else if (delayShootTime < 0.f)
+			{
+				canShoot = 1;
+			}
+			// IF RANGED CHAR
+			gunPlayer = charImageRanged(gunPlayer, character.Pos); // character facing direction based on mouseX position
 			bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
 			// SHOOT PROJECTILE MECHANIC
@@ -409,7 +414,7 @@ void level_1_Update()
 				}
 			}
 
-			//enemy obstruction collision
+			// enemy obstruction collision
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
 				for (int j = 0; j < (spawnIndex); ++j)
@@ -419,7 +424,7 @@ void level_1_Update()
 					float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 
 					/// REDUNDANT. SEPARATE ENEMY DAMAGE DEALING WITH YOUR BULLET OBSTRUCTION! MOVED BELOW.
-					//for (int o = 0; o < obstructionCount; o++)
+					// for (int o = 0; o < obstructionCount; o++)
 					//{ // check if projectile hits obstructions, if so, delete it.
 					//	if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					//	{
@@ -431,13 +436,13 @@ void level_1_Update()
 					//		}
 					//		--bulletSpawnIndex;
 					//	}
-					//}
+					// }
 
 					// enemies die to bullets
 					if (distance < enemies[j].width)
 					{ // less than bullet radius x2
 						--enemies[j].health;
-						///enemies[j].isDead = 1;
+						/// enemies[j].isDead = 1;
 						unsigned int randomRate = CP_Random_RangeInt(1, 5);
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
 						itemDrop[dropIndex].itemId = dropId;
@@ -471,7 +476,8 @@ void level_1_Update()
 						}
 						--bulletSpawnIndex; // deletion of projectile after hitting enemy
 
-						if (enemies[j].health <= 0) {
+						if (enemies[j].health <= 0)
+						{
 							enemies[j].isDead = 1; /// redundant?
 							for (int y = j; y < spawnIndex; ++y)
 							{
@@ -498,7 +504,7 @@ void level_1_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 					}
@@ -506,19 +512,43 @@ void level_1_Update()
 			}
 		}
 
-
-
-
 		if (playerNum == 2)
-		{ // MELEE CHAR
+		{
+			// MELEE CHAR
+			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
+			swordPlayer = charImageMelee(swordPlayer, character.Pos, &characterFacing); // character facing direction based on mouseX position
+
+			// character combat art
+			if (swingSword)
+			{
+				swordSwingTime += elapsedTime;
+				if (swordSwingTime > 0)
+				{
+					if (characterFacing)
+						CP_Image_Draw(swordSwingSprite1, swordSwingArea.x, swordSwingArea.y, CP_Image_GetWidth(swordSwingSprite1), CP_Image_GetHeight(swordSwingSprite1), 255);
+					else
+						CP_Image_Draw(swordSwingSprite2, swordSwingArea.x, swordSwingArea.y, CP_Image_GetWidth(swordSwingSprite2), CP_Image_GetHeight(swordSwingSprite2), 255);
+					if (swordSwingTime > 0.2)
+					{
+						swordSwingTime = 0;
+						swingSword = false;
+					}
+				}
+			}
+
 			if (character.energy > 0)
 			{
+				if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT))
+				{
+					swingSword = true;
+				}
 				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
 					{
 						--enemies[i].health;
-						if (enemies[i].health <= 0) {
+						if (enemies[i].health <= 0)
+						{
 							enemies[i].isDead = 1;
 							for (int y = i; y < spawnIndex; ++y)
 							{
@@ -613,10 +643,6 @@ void level_1_Update()
 		if (character.energy > 0)
 		{
 			character.Pos = charMovement(character.Pos, character.speed); // character movement
-			if (playerNum == 1)
-				gunPlayer = charImageRanged(gunPlayer, character.Pos);
-			else if (playerNum == 2)
-				swordPlayer = charImageMelee(swordPlayer, character.Pos); // changes character sprite based on which direction he is facing
 		}
 
 		// recharge energy if < 5
@@ -645,26 +671,6 @@ void level_1_Update()
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
-		}
-
-		// draw player
-		if (playerNum == 1)
-		{
-			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
-
-			// draw projectile
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{
-				if (firstShoot == 1)
-				{
-					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-					// printf("Drawing %d", bulletSpawnIndex);
-				}
-			}
-		}
-		if (playerNum == 2)
-		{
-			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
 		}
 
 		for (int i = 0; i < dropIndex; ++i)
