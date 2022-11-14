@@ -54,7 +54,7 @@ void level_1_Init()
 	delayShootTime = delayShootStart;
 	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
-	spawnTimer = 2.f;
+	spawnTimer = 1.25f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -62,9 +62,9 @@ void level_1_Init()
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
-	/// spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
-	enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
-	spawnIndex = 1;
+	spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
+	// enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
+	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
 	lose = 0;
@@ -234,8 +234,9 @@ void level_1_Update()
 
 					clear();
 					printf("next Level");
+					level_2_Init();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
-					// level_2_Init();
+
 					// printf("pause  state win lv1 %d", isPaused);
 				}
 			}
@@ -288,20 +289,6 @@ void level_1_Update()
 
 		spawnTimer -= elapsedTime;
 
-		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
-
-		// to display character health
-		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
-		CP_Font_DrawText("Health:", 200, 200);
-		CP_Font_DrawText(characterHealthDisplay, 260, 200);
-
-		// to display character energy
-		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
-		CP_Font_DrawText("Energy:", 200, 230);
-		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
-
 		if (min < surviveMin) //! isCompleted)
 		{
 
@@ -310,10 +297,9 @@ void level_1_Update()
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				// randomId = CP_Random_RangeInt(1, 4);
-				// enemies[spawnIndex].id = randomId;
+				enemies[spawnIndex].isDead = 0;
 
-				/// spawnIndex++; /// YK TESTING HP SYSTEM HERE
+				spawnIndex++;
 
 				spawnTimer = startSpawnTimer;
 			}
@@ -321,25 +307,10 @@ void level_1_Update()
 
 		for (int i = 0; i < spawnIndex; i++)
 		{
-			// Enemy Render
 
-			// if (enemies[i].id == 1)
-			//{
 			enemies[i].enemySprite = enemySprite1;
 			enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
 			enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-			//}
-			/*else if (enemies[i].id == 2)
-			{
-				enemies[i].enemySprite = enemySprite2;
-				enemies[i].width = CP_Image_GetWidth(enemies[i].enemySprite);
-				enemies[i].height = CP_Image_GetHeight(enemies[i].enemySprite);
-			}*/
-			// else if (enemies[i].id == 3)
-			//{
-			//	enemies[i].enemySprite = enmySprite3;
-			//}
-			// printf("%d\n", enemies[i].id);
 
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 			for (int o = 0; o < obstructionCount; o++)
@@ -461,8 +432,8 @@ void level_1_Update()
 							else if (itemDrop[dropIndex].itemId == 2)
 							{
 								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[i].dropSprite);
-								itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[i].dropSprite);
+								itemDrop[dropIndex].width = CP_Image_GetWidth(itemDrop[dropIndex].dropSprite);
+								itemDrop[dropIndex].height = CP_Image_GetHeight(itemDrop[dropIndex].dropSprite);
 							}
 
 							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
@@ -680,6 +651,20 @@ void level_1_Update()
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
+
+		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
+		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+
+		// to display character health
+		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
+		CP_Font_DrawText("Health:", 200, 200);
+		CP_Font_DrawText(characterHealthDisplay, 260, 200);
+
+		// to display character energy
+		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
+		CP_Font_DrawText("Energy:", 200, 230);
+		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 	}
 }
 
