@@ -57,11 +57,11 @@ Sword UpdateSwordSwing(Sword sword, CP_Vector charPosition, float cWidth, float 
 	if (charDirection == left)
 	{
 
-		sword.x = charPosition.x - cWidth / 2;
+		sword.x = charPosition.x - (cWidth * 3 / 2);
 	}
 	if (charDirection == right)
 	{
-		sword.x = charPosition.x + cWidth / 2;
+		sword.x = charPosition.x + (cWidth * 3 / 2);
 	}
 	sword.y = charPosition.y;
 
