@@ -9,7 +9,7 @@
 struct Enemy {
 	CP_Vector pos;
 	CP_Color Color;
-	CP_Image enemySprite;	
+	CP_Image enemySprite;
 	float radius;
 	float height;
 	float width;
@@ -18,7 +18,7 @@ struct Enemy {
 	int isDead;
 	int health;
 	int id;
-	float takeDamage;
+
 
 };
 
@@ -86,8 +86,6 @@ CP_Vector itemSpawn;
 int firstDrop;
 CP_Image enemySprite1;
 CP_Image enemySprite2;
-CP_Image damagedSprite1;
-CP_Image damagedSprite2;
 unsigned int randomId;
 CP_Image dropHealthSprite;
 CP_Image dropEnergySprite;
