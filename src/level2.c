@@ -89,6 +89,8 @@ void level_2_Init()
 	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
+	damagedSprite1 = CP_Image_Load("Assets/enemy1Damaged.png");
+	damagedSprite2 = CP_Image_Load("Assets/Monster_2_Damaged.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
