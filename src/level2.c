@@ -491,11 +491,11 @@ void level_2_Update()
 				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
 				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
 				float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
-				float toDisplace = 0.5f * distance - (enemy.radius * 2.f);
+				float toDisplace = 0.5f * distance - (enemies[j].width);
 
-				if (distance < enemy.radius * 2)
+				if (distance < enemies[j].width)
 				{
-					float toDisplace = 0.5f * (distance - (enemy.radius * 2.f));
+					float toDisplace = 0.5f * (distance - (enemies[j].width));
 					enemies[i].pos.x -= toDisplace * (xDistance) / distance;
 					enemies[i].pos.y -= toDisplace * (yDistance) / distance;
 
@@ -529,7 +529,7 @@ void level_2_Update()
 						}
 					}
 				}
-				if (distance < enemies[j].width * 2)
+				if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
 				{
 					// derease health after collision
 					--enemies[j].health;

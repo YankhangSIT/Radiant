@@ -71,7 +71,7 @@ void level_1_Init()
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
-	surviveMin = 1;
+	surviveMin = 0;
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
@@ -394,6 +394,7 @@ void level_1_Update()
 			// set the width and height to the respective sprite
 			enemies[i].width = (float)CP_Image_GetWidth(enemies[i].enemySprite);
 			enemies[i].height = (float)CP_Image_GetHeight(enemies[i].enemySprite);
+			enemies[i].health = 1;
 
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 			for (int o = 0; o < obstructionCount; o++)
@@ -447,7 +448,7 @@ void level_1_Update()
 			}
 
 			// enemy obstruction collision
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			for (int i = 0; i + 1 < bulletSpawnIndex; ++i)
 			{
 				for (int j = 0; j < (spawnIndex); ++j)
 				{
@@ -471,9 +472,10 @@ void level_1_Update()
 					// }
 
 					// enemies die to bullets
-					if (distance < enemies[j].width)
+					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot ==1)
 					{ // less than bullet radius x2
 						--enemies[j].health;
+						printf("damage\n");
 						// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
 						unsigned int randomRate = CP_Random_RangeInt(1, 4);
 						// randomly set drop id between 1 or 2
@@ -626,11 +628,11 @@ void level_1_Update()
 				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
 				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
 				float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
-				float toDisplace = 0.5f * distance - (enemy.width);
+				float toDisplace = 0.5f * distance - (enemies[j].width);
 
-				if (distance < enemy.width)
+				if (distance < enemies[j].width)
 				{
-					float toDisplace = 0.5f * (distance - (enemy.width));
+					float toDisplace = 0.5f * (distance - (enemies[j].width));
 					enemies[i].pos.x -= toDisplace * (xDistance) / distance;
 					enemies[i].pos.y -= toDisplace * (yDistance) / distance;
 

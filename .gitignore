@@ -436,3 +436,14 @@ FodyWeavers.xsd
 .vs/Radiant/v17/.suo
 .vs/Radiant/v17/Browse.VC.db
 *.db
+bin/Debug-x64/Radiant.pdb
+.tmp/Debug-x64/vc143.pdb
+.tmp/Debug-x64/Radiant.tlog/CL.read.1.tlog
+.tmp/Debug-x64/Radiant.tlog/CL.write.1.tlog
+.tmp/Debug-x64/Radiant.tlog/CL.command.1.tlog
+.tmp/Debug-x64/Radiant.log
+.tmp/Debug-x64/Radiant.ipdb
+.tmp/Debug-x64/Radiant.iobj
+.tmp/Debug-x64/Radiant.exe.recipe
+.vs/Radiant/v17/.suo
+.vs/Radiant/v17/Browse.VC.db
