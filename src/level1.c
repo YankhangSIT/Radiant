@@ -56,9 +56,11 @@ CP_Image swordSwingSprite1;
 CP_Image swordSwingSprite2;
 CP_Image stunned;
 CP_Image hpPickup;
+CP_Image energyPickup;
 CP_Image obstruction1;
 CP_Image obstruction2;
 CP_Image obstruction3;
+
 void level_1_Init()
 {
 	// CP_System_Fullscreen();
@@ -71,7 +73,7 @@ void level_1_Init()
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
-	surviveMin = 0;
+	surviveMin = 1;
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
@@ -94,7 +96,8 @@ void level_1_Init()
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
-	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png"); 
+	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
+	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
 	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
 	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
 	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction3.png");
@@ -448,7 +451,7 @@ void level_1_Update()
 			}
 
 			// enemy obstruction collision
-			for (int i = 0; i + 1 < bulletSpawnIndex; ++i)
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
 				for (int j = 0; j < (spawnIndex); ++j)
 				{
@@ -648,7 +651,7 @@ void level_1_Update()
 		{ // if not invul, check for damage (collision with mobs) every frame
 			for (int i = 0; i < spawnIndex; i++)
 			{
-				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemies[i].width, enemies[i].height) == 1 && enemies[i].health > 0)
+				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, (enemies[i].width / 2)) == 1) //level2.c ADD "&& enemies[i].health > 0"
 				{
 					if (healthChange == 0)
 					{
@@ -673,6 +676,7 @@ void level_1_Update()
 				else if (itemDrop[i].itemId == 2) // health drop
 				{
 					++character.energy;
+					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
 				}
 
 				for (int y = i; y < dropIndex; ++y)

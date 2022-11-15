@@ -10,19 +10,31 @@ enum direction
 	right
 };
 int charDirection = left;
-int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Vector enemyPosition, float enemyWidth, float enemyHeight)
+
+int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Vector enemyPosition, float radius)
 {
-	if (charPosition.x < enemyPosition.x + enemyWidth &&
-		charPosition.x + charWidth > enemyPosition.x &&
-		charPosition.y < enemyPosition.y + enemyHeight &&
-		charHeight + enemyPosition.y > enemyPosition.y)
-	{
+	float testX = enemyPosition.x;
+	float testY = enemyPosition.y;
+
+	float rx = charPosition.x - charWidth / 2; // start from left of rect
+	float ry = charPosition.y - charHeight / 2; // start from top of rect
+
+	// check which edge of rect is closest to circle?
+	if (enemyPosition.x < rx) testX = rx;      // test left edge
+	else if (enemyPosition.x > rx + charWidth) testX = rx + charWidth;   // right edge
+	if (enemyPosition.y < ry) testY = ry;      // top edge
+	else if (enemyPosition.y > ry + charHeight) testY = ry + charHeight;   // bottom edge
+
+	// get distance from closest edges
+	float distX = enemyPosition.x - testX;
+	float distY = enemyPosition.y - testY;
+	float distance = sqrt((distX * distX) + (distY * distY));
+
+	// if the distance is less than the radius, collision detected
+	if (distance <= radius) {
 		return 1;
 	}
-	else
-	{
-		return 0;
-	}
+	return 0;
 }
 
 int energyDeplete(int charEnergy)
