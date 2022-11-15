@@ -35,8 +35,8 @@ void how_To_play_Init()
 void how_To_play_Update()
 {
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-	float xWidth = CP_System_GetWindowWidth();
-	float xHeight = CP_System_GetWindowHeight();
+	float xWidth = (float)CP_System_GetWindowWidth();
+	float xHeight = (float) CP_System_GetWindowHeight();
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
@@ -67,7 +67,7 @@ void how_To_play_Update()
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 	CP_Graphics_DrawRect(xWidth / 2.0f + 175, xHeight / 2.0f + 240, 350, 45);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Press 'Enter' to continue", xWidth / 2.0f + 180, xHeight / 2.0 + 240);
+	CP_Font_DrawText("Press 'Enter' to continue", xWidth / 2.0f + 180, xHeight / 2.0f + 240);
 
 	// Press Enter to proceed to next page
 	if (CP_Input_KeyDown(KEY_ENTER))

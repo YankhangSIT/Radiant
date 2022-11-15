@@ -12,7 +12,7 @@ void Button(char *string,float posX,float posY, float txtPosX, float txtPosY, in
 	//CP_Settings_RectMode(CP_POSITION_CENTER);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(CP_Color_Create(colorRed, colorBlue, colourGreen, alpha));
-	CP_Graphics_DrawRect(posX, posY, width, height);
+	CP_Graphics_DrawRect((float)posX, (float)posY, (float)width, (float)height);
 	CP_Settings_Fill(CP_Color_Create(textRed, textBlue, textGreen, alpha));
 	CP_Font_DrawText(string, txtPosX, txtPosY);
 }

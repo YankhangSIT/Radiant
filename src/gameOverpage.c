@@ -43,15 +43,15 @@ void game_Over_page_init(void)
 
 void game_Over_page_update(void)
 {
-	float pWidth = CP_System_GetWindowWidth();
-	float pHeight = CP_System_GetWindowHeight();
+	float pWidth = (float) CP_System_GetWindowWidth();
+	float pHeight = (float) CP_System_GetWindowHeight();
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 
-	float gWidth = CP_System_GetWindowWidth();
-	float gHeight = CP_System_GetWindowHeight();
+	float gWidth = (float)CP_System_GetWindowWidth();
+	float gHeight = (float) CP_System_GetWindowHeight();
 
 	// Buffer time for splashscreen image & cursor creation
 	TimeElapsed += CP_System_GetDt();
@@ -66,7 +66,7 @@ void game_Over_page_update(void)
 	}
 
 	float resulttime = (TimeElapsed / alphatime) * 255;
-	CP_Image_Draw(gameOver, gWidth / 4.0f + 100, (gHeight / 2.0f - 300), CP_Image_GetWidth(gameOver), CP_Image_GetHeight(gameOver), (int)resulttime);
+	CP_Image_Draw(gameOver, gWidth / 4.0f + 100, (gHeight / 2.0f - 300), (float) CP_Image_GetWidth(gameOver), (float) CP_Image_GetHeight(gameOver), (int)resulttime);
 
 	Button("Restart", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, 255, 0, 0, 0, 0, 0, 255);
 

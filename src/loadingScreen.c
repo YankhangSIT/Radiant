@@ -30,8 +30,8 @@
 
  void loading_Screen_Update(void)
 {
-	float aWidth = CP_System_GetWindowWidth();
-	float aHeight = CP_System_GetWindowHeight();
+	float aWidth = (float) CP_System_GetWindowWidth();
+	float aHeight = (float)CP_System_GetWindowHeight();
 	const float loadingTime = 4.0f;
 	char loadingPercentage[10];
 	float loadingPercentagef;
@@ -42,9 +42,9 @@
 	if (TimeElapsed > loadingTime) {
 		CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 	}
-	if (TimeElapsed < loadingTime - 0.5) {
+	if (TimeElapsed < loadingTime - 0.5f) {
 		loadingBar = (TimeElapsed / loadingTime) * aWidth;
-		loadingPercentagef = TimeElapsed / (loadingTime - 0.5) * 100;
+		loadingPercentagef = TimeElapsed / (loadingTime - 0.5f) * 100.f;
 	}
 	else {
 		loadingPercentagef = 100;
@@ -55,7 +55,7 @@
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-	CP_Image_Draw(game_Title, aWidth/ 2.0f , (aHeight / 2.0f - 100), CP_Image_GetWidth(game_Title), CP_Image_GetHeight(game_Title), 255);
+	CP_Image_Draw(game_Title, aWidth/ 2.0f , (aHeight / 2.0f - 100), (float) CP_Image_GetWidth(game_Title), (float) CP_Image_GetHeight(game_Title), 255);
 
 	//Loading Bar creation
 	/*CP_Settings_Fill(CP_Color_Create(0, 0, 255, 255));

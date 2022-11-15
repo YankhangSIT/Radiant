@@ -189,6 +189,7 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\src\characterSelect.h" />
     <ClInclude Include="..\src\combat.h" />
     <ClInclude Include="..\src\gameOverpage.h" />
+    <ClInclude Include="..\src\global.h" />
     <ClInclude Include="..\src\Howtoplay.h" />
     <ClInclude Include="..\src\level1.h" />
     <ClInclude Include="..\src\level2.h" />

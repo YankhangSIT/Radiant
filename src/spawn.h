@@ -5,6 +5,7 @@
 #include "stdio.h"
 #include "level1.h"
 #include "level2.h"
+#include "global.h"
 
 struct Enemy {
 	CP_Vector pos;

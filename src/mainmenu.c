@@ -40,8 +40,8 @@ void Main_Menu_Init()
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
-	wWidth = CP_System_GetWindowWidth();
-	wHeight = CP_System_GetWindowHeight();
+	wWidth = (float) CP_System_GetWindowWidth();
+	wHeight = (float) CP_System_GetWindowHeight();
 }
 
 void Main_Menu_Update()
@@ -50,7 +50,7 @@ void Main_Menu_Update()
 
 	// Set background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, CP_Image_GetWidth(main_menu), CP_Image_GetHeight(main_menu), 255);
+	CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, (float) CP_Image_GetWidth(main_menu), (float) CP_Image_GetHeight(main_menu), 255);
 
 	// Set font
 	CP_Font_Set(Alclonia);

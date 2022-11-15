@@ -69,8 +69,8 @@ float toDisplace(CP_Vector enemy1Pos, CP_Vector enemy2Pos, float radius)
 {
 	float xDistance = enemy1Pos.x - enemy2Pos.x;
 	float yDistance = enemy1Pos.y - enemy2Pos.y;
-	float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
-	float toDisplace = 0.5 * distance - (radius * 2);
+	float distance = (float) sqrt(pow(xDistance, 2) + pow(yDistance, 2));
+	float toDisplace = 0.5f * distance - (radius * 2);
 }
 
 /*

@@ -48,7 +48,7 @@ void splash_screen_update(void)
 	}
 
 	
-	CP_Image_Draw(digipen, 0, 0, CP_Image_GetWidth(digipen), CP_Image_GetHeight(digipen), (int)resulttime); // Draw splashscreen image
+	CP_Image_Draw(digipen, 0, 0, (float) CP_Image_GetWidth(digipen), (float)CP_Image_GetHeight(digipen), (int)resulttime); // Draw splashscreen image
 }
 void splash_screen_exit(void)
 {
