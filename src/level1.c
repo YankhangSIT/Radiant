@@ -38,6 +38,8 @@ float obsWidth2;
 float obsHeight2;
 float obsWidth3;
 float obsHeight3;
+float stunnedWidth;
+float stunnedHeight;
 
 // area for sword swing
 Sword swordSwingArea;
@@ -52,6 +54,8 @@ char characterEnergyDisplay[MAX_LENGTH];
 CP_Image map_background;
 CP_Image swordSwingSprite1;
 CP_Image swordSwingSprite2;
+CP_Image stunned;
+CP_Image hpPickup;
 CP_Image obstruction1;
 CP_Image obstruction2;
 CP_Image obstruction3;
@@ -89,6 +93,8 @@ void level_1_Init()
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
+	stunned = CP_Image_Load("Assets/stunned_animation.png");
+	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png"); 
 	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
 	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
 	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction3.png");
@@ -98,7 +104,8 @@ void level_1_Init()
 	obsHeight2 = (float)CP_Image_GetHeight(obstruction2);
 	obsWidth3 = (float)CP_Image_GetWidth(obstruction3);
 	obsHeight3 = (float)CP_Image_GetHeight(obstruction3);
-	// enemy.radius = 39;
+	stunnedWidth = (float)CP_Image_GetWidth(stunned);
+	stunnedHeight = (float)CP_Image_GetHeight(stunned);
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetHeight(bullet.bulletSprite);
 	// player sprite
@@ -639,7 +646,7 @@ void level_1_Update()
 		{ // if not invul, check for damage (collision with mobs) every frame
 			for (int i = 0; i < spawnIndex; i++)
 			{
-				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemies[i].width, enemies[i].height) == 1)
+				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, enemies[i].width, enemies[i].height) == 1 && enemies[i].health > 0)
 				{
 					if (healthChange == 0)
 					{
@@ -648,6 +655,29 @@ void level_1_Update()
 					}
 					character.invulState = 1;
 				}
+			}
+		}
+
+		//pickup items
+		for (int i = 0; i < dropIndex; ++i)
+		{ // itemDrop[dropIndex]
+			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
+			{
+				if (itemDrop[i].itemId == 1) // health drop
+				{
+					++character.health;
+					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
+				}
+				else if (itemDrop[i].itemId == 2) // health drop
+				{
+					++character.energy;
+				}
+
+				for (int y = i; y < dropIndex; ++y)
+				{
+					itemDrop[y] = itemDrop[y + 1]; // similar to above^
+				}
+				--dropIndex;
 			}
 		}
 
@@ -682,6 +712,10 @@ void level_1_Update()
 			{ // if stunned for more than 2 seconds, go back to being unstunned
 				++character.energy;
 				energyRechargeTime = 0;
+			}
+
+			if (character.energy < 1) { // draw stunned animation
+				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
 
@@ -742,6 +776,9 @@ void level_1_Update()
 		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
+
+		
+
 	}
 }
 

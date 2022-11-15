@@ -1,51 +1,40 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Year1\csd1401\radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  combat.c
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Users\Artemissed\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   level1.c
-C:\Year1\csd1401\radiant\src\level1.c(160,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(162,88): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(164,43): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(166,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(168,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(170,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(172,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(174,96): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(176,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(178,137): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(180,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(182,147): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(184,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(186,141): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(188,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(190,151): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(196,61): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(196,89): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(197,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(200,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(207,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(207,93): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(208,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(211,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(218,91): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(219,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(224,87): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(225,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(419,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-  level2.c
-C:\Year1\csd1401\radiant\src\level2.c(151,202): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level2.c(155,206): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level2.c(159,206): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level2.c(163,210): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level2.c(167,422): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level2.c(171,426): warning C4020: 'SetRect_': too many actual parameters
-C:\Year1\csd1401\radiant\src\level2.c(333,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-  map.c
-C:\Year1\csd1401\radiant\src\map.c(10,1): warning C4029: declared formal parameter list different from definition
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(167,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(169,88): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(171,43): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(173,92): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(175,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(177,92): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(179,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(181,96): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(183,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(185,137): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(187,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(189,147): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(191,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(193,141): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(195,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(197,151): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(203,61): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(203,89): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(204,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(207,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(214,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(214,93): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(215,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(218,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(225,91): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(226,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(231,87): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(232,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(426,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
   Generating code
-  4 of 48 functions ( 8.3%) were compiled, the rest were copied from previous compilation.
+  2 of 48 functions ( 4.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Year1\csd1401\radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
-  38 File(s) copied
+  40 File(s) copied
