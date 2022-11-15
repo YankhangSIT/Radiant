@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src"
   ],
-  "SelectedNode": "\\Radiant.sln",
+  "SelectedNode": "\\src\\level1.c",
   "PreviewInSolutionExplorer": false
 }
