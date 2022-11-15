@@ -1,11 +1,12 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "level1.h"
+#include "level2.h"
 #include "stdio.h"
 #include "splashScreen.h"
 #include "mainmenu.h"
 #include "loadingScreen.h"
-#include "gameOver.h"
+#include "gameOverPage.h"
 #include "button.h"
 #include "characterSelect.h"
 
@@ -80,7 +81,19 @@ void game_Over_page_update(void)
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 			if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
-				CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+				if (level == 1)
+				{
+					level_1_Init();
+					CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+				}
+				else if (level == 2)
+				{
+					level_2_Init();
+					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+				}
+
+					
+				//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 
 			}
 

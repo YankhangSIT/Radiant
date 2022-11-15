@@ -34,8 +34,6 @@ float stunnedElapsedTime;
 int healthChange;
 float wWidth;
 float wHeight;
-/// WHY???
-// int i = -1;
 
 // obstruction obj in map.h
 Obstruction obs;
@@ -78,7 +76,7 @@ void level_2_Init()
 	lose = 0;
 	canShoot = 0;
 	win = 0;
-
+	level = 2;
 	// Set window width and height to variables
 	wWidth = (float) CP_System_GetWindowWidth();
 	wHeight = (float) CP_System_GetWindowHeight();
@@ -102,19 +100,16 @@ void level_2_Init()
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 
-	// enemy spawn
+	// set spawn positions to 0 coordinate
 	spawnPosition = CP_Vector_Set(0, 0);
-
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
-	// enemy width and height
-	// enemy.width = CP_Image_GetWidth(enemy.enemySprite);
-	// enemy.height = CP_Image_GetHeight(enemy.enemySprite);
+;
 	enemy.speed = 70;
-	healthDrop.width = (float) CP_Image_GetWidth(healthDrop.dropSprite);
-	healthDrop.height = (float) CP_Image_GetHeight(healthDrop.dropSprite);
+	//healthDrop.width = (float) CP_Image_GetWidth(healthDrop.dropSprite);
+	//healthDrop.height = (float) CP_Image_GetHeight(healthDrop.dropSprite);
 
 	// player type gun
 	if (playerNum == 1)
@@ -205,13 +200,7 @@ void level_2_Update()
 		{
 
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
-			/*CP_Font_DrawText("You died!", wWidth / 2.0f, wHeight / 2.0f - 300);
-			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		*/
 		}
 
 		// Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -306,6 +295,7 @@ void level_2_Update()
 		if (playerNum == 1)
 		{
 			canShoot = 0;
+			//prevent the player from shooting immediately when resuming, restarting or when entering the game
 			if (delayShootTime > 0.f)
 			{
 				delayShootTime -= elapsedTime;
@@ -318,20 +308,25 @@ void level_2_Update()
 
 		spawnTimer -= elapsedTime;
 
-		// bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.height / 2);
+		// shooting position always follows character
 		bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
 		if (character.energy > 0)
 		{
 			if (CP_Input_MouseClicked() && canShoot == 1)
 			{
+				//get mouse position
 				CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+				//post increment meaning that bullet spawn index only start increasing from 0
 				if (firstShoot == 1)
 				{
 					++bulletSpawnIndex;
 				}
+				// get the direction vector between the bullet shoot position and the mousclick position by subtraction bewtween two coordinate
 				bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+				//set bullet position to shooting position
 				bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+				//normalize direction vector of the bullet and mouse click
 				bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
 				firstShoot = 1;
 
@@ -342,8 +337,11 @@ void level_2_Update()
 
 		for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 		{
+			// scale bullet by the direction vector and by the bullet speed based on elapsed time
 			bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
+			// add the position of the bullet by the scaled vector
 			bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
+			
 			if (firstShoot == 1)
 			{
 				CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
@@ -355,12 +353,14 @@ void level_2_Update()
 
 			if (spawnTimer <= 0)
 			{
+				// set random spawn position based on width and height of the screen
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+				// set spawn position of enemy
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				enemies[spawnIndex].isDead = 0;
-
+				// add one to enemy count and set spawn index to 1 for the enemy
 				spawnIndex++;
+				//restart spawn time
 				spawnTimer = startSpawnTimer;
 			}
 
@@ -370,24 +370,25 @@ void level_2_Update()
 				enemies[spawnIndex].id = randomId;
 				if (enemies[spawnIndex].id == 1)
 				{
+					// set enemy with this id to the respective sprite
 					enemies[spawnIndex].enemySprite = enemySprite1;
-					enemies[spawnIndex].width = (float) CP_Image_GetWidth(enemies[spawnIndex].enemySprite);
-					enemies[spawnIndex].height = (float) CP_Image_GetHeight(enemies[spawnIndex].enemySprite);
+					// set the width and height to the respective sprite
+					enemies[spawnIndex].width = (float) CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+					enemies[spawnIndex].height = (float) CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+					// set health for the enemy id number
 					enemies[spawnIndex].health = 1;
 				}
 				else if (enemies[spawnIndex].id == 2)
 				{
+					// set enemy with this id to the respective sprite
 					enemies[spawnIndex].enemySprite = enemySprite2;
-					enemies[spawnIndex].width = (float) CP_Image_GetWidth(enemies[spawnIndex].enemySprite);
-					enemies[spawnIndex].height = (float) CP_Image_GetHeight(enemies[spawnIndex].enemySprite);
+					// set the width and height to the respective sprite
+					enemies[spawnIndex].width = (float) CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+					enemies[spawnIndex].height = (float) CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+					// set health for the enemy id number
 					enemies[spawnIndex].health = 2;
 				}
 
-				/*	if (enemies[i].health > 0)
-					{
-						CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
-					}
-					enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);*/
 
 				for (int o = 0; o < obstructionCount; o++)
 				{
@@ -464,15 +465,13 @@ void level_2_Update()
 						--enemies[i].health;
 						if (enemies[i].health <= 0)
 						{
-							enemies[i].isDead = 1;
 							for (int y = i; y < spawnIndex; ++y)
 							{
 								enemies[y] = enemies[y + 1]; // similar to above^
 							}
-							if (enemies[i].isDead = 1)
-							{
+							
 								--spawnIndex;
-							}
+							
 						}
 					}
 				}
@@ -535,33 +534,40 @@ void level_2_Update()
 				}
 				if (distance < enemies[j].width * 2)
 				{
+					// derease health after collision
 					--enemies[j].health;
+					//activate take damge effect
 					enemies[j].takeDamage = 1.0f;
 
-					//	CP_Image_UpdatePixelData(enemies[j].enemySprite, colorArray);
-					// enemies[j].isDead = 1;
-					unsigned int randomRate = CP_Random_RangeInt(1, 5);
+					// randomize spawn rate from 1 to 3
+					unsigned int randomRate = CP_Random_RangeInt(1, 3);
+					// randomly set drop id between 1 or 2
 					unsigned int dropId = CP_Random_RangeInt(1, 2);
+			
 					itemDrop[dropIndex].itemId = dropId;
 
-					if (randomRate == 2 && enemies[j].isDead)
+					if (randomRate == 2 && enemies[j].health <= 0)
 					{
 
 						itemDrop[dropIndex].dropTrue = 1;
-
+						// check item drop's id by the spawn index of the drop
 						if (itemDrop[dropIndex].itemId == 1)
 						{
+							//if item's id is 1 set the item's dropSprite to the dropHealthSprite
 							itemDrop[dropIndex].dropSprite = dropHealthSprite;
-							itemDrop[dropIndex].width = (float) CP_Image_GetWidth(itemDrop[dropIndex].dropSprite);
-							itemDrop[dropIndex].height = (float) CP_Image_GetHeight(itemDrop[dropIndex].dropSprite);
+							// set the width and height to the respective sprite
+							itemDrop[dropIndex].width = (float) CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+							itemDrop[dropIndex].height = (float) CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 						}
 						else if (itemDrop[dropIndex].itemId == 2)
 						{
+							//if items's id is 2 set the item's dropSprite to the dropEnergySprite
 							itemDrop[dropIndex].dropSprite = dropEnergySprite;
-							itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[dropIndex].dropSprite);
-							itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[dropIndex].dropSprite);
+							// set the width and height to the respective sprite
+							itemDrop[dropIndex].width = (float) CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+							itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 						}
-
+						// set item with the drop index to the enemy coordinate
 						itemDrop[dropIndex].pos.x = enemies[j].pos.x;
 						itemDrop[dropIndex].pos.y = enemies[j].pos.y;
 						++dropIndex;
@@ -577,17 +583,15 @@ void level_2_Update()
 
 					if (enemies[j].health <= 0)
 					{
-						enemies[j].isDead = 1; /// redundant?
+						//enemies[j].isDead = 1; /// redundant?
 
 						for (int y = j; y < spawnIndex; ++y)
 						{
 							enemies[y] = enemies[y + 1]; // similar to above^
 						}
-
-						if (enemies[j].isDead = 1)
-						{
+				
 							--spawnIndex;
-						}
+						
 					}
 				}
 			}
@@ -646,25 +650,23 @@ void level_2_Update()
 
 		for (int i = 0; i < spawnIndex; i++)
 		{
+			// check any enemies that take damage
 			if (enemies[i].takeDamage == 1.0f)
 			{
 
-				printf("take damage time %f", enemies[i].takeDamage);
 				if (enemies[i].id == 1)
 				{
+					// change enemy sprite with id 1 to the  damagedSprite1
 					enemies[i].enemySprite = damagedSprite1;
-					printf("sprite id : %d\n", enemies[i].id);
 					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
-					//	enemies[i].enemySprite = enemySprite1;
 				}
 				else if (enemies[i].id == 2)
 				{
+					// change enemy sprite with id 2 to the  damagedSprite1
 					enemies[i].enemySprite = damagedSprite2;
 					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
-					//	enemies[i].enemySprite = enemySprite2;
 				}
 				enemies[i].takeDamage -= elapsedTime;
-				printf("take damage time %f", enemies[i].takeDamage);
 			}
 			else
 			{
@@ -678,7 +680,7 @@ void level_2_Update()
 				}
 				// enemies[i].takeDamage == 0;
 			}
-
+			// only draw enemies that are alive
 			if (enemies[i].health > 0)
 			{
 				CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
@@ -689,6 +691,7 @@ void level_2_Update()
 
 		for (int i = 0; i < dropIndex; ++i)
 		{
+			// check if any item drop is set to true
 			if (itemDrop[i].dropTrue == 1)
 			{
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
@@ -703,7 +706,7 @@ void level_2_Update()
 		{
 			lose = 0;
 		}
-
+		// display timer
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);

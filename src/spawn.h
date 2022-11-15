@@ -7,22 +7,20 @@
 #include "level2.h"
 #include "global.h"
 
+// enemy struct with all the properties needed for the enemy
 struct Enemy {
 	CP_Vector pos;
-	CP_Color Color;
 	CP_Image enemySprite;	
 	float radius;
 	float height;
 	float width;
-	float Direction;
 	float speed;
-	int isDead;
 	int health;
 	int id;
 	float takeDamage;
-
 };
 
+// enemy struct with all the properties needed for the drop
 struct Drop
 {
 	CP_Vector pos;
@@ -30,11 +28,10 @@ struct Drop
 	float width;
 	float height;
 	int itemId;
-	float dropDespawnTimer;
-	float dropDespawnStartTimer;
 	int dropTrue;
 };
 
+// Button struct
 struct Button
 {
 	CP_Vector pos;
@@ -42,9 +39,9 @@ struct Button
 	float height;
 };
 
+// Bullet struct with the properties needed
 struct Bullet
 {
-
 	CP_Vector shootPosition;
 	CP_Vector bulletPos;
 	CP_Image bulletSprite;
@@ -54,12 +51,9 @@ struct Bullet
 	float bulletSpeed;
 	float width;
 	float height;
-	float direction;
-
-	int isAlive;
 };
 
-
+// spawn timer of enemies
 float spawnTimer;
 float startSpawnTimer;
 
@@ -70,9 +64,9 @@ int spawnIndex;
 struct Enemy enemies[SIZE];
 struct Enemy enemy;
 
+// declarations needed for the bullet 
 struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
-
 int bulletSpawnIndex;
 int firstShoot;
 int canShoot;
@@ -80,20 +74,25 @@ float delayShootTime;
 float delayShootStart;
 CP_Vector spawnPosition;
 
+// declarations needed for drops
 struct Drop itemDrop[SIZE];
 struct Drop healthDrop;
 int dropIndex;
 CP_Vector itemSpawn;
 int firstDrop;
+CP_Vector dropPositions;
+
+// Image Sprites
 CP_Image enemySprite1;
 CP_Image enemySprite2;
 CP_Image damagedSprite1;
 CP_Image damagedSprite2;
-unsigned int randomId;
 CP_Image dropHealthSprite;
 CP_Image dropEnergySprite;
-CP_Vector dropPositions;
 
+unsigned int randomId;
+
+//min and sec counter
 int min;
 float sec;
 // survive condition

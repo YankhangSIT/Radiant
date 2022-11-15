@@ -69,7 +69,7 @@ void level_1_Init()
 	dropIndex = 0;
 	lose = 0;
 	canShoot = 0;
-
+	level = 1;
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
@@ -87,7 +87,7 @@ void level_1_Init()
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 
-	// enemy spawn
+	// set spawn positions to 0 coordinate
 	spawnPosition = CP_Vector_Set(0, 0);
 
 	enemies[spawnIndex].pos.x = spawnPosition.x;
@@ -299,27 +299,30 @@ void level_1_Update()
 		}
 
 		spawnTimer -= elapsedTime;
-
-		if (min < surviveMin) //! isCompleted)
+		// keeps spawning until the player survives
+		if (min < surviveMin)
 		{
-
+			// check if spawn timer
 			if (spawnTimer <= 0)
 			{
+				// set random spawn position based on width and height of the screen
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+				// set spawn position of enemy
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				enemies[spawnIndex].isDead = 0;
-
+				//enemies[spawnIndex].isDead = 0;
+				// add one to enemy count and set spawn index to 1 for the enemy
 				spawnIndex++;
-
+				//restart spawn time
 				spawnTimer = startSpawnTimer;
 			}
 		}
-
+		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
 		for (int i = 0; i < spawnIndex; i++)
 		{
-
+			// set enemy sprite to enemy sprite1
 			enemies[i].enemySprite = enemySprite1;
+			// set the width and height to the respective sprite
 			enemies[i].width = (float) CP_Image_GetWidth(enemies[i].enemySprite);
 			enemies[i].height = (float)CP_Image_GetHeight(enemies[i].enemySprite);
 
@@ -402,29 +405,34 @@ void level_1_Update()
 					if (distance < enemies[j].width)
 					{ // less than bullet radius x2
 						--enemies[j].health;
-						/// enemies[j].isDead = 1;
-						unsigned int randomRate = CP_Random_RangeInt(1, 5);
+						// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
+						unsigned int randomRate = CP_Random_RangeInt(1, 4);
+						// randomly set drop id between 1 or 2
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
 						itemDrop[dropIndex].itemId = dropId;
 
-						if (randomRate == 2 && enemies[j].isDead)
+						if (randomRate == 2 && enemies[j].health <= 0)
 						{
 
 							itemDrop[dropIndex].dropTrue = 1;
-
+							// check item drop's id by the spawn index of the drop
 							if (itemDrop[dropIndex].itemId == 1)
 							{
+								//if item's id is 1 set the item's dropSprite to the dropHealthSprite
 								itemDrop[dropIndex].dropSprite = dropHealthSprite;
-								itemDrop[dropIndex].width = (float) CP_Image_GetWidth(itemDrop[i].dropSprite);
-								itemDrop[dropIndex].height = (float) CP_Image_GetHeight(itemDrop[i].dropSprite);
+								// set the width and height to the respective sprite
+								itemDrop[dropIndex].width = (float) CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+								itemDrop[dropIndex].height = (float) CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 							}
 							else if (itemDrop[dropIndex].itemId == 2)
 							{
+								//if item's id is 2 set the item's dropSprite to the dropEnergySprite
 								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								itemDrop[dropIndex].width = (float) CP_Image_GetWidth(itemDrop[dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float) CP_Image_GetHeight(itemDrop[dropIndex].dropSprite);
+								// set the width and height to the respective sprite
+								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+								itemDrop[dropIndex].height = (float) CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 							}
-
+							// set item with the drop index to the enemy coordinate
 							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
 							itemDrop[dropIndex].pos.y = enemies[j].pos.y;
 							++dropIndex;
@@ -438,16 +446,16 @@ void level_1_Update()
 
 						if (enemies[j].health <= 0)
 						{
-							enemies[j].isDead = 1; /// redundant?
+							//enemies[j].isDead = 1; /// redundant?
 							for (int y = j; y < spawnIndex; ++y)
 							{
 								enemies[y] = enemies[y + 1]; // similar to above^
 							}
 
-							if (enemies[j].isDead = 1)
-							{
+							//if (enemies[j].isDead = 1)
+							//{
 								--spawnIndex;
-							}
+							//}
 						}
 					}
 				}
@@ -487,15 +495,15 @@ void level_1_Update()
 						--enemies[i].health;
 						if (enemies[i].health <= 0)
 						{
-							enemies[i].isDead = 1;
+							//enemies[i].isDead = 1;
 							for (int y = i; y < spawnIndex; ++y)
 							{
 								enemies[y] = enemies[y + 1]; // similar to above^
 							}
-							if (enemies[i].isDead = 1)
-							{
+							//if (enemies[i].isDead = 1)
+							//{
 								--spawnIndex;
-							}
+							//}
 						}
 					}
 				}
