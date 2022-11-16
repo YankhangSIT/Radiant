@@ -24,6 +24,7 @@ CP_Image swordPlayer;
 int isPaused;
 float elapsedTime;
 float invulElapsedTime;
+float invulTransparencyTime;
 float energyRechargeTime;
 float stunnedElapsedTime;
 int healthChange;
@@ -158,7 +159,9 @@ void level_1_Init()
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
 	character.speed = 210;
+	character.transparency = 255; // opaque initially, will be translucent in invul state
 	invulElapsedTime = 0;	// timer for invul
+	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
 
@@ -508,21 +511,6 @@ void level_1_Update()
 					float yDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
 					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 
-					/// REDUNDANT. SEPARATE ENEMY DAMAGE DEALING WITH YOUR BULLET OBSTRUCTION! MOVED BELOW.
-					// for (int o = 0; o < obstructionCount; o++)
-					//{ // check if projectile hits obstructions, if so, delete it.
-					//	if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
-					//	{
-					//		// check for obstructions
-					//		for (int x = i; x - 1 < bulletSpawnIndex; ++x)
-					//		{
-					//			bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-					//												 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
-					//		}
-					//		--bulletSpawnIndex;
-					//	}
-					// }
-
 					// enemies die to bullets
 					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot ==1)
 					{ // less than bullet radius x2
@@ -778,6 +766,19 @@ void level_1_Update()
 			{ // if invul for more than 2 seconds, go back to being vul
 				character.invulState = 0;
 				invulElapsedTime = 0;
+				character.transparency = 255;
+			}
+
+			invulTransparencyTime += elapsedTime;
+			if (invulTransparencyTime >= 0.2f) {
+				if (character.transparency == 255) {
+					character.transparency = 100;
+					invulTransparencyTime = 0;
+				}
+				else if (character.transparency == 100) {
+					character.transparency = 255;
+					invulTransparencyTime = 0;
+				}
 			}
 		}
 
@@ -826,7 +827,7 @@ void level_1_Update()
 		// draw player
 		if (playerNum == 1)
 		{
-			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
+			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 
 			// draw projectile
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
@@ -840,7 +841,7 @@ void level_1_Update()
 		}
 		if (playerNum == 2)
 		{
-			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
+			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 		}
 
 		for (int i = 0; i < dropIndex; ++i)

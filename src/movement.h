@@ -15,5 +15,6 @@ struct Character
 	int health;
 	int energy;
 	int invulState;
+	int transparency;
 } character;
 // CP_Vector checkEnemyCollision(CP_Vector enemy1Position, CP_Vector enemy2Position, float buffer);
