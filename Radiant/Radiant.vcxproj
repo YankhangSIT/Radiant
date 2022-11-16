@@ -173,6 +173,8 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\Howtoplay.c" />
     <ClCompile Include="..\src\level1.c" />
     <ClCompile Include="..\src\level2.c" />
+    <ClCompile Include="..\src\level3.c" />
+    <ClCompile Include="..\src\level4.c" />
     <ClCompile Include="..\src\loadingScreen.c" />
     <ClCompile Include="..\src\main.c" />
     <ClCompile Include="..\src\mainmenu.c" />
@@ -193,6 +195,8 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\src\Howtoplay.h" />
     <ClInclude Include="..\src\level1.h" />
     <ClInclude Include="..\src\level2.h" />
+    <ClInclude Include="..\src\level3.h" />
+    <ClInclude Include="..\src\level4.h" />
     <ClInclude Include="..\src\loadingScreen.h" />
     <ClInclude Include="..\src\mainmenu.h" />
     <ClInclude Include="..\src\map.h" />

@@ -5,6 +5,8 @@
 #include "stdio.h"
 #include "level1.h"
 #include "level2.h"
+#include "level3.h"
+#include "level4.h"
 #include "global.h"
 
 // enemy struct with all the properties needed for the enemy
@@ -101,7 +103,9 @@ int surviveMin;
 int win;
 //float spawnTimer = 0.f;
 int lose;
-
+float changeSpawnTimer;
+float startSpawnChangeTimer;
+int direction;
 void clear(void);
 
 

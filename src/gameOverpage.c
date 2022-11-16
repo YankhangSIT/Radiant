@@ -2,6 +2,8 @@
 #include "utils.h"
 #include "level1.h"
 #include "level2.h"
+#include "level3.h"
+#include "level4.h"
 #include "stdio.h"
 #include "splashScreen.h"
 #include "mainmenu.h"
@@ -83,14 +85,22 @@ void game_Over_page_update(void)
 			{
 				if (level == 1)
 				{
-					level_1_Init();
 					CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 				}
 				else if (level == 2)
 				{
-					level_2_Init();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 				}
+				else if (level == 3)
+				{
+					CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
+				}
+				else if(level == 4)
+				{
+					CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+				}
+
+
 
 					
 				//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
