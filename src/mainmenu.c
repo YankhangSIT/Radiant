@@ -14,7 +14,7 @@
 #include "stdio.h"
 #include "splashScreen.h"
 #include "characterSelect.h"
-#include "gameOver.h"
+#include "win.h"
 #include "button.h"
 #include "gameOverpage.h"
 

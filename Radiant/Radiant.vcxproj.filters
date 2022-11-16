@@ -66,6 +66,9 @@
     <ClCompile Include="..\src\level4.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\win.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\level4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\win.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
