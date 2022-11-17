@@ -79,8 +79,7 @@ void level_1_Init()
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
-	spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
-	// enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
+	spawnIndex = 0;
 	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
@@ -136,13 +135,13 @@ void level_1_Init()
 
 	nextLevel.pos.x = wWidth / 2.0f;
 	nextLevel.pos.y = wHeight / 2.0f - 200;
+
 	// player type gun
 	if (playerNum == 1)
 	{
 		character.playerSprite = gunPlayer;
 		character.width = (float)CP_Image_GetWidth(gunPlayer);
 		character.height = (float)CP_Image_GetHeight(gunPlayer);
-		// canShoot = 1;
 	}
 
 	// player type sword
@@ -259,14 +258,12 @@ void level_1_Update()
 
 	if (isPaused && win == FALSE)
 	{
-		// printf("paused screen state lv1 %d", isPaused);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
 
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		//	Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -367,6 +364,7 @@ void level_1_Update()
 		if (playerNum == 1)
 		{
 			canShoot = 0;
+			// prevent the player from shooting immediately when resuming, restarting or when entering the game
 			if (delayShootTime > 0.f)
 			{
 				delayShootTime -= elapsedTime;
@@ -385,27 +383,6 @@ void level_1_Update()
 			// printf("change spawntimer %f\n" , changeSpawnTimer);
 			if (changeSpawnTimer <= 0)
 			{
-				/*if (direction == 4)
-				{
-					direction = 1;
-					printf("direction 1\n");
-				}
-				else if (direction == 3)
-				{
-					printf("direction 4 \n");
-					direction = 4;
-				}
-				else if (direction == 2)
-				{
-					printf("direction 3 \n");
-					direction = 3;
-				}
-				else if (direction == 1)
-				{
-					printf("direction 2 \n");
-					direction = 2;
-				}*/
-
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
 
@@ -440,6 +417,7 @@ void level_1_Update()
 				spawnTimer = startSpawnTimer;
 			}
 		}
+
 		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
 		for (int i = 0; i < spawnIndex; i++)
 		{
@@ -450,7 +428,9 @@ void level_1_Update()
 			enemies[i].height = (float)CP_Image_GetHeight(enemies[i].enemySprite);
 			enemies[i].health = 1;
 
+			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
+
 			for (int o = 0; o < obstructionCount1; o++)
 			{
 				// check for obstructions
@@ -501,7 +481,7 @@ void level_1_Update()
 				}
 			}
 
-			// enemy obstruction collision
+			// enemies dying to bullets
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
 				for (int j = 0; j < (spawnIndex); ++j)
@@ -513,12 +493,14 @@ void level_1_Update()
 					// enemies die to bullets
 					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
 					{ // less than bullet radius x2
+						// decrease health after collision
 						--enemies[j].health;
-						printf("damage\n");
+
 						// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
 						unsigned int randomRate = CP_Random_RangeInt(1, 4);
 						// randomly set drop id between 1 or 2
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
+
 						itemDrop[dropIndex].itemId = dropId;
 
 						if (randomRate == 2 && enemies[j].health <= 0)
@@ -548,24 +530,20 @@ void level_1_Update()
 							++dropIndex;
 						}
 
+						// deletion of projectile after hitting enemy
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1];
 						}
-						--bulletSpawnIndex; // deletion of projectile after hitting enemy
+						--bulletSpawnIndex;
 
 						if (enemies[j].health <= 0)
 						{
-							// enemies[j].isDead = 1; /// redundant?
 							for (int y = j; y < spawnIndex; ++y)
 							{
-								enemies[y] = enemies[y + 1]; // similar to above^
+								enemies[y] = enemies[y + 1];
 							}
-
-							// if (enemies[j].isDead = 1)
-							//{
 							--spawnIndex;
-							//}
 						}
 					}
 				}
@@ -582,7 +560,7 @@ void level_1_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 					}
@@ -636,15 +614,11 @@ void level_1_Update()
 
 						if (enemies[i].health <= 0)
 						{
-							// enemies[i].isDead = 1;
 							for (int y = i; y < spawnIndex; ++y)
 							{
-								enemies[y] = enemies[y + 1]; // similar to above^
+								enemies[y] = enemies[y + 1]; 
 							}
-							// if (enemies[i].isDead = 1)
-							//{
 							--spawnIndex;
-							//}
 						}
 					}
 				}
@@ -671,12 +645,9 @@ void level_1_Update()
 			}
 			// update sword swing area to follow character position
 			swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
-
-			// draw sword swing area
-			// CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
-			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
+		// check player collision with obstruction
 		for (int i = 0; i < obstructionCount1; i++)
 		{
 			// draw obstruction
@@ -756,7 +727,7 @@ void level_1_Update()
 
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1)
-		{ // if invul, it will last for 2 seconds (2000 ms)
+		{ 
 			invulElapsedTime += elapsedTime;
 
 			if (invulElapsedTime >= 2)
