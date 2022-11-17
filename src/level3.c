@@ -167,6 +167,7 @@ void level_3_Init()
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
 	character.speed = 210;
+	character.transparency = 255; // opaque initially, will be translucent in invul state
 	invulElapsedTime = 0;	// timer for invul
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
@@ -307,6 +308,7 @@ void level_3_Update()
 		if (playerNum == 1)
 		{
 			canShoot = 0;
+			// prevent the player from shooting immediately when resuming, restarting or when entering the game
 			if (delayShootTime > 0.f)
 			{
 				delayShootTime -= elapsedTime;
@@ -322,61 +324,43 @@ void level_3_Update()
 		if (min < surviveMin)
 		{
 			changeSpawnTimer -= elapsedTime;
+			// printf("change spawntimer %f\n" , changeSpawnTimer);
 			if (changeSpawnTimer <= 0)
 			{
-				/*if (direction == 4)
-				{
-					direction = 1;
-					printf("direction 1\n");
-				}
-				else if (direction == 3)
-				{
-					printf("direction 4 \n");
-					direction = 4;
-				}
-				else if (direction == 2)
-				{
-					printf("direction 3 \n");
-					direction = 3;
-				}
-				else if (direction == 1)
-				{
-					printf("direction 2 \n");
-					direction = 2;
-				}*/
-
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
-			// check if spawn timer
-			if (spawnTimer <= 0)
-			{
-				// set random spawn position based on width and height of the screen
-				if (direction == 1)
-				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
-				}
-				else if (direction == 2)
-				{
-					spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
-				}
-				else if (direction == 3)
-				{
-					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wWidth));
-				}
-				else if (direction == 4)
-				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
-				}
-				// set spawn position of enemy
-				enemies[spawnIndex].pos.x = spawnPosition.x;
-				enemies[spawnIndex].pos.y = spawnPosition.y;
-				// enemies[spawnIndex].isDead = 0;
-				//  add one to enemy count and set spawn index to 1 for the enemy
-				spawnIndex++;
-				// restart spawn time
-				spawnTimer = startSpawnTimer;
-			}
 		}
+
+		// check if spawn timer
+		if (spawnTimer <= 0)
+		{
+			// set random spawn position based on width and height of the screen
+			if (direction == 1)
+			{
+				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+			}
+			else if (direction == 2)
+			{
+				spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
+			}
+			else if (direction == 3)
+			{
+				spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wWidth));
+			}
+			else if (direction == 4)
+			{
+				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
+			}
+			// set spawn position of enemy
+			enemies[spawnIndex].pos.x = spawnPosition.x;
+			enemies[spawnIndex].pos.y = spawnPosition.y;
+			// enemies[spawnIndex].isDead = 0;
+			//  add one to enemy count and set spawn index to 1 for the enemy
+			spawnIndex++;
+			// restart spawn time
+			spawnTimer = startSpawnTimer;
+		}
+
 		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
 		for (int i = 0; i < spawnIndex; i++)
 		{
@@ -403,7 +387,9 @@ void level_3_Update()
 				enemies[spawnIndex].health = 2;
 			}
 
+			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
+
 			for (int o = 0; o < obstructionCount3; o++)
 			{
 				// check for obstructions
@@ -454,40 +440,27 @@ void level_3_Update()
 				}
 			}
 
-			// enemy obstruction collision
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{
+			// enemies die to bullets
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i) {
 				for (int j = 0; j < (spawnIndex); ++j)
 				{
 					float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 					float yDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
 					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 
-					/// REDUNDANT. SEPARATE ENEMY DAMAGE DEALING WITH YOUR BULLET OBSTRUCTION! MOVED BELOW.
-					// for (int o = 0; o < obstructionCount3; o++)
-					//{ // check if projectile hits obstructions, if so, delete it.
-					//	if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
-					//	{
-					//		// check for obstructions
-					//		for (int x = i; x - 1 < bulletSpawnIndex; ++x)
-					//		{
-					//			bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-					//												 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
-					//		}
-					//		--bulletSpawnIndex;
-					//	}
-					// }
-
 					// enemies die to bullets
 					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
 					{ // less than bullet radius x2
+						// decrease health after collision
 						--enemies[j].health;
+						// activate take damge effect
 						enemies[j].takeDamage = 1.0f;
-						//printf("damage\n");
-						// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
-						unsigned int randomRate = CP_Random_RangeInt(1, 4);
+
+						// randomize spawn rate from 1 to 3
+						unsigned int randomRate = CP_Random_RangeInt(1, 3);
 						// randomly set drop id between 1 or 2
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
+
 						itemDrop[dropIndex].itemId = dropId;
 
 						if (randomRate == 2 && enemies[j].health <= 0)
@@ -505,7 +478,7 @@ void level_3_Update()
 							}
 							else if (itemDrop[dropIndex].itemId == 2)
 							{
-								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
+								// if items's id is 2 set the item's dropSprite to the dropEnergySprite
 								itemDrop[dropIndex].dropSprite = dropEnergySprite;
 								// set the width and height to the respective sprite
 								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
@@ -517,24 +490,21 @@ void level_3_Update()
 							++dropIndex;
 						}
 
+						// deletion of projectile after hitting enemy
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
-							bulletArray[x] = bulletArray[x + 1];
+							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
+							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
-						--bulletSpawnIndex; // deletion of projectile after hitting enemy
+						--bulletSpawnIndex;
 
 						if (enemies[j].health <= 0)
 						{
-							// enemies[j].isDead = 1; /// redundant?
 							for (int y = j; y < spawnIndex; ++y)
 							{
-								enemies[y] = enemies[y + 1]; // similar to above^
+								enemies[y] = enemies[y + 1];
 							}
-
-							// if (enemies[j].isDead = 1)
-							//{
 							--spawnIndex;
-							//}
 						}
 					}
 				}
@@ -543,7 +513,7 @@ void level_3_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = 0; o < obstructionCount3; o++)
+				for (int o = 0; o < obstructionCount1; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -551,7 +521,7 @@ void level_3_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 					}
@@ -573,7 +543,6 @@ void level_3_Update()
 					{
 						--enemies[i].health;
 						enemies[i].takeDamage = 1.0f;
-
 						unsigned int randomRate = CP_Random_RangeInt(1, 4);
 						// randomly set drop id between 1 or 2
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
@@ -609,12 +578,9 @@ void level_3_Update()
 						{
 							for (int y = i; y < spawnIndex; ++y)
 							{
-								enemies[y] = enemies[y + 1]; // similar to above^
+								enemies[y] = enemies[y + 1];
 							}
-							// if (enemies[i].isDead = 1)
-							//{
 							--spawnIndex;
-							//}
 						}
 					}
 				}
@@ -639,12 +605,9 @@ void level_3_Update()
 					}
 				}
 			}
+
 			// update sword swing area to follow character position
 			swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
-
-			// draw sword swing area
-			// CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
-			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
 		for (int i = 0; i < obstructionCount3; i++)
@@ -726,14 +689,14 @@ void level_3_Update()
 
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1)
-		{ // if invul, it will last for 2 seconds (2000 ms)
+		{
 			invulElapsedTime += elapsedTime;
 
 			if (invulElapsedTime >= 2)
 			{ // if invul for more than 2 seconds, go back to being vul
+				character.transparency = 255;
 				character.invulState = 0;
 				invulElapsedTime = 0;
-				character.transparency = 255;
 			}
 			// will character will flicker to represent invulnerability
 			invulTransparencyTime += elapsedTime;
@@ -749,30 +712,6 @@ void level_3_Update()
 					character.transparency = 255;
 					invulTransparencyTime = 0;
 				}
-			}
-		}
-
-		// pickup items
-		for (int i = 0; i < dropIndex; ++i)
-		{ // itemDrop[dropIndex]
-			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
-			{
-				if (itemDrop[i].itemId == 1) // health drop
-				{
-					++character.health;
-					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
-				}
-				else if (itemDrop[i].itemId == 2) // health drop
-				{
-					++character.energy;
-					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
-				}
-
-				for (int y = i; y < dropIndex; ++y)
-				{
-					itemDrop[y] = itemDrop[y + 1]; // similar to above^
-				}
-				--dropIndex;
 			}
 		}
 
@@ -803,17 +742,7 @@ void level_3_Update()
 			}
 		}
 
-		// if char dies
-		if (character.health <= 0)
-		{
-			lose = 1;
-		}
-		else
-		{
-			lose = 0;
-		}
-
-		// draw enemy
+		//enemy damaged sprite + draw enemies
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			// check any enemies that take damage
@@ -843,19 +772,28 @@ void level_3_Update()
 				{
 					enemies[i].enemySprite = enemySprite2;
 				}
-				// enemies[i].takeDamage == 0;
 			}
-
+			// only draw enemies that are alive
 			if (enemies[i].health > 0)
 			{
 				CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 			}
 		}
 
+		// if char dies
+		if (character.health <= 0)
+		{
+			lose = 1;
+		}
+		else
+		{
+			lose = 0;
+		}
+
 		// draw player
 		if (playerNum == 1)
 		{
-			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
+			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 
 			// draw projectile
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
@@ -863,17 +801,17 @@ void level_3_Update()
 				if (firstShoot == 1)
 				{
 					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-					// printf("Drawing %d", bulletSpawnIndex);
 				}
 			}
 		}
 		if (playerNum == 2)
 		{
-			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
+			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 		}
 
 		for (int i = 0; i < dropIndex; ++i)
 		{
+			// check if any item drop is set to true
 			if (itemDrop[i].dropTrue == 1)
 			{
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);

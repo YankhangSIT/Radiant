@@ -747,7 +747,6 @@ void level_2_Update()
 			// check any enemies that take damage
 			if (enemies[i].takeDamage == 1.0f)
 			{
-
 				if (enemies[i].id == 1)
 				{
 					// change enemy sprite with id 1 to the  damagedSprite1
@@ -772,7 +771,6 @@ void level_2_Update()
 				{
 					enemies[i].enemySprite = enemySprite2;
 				}
-				// enemies[i].takeDamage == 0;
 			}
 			// only draw enemies that are alive
 			if (enemies[i].health > 0)
@@ -802,7 +800,6 @@ void level_2_Update()
 				if (firstShoot == 1)
 				{
 					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-					// printf("Drawing %d", bulletSpawnIndex);
 				}
 			}
 		}
