@@ -313,7 +313,7 @@ void level_4_Update()
 
 					printf("next Level");
 					// level_2_Init();
-					//CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+					// CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 
 					// printf("pause  state win lv1 %d", isPaused);
 				}
@@ -467,7 +467,7 @@ void level_4_Update()
 			}
 
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < obstructionCount; o++)
+			for (int o = 0; o < obstructionCount4; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -527,7 +527,7 @@ void level_4_Update()
 					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 
 					/// REDUNDANT. SEPARATE ENEMY DAMAGE DEALING WITH YOUR BULLET OBSTRUCTION! MOVED BELOW.
-					// for (int o = 0; o < obstructionCount; o++)
+					// for (int o = 0; o < obstructionCount4; o++)
 					//{ // check if projectile hits obstructions, if so, delete it.
 					//	if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					//	{
@@ -606,7 +606,7 @@ void level_4_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = 0; o < obstructionCount; o++)
+				for (int o = 0; o < obstructionCount4; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -614,7 +614,7 @@ void level_4_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 					}
@@ -671,7 +671,6 @@ void level_4_Update()
 							++dropIndex;
 						}
 
-
 						if (enemies[i].health <= 0)
 						{
 							// enemies[i].isDead = 1;
@@ -715,7 +714,7 @@ void level_4_Update()
 			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
-		for (int i = 0; i < obstructionCount; i++)
+		for (int i = 0; i < obstructionCount4; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -768,7 +767,7 @@ void level_4_Update()
 			}
 		}
 
-		//pickup items
+		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
 			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
@@ -825,7 +824,8 @@ void level_4_Update()
 				energyRechargeTime = 0;
 			}
 
-			if (character.energy < 1) { // draw stunned animation
+			if (character.energy < 1)
+			{ // draw stunned animation
 				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
@@ -920,9 +920,6 @@ void level_4_Update()
 		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
-
-
-
 	}
 }
 

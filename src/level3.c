@@ -32,12 +32,12 @@ float wHeight;
 
 // obstruction obj in map.h
 Obstruction obs;
-float obsWidth1;
-float obsHeight1;
-float obsWidth2;
-float obsHeight2;
-float obsWidth3;
-float obsHeight3;
+float obsWidth4;
+float obsHeight4;
+float obsWidth5;
+float obsHeight5;
+float obsWidth6;
+float obsHeight6;
 float stunnedWidth;
 float stunnedHeight;
 
@@ -57,9 +57,9 @@ CP_Image swordSwingSprite2;
 CP_Image stunned;
 CP_Image hpPickup;
 CP_Image energyPickup;
-CP_Image obstruction1;
-CP_Image obstruction2;
-CP_Image obstruction3;
+CP_Image obstruction4;
+CP_Image obstruction5;
+CP_Image obstruction6;
 
 void level_3_Init()
 {
@@ -93,9 +93,9 @@ void level_3_Init()
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
-	map_background = CP_Image_Load("Assets/map_background.png");
+	map_background = CP_Image_Load("Assets/map_background3.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-	//enemySprite1 = CP_Image_Load("Assets/Monster_4.png");
+	// enemySprite1 = CP_Image_Load("Assets/Monster_4.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
@@ -103,21 +103,20 @@ void level_3_Init()
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
 	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
 	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
-	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
-	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
-	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction3.png");
+	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction4.png");
+	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction5.png");
+	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction6.png");
 	enemySprite1 = CP_Image_Load("Assets/Monster_4.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 	damagedSprite1 = CP_Image_Load("Assets/Monster_4_Damaged.png");
 	damagedSprite2 = CP_Image_Load("Assets/Monster_2_Damaged.png");
 
-
-	obsWidth1 = (float)CP_Image_GetWidth(obstruction1);
-	obsHeight1 = (float)CP_Image_GetHeight(obstruction1);
-	obsWidth2 = (float)CP_Image_GetWidth(obstruction2);
-	obsHeight2 = (float)CP_Image_GetHeight(obstruction2);
-	obsWidth3 = (float)CP_Image_GetWidth(obstruction3);
-	obsHeight3 = (float)CP_Image_GetHeight(obstruction3);
+	obsWidth4 = (float)CP_Image_GetWidth(obstruction4);
+	obsHeight4 = (float)CP_Image_GetHeight(obstruction4);
+	obsWidth5 = (float)CP_Image_GetWidth(obstruction5);
+	obsHeight5 = (float)CP_Image_GetHeight(obstruction5);
+	obsWidth6 = (float)CP_Image_GetWidth(obstruction6);
+	obsHeight6 = (float)CP_Image_GetHeight(obstruction6);
 	stunnedWidth = (float)CP_Image_GetWidth(stunned);
 	stunnedHeight = (float)CP_Image_GetHeight(stunned);
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
@@ -178,73 +177,6 @@ void level_3_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-	for (int i = 0, x = 0; i < 6; i++, x += obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 6, x = 0; i < 12; i++, x -= obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 12, x = 0; i < 18; i++, x += obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight * 7 / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 18, x = 0; i < 24; i++, x -= obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight * 7 / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 24, y = 0; i < 27; i++, y += obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 - obsWidth2 / 2 + obsWidth3 / 2, wHeight / 8 + obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	for (int i = 27, y = 0; i < 30; i++, y += obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2, wHeight / 8 + obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	for (int i = 30, y = 0; i < 33; i++, y -= obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 - obsWidth2 / 2 + obsWidth3 / 2, wHeight * 7 / 8 - obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	for (int i = 33, y = 0; i < 36; i++, y -= obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2, wHeight * 7 / 8 - obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	// square obstruction
-	for (int i = 36, x = 0, y = 0; i < 66; i++)
-	{
-
-		obs.rec_block[i] = SetRect_(wWidth / 6 + x, wHeight / 4.2 + y, obsWidth1, obsHeight1, obstruction1);
-		x += obs.rec_block[i].width;
-		if (i == 41 || i == 47 || i == 53 || i == 59)
-		{
-			y += obs.rec_block[i].height + character.height;
-			x = 0;
-		}
-	}
-	for (int i = 66, x = 0, y = 0; i < 96; i++)
-	{
-
-		obs.rec_block[i] = SetRect_(wWidth * 5 / 6 + x, wHeight / 4.2 + y, obsWidth1, obsHeight1, obstruction1);
-		x -= obs.rec_block[i].width;
-		if (i == 71 || i == 77 || i == 83 || i == 89)
-		{
-			y += obs.rec_block[i].height + character.height;
-			x = 0;
-		}
-	}
-	for (int i = 96, y = 0; i < 99; i++)
-	{
-
-		obs.rec_block[i] = SetRect_(wWidth / 2, wHeight * 4 / 5 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-		y -= obs.rec_block[i].height;
-	}
-	for (int i = 99, y = 0; i < 102; i++)
-	{
-
-		obs.rec_block[i] = SetRect_(wWidth / 2, wHeight / 5 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-		y += obs.rec_block[i].height;
-	}
 
 	// melee character swing sword area check
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
@@ -469,7 +401,7 @@ void level_3_Update()
 			}
 
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < obstructionCount; o++)
+			for (int o = 0; o < obstructionCount3; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -529,7 +461,7 @@ void level_3_Update()
 					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 
 					/// REDUNDANT. SEPARATE ENEMY DAMAGE DEALING WITH YOUR BULLET OBSTRUCTION! MOVED BELOW.
-					// for (int o = 0; o < obstructionCount; o++)
+					// for (int o = 0; o < obstructionCount3; o++)
 					//{ // check if projectile hits obstructions, if so, delete it.
 					//	if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					//	{
@@ -608,7 +540,7 @@ void level_3_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = 0; o < obstructionCount; o++)
+				for (int o = 0; o < obstructionCount3; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -616,7 +548,7 @@ void level_3_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 					}
@@ -637,51 +569,50 @@ void level_3_Update()
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
 					{
 						--enemies[i].health;
-							enemies[i].takeDamage = 1.0f;
-						
-							unsigned int randomRate = CP_Random_RangeInt(1, 4);
-							// randomly set drop id between 1 or 2
-							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							itemDrop[dropIndex].itemId = dropId;
-							if (randomRate == 2 && enemies[i].health <= 0)
-							{
+						enemies[i].takeDamage = 1.0f;
 
-								itemDrop[dropIndex].dropTrue = 1;
-								// check item drop's id by the spawn index of the drop
-								if (itemDrop[dropIndex].itemId == 1)
-								{
-									// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-									itemDrop[dropIndex].dropSprite = dropHealthSprite;
-									// set the width and height to the respective sprite
-									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								}
-								else if (itemDrop[dropIndex].itemId == 2)
-								{
-									// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-									itemDrop[dropIndex].dropSprite = dropEnergySprite;
-									// set the width and height to the respective sprite
-									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								}
-								// set item with the drop index to the enemy coordinate
-								itemDrop[dropIndex].pos.x = enemies[i].pos.x;
-								itemDrop[dropIndex].pos.y = enemies[i].pos.y;
-								++dropIndex;
-							}
+						unsigned int randomRate = CP_Random_RangeInt(1, 4);
+						// randomly set drop id between 1 or 2
+						unsigned int dropId = CP_Random_RangeInt(1, 2);
+						itemDrop[dropIndex].itemId = dropId;
+						if (randomRate == 2 && enemies[i].health <= 0)
+						{
 
-							if (enemies[i].health <= 0)
+							itemDrop[dropIndex].dropTrue = 1;
+							// check item drop's id by the spawn index of the drop
+							if (itemDrop[dropIndex].itemId == 1)
 							{
-								for (int y = i; y < spawnIndex; ++y)
-								{
-									enemies[y] = enemies[y + 1]; // similar to above^
-								}
-								// if (enemies[i].isDead = 1)
-								//{
-								--spawnIndex;
-								//}
+								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
+								itemDrop[dropIndex].dropSprite = dropHealthSprite;
+								// set the width and height to the respective sprite
+								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 							}
-						
+							else if (itemDrop[dropIndex].itemId == 2)
+							{
+								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
+								itemDrop[dropIndex].dropSprite = dropEnergySprite;
+								// set the width and height to the respective sprite
+								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+							}
+							// set item with the drop index to the enemy coordinate
+							itemDrop[dropIndex].pos.x = enemies[i].pos.x;
+							itemDrop[dropIndex].pos.y = enemies[i].pos.y;
+							++dropIndex;
+						}
+
+						if (enemies[i].health <= 0)
+						{
+							for (int y = i; y < spawnIndex; ++y)
+							{
+								enemies[y] = enemies[y + 1]; // similar to above^
+							}
+							// if (enemies[i].isDead = 1)
+							//{
+							--spawnIndex;
+							//}
+						}
 					}
 				}
 				if (CP_Input_MouseClicked())
@@ -713,7 +644,7 @@ void level_3_Update()
 			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
-		for (int i = 0; i < obstructionCount; i++)
+		for (int i = 0; i < obstructionCount3; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -766,7 +697,7 @@ void level_3_Update()
 			}
 		}
 
-		//pickup items
+		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
 			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
@@ -823,7 +754,8 @@ void level_3_Update()
 				energyRechargeTime = 0;
 			}
 
-			if (character.energy < 1) { // draw stunned animation
+			if (character.energy < 1)
+			{ // draw stunned animation
 				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
@@ -870,7 +802,6 @@ void level_3_Update()
 				}
 				// enemies[i].takeDamage == 0;
 			}
-
 
 			if (enemies[i].health > 0)
 			{
@@ -919,9 +850,6 @@ void level_3_Update()
 		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
-
-
-
 	}
 }
 

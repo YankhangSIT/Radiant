@@ -37,6 +37,14 @@ float wHeight;
 
 // obstruction obj in map.h
 Obstruction obs;
+float obsWidth4;
+float obsHeight4;
+float obsWidth5;
+float obsHeight5;
+float obsWidth6;
+float obsHeight6;
+float stunnedWidth;
+float stunnedHeight;
 // triangle area for sword swing
 Sword swordSwingArea;
 float swordSwingTime;
@@ -53,6 +61,9 @@ char characterEnergyDisplay[MAX_LENGTH];
 CP_Image map_background;
 CP_Image swordSwingSprite1;
 CP_Image swordSwingSprite2;
+CP_Image obstruction4;
+CP_Image obstruction5;
+CP_Image obstruction6;
 void level_2_Init()
 {
 	// CP_System_Fullscreen();
@@ -83,8 +94,8 @@ void level_2_Init()
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
-	map_background = CP_Image_Load("Assets/map_background.png");
-	//healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
+	map_background = CP_Image_Load("Assets/map_background2.png");
+	// healthDrop.dropSprite = CP_Image_Load("Assets/healthDrop.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	// enemy.enemySprite = CP_Image_Load("Assets/enemy1.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
@@ -96,13 +107,19 @@ void level_2_Init()
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
+
 	enemy.radius = 39;
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	// player sprite
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
-
+	obsWidth4 = (float)CP_Image_GetWidth(obstruction4);
+	obsHeight4 = (float)CP_Image_GetHeight(obstruction4);
+	obsWidth5 = (float)CP_Image_GetWidth(obstruction5);
+	obsHeight5 = (float)CP_Image_GetHeight(obstruction5);
+	obsWidth6 = (float)CP_Image_GetWidth(obstruction6);
+	obsHeight6 = (float)CP_Image_GetHeight(obstruction6);
 	// set spawn positions to 0 coordinate
 	spawnPosition = CP_Vector_Set(0, 0);
 	enemies[spawnIndex].pos.x = spawnPosition.x;
@@ -148,31 +165,8 @@ void level_2_Init()
 
 	isPaused = FALSE;
 	printf("paused screen state init lv2 %d", isPaused);
+
 	// initiate obstruction
-	for (int i = 0, x = 0; i < 6; i++, x += CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight / 8, (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	}
-	for (int i = 6, x = 0; i < 12; i++, x -= CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight / 8, (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	}
-	for (int i = 12, x = 0; i < 18; i++, x += CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight * 7 / 8, (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	}
-	for (int i = 18, x = 0; i < 24; i++, x -= CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")))
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight * 7 / 8, (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")), (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction2.png")) * 2, CP_Image_Load("Assets/obstruction2.png"));
-	}
-	for (int i = 24, y = 0; i < 27; i++, y += CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")))
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 - (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")) / 2 + (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) / 2, wHeight / 8 + (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")) / 2 + y, (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
-	}
-	for (int i = 27, y = 0; i < 30; i++, y += CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")))
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction2.png")) / 2 - (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) / 2, wHeight / 8 + (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")) / 2 + y, (float)CP_Image_GetWidth(CP_Image_Load("Assets/obstruction3.png")) * 2, (float)CP_Image_GetHeight(CP_Image_Load("Assets/obstruction3.png")), CP_Image_Load("Assets/obstruction3.png"));
-	}
 
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3) / 2, character.Pos.y, character.width * 3.f, character.height * 2.5f);
 	swordSwingTime = 0;
@@ -259,8 +253,6 @@ void level_2_Update()
 					// printf("pause  state win lv1 %d", isPaused);
 				}
 			}
-
-
 
 			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
@@ -449,7 +441,7 @@ void level_2_Update()
 					enemies[spawnIndex].health = 2;
 				}
 
-				for (int o = 0; o < obstructionCount; o++)
+				for (int o = 0; o < obstructionCount2; o++)
 				{
 					// check for obstructions
 					enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -470,7 +462,7 @@ void level_2_Update()
 
 		// CLEAR BACKGROUND
 
-		for (int i = 0; i < obstructionCount; i++)
+		for (int i = 0; i < obstructionCount2; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -610,7 +602,7 @@ void level_2_Update()
 				float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 				// printf("distance is %f\n", ddistance);
 
-				for (int o = 0; o < obstructionCount; o++)
+				for (int o = 0; o < obstructionCount2; o++)
 				{
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{

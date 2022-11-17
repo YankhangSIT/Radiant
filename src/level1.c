@@ -93,7 +93,7 @@ void level_1_Init()
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
-	map_background = CP_Image_Load("Assets/map_background.png");
+	map_background = CP_Image_Load("Assets/map_background1.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
@@ -160,7 +160,7 @@ void level_1_Init()
 	character.invulState = 0; // start not invul
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
-	invulElapsedTime = 0;	// timer for invul
+	invulElapsedTime = 0;		  // timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
@@ -308,7 +308,7 @@ void level_1_Update()
 				{
 					delayShootTime = delayShootStart;
 
-					//clear();
+					// clear();
 					printf("next Level");
 					// level_2_Init();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
@@ -333,20 +333,20 @@ void level_1_Update()
 			if (isPaused == TRUE)
 			{
 				win = FALSE;
-				//clear();
+				// clear();
 				level_1_Init();
 			}
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			//clear();
+			// clear();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-		//	clear();
+			//	clear();
 			CP_Engine_Terminate();
 		}
 	}
@@ -382,7 +382,7 @@ void level_1_Update()
 		if (min < surviveMin)
 		{
 			changeSpawnTimer -= elapsedTime;
-			//printf("change spawntimer %f\n" , changeSpawnTimer);
+			// printf("change spawntimer %f\n" , changeSpawnTimer);
 			if (changeSpawnTimer <= 0)
 			{
 				if (direction == 4)
@@ -403,7 +403,7 @@ void level_1_Update()
 				else if (direction == 1)
 				{
 					printf("direction 2 \n");
-					direction = 2;					
+					direction = 2;
 				}
 
 				changeSpawnTimer = startSpawnChangeTimer;
@@ -412,7 +412,6 @@ void level_1_Update()
 			// check if spawn timer
 			if (spawnTimer <= 0)
 			{
-				
 
 				// set random spawn position based on width and height of the screen
 				if (direction == 1)
@@ -423,11 +422,11 @@ void level_1_Update()
 				{
 					spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
 				}
-				else if(direction == 3)
+				else if (direction == 3)
 				{
-					spawnPosition = CP_Vector_Set(wWidth -200, CP_Random_RangeFloat(wHeight / 7, wWidth));
+					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wWidth));
 				}
-				else if(direction == 4)
+				else if (direction == 4)
 				{
 					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
 				}
@@ -452,7 +451,7 @@ void level_1_Update()
 			enemies[i].health = 1;
 
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < obstructionCount; o++)
+			for (int o = 0; o < obstructionCount1; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -512,7 +511,7 @@ void level_1_Update()
 					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
 
 					// enemies die to bullets
-					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot ==1)
+					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
 					{ // less than bullet radius x2
 						--enemies[j].health;
 						printf("damage\n");
@@ -575,7 +574,7 @@ void level_1_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = 0; o < obstructionCount; o++)
+				for (int o = 0; o < obstructionCount1; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -635,8 +634,6 @@ void level_1_Update()
 							++dropIndex;
 						}
 
-
-
 						if (enemies[i].health <= 0)
 						{
 							// enemies[i].isDead = 1;
@@ -680,7 +677,7 @@ void level_1_Update()
 			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
-		for (int i = 0; i < obstructionCount; i++)
+		for (int i = 0; i < obstructionCount1; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -733,7 +730,7 @@ void level_1_Update()
 			}
 		}
 
-		//pickup items
+		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
 			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
@@ -770,12 +767,15 @@ void level_1_Update()
 			}
 
 			invulTransparencyTime += elapsedTime;
-			if (invulTransparencyTime >= 0.2f) {
-				if (character.transparency == 255) {
+			if (invulTransparencyTime >= 0.2f)
+			{
+				if (character.transparency == 255)
+				{
 					character.transparency = 100;
 					invulTransparencyTime = 0;
 				}
-				else if (character.transparency == 100) {
+				else if (character.transparency == 100)
+				{
 					character.transparency = 255;
 					invulTransparencyTime = 0;
 				}
@@ -803,7 +803,8 @@ void level_1_Update()
 				energyRechargeTime = 0;
 			}
 
-			if (character.energy < 1) { // draw stunned animation
+			if (character.energy < 1)
+			{ // draw stunned animation
 				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
@@ -865,9 +866,6 @@ void level_1_Update()
 		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
 		CP_Font_DrawText("Energy:", 200, 230);
 		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
-
-		
-
 	}
 }
 
