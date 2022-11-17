@@ -14,6 +14,7 @@
 #include "gameOverpage.h"
 #include "global.h"
 #include "win.h"
+
 struct Character playerGun;
 struct Character playerSword;
 
@@ -24,6 +25,7 @@ CP_Image swordPlayer;
 int isPaused;
 float elapsedTime;
 float invulElapsedTime;
+float invulTransparencyTime;
 float energyRechargeTime;
 float stunnedElapsedTime;
 int healthChange;
@@ -78,8 +80,7 @@ void level_3_Init()
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
-	spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
-	// enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
+	spawnIndex = 0;
 	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
@@ -248,7 +249,7 @@ void level_3_Update()
 					delayShootTime = delayShootStart;
 
 					clear();
-					printf("next Level");
+					//printf("next Level");
 					// level_2_Init();
 					CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 
@@ -323,7 +324,7 @@ void level_3_Update()
 			changeSpawnTimer -= elapsedTime;
 			if (changeSpawnTimer <= 0)
 			{
-				if (direction == 4)
+				/*if (direction == 4)
 				{
 					direction = 1;
 					printf("direction 1\n");
@@ -342,7 +343,7 @@ void level_3_Update()
 				{
 					printf("direction 2 \n");
 					direction = 2;
-				}
+				}*/
 
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
@@ -482,7 +483,7 @@ void level_3_Update()
 					{ // less than bullet radius x2
 						--enemies[j].health;
 						enemies[j].takeDamage = 1.0f;
-						printf("damage\n");
+						//printf("damage\n");
 						// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
 						unsigned int randomRate = CP_Random_RangeInt(1, 4);
 						// randomly set drop id between 1 or 2
@@ -732,6 +733,46 @@ void level_3_Update()
 			{ // if invul for more than 2 seconds, go back to being vul
 				character.invulState = 0;
 				invulElapsedTime = 0;
+				character.transparency = 255;
+			}
+			// will character will flicker to represent invulnerability
+			invulTransparencyTime += elapsedTime;
+			if (invulTransparencyTime >= 0.2f)
+			{
+				if (character.transparency == 255)
+				{
+					character.transparency = 100;
+					invulTransparencyTime = 0;
+				}
+				else if (character.transparency == 100)
+				{
+					character.transparency = 255;
+					invulTransparencyTime = 0;
+				}
+			}
+		}
+
+		// pickup items
+		for (int i = 0; i < dropIndex; ++i)
+		{ // itemDrop[dropIndex]
+			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
+			{
+				if (itemDrop[i].itemId == 1) // health drop
+				{
+					++character.health;
+					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
+				}
+				else if (itemDrop[i].itemId == 2) // health drop
+				{
+					++character.energy;
+					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
+				}
+
+				for (int y = i; y < dropIndex; ++y)
+				{
+					itemDrop[y] = itemDrop[y + 1]; // similar to above^
+				}
+				--dropIndex;
 			}
 		}
 

@@ -309,7 +309,7 @@ void level_1_Update()
 					delayShootTime = delayShootStart;
 
 					// clear();
-					printf("next Level");
+					//printf("next Level");
 					// level_2_Init();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 
@@ -385,7 +385,7 @@ void level_1_Update()
 			// printf("change spawntimer %f\n" , changeSpawnTimer);
 			if (changeSpawnTimer <= 0)
 			{
-				if (direction == 4)
+				/*if (direction == 4)
 				{
 					direction = 1;
 					printf("direction 1\n");
@@ -404,7 +404,7 @@ void level_1_Update()
 				{
 					printf("direction 2 \n");
 					direction = 2;
-				}
+				}*/
 
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
@@ -761,11 +761,11 @@ void level_1_Update()
 
 			if (invulElapsedTime >= 2)
 			{ // if invul for more than 2 seconds, go back to being vul
+				character.transparency = 255;
 				character.invulState = 0;
 				invulElapsedTime = 0;
-				character.transparency = 255;
 			}
-
+			// will character will flicker to represent invulnerability
 			invulTransparencyTime += elapsedTime;
 			if (invulTransparencyTime >= 0.2f)
 			{

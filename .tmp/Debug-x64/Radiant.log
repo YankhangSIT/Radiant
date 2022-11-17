@@ -1,108 +1,48 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Donovan\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  button.c
-  characterSelect.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\characterSelect.c(70,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\characterSelect.c(70,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\characterSelect.c(70,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\characterSelect.c(77,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\characterSelect.c(77,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\characterSelect.c(77,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\characterSelect.c(45,12): warning C4101: 'mouseClickPos': unreferenced local variable
-  combat.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\combat.c(31,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  gameOverpage.c
-  Howtoplay.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\Howtoplay.c(37,12): warning C4101: 'mouseClickPos': unreferenced local variable
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Users\Artemissed\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   level1.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(177,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(179,88): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(181,43): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(183,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(185,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(187,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(189,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(191,96): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(193,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(195,137): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(197,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(199,147): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(201,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(203,141): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(205,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(207,151): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(213,61): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(213,89): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(214,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(217,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(224,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(224,93): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(225,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(228,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(235,91): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(236,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(241,87): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(242,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(481,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level1.c(736,117): warning C4020: 'checkDamage': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(177,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(179,88): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(181,43): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(183,92): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(185,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(187,92): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(189,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(191,96): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(193,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(195,137): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(197,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(199,147): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(201,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(203,141): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(205,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(207,151): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(213,61): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(213,89): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(214,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(217,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(224,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(224,93): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(225,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(228,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(235,91): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(236,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(241,87): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(242,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(481,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(736,117): warning C4020: 'checkDamage': too many actual parameters
   level2.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level2.c(345,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level2.c(687,115): warning C4020: 'checkDamage': too many actual parameters
-  level3.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level3.c(431,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level3.c(703,117): warning C4020: 'checkDamage': too many actual parameters
-  level4.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(180,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(182,88): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(184,43): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(186,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(188,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(190,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(192,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(194,96): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(196,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(198,137): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(200,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(202,147): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(204,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(206,141): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(208,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(210,151): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(216,61): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(216,89): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(217,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(220,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(227,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(227,93): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(228,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(231,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(238,91): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(239,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(244,87): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(245,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(497,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\Donovan\Documents\GitHub\Radiant\src\level4.c(773,117): warning C4020: 'checkDamage': too many actual parameters
-  loadingScreen.c
-  main.c
-  mainmenu.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\mainmenu.c(77,52): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\mainmenu.c(77,77): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Donovan\Documents\GitHub\Radiant\src\mainmenu.c(77,100): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-  map.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\map.c(10,1): warning C4029: declared formal parameter list different from definition
-  movement.c
-  spawn.c
-  splashScreen.c
-  utils.c
-  win.c
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\win.c' and 'c:\users\donovan\documents\github\radiant\src\spawn.c': 8 and 4
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\win.c' and 'c:\users\donovan\documents\github\radiant\src\spawn.c': 8 and 4 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\win.c' and 'c:\users\donovan\documents\github\radiant\src\spawn.c': 'pointer' and 'int'
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(374,24): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(670,115): warning C4020: 'checkDamage': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(686,117): warning C4020: 'checkDamage': too many actual parameters
+LINK : warning C4742: 'win' has different alignment in 'c:\users\artemissed\source\repos\radiant\src\win.c' and 'c:\users\artemissed\source\repos\radiant\src\spawn.c': 8 and 4
+LINK : warning C4743: 'win' has different size in 'c:\users\artemissed\source\repos\radiant\src\win.c' and 'c:\users\artemissed\source\repos\radiant\src\spawn.c': 8 and 4 bytes
+LINK : warning C4744: 'win' has different type in 'c:\users\artemissed\source\repos\radiant\src\win.c' and 'c:\users\artemissed\source\repos\radiant\src\spawn.c': 'pointer' and 'int'
   Generating code
-  Previous IPDB was built with incompatible compiler, fall back to full compilation.
-C:\Users\Donovan\Documents\GitHub\Radiant\src\win.c(25): warning C4739: reference to variable 'win' exceeds its storage space
-  All 57 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 57 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    6 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Radiant.vcxproj -> C:\Users\Donovan\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
+  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
-  49 File(s) copied
+  53 File(s) copied

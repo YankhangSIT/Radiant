@@ -5,7 +5,7 @@
 #include "combat.h"
 #include "mainmenu.h"
 #include "math.h"
-#include "level2.h"
+#include "level1.h"
 #include "spawn.h"
 #include "map.h"
 #include <stdbool.h>
@@ -14,9 +14,6 @@
 #include "gameOverpage.h"
 #include "global.h"
 
-// define struct for character
-
-/// CAN PUT IN .H FILE
 struct Character playerGun;
 struct Character playerSword;
 
@@ -24,11 +21,10 @@ struct Character playerSword;
 CP_Image gunPlayer;
 CP_Image swordPlayer;
 
-/// CAN PUT IN .H FILE
-
 int isPaused;
 float elapsedTime;
 float invulElapsedTime;
+float invulTransparencyTime;
 float energyRechargeTime;
 float stunnedElapsedTime;
 int healthChange;
@@ -54,16 +50,17 @@ int characterFacing;
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
-// time variables
-
-// Bullet Struct Contains all the properties of the bullet
 
 CP_Image map_background;
 CP_Image swordSwingSprite1;
 CP_Image swordSwingSprite2;
-CP_Image obstruction4;
-CP_Image obstruction5;
-CP_Image obstruction6;
+CP_Image stunned;
+CP_Image hpPickup;
+CP_Image energyPickup;
+CP_Image obstruction1;
+CP_Image obstruction2;
+CP_Image obstruction3;
+
 void level_2_Init()
 {
 	// CP_System_Fullscreen();
@@ -116,6 +113,8 @@ void level_2_Init()
 	// player sprite
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
+	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
+	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
 	obsWidth4 = (float)CP_Image_GetWidth(obstruction4);
 	obsHeight4 = (float)CP_Image_GetHeight(obstruction4);
 	obsWidth5 = (float)CP_Image_GetWidth(obstruction5);
@@ -130,8 +129,6 @@ void level_2_Init()
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	;
 	enemy.speed = 70;
-	// healthDrop.width = (float) CP_Image_GetWidth(healthDrop.dropSprite);
-	// healthDrop.height = (float) CP_Image_GetHeight(healthDrop.dropSprite);
 
 	// player type gun
 	if (playerNum == 1)
@@ -320,6 +317,36 @@ void level_2_Update()
 		}
 
 		spawnTimer -= elapsedTime;
+		// keeps spawning until the player survives
+		if (min < surviveMin)
+		{
+			changeSpawnTimer -= elapsedTime;
+			// printf("change spawntimer %f\n" , changeSpawnTimer);
+			if (changeSpawnTimer <= 0)
+			{
+				/*if (direction == 4)
+				{
+					direction = 1;
+					printf("direction 1\n");
+				}
+				else if (direction == 3)
+				{
+					printf("direction 4 \n");
+					direction = 4;
+				}
+				else if (direction == 2)
+				{
+					printf("direction 3 \n");
+					direction = 3;
+				}
+				else if (direction == 1)
+				{
+					printf("direction 2 \n");
+					direction = 2;
+				}*/
+
+				changeSpawnTimer = startSpawnChangeTimer;
+			}
 
 		// shooting position always follows character
 		bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
@@ -354,41 +381,8 @@ void level_2_Update()
 			bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
 			// add the position of the bullet by the scaled vector
 			bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
-
-			if (firstShoot == 1)
-			{
-				CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-			}
 		}
 
-		if (min < surviveMin) //! isCompleted)
-		{
-			changeSpawnTimer -= elapsedTime;
-			if (changeSpawnTimer <= 0)
-			{
-				if (direction == 4)
-				{
-					direction = 1;
-					printf("direction 1\n");
-				}
-				else if (direction == 3)
-				{
-					printf("direction 4 \n");
-					direction = 4;
-				}
-				else if (direction == 2)
-				{
-					printf("direction 3 \n");
-					direction = 3;
-				}
-				else if (direction == 1)
-				{
-					printf("direction 2 \n");
-					direction = 2;
-				}
-
-				changeSpawnTimer = startSpawnChangeTimer;
-			}
 
 			if (spawnTimer <= 0)
 			{
@@ -450,19 +444,6 @@ void level_2_Update()
 				}
 			}
 		}
-
-		// Player Render
-		if (playerNum == 1)
-		{
-			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
-		}
-
-		if (playerNum == 2)
-		{
-			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
-		}
-
-		// CLEAR BACKGROUND
 
 		for (int i = 0; i < obstructionCount2; i++)
 		{
@@ -698,15 +679,56 @@ void level_2_Update()
 			}
 		}
 
+
+		// pickup items
+		for (int i = 0; i < dropIndex; ++i)
+		{ // itemDrop[dropIndex]
+			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
+			{
+				if (itemDrop[i].itemId == 1) // health drop
+				{
+					++character.health;
+					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
+				}
+				else if (itemDrop[i].itemId == 2) // health drop
+				{
+					++character.energy;
+					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
+				}
+
+				for (int y = i; y < dropIndex; ++y)
+				{
+					itemDrop[y] = itemDrop[y + 1]; // similar to above^
+				}
+				--dropIndex;
+			}
+		}
+
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1)
-		{ // if invul, it will last for 2 seconds (2000 ms)
+		{
 			invulElapsedTime += elapsedTime;
 
 			if (invulElapsedTime >= 2)
 			{ // if invul for more than 2 seconds, go back to being vul
 				character.invulState = 0;
 				invulElapsedTime = 0;
+				character.transparency = 255;
+			}
+			// will character will flicker to represent invulnerability
+			invulTransparencyTime += elapsedTime;
+			if (invulTransparencyTime >= 0.2f)
+			{
+				if (character.transparency == 255)
+				{
+					character.transparency = 100;
+					invulTransparencyTime = 0;
+				}
+				else if (character.transparency == 100)
+				{
+					character.transparency = 255;
+					invulTransparencyTime = 0;
+				}
 			}
 		}
 
@@ -789,6 +811,27 @@ void level_2_Update()
 		{
 			lose = 0;
 		}
+
+		// draw player
+		if (playerNum == 1)
+		{
+			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
+
+			// draw projectile
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
+				if (firstShoot == 1)
+				{
+					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
+					// printf("Drawing %d", bulletSpawnIndex);
+				}
+			}
+		}
+		if (playerNum == 2)
+		{
+			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
+		}
+
 		// display timer
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
