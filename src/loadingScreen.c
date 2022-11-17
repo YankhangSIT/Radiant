@@ -40,7 +40,7 @@
 	TimeElapsed += CP_System_GetDt();
 
 	if (TimeElapsed > loadingTime) {
-		CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
+		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update,Main_Menu_Exit);
 	}
 	if (TimeElapsed < loadingTime - 0.5f) {
 		loadingBar = (TimeElapsed / loadingTime) * aWidth;

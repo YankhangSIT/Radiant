@@ -55,8 +55,9 @@ void win_update() {
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-			CP_Font_DrawText("Enter your username: ", gWidth / 2.0f , gHeight / 2.0f-500);
+			/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+			CP_Font_DrawText("Enter your username: ", gWidth / 2.0f , gHeight / 2.0f-500);*/
+			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 	}
 
