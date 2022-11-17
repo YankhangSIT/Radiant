@@ -13,7 +13,7 @@
 #include "button.h"
 #include "gameOverpage.h"
 #include "global.h"
-
+#include "win.h"
 struct Character playerGun;
 struct Character playerSword;
 
@@ -283,6 +283,7 @@ void level_3_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
+			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
 			CP_Font_DrawText("You survived Level 3!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
