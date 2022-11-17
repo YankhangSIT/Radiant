@@ -79,7 +79,7 @@ void level_2_Init()
 	level = 2;
 	changeSpawnTimer = 0.1f;
 	startSpawnChangeTimer = changeSpawnTimer;
-	direction = 1;
+	direction = 2;
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();

@@ -70,7 +70,7 @@ void level_3_Init()
 	delayShootTime = delayShootStart;
 	CP_System_FullscreenAdvanced(1920, 1080);
 	bullet.bulletSpeed = 1000;
-	spawnTimer = 1.25f;
+	spawnTimer = 1.5f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -89,13 +89,13 @@ void level_3_Init()
 	win = 0;
 	changeSpawnTimer = 0.1f;
 	startSpawnChangeTimer = changeSpawnTimer;
-	direction = 1;
+	direction = 3;
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
+	//enemySprite1 = CP_Image_Load("Assets/Monster_4.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
@@ -106,9 +106,9 @@ void level_3_Init()
 	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
 	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
 	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction3.png");
-	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
+	enemySprite1 = CP_Image_Load("Assets/Monster_4.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
-	damagedSprite1 = CP_Image_Load("Assets/enemy1Damaged.png");
+	damagedSprite1 = CP_Image_Load("Assets/Monster_4_Damaged.png");
 	damagedSprite2 = CP_Image_Load("Assets/Monster_2_Damaged.png");
 
 
@@ -454,7 +454,7 @@ void level_3_Update()
 				enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
 				enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
 				// set health for the enemy id number
-				enemies[spawnIndex].health = 1;
+				enemies[spawnIndex].health = 3;
 			}
 			else if (enemies[spawnIndex].id == 2)
 			{
