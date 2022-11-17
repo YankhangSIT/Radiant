@@ -32,12 +32,12 @@ float wHeight;
 
 // obstruction obj in map.h
 Obstruction obs;
-float obsWidth4;
-float obsHeight4;
-float obsWidth5;
-float obsHeight5;
-float obsWidth6;
-float obsHeight6;
+float obsWidth7;
+float obsHeight7;
+float obsWidth8;
+float obsHeight8;
+float obsWidth9;
+float obsHeight9;
 float stunnedWidth;
 float stunnedHeight;
 
@@ -57,9 +57,9 @@ CP_Image swordSwingSprite2;
 CP_Image stunned;
 CP_Image hpPickup;
 CP_Image energyPickup;
-CP_Image obstruction4;
-CP_Image obstruction5;
-CP_Image obstruction6;
+CP_Image obstruction7;
+CP_Image obstruction8;
+CP_Image obstruction9;
 
 void level_3_Init()
 {
@@ -110,13 +110,15 @@ void level_3_Init()
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 	damagedSprite1 = CP_Image_Load("Assets/Monster_4_Damaged.png");
 	damagedSprite2 = CP_Image_Load("Assets/Monster_2_Damaged.png");
-
-	obsWidth4 = (float)CP_Image_GetWidth(obstruction4);
-	obsHeight4 = (float)CP_Image_GetHeight(obstruction4);
-	obsWidth5 = (float)CP_Image_GetWidth(obstruction5);
-	obsHeight5 = (float)CP_Image_GetHeight(obstruction5);
-	obsWidth6 = (float)CP_Image_GetWidth(obstruction6);
-	obsHeight6 = (float)CP_Image_GetHeight(obstruction6);
+	CP_Image obstruction7 = CP_Image_Load("Assets/obstruction7.png");
+	CP_Image obstruction8 = CP_Image_Load("Assets/obstruction8.png");
+	CP_Image obstruction9 = CP_Image_Load("Assets/obstruction9.png");
+	obsWidth7 = (float)CP_Image_GetWidth(obstruction7);
+	obsHeight7 = (float)CP_Image_GetHeight(obstruction7);
+	obsWidth8 = (float)CP_Image_GetWidth(obstruction8);
+	obsHeight8 = (float)CP_Image_GetHeight(obstruction8);
+	obsWidth9 = (float)CP_Image_GetWidth(obstruction9);
+	obsHeight9 = (float)CP_Image_GetHeight(obstruction9);
 	stunnedWidth = (float)CP_Image_GetWidth(stunned);
 	stunnedHeight = (float)CP_Image_GetHeight(stunned);
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);

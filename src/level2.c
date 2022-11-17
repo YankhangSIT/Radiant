@@ -107,7 +107,9 @@ void level_2_Init()
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
-
+	CP_Image obstruction4 = CP_Image_Load("Assets/obstruction4.png");
+	CP_Image obstruction5 = CP_Image_Load("Assets/obstruction5.png");
+	CP_Image obstruction6 = CP_Image_Load("Assets/obstruction6.png");
 	enemy.radius = 39;
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetWidth(bullet.bulletSprite);
