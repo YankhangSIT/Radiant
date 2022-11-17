@@ -56,6 +56,9 @@ void character_Select_Update()
 		CP_Font_DrawText("Choose your character", zWidth / 2.0f, zHeight / 2.0f - 200);
 		CP_Image_Draw(gunPlayer, zWidth / 2.0f - 100, zHeight / 2.0f, (float)CP_Image_GetWidth(gunPlayer), (float) CP_Image_GetHeight(gunPlayer), 255);
 		CP_Image_Draw(swordPlayer, zWidth / 2.0f + 100, zHeight / 2.0f, (float)CP_Image_GetWidth(swordPlayer), (float) CP_Image_GetHeight(swordPlayer), 255);
+
+		CP_Font_DrawText("Ranged", zWidth / 2.0f - 100, zHeight / 2.0f + 100);
+		CP_Font_DrawText("Melee", zWidth / 2.0f + 100, zHeight / 2.0f + 100);
 	
 		//Pick the character, then proceed to Howtoplay page.
 		if (CP_Input_MouseClicked()) {

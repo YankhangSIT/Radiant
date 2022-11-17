@@ -65,9 +65,9 @@ void how_To_play_Update()
 
 	// Prompt user to click 'enter' to proceed to game
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f + 175, xHeight / 2.0f + 240, 350, 45);
+	CP_Graphics_DrawRect(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 200, 45);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Press 'Enter' to continue", xWidth / 2.0f + 180, xHeight / 2.0f + 240);
+	CP_Font_DrawText("Continue", xWidth / 2.0f + 180, xHeight / 2.0f + 240);
 
 	// Press Enter to proceed to next page
 	if (CP_Input_KeyDown(KEY_ENTER))
@@ -78,7 +78,7 @@ void how_To_play_Update()
 	if (CP_Input_MouseClicked())
 	{
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-		if (IsAreaClicked(xWidth / 2.0f + 175, xHeight / 2.0f + 240, 350, 45, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 		}

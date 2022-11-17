@@ -66,9 +66,6 @@ void Main_Menu_Update()
 	// Exit Button
 	Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-	if (CP_Input_KeyDown(KEY_ENTER))
-		CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
-
 	// If click "Play" Button
 	if (CP_Input_MouseClicked())
 	{
