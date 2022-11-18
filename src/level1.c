@@ -75,8 +75,7 @@ void level_1_Init()
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
-	//surviveMin = 1;
-	surviveMin = 0;
+	surviveMin = 1;
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
