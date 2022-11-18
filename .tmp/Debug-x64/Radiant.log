@@ -1,28 +1,12 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\Donovan\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  leaderboard.c
-C:\Users\Donovan\Documents\GitHub\Radiant\src\leaderboard.c(20,23): warning C4305: 'initializing': truncation from 'int' to 'char'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level1.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level1.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level1.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level2.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level2.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level2.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level3.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level3.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level3.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level4.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level4.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level4.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
+  main.c
 LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\win.c' and 'c:\users\donovan\documents\github\radiant\src\spawn.c': 8 and 4
 LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\win.c' and 'c:\users\donovan\documents\github\radiant\src\spawn.c': 8 and 4 bytes
 LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\win.c' and 'c:\users\donovan\documents\github\radiant\src\spawn.c': 'pointer' and 'int'
   Generating code
-  1 of 60 functions ( 1.7%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    6 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+C:\Users\Donovan\Documents\GitHub\Radiant\src\win.c(25): warning C4739: reference to variable 'win' exceeds its storage space
+  All 57 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   Radiant.vcxproj -> C:\Users\Donovan\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
