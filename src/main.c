@@ -20,7 +20,7 @@
 #include "loadingScreen.h"
 #include "gameOverpage.h"
 #include "win.h"
-
+#include "leaderboard.h"
 int main(void)
 {
 	/*CP_Engine_SetNextGameState(win_init, win_update, win_exit);*/
