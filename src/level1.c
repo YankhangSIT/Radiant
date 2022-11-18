@@ -383,6 +383,23 @@ void level_1_Update()
 			// printf("change spawntimer %f\n" , changeSpawnTimer);
 			if (changeSpawnTimer <= 0)
 			{
+				if (direction == 4)
+				{
+					direction = 1;
+				}
+				else if (direction == 3)
+				{
+					direction = 4;
+				}
+				else if (direction == 2)
+				{
+					direction = 3;
+				}
+				else if (direction == 1)
+				{
+
+					direction = 2;
+				}
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
 
@@ -401,11 +418,11 @@ void level_1_Update()
 				}
 				else if (direction == 3)
 				{
-					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wWidth));
+					spawnPosition = CP_Vector_Set(wWidth - 500.f, CP_Random_RangeFloat(wHeight / 7, wWidth));
 				}
 				else if (direction == 4)
 				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
+					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 500.f);
 				}
 				// set spawn position of enemy
 				enemies[spawnIndex].pos.x = spawnPosition.x;
