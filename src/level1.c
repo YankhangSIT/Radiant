@@ -77,7 +77,7 @@ void level_1_Init()
 	elapsedTime = 0;
 	surviveMin = 1;
 	sec = 0;
-	min = 0;
+	min = 1;
 	firstDrop = 0;
 	spawnIndex = 0;
 	spawnIndex = 0;
@@ -306,7 +306,7 @@ void level_1_Update()
 					delayShootTime = delayShootStart;
 
 					// clear();
-					//printf("next Level");
+					// printf("next Level");
 					// level_2_Init();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 
@@ -560,7 +560,7 @@ void level_1_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 					}
@@ -616,7 +616,7 @@ void level_1_Update()
 						{
 							for (int y = i; y < spawnIndex; ++y)
 							{
-								enemies[y] = enemies[y + 1]; 
+								enemies[y] = enemies[y + 1];
 							}
 							--spawnIndex;
 						}
@@ -727,7 +727,7 @@ void level_1_Update()
 
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1)
-		{ 
+		{
 			invulElapsedTime += elapsedTime;
 
 			if (invulElapsedTime >= 2)

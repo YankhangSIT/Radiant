@@ -150,8 +150,8 @@ void level_2_Init()
 	character.invulState = 0; // start not invul
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
-	invulElapsedTime = 0;	// timer for invul
-	energyRechargeTime = 0; // timer for energyRecharge
+	invulElapsedTime = 0;		  // timer for invul
+	energyRechargeTime = 0;		  // timer for energyRecharge
 	stunnedElapsedTime = 0;
 
 	// bullet start shoot spawn position
@@ -162,6 +162,60 @@ void level_2_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
+	obs.rec_block[obstructionCount1 + 1] = SetRect_(wWidth * 2.3 / 4, wHeight * 1.3 / 4, obsWidth4 * 1.8, obsHeight4 * 1.8, obstruction4);
+	for (int i = obstructionCount1 + 2, x = 0; i < 107; i++)
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 8 + x, wHeight * 2 / 4, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
+		x += obsWidth6;
+	}
+	for (int i = 107, x = 0; i < 110; i++)
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 4.5 / 5 + x, wHeight * 7 / 8, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
+		x -= obsWidth6;
+	}
+	for (int i = 110, x = 0, y = 0; i < 116; i++)
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 2.3 / 3 + x, wHeight * 1 / 2 + y, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
+		x += obsWidth6;
+		if (i == 112)
+		{
+			x = 0;
+			y += obsHeight6;
+		}
+	}
+	for (int i = 116, x = 0, y = 0; i < 128; i++)
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 16 + x, wHeight * 1.3 / 2 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
+		x += obsWidth5;
+		if (i == 117 || i == 121)
+		{
+			x = 0;
+			y += obsHeight5 * 0.7;
+		}
+	}
+	for (int i = 128, x = 0, y = 0; i < 132; i++)
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 3 + x, wHeight * 0.8 / 2 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
+		x += obsWidth5;
+		y += obsHeight5 * 0.7 + 80.f;
+	}
+	for (int i = 132, x = 0, y = 0; i < 135; i++)
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 0.5 / 4 + x, wHeight * 0.5 / 3, obsWidth5, obsHeight5 * 0.7, obstruction5);
+		x += obsWidth5 * 2;
+	}
+	for (int i = 135, x = 0, y = 0; i < 147; i++)
+	{
+		obs.rec_block[i] = SetRect_(wWidth * 2.4 / 3 + x, wHeight * 1 / 8 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
+		if (i < 139)
+			x += obsWidth5;
+		if (i == 140 || i == 141)
+		{
+			y += obs.rec_block[i].height;
+		}
+		if (i > 141)
+			x -= obsWidth5;
+	}
 
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3) / 2, character.Pos.y, character.width * 3.f, character.height * 2.5f);
 	swordSwingTime = 0;
@@ -384,7 +438,7 @@ void level_2_Update()
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
-			for (int o = 0; o < obstructionCount2; o++)
+			for (int o = obstructionCount1 + 1; o < obstructionCount2; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -435,7 +489,8 @@ void level_2_Update()
 			}
 
 			// enemies die to bullets
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i) {
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
 				for (int j = 0; j < (spawnIndex); ++j)
 				{
 					float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
@@ -488,7 +543,7 @@ void level_2_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 
@@ -507,7 +562,7 @@ void level_2_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = 0; o < obstructionCount1; o++)
+				for (int o = obstructionCount1 + 1; o < obstructionCount2; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -515,7 +570,7 @@ void level_2_Update()
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-							// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 					}
@@ -606,7 +661,7 @@ void level_2_Update()
 		}
 
 		// check player collision with obstruction
-		for (int i = 0; i < obstructionCount2; i++)
+		for (int i = obstructionCount1 + 1; i < obstructionCount2; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -641,8 +696,6 @@ void level_2_Update()
 			}
 		}
 
-		
-
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1)
@@ -660,7 +713,6 @@ void level_2_Update()
 				}
 			}
 		}
-
 
 		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
@@ -741,7 +793,7 @@ void level_2_Update()
 			}
 		}
 
-		//enemy damaged sprite + draw enemies
+		// enemy damaged sprite + draw enemies
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			// check any enemies that take damage
