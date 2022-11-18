@@ -688,6 +688,7 @@ void level_3_Update()
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1)
 		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
 			for (int i = 0; i < spawnIndex; i++)
 			{
 				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, (enemies[i].width / 2)) == 1 && enemies[i].health > 0)
@@ -733,7 +734,6 @@ void level_3_Update()
 
 			if (invulElapsedTime >= 2)
 			{ // if invul for more than 2 seconds, go back to being vul
-				character.transparency = 255;
 				character.invulState = 0;
 				invulElapsedTime = 0;
 			}
