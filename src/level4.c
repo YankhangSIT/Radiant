@@ -32,12 +32,12 @@ float wHeight;
 
 // obstruction obj in map.h
 Obstruction obs;
-float obsWidth1;
-float obsHeight1;
-float obsWidth2;
-float obsHeight2;
-float obsWidth3;
-float obsHeight3;
+float obsWidth7;
+float obsHeight7;
+float obsWidth8;
+float obsHeight8;
+float obsWidth9;
+float obsHeight9;
 float stunnedWidth;
 float stunnedHeight;
 
@@ -57,9 +57,9 @@ CP_Image swordSwingSprite2;
 CP_Image stunned;
 CP_Image hpPickup;
 CP_Image energyPickup;
-CP_Image obstruction1;
-CP_Image obstruction2;
-CP_Image obstruction3;
+CP_Image obstruction7;
+CP_Image obstruction8;
+CP_Image obstruction9;
 
 void level_4_Init()
 {
@@ -93,7 +93,7 @@ void level_4_Init()
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
-	map_background = CP_Image_Load("Assets/map_background.png");
+	map_background = CP_Image_Load("Assets/map_background3.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
@@ -103,15 +103,9 @@ void level_4_Init()
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
 	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
 	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
-	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
-	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
-	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction3.png");
-	obsWidth1 = (float)CP_Image_GetWidth(obstruction1);
-	obsHeight1 = (float)CP_Image_GetHeight(obstruction1);
-	obsWidth2 = (float)CP_Image_GetWidth(obstruction2);
-	obsHeight2 = (float)CP_Image_GetHeight(obstruction2);
-	obsWidth3 = (float)CP_Image_GetWidth(obstruction3);
-	obsHeight3 = (float)CP_Image_GetHeight(obstruction3);
+	CP_Image obstruction7 = CP_Image_Load("Assets/obstruction7.png");
+	CP_Image obstruction8 = CP_Image_Load("Assets/obstruction8.png");
+	CP_Image obstruction9 = CP_Image_Load("Assets/obstruction9.png");
 	stunnedWidth = (float)CP_Image_GetWidth(stunned);
 	stunnedHeight = (float)CP_Image_GetHeight(stunned);
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
@@ -177,71 +171,44 @@ void level_4_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-	for (int i = 0, x = 0; i < 6; i++, x += obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 6, x = 0; i < 12; i++, x -= obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 12, x = 0; i < 18; i++, x += obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight * 7 / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 18, x = 0; i < 24; i++, x -= obsWidth2)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight * 7 / 8, obsWidth2, obsHeight2 * 2, obstruction2);
-	}
-	for (int i = 24, y = 0; i < 27; i++, y += obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 - obsWidth2 / 2 + obsWidth3 / 2, wHeight / 8 + obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	for (int i = 27, y = 0; i < 30; i++, y += obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2, wHeight / 8 + obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	for (int i = 30, y = 0; i < 33; i++, y -= obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 - obsWidth2 / 2 + obsWidth3 / 2, wHeight * 7 / 8 - obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	for (int i = 33, y = 0; i < 36; i++, y -= obsHeight3)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2, wHeight * 7 / 8 - obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-	}
-	// square obstruction
-	for (int i = 36, x = 0, y = 0; i < 66; i++)
+	// initiate obstruction
+	for (int i = obstructionCount2 + 1, x = 0, y = 0; i < 160; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth / 6 + x, wHeight / 4.2 + y, obsWidth1, obsHeight1, obstruction1);
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 10 + x, wHeight * 1 / 2 + y, obsWidth9, obsHeight9 * 0.5, obstruction9);
 		x += obs.rec_block[i].width;
-		if (i == 41 || i == 47 || i == 53 || i == 59)
+		if (i == 153)
 		{
-			y += obs.rec_block[i].height + character.height;
 			x = 0;
+			y += obs.rec_block[i].height * 2;
 		}
 	}
-	for (int i = 66, x = 0, y = 0; i < 96; i++)
+	for (int i = 160, x = 0, y = 0; i < 176; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth * 5 / 6 + x, wHeight / 4.2 + y, obsWidth1, obsHeight1, obstruction1);
-		x -= obs.rec_block[i].width;
-		if (i == 71 || i == 77 || i == 83 || i == 89)
+		obs.rec_block[i] = SetRect_(wWidth * 1.1 / 2 + x, wHeight * 1 / 2 + y, obsWidth8, obsHeight8, obstruction8);
+		x += obs.rec_block[i].width;
+		if (i == 167)
 		{
-			y += obs.rec_block[i].height + character.height;
 			x = 0;
+			y -= obs.rec_block[i].height * 3;
 		}
 	}
-	for (int i = 96, y = 0; i < 99; i++)
+	for (int i = 176, x = 0, y = 0; i < 183; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth / 2, wHeight * 4 / 5 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-		y -= obs.rec_block[i].height;
+		obs.rec_block[i] = SetRect_(obsWidth7 * 1.5 + x, wHeight * 0.8 / 3 + y, obsWidth7, obsHeight7, obstruction7);
+		if (i < 180)
+			x += obs.rec_block[i].width;
+		if (i >= 180)
+		{
+			y -= obs.rec_block[i].height;
+		}
 	}
-	for (int i = 99, y = 0; i < 102; i++)
+	for (int i = 183, y = 0; i < 186; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth / 2, wHeight / 5 + y, obsWidth3 * 2, obsHeight3, obstruction3);
+		obs.rec_block[i] = SetRect_(wWidth * 5 / 6, wHeight * 1.3 / 2 + y, obsWidth7, obsHeight7, obstruction7);
 		y += obs.rec_block[i].height;
 	}
 
@@ -467,7 +434,7 @@ void level_4_Update()
 			}
 
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = 0; o < obstructionCount4; o++)
+			for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -606,7 +573,7 @@ void level_4_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = 0; o < obstructionCount4; o++)
+				for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -714,7 +681,7 @@ void level_4_Update()
 			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
-		for (int i = 0; i < obstructionCount4; i++)
+		for (int i = obstructionCount2 + 1; i < obstructionCount3; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);

@@ -77,7 +77,7 @@ void level_1_Init()
 	elapsedTime = 0;
 	surviveMin = 1;
 	sec = 0;
-	min = 1;
+	min = 0;
 	firstDrop = 0;
 	spawnIndex = 0;
 	spawnIndex = 0;
