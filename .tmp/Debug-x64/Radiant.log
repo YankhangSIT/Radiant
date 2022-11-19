@@ -1,54 +1,44 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Users\Artemissed\source\repos\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  button.c
-  characterSelect.c
-C:\Users\Artemissed\source\repos\Radiant\src\characterSelect.c(70,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\characterSelect.c(70,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\characterSelect.c(70,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\characterSelect.c(77,49): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\characterSelect.c(77,69): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\characterSelect.c(77,87): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\characterSelect.c(45,12): warning C4101: 'mouseClickPos': unreferenced local variable
-  combat.c
-C:\Users\Artemissed\source\repos\Radiant\src\combat.c(31,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  gameOverpage.c
-  Howtoplay.c
-C:\Users\Artemissed\source\repos\Radiant\src\Howtoplay.c(38,12): warning C4101: 'mouseClickPos': unreferenced local variable
-  leaderboard.c
   level1.c
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(176,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(178,88): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(180,43): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(182,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(184,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(186,92): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(188,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(190,96): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(192,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(194,137): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(196,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(198,147): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(200,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(202,141): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(204,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(206,151): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(212,61): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(212,89): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(213,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(216,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(223,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(223,93): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(224,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(227,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(234,91): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(235,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(240,87): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(241,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(481,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(728,117): warning C4020: 'checkDamage': too many actual parameters
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(857,44): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(857,56): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Users\Artemissed\source\repos\Radiant\src\level1.c(857,93): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(182,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(184,88): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(186,43): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(188,92): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(190,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(192,92): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(194,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(196,96): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(198,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(200,137): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(202,44): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(204,147): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(206,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(208,141): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(210,44): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(212,151): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(218,61): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(218,89): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(219,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(222,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(229,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(229,93): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(230,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(233,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(240,91): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(241,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(246,87): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(247,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(488,26): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(736,117): warning C4020: 'checkDamage': too many actual parameters
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(863,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(863,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(863,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(868,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(868,50): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Users\Artemissed\source\repos\Radiant\src\level1.c(868,82): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
   level2.c
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(101,19): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(101,59): warning C4047: '=': 'int' differs in levels of indirection from 'CP_Image'
 C:\Users\Artemissed\source\repos\Radiant\src\level2.c(165,63): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level2.c(165,82): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level2.c(165,97): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
@@ -91,8 +81,14 @@ C:\Users\Artemissed\source\repos\Radiant\src\level2.c(211,9): warning C4244: '+=
 C:\Users\Artemissed\source\repos\Radiant\src\level2.c(214,25): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level2.c(217,9): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level2.c(486,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(541,58): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(541,58): warning C4047: '=': 'CP_Image' differs in levels of indirection from 'int'
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(625,58): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level2.c(625,58): warning C4047: '=': 'CP_Image' differs in levels of indirection from 'int'
 C:\Users\Artemissed\source\repos\Radiant\src\level2.c(739,117): warning C4020: 'checkDamage': too many actual parameters
   level3.c
+C:\Users\Artemissed\source\repos\Radiant\src\level3.c(100,19): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level3.c(100,59): warning C4047: '=': 'int' differs in levels of indirection from 'CP_Image'
 C:\Users\Artemissed\source\repos\Radiant\src\level3.c(187,95): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level3.c(187,102): warning C4020: 'SetRect_': too many actual parameters
 C:\Users\Artemissed\source\repos\Radiant\src\level3.c(188,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
@@ -110,8 +106,14 @@ C:\Users\Artemissed\source\repos\Radiant\src\level3.c(220,65): warning C4244: 'f
 C:\Users\Artemissed\source\repos\Radiant\src\level3.c(220,93): warning C4020: 'SetRect_': too many actual parameters
 C:\Users\Artemissed\source\repos\Radiant\src\level3.c(221,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level3.c(476,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\Artemissed\source\repos\Radiant\src\level3.c(531,58): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level3.c(531,58): warning C4047: '=': 'CP_Image' differs in levels of indirection from 'int'
+C:\Users\Artemissed\source\repos\Radiant\src\level3.c(615,58): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level3.c(615,58): warning C4047: '=': 'CP_Image' differs in levels of indirection from 'int'
 C:\Users\Artemissed\source\repos\Radiant\src\level3.c(727,117): warning C4020: 'checkDamage': too many actual parameters
   level4.c
+C:\Users\Artemissed\source\repos\Radiant\src\level4.c(102,19): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level4.c(102,59): warning C4047: '=': 'int' differs in levels of indirection from 'CP_Image'
 C:\Users\Artemissed\source\repos\Radiant\src\level4.c(202,95): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level4.c(202,102): warning C4020: 'SetRect_': too many actual parameters
 C:\Users\Artemissed\source\repos\Radiant\src\level4.c(203,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
@@ -129,29 +131,8 @@ C:\Users\Artemissed\source\repos\Radiant\src\level4.c(235,65): warning C4244: 'f
 C:\Users\Artemissed\source\repos\Radiant\src\level4.c(235,93): warning C4020: 'SetRect_': too many actual parameters
 C:\Users\Artemissed\source\repos\Radiant\src\level4.c(236,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
 C:\Users\Artemissed\source\repos\Radiant\src\level4.c(489,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\Artemissed\source\repos\Radiant\src\level4.c(559,58): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level4.c(559,58): warning C4047: '=': 'CP_Image' differs in levels of indirection from 'int'
+C:\Users\Artemissed\source\repos\Radiant\src\level4.c(658,58): error C2065: 'dropHealthSprite': undeclared identifier
+C:\Users\Artemissed\source\repos\Radiant\src\level4.c(658,58): warning C4047: '=': 'CP_Image' differs in levels of indirection from 'int'
 C:\Users\Artemissed\source\repos\Radiant\src\level4.c(780,117): warning C4020: 'checkDamage': too many actual parameters
-  loadingScreen.c
-  main.c
-  mainmenu.c
-C:\Users\Artemissed\source\repos\Radiant\src\mainmenu.c(77,52): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\mainmenu.c(77,77): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-C:\Users\Artemissed\source\repos\Radiant\src\mainmenu.c(77,100): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
-  map.c
-C:\Users\Artemissed\source\repos\Radiant\src\map.c(10,1): warning C4029: declared formal parameter list different from definition
-  movement.c
-  spawn.c
-  splashScreen.c
-  utils.c
-  win.c
-LINK : warning C4742: 'win' has different alignment in 'c:\users\artemissed\source\repos\radiant\src\win.c' and 'c:\users\artemissed\source\repos\radiant\src\spawn.c': 8 and 4
-LINK : warning C4743: 'win' has different size in 'c:\users\artemissed\source\repos\radiant\src\win.c' and 'c:\users\artemissed\source\repos\radiant\src\spawn.c': 8 and 4 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\artemissed\source\repos\radiant\src\win.c' and 'c:\users\artemissed\source\repos\radiant\src\spawn.c': 'pointer' and 'int'
-  Generating code
-  Previous IPDB was built with incompatible compiler, fall back to full compilation.
-C:\Users\Artemissed\source\repos\Radiant\src\win.c(25): warning C4739: reference to variable 'win' exceeds its storage space
-  All 57 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
-  1 File(s) copied
-  1 File(s) copied
-  52 File(s) copied

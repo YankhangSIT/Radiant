@@ -111,12 +111,17 @@ CP_Vector itemSpawn;
 int firstDrop;
 CP_Vector dropPositions;
 
+float shieldDuration;
+float unlimitedEnergyDuration;
+
 // Image Sprites
 CP_Image enemySprite1;
 CP_Image enemySprite2;
 CP_Image damagedSprite1;
 CP_Image damagedSprite2;
-CP_Image dropHealthSprite;
+CP_Image char_health; /// changed from dropHealthSprite
+CP_Image char_energy; /// added
+CP_Image dropShieldSprite;
 CP_Image dropEnergySprite;
 CP_Image bossSprite;
 unsigned int randomId;
