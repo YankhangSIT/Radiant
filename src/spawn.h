@@ -56,6 +56,8 @@ struct Button
 struct Bullet
 {
 	CP_Vector shootPosition;
+	CP_Vector shootPosition2;
+	CP_Vector shootPosition3;
 	CP_Vector bulletPos;
 	CP_Image bulletSprite;
 	CP_Vector acceleration;
@@ -83,13 +85,15 @@ struct Bullet bulletArray[SIZE];
 
 struct Bullet bossBullet;
 struct Bullet bossBulletArray[SIZE];
+struct Bullet bossBulletArray2[SIZE];
+struct Bullet bossBulletArray3[SIZE];
 struct Enemy boss;
 float bossShootTimer;
 float startBossShootTimer;
 int bossShoot;
 int bossBulletIndex;
-
-
+int bossBulletIndex2;
+int bossBulletIndex3;
 
 
 int bulletSpawnIndex;

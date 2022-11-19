@@ -1,23 +1,23 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(534,5): warning MSB8028: The intermediate directory (C:\Users\darre\OneDrive\Documents\GitHub\Radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   level4.c
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(198,95): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(198,102): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(199,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(203,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(209,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(209,97): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(210,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(214,33): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(220,47): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(220,70): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(220,98): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(222,25): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(225,25): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(231,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(231,93): warning C4020: 'SetRect_': too many actual parameters
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(232,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(485,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(776,117): warning C4020: 'checkDamage': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(202,95): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(202,102): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(203,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(207,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(213,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(213,97): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(214,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(218,33): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(224,47): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(224,70): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(224,98): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(226,25): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(229,25): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(235,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(235,93): warning C4020: 'SetRect_': too many actual parameters
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(236,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(489,25): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(780,117): warning C4020: 'checkDamage': too many actual parameters
 LINK : warning C4742: 'win' has different alignment in 'c:\users\darre\onedrive\documents\github\radiant\src\win.c' and 'c:\users\darre\onedrive\documents\github\radiant\src\spawn.c': 8 and 4
 LINK : warning C4743: 'win' has different size in 'c:\users\darre\onedrive\documents\github\radiant\src\win.c' and 'c:\users\darre\onedrive\documents\github\radiant\src\spawn.c': 8 and 4 bytes
 LINK : warning C4744: 'win' has different type in 'c:\users\darre\onedrive\documents\github\radiant\src\win.c' and 'c:\users\darre\onedrive\documents\github\radiant\src\spawn.c': 'pointer' and 'int'

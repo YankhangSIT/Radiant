@@ -169,6 +169,8 @@ void level_4_Init()
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
 	bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
+	bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x, boss.pos.y);
+	bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x, boss.pos.y);
 	bossShoot = 0;
 
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight);
@@ -184,6 +186,8 @@ void level_4_Init()
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 	bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+	bossBulletArray2[bossBulletIndex].bulletPos = bossBullet.shootPosition2;
+	bossBulletArray3[bossBulletIndex].bulletPos = bossBullet.shootPosition3;
 	firstShoot = 0;
 
 	isPaused = FALSE;
@@ -428,39 +432,39 @@ void level_4_Update()
 			}
 		}
 		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
-		for (int i = 0; i < spawnIndex; i++)
-		{
+		//for (int i = 0; i < spawnIndex; i++)
+		//{
 
-			randomId = CP_Random_RangeInt(1, 2);
-			enemies[spawnIndex].id = randomId;
-			if (enemies[spawnIndex].id == 1)
-			{
-				// set enemy with this id to the respective sprite
-				enemies[spawnIndex].enemySprite = enemySprite1;
-				// set the width and height to the respective sprite
-				enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-				enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-				// set health for the enemy id number
-				enemies[spawnIndex].health = 1;
-			}
-			else if (enemies[spawnIndex].id == 2)
-			{
-				// set enemy with this id to the respective sprite
-				enemies[spawnIndex].enemySprite = enemySprite2;
-				// set the width and height to the respective sprite
-				enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-				enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-				// set health for the enemy id number
-				enemies[spawnIndex].health = 2;
-			}
+		//	randomId = CP_Random_RangeInt(1, 2);
+		//	enemies[spawnIndex].id = randomId;
+		//	if (enemies[spawnIndex].id == 1)
+		//	{
+		//		// set enemy with this id to the respective sprite
+		//		enemies[spawnIndex].enemySprite = enemySprite1;
+		//		// set the width and height to the respective sprite
+		//		enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+		//		enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+		//		// set health for the enemy id number
+		//		enemies[spawnIndex].health = 1;
+		//	}
+		//	else if (enemies[spawnIndex].id == 2)
+		//	{
+		//		// set enemy with this id to the respective sprite
+		//		enemies[spawnIndex].enemySprite = enemySprite2;
+		//		// set the width and height to the respective sprite
+		//		enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+		//		enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+		//		// set health for the enemy id number
+		//		enemies[spawnIndex].health = 2;
+		//	}
 
-			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-			for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
-			{
-				// check for obstructions
-				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
-			}
-		}
+		//	enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
+		//	for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
+		//	{
+		//		// check for obstructions
+		//		enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
+		//	}
+		//}
 
 		if (playerNum == 1)
 		{ // IF RANGED CHAR
@@ -899,17 +903,29 @@ void level_4_Update()
 
 
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);	
+		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width/2 , boss.pos.y);
+		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width/2, boss.pos.y);
 		if (bossShootTimer <= 0)
 		{
 	
 			if (bossShoot == 1)
 			{
 				++bossBulletIndex;
+				++bossBulletIndex2;
+				++bossBulletIndex3;
 			}
 			
 			bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
 			bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 			bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+			bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+			bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+			bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex2].directionBullet);
+
+			bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+			bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+			bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex3].directionBullet);
 			bossShoot = 1;
 			bossShootTimer = startBossShootTimer;
 		}
@@ -921,6 +937,25 @@ void level_4_Update()
 			{
 				bossBulletArray[i].acceleration = CP_Vector_Scale(bossBulletArray[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
 				bossBulletArray[i].bulletPos = CP_Vector_Add(bossBulletArray[i].bulletPos, bossBulletArray[i].acceleration);
+			}
+		}
+		for (int i = 0; i - 1 < bossBulletIndex2; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray2[i].acceleration = CP_Vector_Scale(bossBulletArray2[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray2[i].bulletPos = CP_Vector_Add(bossBulletArray2[i].bulletPos, bossBulletArray2[i].acceleration);
+			}
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex3; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray3[i].acceleration = CP_Vector_Scale(bossBulletArray3[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray3[i].bulletPos = CP_Vector_Add(bossBulletArray3[i].bulletPos, bossBulletArray3[i].acceleration);
 			}
 		}
 
@@ -936,6 +971,26 @@ void level_4_Update()
 				// printf("Drawing %d", bulletSpawnIndex);
 			}
 		}
+
+		for (int i = 0; i - 1 < bossBulletIndex2; ++i)
+		{
+			if (bossShoot == 1)
+			{
+				CP_Image_Draw(bossBullet.bulletSprite, bossBulletArray2[i].bulletPos.x, bossBulletArray2[i].bulletPos.y, bullet.width, bullet.height, 255);
+				// printf("Drawing %d", bulletSpawnIndex);
+			}
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex3; ++i)
+		{
+			if (bossShoot == 1)
+			{
+				CP_Image_Draw(bossBullet.bulletSprite, bossBulletArray3[i].bulletPos.x, bossBulletArray3[i].bulletPos.y, bullet.width, bullet.height, 255);
+				// printf("Drawing %d", bulletSpawnIndex);
+			}
+		}
+
+
 
 		if (playerNum == 2)
 		{
