@@ -74,7 +74,7 @@ void level_1_Init()
 	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
-	elapsedTime = 0;
+	elapsedTime = 1;
 	surviveMin = 1;
 	sec = 0;
 	min = 0;
@@ -104,6 +104,8 @@ void level_1_Init()
 	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
 	char_energy = CP_Image_Load("Assets/Char_Energy.png"); ///
 	char_health = CP_Image_Load("Assets/Char_Health.png"); /// removed drop health sprite
+	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png"); ///
+	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png"); ///
 	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
 	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
 	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction3.png");
@@ -167,8 +169,8 @@ void level_1_Init()
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
-	shieldDuration = 0;
-	unlimitedEnergyDuration = 0;
+	shieldedDuration = 0; ///
+	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
@@ -738,11 +740,13 @@ void level_1_Update()
 				if (itemDrop[i].itemId == 1) // shield drop
 				{
 					character.shieldedState = 1;
+					shieldedDuration = 0;
 					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
 				} 
 				else if (itemDrop[i].itemId == 2) // health drop
 				{
 					character.unlimitedEnergyState = 1;
+					unlimitedEnergyDuration = 0;
 					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
 				}
 
@@ -753,6 +757,7 @@ void level_1_Update()
 				--dropIndex;
 			}
 		}
+		
 
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1)
@@ -790,6 +795,27 @@ void level_1_Update()
 			else if (playerNum == 2)
 				swordPlayer = charImageMelee(swordPlayer, character.Pos, &characterFacing); // changes character sprite based on which direction he is facing
 		}
+
+		// character power ups
+		if (character.shieldedState == 1) {
+			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, CP_Image_GetWidth(shielded), CP_Image_GetHeight(shielded), 255);
+			shieldedDuration += elapsedTime;
+
+			if (shieldedDuration >= 3) {
+				character.shieldedState = 0;
+				shieldedDuration = 0;
+			}
+		}
+		if (character.unlimitedEnergyState == 1) {
+			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, CP_Image_GetWidth(unlimitedEnergy), CP_Image_GetHeight(unlimitedEnergy), 255);
+			unlimitedEnergyDuration += elapsedTime;
+
+			if (unlimitedEnergyDuration >= 3) {
+				character.unlimitedEnergyState = 0;
+				unlimitedEnergyDuration = 0;
+			}
+		}
+
 
 		// recharge energy if < 5
 		if (character.energy < 5)

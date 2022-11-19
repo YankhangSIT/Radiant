@@ -97,13 +97,17 @@ void level_3_Init()
 	map_background = CP_Image_Load("Assets/map_background3.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 	// enemySprite1 = CP_Image_Load("Assets/Monster_4.png");
-//	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
+	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png"); /// added
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
 	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
 	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
+	char_energy = CP_Image_Load("Assets/Char_Energy.png"); ///
+	char_health = CP_Image_Load("Assets/Char_Health.png"); /// removed drop health sprite
+	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png"); ///
+	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png"); ///
 	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction4.png");
 	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction5.png");
 	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction6.png");
@@ -168,9 +172,13 @@ void level_3_Init()
 	character.invulState = 0; // start not invul
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
+	character.shieldedState = 0; ///
+	character.unlimitedEnergyState = 0; ///
 	invulElapsedTime = 0;		  // timer for invul
 	energyRechargeTime = 0;		  // timer for energyRecharge
 	stunnedElapsedTime = 0;
+	shieldedDuration = 0; ///
+	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
@@ -473,7 +481,9 @@ void level_3_Update()
 					firstShoot = 1;
 
 					// energy deplete function
-					character.energy = energyDeplete(character.energy);
+					if (character.unlimitedEnergyState != 1) {
+						character.energy = energyDeplete(character.energy);
+					}
 				}
 			}
 
@@ -641,7 +651,7 @@ void level_3_Update()
 						}
 					}
 				}
-				if (CP_Input_MouseClicked())
+				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)
 				{
 					character.energy = energyDeplete(character.energy);
 				}
@@ -704,7 +714,7 @@ void level_3_Update()
 
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
-		if (character.invulState != 1)
+		if (character.invulState != 1 && character.shieldedState != 1)
 		{ // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < spawnIndex; i++)
@@ -726,14 +736,16 @@ void level_3_Update()
 		{ // itemDrop[dropIndex]
 			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
 			{
-				if (itemDrop[i].itemId == 1) // health drop
+				if (itemDrop[i].itemId == 1) // shield drop
 				{
-					++character.health;
+					character.shieldedState = 1;
+					shieldedDuration = 0;
 					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
 				}
 				else if (itemDrop[i].itemId == 2) // health drop
 				{
-					++character.energy;
+					character.unlimitedEnergyState = 1;
+					unlimitedEnergyDuration = 0;
 					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
 				}
 
@@ -780,6 +792,26 @@ void level_3_Update()
 				gunPlayer = charImageRanged(gunPlayer, character.Pos);
 			else if (playerNum == 2)
 				swordPlayer = charImageMelee(swordPlayer, character.Pos, &characterFacing); // changes character sprite based on which direction he is facing
+		}
+
+		// character power ups
+		if (character.shieldedState == 1) {
+			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, CP_Image_GetWidth(shielded), CP_Image_GetHeight(shielded), 255);
+			shieldedDuration += elapsedTime;
+
+			if (shieldedDuration >= 3) {
+				character.shieldedState = 0;
+				shieldedDuration = 0;
+			}
+		}
+		if (character.unlimitedEnergyState == 1) {
+			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, CP_Image_GetWidth(unlimitedEnergy), CP_Image_GetHeight(unlimitedEnergy), 255);
+			unlimitedEnergyDuration += elapsedTime;
+
+			if (unlimitedEnergyDuration >= 3) {
+				character.unlimitedEnergyState = 0;
+				unlimitedEnergyDuration = 0;
+			}
 		}
 
 		// recharge energy if < 5
@@ -879,15 +911,16 @@ void level_3_Update()
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
 
-		// to display character health
-		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
-		CP_Font_DrawText("Health:", 200, 200);
-		CP_Font_DrawText(characterHealthDisplay, 260, 200);
+		// display char health and energy ///
+		CP_Font_DrawText("Health:", 50, 50);
+		for (int i = 0; i < character.health; ++i) {
+			CP_Image_Draw(char_health, i * 52 + 150, 50, CP_Image_GetWidth(char_health), CP_Image_GetHeight(char_health), 255);
+		}
 
-		// to display character energy
-		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
-		CP_Font_DrawText("Energy:", 200, 230);
-		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
+		CP_Font_DrawText("Energy:", 50, 102);
+		for (int i = 0; i < character.energy; ++i) {
+			CP_Image_Draw(char_energy, i * 52 + 150, 102, CP_Image_GetWidth(char_energy), CP_Image_GetHeight(char_energy), 255);
+		}
 	}
 }
 
