@@ -69,8 +69,10 @@ void level_4_Init()
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
 	CP_System_FullscreenAdvanced(1920, 1080);
+	//CP_System_SetWindowSize(1000, 1000);
 	bullet.bulletSpeed = 1000;
-	spawnTimer = 1.25f;
+	bossBullet.bulletSpeed = 500;
+	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -80,7 +82,6 @@ void level_4_Init()
 	firstDrop = 0;
 	spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
 	// enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
-	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
 	lose = 0;
@@ -95,6 +96,8 @@ void level_4_Init()
 	wHeight = (float)CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background3.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
+	bossBullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
+
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
@@ -118,7 +121,7 @@ void level_4_Init()
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 	damagedSprite1 = CP_Image_Load("Assets/enemy1Damaged.png");
 	damagedSprite2 = CP_Image_Load("Assets/Monster_2_Damaged.png");
-
+	bossSprite = CP_Image_Load("Assets/Final_boss.png");
 	// set spawn positions to 0 coordinate
 	spawnPosition = CP_Vector_Set(0, 0);
 
@@ -126,6 +129,8 @@ void level_4_Init()
 	enemies[spawnIndex].pos.y = spawnPosition.y;
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
+
+	
 	// enemy width and height
 	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
 	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
@@ -153,7 +158,20 @@ void level_4_Init()
 		canShoot = 0;
 	}
 
-	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
+	bossBulletIndex = 0;
+	
+	bossBullet.width = (float)CP_Image_GetWidth(bossBullet.bulletSprite);
+	bossBullet.height = (float)CP_Image_GetHeight(bossBullet.bulletSprite);
+	boss.enemySprite = bossSprite;
+	boss.pos = CP_Vector_Set(wWidth / 2, wHeight/6);
+	boss.width = (float) CP_Image_GetWidth(bossSprite);
+	boss.height = (float) CP_Image_GetHeight(bossSprite);
+	bossShootTimer = 0.5f;
+	startBossShootTimer = bossShootTimer;
+	bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
+	bossShoot = 0;
+
+	character.Pos = CP_Vector_Set(wWidth / 2, wHeight);
 	character.health = 5;	  // start with 5 hp
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
@@ -164,11 +182,13 @@ void level_4_Init()
 
 	// bullet start shoot spawn position
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
-
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+	bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 	firstShoot = 0;
 
 	isPaused = FALSE;
+
+
 
 	// initiate obstruction
 	// initiate obstruction
@@ -347,6 +367,11 @@ void level_4_Update()
 		}
 
 		spawnTimer -= elapsedTime;
+		bossShootTimer -= elapsedTime;
+
+
+
+
 		// keeps spawning until the player survives
 		if (min < surviveMin)
 		{
@@ -356,21 +381,17 @@ void level_4_Update()
 				if (direction == 4)
 				{
 					direction = 1;
-					printf("direction 1\n");
 				}
 				else if (direction == 3)
 				{
-					printf("direction 4 \n");
 					direction = 4;
 				}
 				else if (direction == 2)
 				{
-					printf("direction 3 \n");
 					direction = 3;
 				}
 				else if (direction == 1)
 				{
-					printf("direction 2 \n");
 					direction = 2;
 				}
 
@@ -520,6 +541,9 @@ void level_4_Update()
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
 						itemDrop[dropIndex].itemId = dropId;
 
+						
+
+						
 						if (randomRate == 2 && enemies[j].health <= 0)
 						{
 
@@ -532,6 +556,9 @@ void level_4_Update()
 								// set the width and height to the respective sprite
 								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+								++dropIndex;
 							}
 							else if (itemDrop[dropIndex].itemId == 2)
 							{
@@ -540,11 +567,16 @@ void level_4_Update()
 								// set the width and height to the respective sprite
 								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+								++dropIndex;
 							}
 							// set item with the drop index to the enemy coordinate
-							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-							++dropIndex;
+							
+							/*	itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[j].pos.y;						
+								++dropIndex;*/
+							
 						}
 
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
@@ -633,8 +665,12 @@ void level_4_Update()
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 							}
 							// set item with the drop index to the enemy coordinate
+
+
 							itemDrop[dropIndex].pos.x = enemies[i].pos.x;
 							itemDrop[dropIndex].pos.y = enemies[i].pos.y;
+
+
 							++dropIndex;
 						}
 
@@ -857,10 +893,50 @@ void level_4_Update()
 				if (firstShoot == 1)
 				{
 					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-					// printf("Drawing %d", bulletSpawnIndex);
 				}
 			}
 		}
+
+
+		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);	
+		if (bossShootTimer <= 0)
+		{
+	
+			if (bossShoot == 1)
+			{
+				++bossBulletIndex;
+			}
+			
+			bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+			bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+			bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+			bossShoot = 1;
+			bossShootTimer = startBossShootTimer;
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex; ++i)
+		{
+			
+			if (bossShoot == 1)
+			{
+				bossBulletArray[i].acceleration = CP_Vector_Scale(bossBulletArray[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray[i].bulletPos = CP_Vector_Add(bossBulletArray[i].bulletPos, bossBulletArray[i].acceleration);
+			}
+		}
+
+
+
+		CP_Image_Draw(boss.enemySprite, boss.pos.x, boss.pos.y, boss.width, boss.height, 255);
+
+		for (int i = 0; i - 1 < bossBulletIndex; ++i)
+		{
+			if (bossShoot == 1)
+			{
+				CP_Image_Draw(bossBullet.bulletSprite, bossBulletArray[i].bulletPos.x, bossBulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
+				// printf("Drawing %d", bulletSpawnIndex);
+			}
+		}
+
 		if (playerNum == 2)
 		{
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);

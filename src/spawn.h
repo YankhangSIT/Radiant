@@ -21,6 +21,17 @@ struct Enemy {
 	int id;
 	float takeDamage;
 };
+//
+//struct Boss
+//{
+//	CP_Vector pos;
+//	CP_Image bossSprite;
+//	float height;
+//	float width;
+//	float speed;
+//	int health;
+//	float takeDamage;
+//};
 
 // enemy struct with all the properties needed for the drop
 struct Drop
@@ -69,6 +80,18 @@ struct Enemy enemy;
 // declarations needed for the bullet 
 struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
+
+struct Bullet bossBullet;
+struct Bullet bossBulletArray[SIZE];
+struct Enemy boss;
+float bossShootTimer;
+float startBossShootTimer;
+int bossShoot;
+int bossBulletIndex;
+
+
+
+
 int bulletSpawnIndex;
 int firstShoot;
 int canShoot;
@@ -91,7 +114,7 @@ CP_Image damagedSprite1;
 CP_Image damagedSprite2;
 CP_Image dropHealthSprite;
 CP_Image dropEnergySprite;
-
+CP_Image bossSprite;
 unsigned int randomId;
 
 //min and sec counter

@@ -11,6 +11,7 @@
 #include "cprocessing.h"
 #include "utils.h"
 #include "level1.h"
+#include "level4.h"
 #include "stdio.h"
 #include "splashScreen.h"
 #include "characterSelect.h"
@@ -48,7 +49,7 @@ void how_To_play_Update()
 	CP_Font_Set(Abril);
 
 	// Teach user how to play
-	CP_Font_DrawText("1) You are to stay ALIVE until the timer 1minute.", xWidth / 2.0f, xHeight / 2.0f - 330);
+	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f, xHeight / 2.0f - 330);
 	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f, xHeight / 2.0f - 280);
 	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f, xHeight / 2.0f - 230);
 	CP_Font_DrawText("4) There are 4 stages, advance till the final stage. ", xWidth / 2.0f, xHeight / 2.0f - 180);
@@ -72,6 +73,7 @@ void how_To_play_Update()
 	// Press Enter to proceed to next page
 	if (CP_Input_KeyDown(KEY_ENTER))
 	{
+		//CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 	}
 	// Alternatively, click the area to proceed to next page.
@@ -80,6 +82,7 @@ void how_To_play_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			//CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 		}
 	}

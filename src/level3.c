@@ -72,7 +72,7 @@ void level_3_Init()
 	delayShootTime = delayShootStart;
 	CP_System_FullscreenAdvanced(1920, 1080);
 	bullet.bulletSpeed = 1000;
-	spawnTimer = 1.5f;
+	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -365,6 +365,23 @@ void level_3_Update()
 			// printf("change spawntimer %f\n" , changeSpawnTimer);
 			if (changeSpawnTimer <= 0)
 			{
+				if (direction == 4)
+				{
+					direction = 1;
+				}
+				else if (direction == 3)
+				{
+					direction = 4;
+				}
+				else if (direction == 2)
+				{
+					direction = 3;
+				}
+				else if (direction == 1)
+				{
+					direction = 2;
+				}
+
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
 		}
@@ -376,6 +393,7 @@ void level_3_Update()
 			if (direction == 1)
 			{
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+			
 			}
 			else if (direction == 2)
 			{
@@ -383,7 +401,7 @@ void level_3_Update()
 			}
 			else if (direction == 3)
 			{
-				spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wWidth));
+				spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wHeight));
 			}
 			else if (direction == 4)
 			{
