@@ -99,7 +99,7 @@ void level_4_Init()
 	bossBullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
-	dropHealthSprite = CP_Image_Load("Assets/healthDrop.png");
+	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
@@ -556,7 +556,7 @@ void level_4_Update()
 							if (itemDrop[dropIndex].itemId == 1)
 							{
 								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropHealthSprite;
+								itemDrop[dropIndex].dropSprite = dropShieldSprite;
 								// set the width and height to the respective sprite
 								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
@@ -655,7 +655,7 @@ void level_4_Update()
 							if (itemDrop[dropIndex].itemId == 1)
 							{
 								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropHealthSprite;
+								itemDrop[dropIndex].dropSprite = dropShieldSprite;
 								// set the width and height to the respective sprite
 								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
