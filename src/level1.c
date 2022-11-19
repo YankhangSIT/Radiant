@@ -853,6 +853,11 @@ void level_1_Update()
 		CP_Font_DrawText("Health:", 200, 200);
 		CP_Font_DrawText(characterHealthDisplay, 260, 200);
 
+		for (int i = 0; i < character.health; ++i) {
+			CP_Image_Draw(dropHealthSprite, i * 100 + 52, 300, CP_Image_GetWidth(dropHealthSprite), CP_Image_GetHeight(dropHealthSprite), 255);
+		}
+
+
 		// to display character energy
 		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
 		CP_Font_DrawText("Energy:", 200, 230);
