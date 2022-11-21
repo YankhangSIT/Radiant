@@ -172,6 +172,14 @@ void level_4_Init()
 	bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x, boss.pos.y);
 	bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x, boss.pos.y);
 	bossShoot = 0;
+	changeAttackTimer = 5.f;
+	startChangeTimer = changeAttackTimer;
+	attackMode = 1;
+
+
+	firstShoot = 0;
+	directionAngle = 0;
+	rotationSpeed = 2000.f;
 
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight);
 	character.health = 5;	  // start with 5 hp
@@ -901,31 +909,85 @@ void level_4_Update()
 			}
 		}
 
-
+		changeAttackTimer -= elapsedTime;
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);	
 		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width/2 , boss.pos.y);
 		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width/2, boss.pos.y);
 		if (bossShootTimer <= 0)
 		{
-	
+			
 			if (bossShoot == 1)
 			{
 				++bossBulletIndex;
 				++bossBulletIndex2;
 				++bossBulletIndex3;
 			}
-			
-			bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
-			bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
-			bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
 
-			bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
-			bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
-			bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex2].directionBullet);
+			printf("timer: %f \n", changeAttackTimer);
+			if (changeAttackTimer <= 0)
 
-			bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
-			bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
-			bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex3].directionBullet);
+			{
+				if (attackMode == 2)
+				{
+					attackMode = 1;
+					printf("switching to attack 1 \n");
+				}
+				else if (attackMode == 1)
+				{
+					attackMode = 2;
+					printf("switching to attack 2 \n");
+				}
+				/*	else if (attackMode == 3)
+					{
+
+						attackMode = 1;
+						printf("switching to attack 1 \n");
+					}*/
+
+				changeAttackTimer = startChangeTimer;
+			}
+			if (attackMode == 1)
+			{
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex3].directionBullet);
+			}
+			else if (attackMode == 2)
+			{
+
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray2[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray3[bossBulletIndex3].directionBullet);
+
+			}
+			/*		else if (attackMode == 3)
+					{
+						CP_Vector acceleration = CP_Vector_Scale(AngleToVector(directionAngle), bossBullet.bulletSpeed * elapsedTime);
+						directionAngle += rotationSpeed * elapsedTime;
+						bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+						bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Add(bossBulletArray[bossBulletIndex].bulletPos, acceleration);
+
+						printf("angle: %f \n", directionAngle);
+						bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+
+			}*/
 			bossShoot = 1;
 			bossShootTimer = startBossShootTimer;
 		}
