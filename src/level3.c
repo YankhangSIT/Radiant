@@ -164,44 +164,43 @@ void level_3_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-	for (int i = obstructionCount2 + 1, x = 0, y = 0; i < 160; i++)
+	// trees
+	for (int i = obstructionCount2 + 1, x = 0, y = 0; i < 114; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth * 1 / 10 + x, wHeight * 1 / 2 + y, obsWidth9, obsHeight9 * 0.5, obstruction9);
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 10 + x, wHeight * 1.f / 2.f - obsHeight9 * 0.25 + y, obsWidth9, obsHeight9 * 0.5, obstruction9);
 		x += obs.rec_block[i].width;
-		if (i == 153)
+		if (i == 107)
 		{
 			x = 0;
-			y += obs.rec_block[i].height * 2;
+			y += obs.rec_block[i].height * 2.5;
 		}
 	}
-	for (int i = 160, x = 0, y = 0; i < 176; i++)
+	// skulls
+	for (int i = 114, x = 0, y = 0; i < 130; i++)
 	{
 
 		obs.rec_block[i] = SetRect_(wWidth * 1.1 / 2 + x, wHeight * 1 / 2 + y, obsWidth8, obsHeight8, obstruction8);
 		x += obs.rec_block[i].width;
-		if (i == 167)
+		if (i == 121)
 		{
 			x = 0;
 			y -= obs.rec_block[i].height * 3;
 		}
 	}
-	for (int i = 176, x = 0, y = 0; i < 183; i++)
+	// top left rocks
+	for (int i = 130, x = 0; i < 133; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(obsWidth7 * 1.5 + x, wHeight * 0.8 / 3 + y, obsWidth7, obsHeight7, obstruction7);
-		if (i < 180)
-			x += obs.rec_block[i].width;
-		if (i >= 180)
-		{
-			y -= obs.rec_block[i].height;
-		}
+		obs.rec_block[i] = SetRect_(obsWidth7 * 1.5 + x, wHeight * 0.8 / 3, obsWidth7, obsHeight7, obstruction7);
+		x += obs.rec_block[i].width * 2;
 	}
-	for (int i = 183, y = 0; i < 186; i++)
+	// bottom right rocks
+	for (int i = 133, x = 0; i < 136; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth * 5 / 6, wHeight * 1.3 / 2 + y, obsWidth7, obsHeight7, obstruction7);
-		y += obs.rec_block[i].height;
+		obs.rec_block[i] = SetRect_(wWidth * 5 / 6 + x, wHeight * 1.3 / 2 + obsHeight7, obsWidth7, obsHeight7, obstruction7);
+		x -= obs.rec_block[i].width * 2;
 	}
 	// melee character swing sword area check
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);

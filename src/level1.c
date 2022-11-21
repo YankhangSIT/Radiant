@@ -158,70 +158,58 @@ void level_1_Init()
 	// initiate obstruction
 	for (int i = 0, x = 0; i < 6; i++, x += obsWidth2)
 	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight / 8, obsWidth2, obsHeight2 * 2, obstruction2);
+		obs.rec_block[i] = SetRect_(wWidth / 10.f + x, wHeight / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
 	for (int i = 6, x = 0; i < 12; i++, x -= obsWidth2)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight / 8, obsWidth2, obsHeight2 * 2, obstruction2);
+		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + x, wHeight / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
 	for (int i = 12, x = 0; i < 18; i++, x += obsWidth2)
 	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 + x, wHeight * 7 / 8, obsWidth2, obsHeight2 * 2, obstruction2);
+		obs.rec_block[i] = SetRect_(wWidth / 10.f + x, wHeight * 7.f / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
 	for (int i = 18, x = 0; i < 24; i++, x -= obsWidth2)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 9 / 10 + x, wHeight * 7 / 8, obsWidth2, obsHeight2 * 2, obstruction2);
+		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + x, wHeight * 7.f / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
 	for (int i = 24, y = 0; i < 27; i++, y += obsHeight3)
 	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 - obsWidth2 / 2 + obsWidth3 / 2, wHeight / 8 + obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
+		obs.rec_block[i] = SetRect_(wWidth / 10.f - obsWidth2 / 2.f + obsWidth3 / 2.f, wHeight / 8.f + obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
 	for (int i = 27, y = 0; i < 30; i++, y += obsHeight3)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2, wHeight / 8 + obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
+		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2.f, wHeight / 8.f + obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
 	for (int i = 30, y = 0; i < 33; i++, y -= obsHeight3)
 	{
-		obs.rec_block[i] = SetRect_(wWidth / 10 - obsWidth2 / 2 + obsWidth3 / 2, wHeight * 7 / 8 - obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
+		obs.rec_block[i] = SetRect_(wWidth / 10.f - obsWidth2 / 2.f + obsWidth3 / 2.f, wHeight * 7.f / 8.f - obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
 	for (int i = 33, y = 0; i < 36; i++, y -= obsHeight3)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2, wHeight * 7 / 8 - obsHeight3 / 2 + y, obsWidth3 * 2, obsHeight3, obstruction3);
+		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2.f, wHeight * 7.f / 8.f - obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
 	// square obstruction
-	for (int i = 36, x = 0, y = 0; i < 66; i++)
+	for (int i = 36, x = 0, y = 0; i < 48; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth / 6 + x, wHeight / 4.2 + y, obsWidth1, obsHeight1, obstruction1);
+		obs.rec_block[i] = SetRect_(wWidth / 6.f + x, wHeight / 4.2f + obsHeight1 * 2 + y, obsWidth1, obsHeight1, obstruction1);
 		x += obs.rec_block[i].width;
-		if (i == 41 || i == 47 || i == 53 || i == 59)
+		if (i == 41)
 		{
-			y += obs.rec_block[i].height + character.height;
+			y += obs.rec_block[i].height + character.height * 2;
 			x = 0;
 		}
 	}
-	for (int i = 66, x = 0, y = 0; i < 96; i++)
+	for (int i = 48, x = 0, y = 0; i < 66; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth * 5 / 6 + x, wHeight / 4.2 + y, obsWidth1, obsHeight1, obstruction1);
+		obs.rec_block[i] = SetRect_(wWidth * 5.f / 6.f + x, wHeight / 4.2f + y, obsWidth1, obsHeight1, obstruction1);
 		x -= obs.rec_block[i].width;
-		if (i == 71 || i == 77 || i == 83 || i == 89)
+		if (i == 53 || i == 59)
 		{
-			y += obs.rec_block[i].height + character.height;
+			y += obs.rec_block[i].height + character.height * 2;
 			x = 0;
 		}
-	}
-	for (int i = 96, y = 0; i < 99; i++)
-	{
-
-		obs.rec_block[i] = SetRect_(wWidth / 2, wHeight * 4 / 5 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-		y -= obs.rec_block[i].height;
-	}
-	for (int i = 99, y = 0; i < 102; i++)
-	{
-
-		obs.rec_block[i] = SetRect_(wWidth / 2, wHeight / 5 + y, obsWidth3 * 2, obsHeight3, obstruction3);
-		y += obs.rec_block[i].height;
 	}
 
 	// melee character swing sword area check

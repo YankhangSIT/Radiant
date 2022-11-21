@@ -144,59 +144,57 @@ void level_2_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
+	// big house
 	obs.rec_block[obstructionCount1 + 1] = SetRect_(wWidth * 2.3 / 4, wHeight * 1.3 / 4, obsWidth4 * 1.8, obsHeight4 * 1.8, obstruction4);
-	for (int i = obstructionCount1 + 2, x = 0; i < 107; i++)
+	// left side ice cube
+	for (int i = obstructionCount1 + 2, x = 0; i < 71; i++)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 1 / 8 + x, wHeight * 2 / 4, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
 		x += obsWidth6;
 	}
-	for (int i = 107, x = 0; i < 110; i++)
+	// right side ice cube
+	for (int i = 71, x = 0; i < 74; i++)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 4.5 / 5 + x, wHeight * 7 / 8, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
 		x -= obsWidth6;
 	}
-	for (int i = 110, x = 0, y = 0; i < 116; i++)
+	for (int i = 74, x = 0, y = 0; i < 77; i++)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 2.3 / 3 + x, wHeight * 1 / 2 + y, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
 		x += obsWidth6;
-		if (i == 112)
-		{
-			x = 0;
-			y += obsHeight6;
-		}
 	}
-	for (int i = 116, x = 0, y = 0; i < 128; i++)
+	// bottom left trees
+	for (int i = 77, x = 0, y = 0; i < 89; i++)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 1 / 16 + x, wHeight * 1.3 / 2 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
 		x += obsWidth5;
-		if (i == 117 || i == 121)
+		if (i == 78 || i == 82)
 		{
 			x = 0;
 			y += obsHeight5 * 0.7;
 		}
 	}
-	for (int i = 128, x = 0, y = 0; i < 132; i++)
+	// center trees
+	for (int i = 89, x = 0, y = 0; i < 91; i++)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 1 / 3 + x, wHeight * 0.8 / 2 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
 		x += obsWidth5;
-		y += obsHeight5 * 0.7 + 80.f;
+		y += obsHeight5 * 0.7f * 2.f + 80.f;
 	}
-	for (int i = 132, x = 0, y = 0; i < 135; i++)
-	{
-		obs.rec_block[i] = SetRect_(wWidth * 0.5 / 4 + x, wHeight * 0.5 / 3, obsWidth5, obsHeight5 * 0.7, obstruction5);
-		x += obsWidth5 * 2;
-	}
-	for (int i = 135, x = 0, y = 0; i < 147; i++)
+	// top right trees
+	for (int i = 91, x = 0, y = 0; i < 101; i++)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 2.4 / 3 + x, wHeight * 1 / 8 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
-		if (i < 139)
+		if (i < 95)
 			x += obsWidth5;
-		if (i == 140 || i == 141)
+		else if (i == 95)
+			y = obsHeight5 * 0.7 * 2.f;
+		else
 		{
-			y += obs.rec_block[i].height;
-		}
-		if (i > 141)
+
+			y = obsHeight5 * 0.7 * 2.f;
 			x -= obsWidth5;
+		}
 	}
 
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3) / 2, character.Pos.y, character.width * 3.f, character.height * 2.5f);
