@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "cprocessing.h"
 #define MAX_Obs1 102
 #define MAX_Obs2 147
 #define MAX_Obs3 190
@@ -17,10 +18,41 @@ typedef struct Rect
 } Rect;
 typedef struct Obstruction
 {
-Rect rec_block[MAX_Obs3];
+	Rect rec_block[MAX_Obs3];
 } Obstruction;
 Rect SetRect_(float x, float y, float width, float height);
 const int obstructionCount1;
 const int obstructionCount2;
 const int obstructionCount3;
 const int obstructionCount4;
+CP_Image map_background;
+CP_Image obstruction1;
+CP_Image obstruction2;
+CP_Image obstruction3;
+CP_Image obstruction4;
+CP_Image obstruction5;
+CP_Image obstruction6;
+CP_Image obstruction7;
+CP_Image obstruction8;
+CP_Image obstruction9;
+
+Obstruction obs;
+
+float obsWidth1;
+float obsHeight1;
+float obsWidth2;
+float obsHeight2;
+float obsWidth3;
+float obsHeight3;
+float obsWidth4;
+float obsHeight4;
+float obsWidth5;
+float obsHeight5;
+float obsWidth6;
+float obsHeight6;
+float obsWidth7;
+float obsHeight7;
+float obsWidth8;
+float obsHeight8;
+float obsWidth9;
+float obsHeight9;

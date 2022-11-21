@@ -17,6 +17,7 @@
 #include "win.h"
 #include "button.h"
 #include "gameOverpage.h"
+#include "sound.h"
 
 int panelDisplay = 0;
 
@@ -40,8 +41,9 @@ void Main_Menu_Init()
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
-	wWidth = (float) CP_System_GetWindowWidth();
-	wHeight = (float) CP_System_GetWindowHeight();
+	wWidth = (float)CP_System_GetWindowWidth();
+	wHeight = (float)CP_System_GetWindowHeight();
+	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 }
 
 void Main_Menu_Update()
@@ -50,7 +52,7 @@ void Main_Menu_Update()
 
 	// Set background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, (float) CP_Image_GetWidth(main_menu), (float) CP_Image_GetHeight(main_menu), 255);
+	CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, (float)CP_Image_GetWidth(main_menu), (float)CP_Image_GetHeight(main_menu), 255);
 
 	// Set font
 	CP_Font_Set(Alclonia);
@@ -66,24 +68,29 @@ void Main_Menu_Update()
 	// Exit Button
 	Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-	// If click "Play" Button
 	if (CP_Input_MouseClicked())
 	{
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+		// If click "Play" Button
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			panelDisplay = 1;
+			Main_Menu_Exit();
 			CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
 		}
 		// else if click "Exit" button
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			Main_Menu_Exit();
 			CP_Engine_Terminate();
 		}
 
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			// CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			// Main_Menu_Exit();
 			// CP_Engine_SetNextGameState(Settings_Init, Settings_Update, Settings_Exit);
 		}
 	}
@@ -92,4 +99,5 @@ void Main_Menu_Update()
 void Main_Menu_Exit()
 {
 	CP_Image_Free(&main_menu);
+	CP_Sound_Free(&buttonClickSound);
 }

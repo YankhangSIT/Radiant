@@ -1,10 +1,15 @@
 #include <stdio.h>
-#include "cprocessing.h"
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
 #include "level1.h"
 #include "map.h"
+
+const int obstructionCount1 = MAX_Obs1;
+const int obstructionCount2 = MAX_Obs2;
+const int obstructionCount3 = MAX_Obs3;
+const int obstructionCount4 = MAX_Obs4;
+
 
 Rect SetRect_(float x, float y, float width, float height, CP_Image sprite)
 {
@@ -71,10 +76,6 @@ bool checkProjectileObsCollision(CP_Vector bulletPosition, float bulletWidth, fl
 	return false;
 }
 
-const int obstructionCount1 = MAX_Obs1;
-const int obstructionCount2 = MAX_Obs2;
-const int obstructionCount3 = MAX_Obs3;
-const int obstructionCount4 = MAX_Obs4;
 
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height)
 {

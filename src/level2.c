@@ -13,6 +13,7 @@
 #include "button.h"
 #include "gameOverpage.h"
 #include "global.h"
+#include "sound.h"
 
 struct Character playerGun;
 struct Character playerSword;
@@ -31,35 +32,10 @@ int healthChange;
 float wWidth;
 float wHeight;
 
-// obstruction obj in map.h
-Obstruction obs;
-float obsWidth4;
-float obsHeight4;
-float obsWidth5;
-float obsHeight5;
-float obsWidth6;
-float obsHeight6;
-float stunnedWidth;
-float stunnedHeight;
-// triangle area for sword swing
-Sword swordSwingArea;
-float swordSwingTime;
-bool swingSword;
-int characterFacing;
 // string array to use for text display
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
-
-CP_Image map_background;
-CP_Image swordSwingSprite1;
-CP_Image swordSwingSprite2;
-CP_Image stunned;
-CP_Image hpPickup;
-CP_Image energyPickup;
-CP_Image obstruction1;
-CP_Image obstruction2;
-CP_Image obstruction3;
 
 void level_2_Init()
 {
@@ -147,17 +123,17 @@ void level_2_Init()
 	}
 
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
-	character.health = 5;	  // start with 5 hp
-	character.energy = 5;	  // start with 5 energy
-	character.invulState = 0; // start not invul
-	character.shieldedState = 0; ///
+	character.health = 5;				// start with 5 hp
+	character.energy = 5;				// start with 5 energy
+	character.invulState = 0;			// start not invul
+	character.shieldedState = 0;		///
 	character.unlimitedEnergyState = 0; ///
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	invulElapsedTime = 0;		  // timer for invul
 	energyRechargeTime = 0;		  // timer for energyRecharge
 	stunnedElapsedTime = 0;
-	shieldedDuration = 0; ///
+	shieldedDuration = 0;		 ///
 	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
@@ -227,6 +203,12 @@ void level_2_Init()
 	swordSwingTime = 0;
 	swingSword = false;
 	characterFacing = 0;
+	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
+	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
+	pickUp = CP_Sound_Load("Assets/pickup.wav");
+	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
+	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
+	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
 }
 
 void level_2_Update()
@@ -240,6 +222,8 @@ void level_2_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
+			CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+
 			CP_Font_DrawText("You survived Level 2!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -301,8 +285,9 @@ void level_2_Update()
 					delayShootTime = delayShootStart;
 
 					clear();
-					printf("next Level");
-					// level_2_Init();
+					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					level_2_Exit();
+
 					CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
 
 					// printf("pause  state win lv1 %d", isPaused);
@@ -313,6 +298,8 @@ void level_2_Update()
 			{
 				if (win == FALSE)
 				{
+					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+
 					delayShootTime = delayShootStart;
 
 					isPaused = !isPaused;
@@ -326,6 +313,7 @@ void level_2_Update()
 			if (isPaused == TRUE)
 			{
 				//	printf("paused state win lv2 %d", isPaused);
+				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				win = FALSE;
 				clear();
 				level_2_Init();
@@ -335,12 +323,15 @@ void level_2_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			clear();
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			level_2_Exit();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			clear();
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			CP_Engine_Terminate();
 		}
 	}
@@ -383,7 +374,6 @@ void level_2_Update()
 				if (direction == 4)
 				{
 					direction = 1;
-
 				}
 				else if (direction == 3)
 				{
@@ -478,6 +468,7 @@ void level_2_Update()
 			{
 				if (CP_Input_MouseClicked() && canShoot == 1)
 				{
+					CP_Sound_PlayAdvanced(projectile_shoot, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 					if (firstShoot == 1)
 					{
@@ -489,7 +480,8 @@ void level_2_Update()
 					firstShoot = 1;
 
 					// energy deplete function
-					if (character.unlimitedEnergyState != 1) {
+					if (character.unlimitedEnergyState != 1)
+					{
 						character.energy = energyDeplete(character.energy);
 					}
 				}
@@ -611,6 +603,7 @@ void level_2_Update()
 				if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT))
 				{
 					swingSword = true;
+					CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				}
 				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
@@ -733,6 +726,7 @@ void level_2_Update()
 				{
 					if (healthChange == 0)
 					{
+						CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 						character.health = takeDamage(character.health);
 						healthChange = 1; // telling program health has changed, dont change again in this frame
 					}
@@ -741,12 +735,12 @@ void level_2_Update()
 			}
 		}
 
-
 		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
 			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
 			{
+				CP_Sound_PlayAdvanced(pickUp, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				if (itemDrop[i].itemId == 1) // shield drop
 				{
 					character.shieldedState = 1;
@@ -806,20 +800,24 @@ void level_2_Update()
 		}
 
 		// character power ups
-		if (character.shieldedState == 1) {
+		if (character.shieldedState == 1)
+		{
 			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, CP_Image_GetWidth(shielded), CP_Image_GetHeight(shielded), 255);
 			shieldedDuration += elapsedTime;
 
-			if (shieldedDuration >= 3) {
+			if (shieldedDuration >= 3)
+			{
 				character.shieldedState = 0;
 				shieldedDuration = 0;
 			}
 		}
-		if (character.unlimitedEnergyState == 1) {
+		if (character.unlimitedEnergyState == 1)
+		{
 			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, CP_Image_GetWidth(unlimitedEnergy), CP_Image_GetHeight(unlimitedEnergy), 255);
 			unlimitedEnergyDuration += elapsedTime;
 
-			if (unlimitedEnergyDuration >= 3) {
+			if (unlimitedEnergyDuration >= 3)
+			{
 				character.unlimitedEnergyState = 0;
 				unlimitedEnergyDuration = 0;
 			}
@@ -925,12 +923,14 @@ void level_2_Update()
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);
-		for (int i = 0; i < character.health; ++i) {
+		for (int i = 0; i < character.health; ++i)
+		{
 			CP_Image_Draw(char_health, i * 52 + 150, 50, CP_Image_GetWidth(char_health), CP_Image_GetHeight(char_health), 255);
 		}
 
 		CP_Font_DrawText("Energy:", 50, 102);
-		for (int i = 0; i < character.energy; ++i) {
+		for (int i = 0; i < character.energy; ++i)
+		{
 			CP_Image_Draw(char_energy, i * 52 + 150, 102, CP_Image_GetWidth(char_energy), CP_Image_GetHeight(char_energy), 255);
 		}
 	}
@@ -938,4 +938,14 @@ void level_2_Update()
 
 void level_2_Exit()
 {
+	CP_Sound_Free(&sword_swing);
+	CP_Sound_Free(&projectile_shoot);
+	CP_Sound_Free(&pickUp);
+	CP_Sound_Free(&nextlvl_sound);
+	CP_Sound_Free(&buttonClickSound);
+	CP_Sound_Free(&damageTaken);
+	CP_Image_Free(&obstruction1);
+	CP_Image_Free(&obstruction2);
+	CP_Image_Free(&obstruction3);
+	CP_Image_Free(&map_background);
 }

@@ -13,6 +13,7 @@
 #include "button.h"
 #include "gameOverpage.h"
 #include "global.h"
+#include "sound.h"
 
 struct Character playerGun;
 struct Character playerSword;
@@ -30,40 +31,11 @@ float stunnedElapsedTime;
 int healthChange;
 float wWidth;
 float wHeight;
-
-// obstruction obj in map.h
-Obstruction obs;
-float obsWidth1;
-float obsHeight1;
-float obsWidth2;
-float obsHeight2;
-float obsWidth3;
-float obsHeight3;
-float stunnedWidth;
-float stunnedHeight;
-
-// area for sword swing
-Sword swordSwingArea;
-float swordSwingTime;
-bool swingSword;
-int characterFacing;
 // string array to use for text display
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
 
-CP_Image map_background;
-CP_Image swordSwingSprite1;
-CP_Image swordSwingSprite2;
-CP_Image stunned;
-CP_Image hpPickup;
-CP_Image energyPickup;
-CP_Image obstruction1;
-CP_Image obstruction2;
-CP_Image obstruction3;
-CP_Sound sword_swing = NULL;
-CP_Sound projectile_shoot = NULL;
-CP_Sound pickUp = NULL;
 void level_1_Init()
 {
 	clear();
@@ -79,7 +51,7 @@ void level_1_Init()
 	bulletSpawnIndex = 0;
 	elapsedTime = 1;
 	surviveMin = 1;
-	sec = 55;
+	sec = 0;
 	min = 0;
 	firstDrop = 0;
 	spawnIndex = 0;
@@ -255,11 +227,16 @@ void level_1_Init()
 	// melee character swing sword area check
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
 	swordSwingTime = 0;
+	damageTakenTime = 0;
 	swingSword = false;
+	damageSound = false;
 	characterFacing = 0;
 	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
 	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
 	pickUp = CP_Sound_Load("Assets/pickup.wav");
+	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
+	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
+	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
 }
 
 void level_1_Update()
@@ -291,6 +268,7 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
+			CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -321,7 +299,8 @@ void level_1_Update()
 					delayShootTime = delayShootStart;
 
 					// clear();
-					// printf("next Level");
+
+					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					level_1_Exit();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 
@@ -333,6 +312,7 @@ void level_1_Update()
 			{
 				if (win == FALSE)
 				{
+					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					delayShootTime = delayShootStart;
 					isPaused = !isPaused;
 				}
@@ -344,6 +324,7 @@ void level_1_Update()
 			// isPaused = !isPaused;
 			if (isPaused == TRUE)
 			{
+				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				win = FALSE;
 				// clear();
 				level_1_Init();
@@ -353,12 +334,15 @@ void level_1_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			// clear();
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			level_1_Exit();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			//	clear();
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			CP_Engine_Terminate();
 		}
 	}
@@ -374,6 +358,15 @@ void level_1_Update()
 		{
 			sec = 0;
 			++min;
+		}
+		if (damageSound)
+		{
+			damageTakenTime += elapsedTime;
+			if (damageTakenTime > 2)
+			{
+				damageTakenTime = 0;
+				damageSound = false;
+			}
 		}
 
 		if (playerNum == 1)
@@ -617,7 +610,6 @@ void level_1_Update()
 				{
 					swingSword = true;
 					CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-					// CP_Sound_Play(sword_swing);
 				}
 				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
@@ -737,6 +729,12 @@ void level_1_Update()
 				{
 					if (healthChange == 0)
 					{
+						if (!damageTakenTime)
+						{
+							damageSound = true;
+							CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
+						}
+
 						character.health = takeDamage(character.health);
 						healthChange = 1; // telling program health has changed, dont change again in this frame
 					}
@@ -918,4 +916,11 @@ void level_1_Exit()
 	CP_Sound_Free(&sword_swing);
 	CP_Sound_Free(&projectile_shoot);
 	CP_Sound_Free(&pickUp);
+	CP_Sound_Free(&nextlvl_sound);
+	CP_Sound_Free(&buttonClickSound);
+	CP_Sound_Free(&damageTaken);
+	CP_Image_Free(&obstruction1);
+	CP_Image_Free(&obstruction2);
+	CP_Image_Free(&obstruction3);
+	CP_Image_Free(&map_background);
 }

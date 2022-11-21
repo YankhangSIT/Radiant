@@ -17,6 +17,7 @@
 #include "characterSelect.h"
 #include "mainmenu.h"
 #include "Howtoplay.h"
+#include "sound.h"
 
 CP_Font Acme, Abril;
 void how_To_play_Init()
@@ -31,13 +32,14 @@ void how_To_play_Init()
 	CP_TEXT_ALIGN_VERTICAL vertical2 = CP_TEXT_ALIGN_V_TOP;*/
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
+	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 }
 
 void how_To_play_Update()
 {
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	float xWidth = (float)CP_System_GetWindowWidth();
-	float xHeight = (float) CP_System_GetWindowHeight();
+	float xHeight = (float)CP_System_GetWindowHeight();
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
@@ -73,7 +75,9 @@ void how_To_play_Update()
 	// Press Enter to proceed to next page
 	if (CP_Input_KeyDown(KEY_ENTER))
 	{
-		//CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+		// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+		CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+		how_To_play_Exit();
 		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 	}
 	// Alternatively, click the area to proceed to next page.
@@ -82,7 +86,9 @@ void how_To_play_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			//CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+			// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			how_To_play_Exit();
 			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 		}
 	}
@@ -90,4 +96,5 @@ void how_To_play_Update()
 
 void how_To_play_Exit()
 {
+	CP_Sound_Free(&buttonClickSound);
 }
