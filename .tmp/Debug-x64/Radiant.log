@@ -1,4 +1,14 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (C:\Year1\csd1401\radiant\.tmp\Debug-x64\) contains files shared from another project (CarSelectGame.vcxproj, SplashScreen.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Howtoplay.c
+C:\Year1\csd1401\radiant\src\Howtoplay.c(40,12): warning C4101: 'mouseClickPos': unreferenced local variable
+  characterSelect.c
+C:\Year1\csd1401\radiant\src\characterSelect.c(72,47): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(72,67): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(72,85): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(81,47): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(81,67): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(81,85): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\characterSelect.c(44,12): warning C4101: 'mouseClickPos': unreferenced local variable
   level1.c
 C:\Year1\csd1401\radiant\src\level1.c(159,42): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(161,88): warning C4020: 'SetRect_': too many actual parameters
@@ -28,18 +38,72 @@ C:\Year1\csd1401\radiant\src\level1.c(217,91): warning C4020: 'SetRect_': too ma
 C:\Year1\csd1401\radiant\src\level1.c(218,24): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
 C:\Year1\csd1401\radiant\src\level1.c(223,87): warning C4020: 'SetRect_': too many actual parameters
 C:\Year1\csd1401\radiant\src\level1.c(224,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(494,26): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Year1\csd1401\radiant\src\level1.c(749,117): warning C4020: 'checkDamage': too many actual parameters
-C:\Year1\csd1401\radiant\src\level1.c(813,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(813,91): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(824,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(824,109): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(903,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(903,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(903,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(909,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(909,50): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level1.c(909,82): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(497,26): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Year1\csd1401\radiant\src\level1.c(752,117): warning C4020: 'checkDamage': too many actual parameters
+C:\Year1\csd1401\radiant\src\level1.c(816,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(816,91): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(827,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(827,109): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(906,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(906,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(906,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(912,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(912,50): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level1.c(912,82): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  level2.c
+C:\Year1\csd1401\radiant\src\level2.c(147,63): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(147,82): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(147,97): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(147,115): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(147,122): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(150,78): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(150,96): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(150,103): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(151,8): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(155,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(155,80): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(155,98): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(155,105): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(156,8): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(160,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(160,84): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(160,102): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(160,109): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(161,8): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(165,9): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(170,70): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(170,97): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(170,104): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(171,8): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(175,20): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(180,69): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(180,96): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(180,103): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(181,8): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(182,25): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(186,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(186,67): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(186,94): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(186,101): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(187,18): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(191,48): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(191,96): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(191,103): warning C4020: 'SetRect_': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(193,9): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(196,25): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(199,9): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(487,26): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Year1\csd1401\radiant\src\level2.c(743,117): warning C4020: 'checkDamage': too many actual parameters
+C:\Year1\csd1401\radiant\src\level2.c(807,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(807,91): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(818,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(818,109): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(930,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(930,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(930,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(936,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(936,50): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level2.c(936,82): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
   level3.c
 C:\Year1\csd1401\radiant\src\level3.c(170,95): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level3.c(170,102): warning C4020: 'SetRect_': too many actual parameters
@@ -57,25 +121,29 @@ C:\Year1\csd1401\radiant\src\level3.c(197,25): warning C4244: '-=': conversion f
 C:\Year1\csd1401\radiant\src\level3.c(203,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Year1\csd1401\radiant\src\level3.c(203,93): warning C4020: 'SetRect_': too many actual parameters
 C:\Year1\csd1401\radiant\src\level3.c(204,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(471,26): warning C4013: 'energyDeplete' undefined; assuming extern returning int
-C:\Year1\csd1401\radiant\src\level3.c(725,117): warning C4020: 'checkDamage': too many actual parameters
-C:\Year1\csd1401\radiant\src\level3.c(789,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(789,91): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(800,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(800,109): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(911,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(911,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(911,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(917,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(917,50): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
-C:\Year1\csd1401\radiant\src\level3.c(917,82): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(474,26): warning C4013: 'energyDeplete' undefined; assuming extern returning int
+C:\Year1\csd1401\radiant\src\level3.c(728,117): warning C4020: 'checkDamage': too many actual parameters
+C:\Year1\csd1401\radiant\src\level3.c(792,62): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(792,91): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(803,73): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(803,109): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(914,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(914,49): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(914,81): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(920,38): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(920,50): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+C:\Year1\csd1401\radiant\src\level3.c(920,82): warning C4244: 'function': conversion from 'int' to 'float', possible loss of data
+  mainmenu.c
+C:\Year1\csd1401\radiant\src\mainmenu.c(80,52): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\mainmenu.c(80,77): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
+C:\Year1\csd1401\radiant\src\mainmenu.c(80,100): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'FunctionPtr'
 LINK : warning C4742: 'win' has different alignment in 'c:\year1\csd1401\radiant\src\win.c' and 'c:\year1\csd1401\radiant\src\spawn.c': 8 and 4
 LINK : warning C4743: 'win' has different size in 'c:\year1\csd1401\radiant\src\win.c' and 'c:\year1\csd1401\radiant\src\spawn.c': 8 and 4 bytes
 LINK : warning C4744: 'win' has different type in 'c:\year1\csd1401\radiant\src\win.c' and 'c:\year1\csd1401\radiant\src\spawn.c': 'pointer' and 'int'
   Generating code
-  2 of 57 functions ( 3.5%) were compiled, the rest were copied from previous compilation.
+  7 of 57 functions (12.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    5 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Radiant.vcxproj -> C:\Year1\csd1401\radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied

@@ -237,6 +237,7 @@ void level_1_Init()
 	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
+	gameOverSound = CP_Sound_Load("Assets/gameOver.wav");
 }
 
 void level_1_Update()
@@ -277,6 +278,8 @@ void level_1_Update()
 		}
 		else
 		{
+			CP_Sound_PlayAdvanced(gameOverSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			level_1_Exit();
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 

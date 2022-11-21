@@ -6,3 +6,4 @@ CP_Sound pickUp;
 CP_Sound nextlvl_sound;
 CP_Sound buttonClickSound;
 CP_Sound damageTaken;
+CP_Sound gameOverSound;
