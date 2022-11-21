@@ -28,7 +28,7 @@ int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Ve
 	// get distance from closest edges
 	float distX = enemyPosition.x - testX;
 	float distY = enemyPosition.y - testY;
-	float distance = sqrt((distX * distX) + (distY * distY));
+	float distance = (float)sqrt((distX * distX) + (distY * distY));
 
 	// if the distance is less than the radius, collision detected
 	if (distance <= radius) {

@@ -148,7 +148,7 @@ void level_1_Init()
 	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
-	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
 
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 	firstShoot = 0;
@@ -479,7 +479,7 @@ void level_1_Update()
 					if (character.unlimitedEnergyState != 1)
 					{
 
-						character.energy = energyDeplete(character.energy);
+						--character.energy;
 					}
 				}
 			}
@@ -647,7 +647,7 @@ void level_1_Update()
 				}
 				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)
 				{
-					character.energy = energyDeplete(character.energy);
+					--character.energy;
 				}
 			}
 			if (swingSword)
@@ -734,7 +734,7 @@ void level_1_Update()
 		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
-			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
+			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width / 2.f) == 1)
 			{
 				CP_Sound_PlayAdvanced(pickUp, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				if (itemDrop[i].itemId == 1) // shield drop
@@ -798,7 +798,7 @@ void level_1_Update()
 		// character power ups
 		if (character.shieldedState == 1)
 		{
-			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, CP_Image_GetWidth(shielded), CP_Image_GetHeight(shielded), 255);
+			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, (float)CP_Image_GetWidth(shielded), (float)CP_Image_GetHeight(shielded), 255);
 			shieldedDuration += elapsedTime;
 
 			if (shieldedDuration >= 3)
@@ -809,7 +809,7 @@ void level_1_Update()
 		}
 		if (character.unlimitedEnergyState == 1)
 		{
-			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, CP_Image_GetWidth(unlimitedEnergy), CP_Image_GetHeight(unlimitedEnergy), 255);
+			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, (float)CP_Image_GetWidth(unlimitedEnergy), (float)CP_Image_GetHeight(unlimitedEnergy), 255);
 			unlimitedEnergyDuration += elapsedTime;
 
 			if (unlimitedEnergyDuration >= 3)
@@ -888,13 +888,13 @@ void level_1_Update()
 		CP_Font_DrawText("Health:", 50, 50);
 		for (int i = 0; i < character.health; ++i)
 		{
-			CP_Image_Draw(char_health, i * 52 + 150, 50, CP_Image_GetWidth(char_health), CP_Image_GetHeight(char_health), 255);
+			CP_Image_Draw(char_health, (float)i * 52 + 150, 50, (float)CP_Image_GetWidth(char_health), (float)CP_Image_GetHeight(char_health), 255);
 		}
 
 		CP_Font_DrawText("Energy:", 50, 102);
 		for (int i = 0; i < character.energy; ++i)
 		{
-			CP_Image_Draw(char_energy, i * 52 + 150, 102, CP_Image_GetWidth(char_energy), CP_Image_GetHeight(char_energy), 255);
+			CP_Image_Draw(char_energy, (float)i * 52 + 150, 102, (float)CP_Image_GetWidth(char_energy), (float)CP_Image_GetHeight(char_energy), 255);
 		}
 	}
 }

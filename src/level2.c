@@ -69,6 +69,7 @@ void level_2_Init()
 	wHeight = (float)CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background2.png");
 	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
+
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
 	damagedSprite1 = CP_Image_Load("Assets/enemy1Damaged.png");
@@ -81,12 +82,12 @@ void level_2_Init()
 	CP_Image obstruction4 = CP_Image_Load("Assets/obstruction4.png");
 	CP_Image obstruction5 = CP_Image_Load("Assets/obstruction5.png");
 	CP_Image obstruction6 = CP_Image_Load("Assets/obstruction6.png");
-	enemy.radius = 39;
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	// player sprite
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
+	stunned = CP_Image_Load("Assets/stunned_animation.png");
 	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
 	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
 	char_energy = CP_Image_Load("Assets/Char_Energy.png"); ///
@@ -131,13 +132,14 @@ void level_2_Init()
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	invulElapsedTime = 0;		  // timer for invul
+	invulTransparencyTime = 0;
 	energyRechargeTime = 0;		  // timer for energyRecharge
 	stunnedElapsedTime = 0;
 	shieldedDuration = 0;		 ///
 	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
-	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
 
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 
@@ -479,7 +481,7 @@ void level_2_Update()
 					// energy deplete function
 					if (character.unlimitedEnergyState != 1)
 					{
-						character.energy = energyDeplete(character.energy);
+						--character.energy;
 					}
 				}
 			}
@@ -527,7 +529,7 @@ void level_2_Update()
 
 						itemDrop[dropIndex].itemId = dropId;
 
-						if (randomRate == 2 && enemies[j].health <= 0)
+						if (randomRate == 2 && enemies[i].health <= 0)
 						{
 
 							itemDrop[dropIndex].dropTrue = 1;
@@ -535,22 +537,22 @@ void level_2_Update()
 							if (itemDrop[dropIndex].itemId == 1)
 							{
 								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropEnergySprite;
+								itemDrop[dropIndex].dropSprite = dropShieldSprite;
 								// set the width and height to the respective sprite
 								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 							}
 							else if (itemDrop[dropIndex].itemId == 2)
 							{
-								// if items's id is 2 set the item's dropSprite to the dropEnergySprite
+								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
 								itemDrop[dropIndex].dropSprite = dropEnergySprite;
 								// set the width and height to the respective sprite
 								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 							}
 							// set item with the drop index to the enemy coordinate
-							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+							itemDrop[dropIndex].pos.x = enemies[i].pos.x;
+							itemDrop[dropIndex].pos.y = enemies[i].pos.y;
 							++dropIndex;
 						}
 
@@ -652,7 +654,7 @@ void level_2_Update()
 				}
 				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)
 				{
-					character.energy = energyDeplete(character.energy);
+					--character.energy;
 				}
 			}
 			if (swingSword)
@@ -735,7 +737,7 @@ void level_2_Update()
 		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
-			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
+			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width/2.f) == 1)
 			{
 				CP_Sound_PlayAdvanced(pickUp, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				if (itemDrop[i].itemId == 1) // shield drop
@@ -799,7 +801,7 @@ void level_2_Update()
 		// character power ups
 		if (character.shieldedState == 1)
 		{
-			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, CP_Image_GetWidth(shielded), CP_Image_GetHeight(shielded), 255);
+			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, (float)CP_Image_GetWidth(shielded), (float)CP_Image_GetHeight(shielded), 255);
 			shieldedDuration += elapsedTime;
 
 			if (shieldedDuration >= 3)
@@ -810,7 +812,7 @@ void level_2_Update()
 		}
 		if (character.unlimitedEnergyState == 1)
 		{
-			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, CP_Image_GetWidth(unlimitedEnergy), CP_Image_GetHeight(unlimitedEnergy), 255);
+			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, (float)CP_Image_GetWidth(unlimitedEnergy), (float)CP_Image_GetHeight(unlimitedEnergy), 255);
 			unlimitedEnergyDuration += elapsedTime;
 
 			if (unlimitedEnergyDuration >= 3)
@@ -904,6 +906,7 @@ void level_2_Update()
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 		}
 
+		//draw drops
 		for (int i = 0; i < dropIndex; ++i)
 		{
 			// check if any item drop is set to true
@@ -922,13 +925,13 @@ void level_2_Update()
 		CP_Font_DrawText("Health:", 50, 50);
 		for (int i = 0; i < character.health; ++i)
 		{
-			CP_Image_Draw(char_health, i * 52 + 150, 50, CP_Image_GetWidth(char_health), CP_Image_GetHeight(char_health), 255);
+			CP_Image_Draw(char_health, (float)i * 52 + 150, 50, (float)CP_Image_GetWidth(char_health), (float)CP_Image_GetHeight(char_health), 255);
 		}
 
 		CP_Font_DrawText("Energy:", 50, 102);
 		for (int i = 0; i < character.energy; ++i)
 		{
-			CP_Image_Draw(char_energy, i * 52 + 150, 102, CP_Image_GetWidth(char_energy), CP_Image_GetHeight(char_energy), 255);
+			CP_Image_Draw(char_energy, (float)i * 52 + 150, 102, (float)CP_Image_GetWidth(char_energy), (float)CP_Image_GetHeight(char_energy), 255);
 		}
 	}
 }

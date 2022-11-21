@@ -13,6 +13,7 @@
 #include "button.h"
 #include "gameOverpage.h"
 #include "global.h"
+#include "sound.h"
 
 struct Character playerGun;
 struct Character playerSword;
@@ -24,6 +25,7 @@ CP_Image swordPlayer;
 int isPaused;
 float elapsedTime;
 float invulElapsedTime;
+float invulTransparencyTime;
 float energyRechargeTime;
 float stunnedElapsedTime;
 int healthChange;
@@ -69,10 +71,10 @@ void level_4_Init()
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
 	CP_System_FullscreenAdvanced(1920, 1080);
-	//CP_System_SetWindowSize(1000, 1000);
 	bullet.bulletSpeed = 1000;
-	bossBullet.bulletSpeed = 500;
+	bossBullet.bulletSpeed = 50;
 	spawnTimer = 1.7f;
+
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
@@ -80,8 +82,7 @@ void level_4_Init()
 	sec = 0;
 	min = 0;
 	firstDrop = 0;
-	spawnIndex = 0; /// YK TESTING HP SYSTEM HERE
-	// enemies[0].health = 2; /// YK TESTING HP SYSTEM HERE
+	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
 	lose = 0;
@@ -99,28 +100,25 @@ void level_4_Init()
 	bossBullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
 
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
+
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
-	stunned = CP_Image_Load("Assets/stunned_animation.png");
-	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
-	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
 	CP_Image obstruction7 = CP_Image_Load("Assets/obstruction7.png");
 	CP_Image obstruction8 = CP_Image_Load("Assets/obstruction8.png");
 	CP_Image obstruction9 = CP_Image_Load("Assets/obstruction9.png");
-	stunnedWidth = (float)CP_Image_GetWidth(stunned);
-	stunnedHeight = (float)CP_Image_GetHeight(stunned);
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetHeight(bullet.bulletSprite);
 	// player sprite
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
+	stunned = CP_Image_Load("Assets/stunned_animation.png");
+	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
+	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
+	char_energy = CP_Image_Load("Assets/Char_Energy.png"); ///
+	char_health = CP_Image_Load("Assets/Char_Health.png"); /// removed drop health sprite
 
-	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
-	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
-	damagedSprite1 = CP_Image_Load("Assets/enemy1Damaged.png");
-	damagedSprite2 = CP_Image_Load("Assets/Monster_2_Damaged.png");
 	bossSprite = CP_Image_Load("Assets/Final_boss.png");
 	// set spawn positions to 0 coordinate
 	spawnPosition = CP_Vector_Set(0, 0);
@@ -181,18 +179,26 @@ void level_4_Init()
 	directionAngle = 0;
 	rotationSpeed = 2000.f;
 
-	character.Pos = CP_Vector_Set(wWidth / 2, wHeight);
-	character.health = 5;	  // start with 5 hp
-	character.energy = 5;	  // start with 5 energy
-	character.invulState = 0; // start not invul
+	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
+	character.health = 5;				// start with 5 hp
+	character.energy = 5;				// start with 5 energy
+	character.invulState = 0;			// start not invul
+	character.shieldedState = 0;		///
+	character.unlimitedEnergyState = 0; ///
 	character.speed = 210;
-	invulElapsedTime = 0;	// timer for invul
-	energyRechargeTime = 0; // timer for energyRecharge
+	character.transparency = 255; // opaque initially, will be translucent in invul state
+	invulElapsedTime = 0;		  // timer for invul
+	invulTransparencyTime = 0;
+	energyRechargeTime = 0;		  // timer for energyRecharge
 	stunnedElapsedTime = 0;
+	shieldedDuration = 0;		 ///
+	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
-	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
+
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+
 	bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 	bossBulletArray2[bossBulletIndex].bulletPos = bossBullet.shootPosition2;
 	bossBulletArray3[bossBulletIndex].bulletPos = bossBullet.shootPosition3;
@@ -254,6 +260,7 @@ void level_4_Init()
 void level_4_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
 		isPaused = !isPaused;
@@ -368,6 +375,7 @@ void level_4_Update()
 		if (playerNum == 1)
 		{
 			canShoot = 0;
+			// prevent the player from shooting immediately when resuming, restarting or when entering the game
 			if (delayShootTime > 0.f)
 			{
 				delayShootTime -= elapsedTime;
@@ -378,11 +386,9 @@ void level_4_Update()
 			}
 		}
 
+		// timers
 		spawnTimer -= elapsedTime;
 		bossShootTimer -= elapsedTime;
-
-
-
 
 		// keeps spawning until the player survives
 		if (min < surviveMin)
@@ -409,6 +415,7 @@ void level_4_Update()
 
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
+
 			// check if spawn timer
 			if (spawnTimer <= 0)
 			{
@@ -483,6 +490,7 @@ void level_4_Update()
 			{
 				if (CP_Input_MouseClicked() && canShoot == 1)
 				{
+					//CP_Sound_PlayAdvanced(projectile_shoot, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 					if (firstShoot == 1)
 					{
@@ -494,7 +502,10 @@ void level_4_Update()
 					firstShoot = 1;
 
 					// energy deplete function
-					character.energy = energyDeplete(character.energy);
+					if (character.unlimitedEnergyState != 1)
+					{
+						--character.energy;
+					}
 				}
 			}
 
@@ -517,102 +528,27 @@ void level_4_Update()
 				}
 			}
 
-			// enemy obstruction collision
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{
-				for (int j = 0; j < (spawnIndex); ++j)
-				{
-					float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
-					float yDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
-					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
+			//// NO enemies this level to die to bullets
+			
 
-					/// REDUNDANT. SEPARATE ENEMY DAMAGE DEALING WITH YOUR BULLET OBSTRUCTION! MOVED BELOW.
-					// for (int o = 0; o < obstructionCount4; o++)
-					//{ // check if projectile hits obstructions, if so, delete it.
-					//	if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
-					//	{
-					//		// check for obstructions
-					//		for (int x = i; x - 1 < bulletSpawnIndex; ++x)
-					//		{
-					//			bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-					//												 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
-					//		}
-					//		--bulletSpawnIndex;
-					//	}
-					// }
-
-					// enemies die to bullets
-					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
-					{ // less than bullet radius x2
-						--enemies[j].health;
-						enemies[j].takeDamage = 1.0f;
-						printf("damage\n");
-						// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
-						unsigned int randomRate = CP_Random_RangeInt(1, 4);
-						// randomly set drop id between 1 or 2
-						unsigned int dropId = CP_Random_RangeInt(1, 2);
-						itemDrop[dropIndex].itemId = dropId;
-
-						
-
-						
-						if (randomRate == 2 && enemies[j].health <= 0)
-						{
-
-							itemDrop[dropIndex].dropTrue = 1;
-							// check item drop's id by the spawn index of the drop
-							if (itemDrop[dropIndex].itemId == 1)
-							{
-								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropShieldSprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-								++dropIndex;
-							}
-							else if (itemDrop[dropIndex].itemId == 2)
-							{
-								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-								++dropIndex;
-							}
-							// set item with the drop index to the enemy coordinate
-							
-							/*	itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-								itemDrop[dropIndex].pos.y = enemies[j].pos.y;						
-								++dropIndex;*/
-							
-						}
-
-						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
-						{
-							bulletArray[x] = bulletArray[x + 1];
-						}
-						--bulletSpawnIndex; // deletion of projectile after hitting enemy
-
-						if (enemies[j].health <= 0)
-						{
-							// enemies[j].isDead = 1; /// redundant?
-							for (int y = j; y < spawnIndex; ++y)
-							{
-								enemies[y] = enemies[y + 1]; // similar to above^
-							}
-
-							// if (enemies[j].isDead = 1)
-							//{
-							--spawnIndex;
-							//}
-						}
-					}
-				}
-			}
+			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS // NEED JS TO UPDATE WHEN PILLARS ARE IMPLEMENTED
+			//for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			//{
+			//	for (int o = obstructionCount1 + 1; o < obstructionCount2; o++)
+			//	{ // check if projectile hits obstructions, if so, delete it.
+			//		if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
+			//		{
+			//			// check for obstructions
+			//			for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+			//			{
+			//				bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
+			//				// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+			//			}
+			//			--bulletSpawnIndex;
+			//		}
+			//	}
+			//}
+		
 
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
@@ -640,69 +576,28 @@ void level_4_Update()
 				if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT))
 				{
 					swingSword = true;
+					//CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				}
 				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
 					{
-						--enemies[i].health;
-						enemies[i].takeDamage = 1.0f;
+						//--enemies[i].health;
+						//NO DROPS FROM ENEMIES
 
-						// randomize spawn rate from 1 to 3
-						unsigned int randomRate = CP_Random_RangeInt(1, 3);
-						// randomly set drop id between 1 or 2
-						unsigned int dropId = CP_Random_RangeInt(1, 2);
-
-						itemDrop[dropIndex].itemId = dropId;
-
-						if (randomRate == 2 && enemies[i].health <= 0)
+						/*if (enemies[i].health <= 0)
 						{
-
-							itemDrop[dropIndex].dropTrue = 1;
-							// check item drop's id by the spawn index of the drop
-							if (itemDrop[dropIndex].itemId == 1)
-							{
-								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropShieldSprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-							}
-							else if (itemDrop[dropIndex].itemId == 2)
-							{
-								// if items's id is 2 set the item's dropSprite to the dropEnergySprite
-								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-							}
-							// set item with the drop index to the enemy coordinate
-
-
-							itemDrop[dropIndex].pos.x = enemies[i].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[i].pos.y;
-
-
-							++dropIndex;
-						}
-
-						if (enemies[i].health <= 0)
-						{
-							// enemies[i].isDead = 1;
 							for (int y = i; y < spawnIndex; ++y)
 							{
-								enemies[y] = enemies[y + 1]; // similar to above^
+								enemies[y] = enemies[y + 1];
 							}
-							// if (enemies[i].isDead = 1)
-							//{
 							--spawnIndex;
-							//}
-						}
+						}*/
 					}
 				}
-				if (CP_Input_MouseClicked())
+				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)
 				{
-					character.energy = energyDeplete(character.energy);
+					--character.energy;
 				}
 			}
 			if (swingSword)
@@ -723,46 +618,21 @@ void level_4_Update()
 			}
 			// update sword swing area to follow character position
 			swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
-
-			// draw sword swing area
-			// CP_Settings_Fill(CP_Color_Create(222, 123, 11, 120));
-			// CP_Graphics_DrawRect(swordSwingArea.x, swordSwingArea.y, swordSwingArea.width, swordSwingArea.height);
 		}
 
-		for (int i = obstructionCount2 + 1; i < obstructionCount3; i++)
-		{
-			// draw obstruction
-			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
-			// check for obstructions
-			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
-		}
+		// check player collision with obstruction // NEED JS TO UPDATE WHEN PILLARS ARE IMPLEMENTED
+		//for (int i = 0; i < obstructionCount1; i++)
+		//{
+		//	// draw obstruction
+		//	CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
+		//	// check for obstructions
+		//	character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+		//}
 
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
 
-		// enemy obstruction
-		for (int i = 0; i < (spawnIndex); ++i)
-		{
-			for (int j = 0; j < (spawnIndex); ++j)
-			{
-				if (i == j)
-					continue;
-				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
-				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
-				float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
-				float toDisplace = 0.5f * distance - (enemies[j].width);
-
-				if (distance < enemies[j].width)
-				{
-					float toDisplace = 0.5f * (distance - (enemies[j].width));
-					enemies[i].pos.x -= toDisplace * (xDistance) / distance;
-					enemies[i].pos.y -= toDisplace * (yDistance) / distance;
-
-					enemies[j].pos.x += toDisplace * (xDistance) / distance;
-					enemies[j].pos.y += toDisplace * (yDistance) / distance;
-				}
-			}
-		}
+		/// no enemy obstruction
 
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
@@ -778,133 +648,6 @@ void level_4_Update()
 						healthChange = 1; // telling program health has changed, dont change again in this frame
 					}
 					character.invulState = 1;
-				}
-			}
-		}
-
-		// pickup items
-		for (int i = 0; i < dropIndex; ++i)
-		{ // itemDrop[dropIndex]
-			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
-			{
-				if (itemDrop[i].itemId == 1) // health drop
-				{
-					++character.health;
-					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
-				}
-				else if (itemDrop[i].itemId == 2) // health drop
-				{
-					++character.energy;
-					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
-				}
-
-				for (int y = i; y < dropIndex; ++y)
-				{
-					itemDrop[y] = itemDrop[y + 1]; // similar to above^
-				}
-				--dropIndex;
-			}
-		}
-
-		// if character is invulnerable, don't take damage
-		if (character.invulState == 1)
-		{ // if invul, it will last for 2 seconds (2000 ms)
-			invulElapsedTime += elapsedTime;
-
-			if (invulElapsedTime >= 2)
-			{ // if invul for more than 2 seconds, go back to being vul
-				character.invulState = 0;
-				invulElapsedTime = 0;
-			}
-		}
-
-		// updates character's positon based off WASD inputs. Function defined in movement.c
-		if (character.energy > 0)
-		{
-			character.Pos = charMovement(character.Pos, character.speed); // character movement
-			if (playerNum == 1)
-				gunPlayer = charImageRanged(gunPlayer, character.Pos);
-			else if (playerNum == 2)
-				swordPlayer = charImageMelee(swordPlayer, character.Pos, &characterFacing); // changes character sprite based on which direction he is facing
-		}
-
-		// recharge energy if < 5
-		if (character.energy < 5)
-		{
-			energyRechargeTime += elapsedTime;
-
-			if (energyRechargeTime >= 3)
-			{ // if stunned for more than 2 seconds, go back to being unstunned
-				++character.energy;
-				energyRechargeTime = 0;
-			}
-
-			if (character.energy < 1)
-			{ // draw stunned animation
-				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
-			}
-		}
-
-		// if char dies
-		if (character.health <= 0)
-		{
-			lose = 1;
-		}
-		else
-		{
-			lose = 0;
-		}
-
-		// draw enemy
-		for (int i = 0; i < spawnIndex; i++)
-		{
-			if (enemies[i].takeDamage == 1.0f)
-			{
-
-				if (enemies[i].id == 1)
-				{
-					// change enemy sprite with id 1 to the  damagedSprite1
-					enemies[i].enemySprite = damagedSprite1;
-					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
-				}
-				else if (enemies[i].id == 2)
-				{
-					// change enemy sprite with id 2 to the  damagedSprite1
-					enemies[i].enemySprite = damagedSprite2;
-					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
-				}
-				enemies[i].takeDamage -= elapsedTime;
-			}
-			else
-			{
-				if (enemies[i].id == 1)
-				{
-					enemies[i].enemySprite = enemySprite1;
-				}
-				else if (enemies[i].id == 2)
-				{
-					enemies[i].enemySprite = enemySprite2;
-				}
-				// enemies[i].takeDamage == 0;
-			}
-
-			if (enemies[i].health > 0)
-			{
-				CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
-			}
-		}
-
-		// draw player
-		if (playerNum == 1)
-		{
-			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
-
-			// draw projectile
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{
-				if (firstShoot == 1)
-				{
-					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
 				}
 			}
 		}
@@ -1021,6 +764,574 @@ void level_4_Update()
 			}
 		}
 
+		// damage taking and 2 second invulnerability after code.
+		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
+		if (character.invulState != 1 && character.shieldedState != 1)
+		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
+			for (int i = 0; i - 1 < bossBulletIndex; ++i)
+			{
+				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray[i].bulletPos, (bossBulletArray[i].width / 2)) == 1)
+				{
+					if (healthChange == 0)
+					{	// sound to be implemented
+						//if (!damageTakenTime)
+						//{
+						//	damageSound = true;
+						//	CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
+						//}
+
+						character.health = takeDamage(character.health);
+						healthChange = 1; // telling program health has changed, dont change again in this frame
+					}
+					character.invulState = 1;
+				}
+			}
+		}
+
+		changeAttackTimer -= elapsedTime;
+		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);	
+		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width/2 , boss.pos.y);
+		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width/2, boss.pos.y);
+		if (bossShootTimer <= 0)
+		{
+			
+			if (bossShoot == 1)
+			{
+				++bossBulletIndex;
+				++bossBulletIndex2;
+				++bossBulletIndex3;
+			}
+
+			printf("timer: %f \n", changeAttackTimer);
+			if (changeAttackTimer <= 0)
+
+			{
+				if (attackMode == 2)
+				{
+					attackMode = 1;
+					printf("switching to attack 1 \n");
+				}
+				else if (attackMode == 1)
+				{
+					attackMode = 2;
+					printf("switching to attack 2 \n");
+				}
+				/*	else if (attackMode == 3)
+					{
+
+						attackMode = 1;
+						printf("switching to attack 1 \n");
+					}*/
+
+				changeAttackTimer = startChangeTimer;
+			}
+			if (attackMode == 1)
+			{
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex3].directionBullet);
+			}
+			else if (attackMode == 2)
+			{
+
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray2[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray3[bossBulletIndex3].directionBullet);
+
+			}
+			/*		else if (attackMode == 3)
+					{
+						CP_Vector acceleration = CP_Vector_Scale(AngleToVector(directionAngle), bossBullet.bulletSpeed * elapsedTime);
+						directionAngle += rotationSpeed * elapsedTime;
+						bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+						bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Add(bossBulletArray[bossBulletIndex].bulletPos, acceleration);
+
+						printf("angle: %f \n", directionAngle);
+						bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+
+			}*/
+			bossShoot = 1;
+			bossShootTimer = startBossShootTimer;
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex; ++i)
+		{
+			
+			if (bossShoot == 1)
+			{
+				bossBulletArray[i].acceleration = CP_Vector_Scale(bossBulletArray[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray[i].bulletPos = CP_Vector_Add(bossBulletArray[i].bulletPos, bossBulletArray[i].acceleration);
+			}
+		}
+		for (int i = 0; i - 1 < bossBulletIndex2; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray2[i].acceleration = CP_Vector_Scale(bossBulletArray2[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray2[i].bulletPos = CP_Vector_Add(bossBulletArray2[i].bulletPos, bossBulletArray2[i].acceleration);
+			}
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex3; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray3[i].acceleration = CP_Vector_Scale(bossBulletArray3[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray3[i].bulletPos = CP_Vector_Add(bossBulletArray3[i].bulletPos, bossBulletArray3[i].acceleration);
+			}
+		}
+
+		// damage taking and 2 second invulnerability after code.
+		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
+		if (character.invulState != 1 && character.shieldedState != 1)
+		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
+			for (int i = 0; i - 1 < bossBulletIndex; ++i)
+			{
+				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray[i].bulletPos, (bossBulletArray[i].width / 2)) == 1)
+				{
+					if (healthChange == 0)
+					{	// sound to be implemented
+						//if (!damageTakenTime)
+						//{
+						//	damageSound = true;
+						//	CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
+						//}
+
+						character.health = takeDamage(character.health);
+						healthChange = 1; // telling program health has changed, dont change again in this frame
+					}
+					character.invulState = 1;
+				}
+			}
+		}
+
+		changeAttackTimer -= elapsedTime;
+		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);	
+		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width/2 , boss.pos.y);
+		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width/2, boss.pos.y);
+		if (bossShootTimer <= 0)
+		{
+			
+			if (bossShoot == 1)
+			{
+				++bossBulletIndex;
+				++bossBulletIndex2;
+				++bossBulletIndex3;
+			}
+
+			printf("timer: %f \n", changeAttackTimer);
+			if (changeAttackTimer <= 0)
+
+			{
+				if (attackMode == 2)
+				{
+					attackMode = 1;
+					printf("switching to attack 1 \n");
+				}
+				else if (attackMode == 1)
+				{
+					attackMode = 2;
+					printf("switching to attack 2 \n");
+				}
+				/*	else if (attackMode == 3)
+					{
+
+						attackMode = 1;
+						printf("switching to attack 1 \n");
+					}*/
+
+				changeAttackTimer = startChangeTimer;
+			}
+			if (attackMode == 1)
+			{
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex3].directionBullet);
+			}
+			else if (attackMode == 2)
+			{
+
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray2[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray3[bossBulletIndex3].directionBullet);
+
+			}
+			/*		else if (attackMode == 3)
+					{
+						CP_Vector acceleration = CP_Vector_Scale(AngleToVector(directionAngle), bossBullet.bulletSpeed * elapsedTime);
+						directionAngle += rotationSpeed * elapsedTime;
+						bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+						bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Add(bossBulletArray[bossBulletIndex].bulletPos, acceleration);
+
+						printf("angle: %f \n", directionAngle);
+						bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+
+			}*/
+			bossShoot = 1;
+			bossShootTimer = startBossShootTimer;
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex; ++i)
+		{
+			
+			if (bossShoot == 1)
+			{
+				bossBulletArray[i].acceleration = CP_Vector_Scale(bossBulletArray[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray[i].bulletPos = CP_Vector_Add(bossBulletArray[i].bulletPos, bossBulletArray[i].acceleration);
+			}
+		}
+		for (int i = 0; i - 1 < bossBulletIndex2; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray2[i].acceleration = CP_Vector_Scale(bossBulletArray2[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray2[i].bulletPos = CP_Vector_Add(bossBulletArray2[i].bulletPos, bossBulletArray2[i].acceleration);
+			}
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex3; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray3[i].acceleration = CP_Vector_Scale(bossBulletArray3[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray3[i].bulletPos = CP_Vector_Add(bossBulletArray3[i].bulletPos, bossBulletArray3[i].acceleration);
+			}
+		}
+
+		// damage taking and 2 second invulnerability after code.
+		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
+		if (character.invulState != 1 && character.shieldedState != 1)
+		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
+			for (int i = 0; i - 1 < bossBulletIndex; ++i)
+			{
+				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray[i].bulletPos, (bossBulletArray[i].width / 2)) == 1)
+				{
+					if (healthChange == 0)
+					{	// sound to be implemented
+						//if (!damageTakenTime)
+						//{
+						//	damageSound = true;
+						//	CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
+						//}
+
+						character.health = takeDamage(character.health);
+						healthChange = 1; // telling program health has changed, dont change again in this frame
+					}
+					character.invulState = 1;
+				}
+			}
+		}
+
+		// FINAL BOSS MECHANICS
+		changeAttackTimer -= elapsedTime;
+		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
+		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width / 2, boss.pos.y);
+		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width / 2, boss.pos.y);
+		if (bossShootTimer <= 0)
+		{
+
+			if (bossShoot == 1)
+			{
+				++bossBulletIndex;
+				++bossBulletIndex2;
+				++bossBulletIndex3;
+			}
+
+			printf("timer: %f \n", changeAttackTimer);
+			if (changeAttackTimer <= 0)
+
+			{
+				if (attackMode == 2)
+				{
+					attackMode = 1;
+					printf("switching to attack 1 \n");
+				}
+				else if (attackMode == 1)
+				{
+					attackMode = 2;
+					printf("switching to attack 2 \n");
+				}
+				/*	else if (attackMode == 3)
+					{
+
+						attackMode = 1;
+						printf("switching to attack 1 \n");
+					}*/
+
+				changeAttackTimer = startChangeTimer;
+			}
+			if (attackMode == 1)
+			{
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex3].directionBullet);
+			}
+			else if (attackMode == 2)
+			{
+
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
+				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
+				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray2[bossBulletIndex2].directionBullet);
+
+				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
+				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray3[bossBulletIndex3].directionBullet);
+
+			}
+			/*		else if (attackMode == 3)
+					{
+						CP_Vector acceleration = CP_Vector_Scale(AngleToVector(directionAngle), bossBullet.bulletSpeed * elapsedTime);
+						directionAngle += rotationSpeed * elapsedTime;
+						bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+						bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Add(bossBulletArray[bossBulletIndex].bulletPos, acceleration);
+
+						printf("angle: %f \n", directionAngle);
+						bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+
+
+			}*/
+			bossShoot = 1;
+			bossShootTimer = startBossShootTimer;
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray[i].acceleration = CP_Vector_Scale(bossBulletArray[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray[i].bulletPos = CP_Vector_Add(bossBulletArray[i].bulletPos, bossBulletArray[i].acceleration);
+			}
+		}
+		for (int i = 0; i - 1 < bossBulletIndex2; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray2[i].acceleration = CP_Vector_Scale(bossBulletArray2[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray2[i].bulletPos = CP_Vector_Add(bossBulletArray2[i].bulletPos, bossBulletArray2[i].acceleration);
+			}
+		}
+
+		for (int i = 0; i - 1 < bossBulletIndex3; ++i)
+		{
+
+			if (bossShoot == 1)
+			{
+				bossBulletArray3[i].acceleration = CP_Vector_Scale(bossBulletArray3[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
+				bossBulletArray3[i].bulletPos = CP_Vector_Add(bossBulletArray3[i].bulletPos, bossBulletArray3[i].acceleration);
+			}
+		}
+
+		// damage taking and 2 second invulnerability after code.
+		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
+		if (character.invulState != 1 && character.shieldedState != 1)
+		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
+			for (int i = 0; i - 1 < bossBulletIndex; ++i)
+			{
+				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray[i].bulletPos, (bossBulletArray[i].width / 2)) == 1)
+				{
+					if (healthChange == 0)
+					{
+						//CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+						character.health = takeDamage(character.health);
+						healthChange = 1; // telling program health has changed, dont change again in this frame
+					}
+					character.invulState = 1;
+				}
+			}
+		}
+		if (character.invulState != 1 && character.shieldedState != 1)
+		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
+			for (int i = 0; i - 1 < bossBulletIndex2; ++i)
+			{
+				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray2[i].bulletPos, (bossBulletArray2[i].width / 2)) == 1)
+				{
+					if (healthChange == 0)
+					{
+						//CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+						character.health = takeDamage(character.health);
+						healthChange = 1; // telling program health has changed, dont change again in this frame
+					}
+					character.invulState = 1;
+				}
+			}
+		}
+		if (character.invulState != 1 && character.shieldedState != 1)
+		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
+			for (int i = 0; i - 1 < bossBulletIndex3; ++i)
+			{
+				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray3[i].bulletPos, (bossBulletArray3[i].width / 2)) == 1)
+				{
+					if (healthChange == 0)
+					{
+						//CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+						character.health = takeDamage(character.health);
+						healthChange = 1; // telling program health has changed, dont change again in this frame
+					}
+					character.invulState = 1;
+				}
+			}
+		}
+
+		// no items to pickup
+
+		// if character is invulnerable, don't take damage
+		if (character.invulState == 1)
+		{
+			invulElapsedTime += elapsedTime;
+
+			if (invulElapsedTime >= 2)
+			{ // if invul for more than 2 seconds, go back to being vul
+				character.invulState = 0;
+				invulElapsedTime = 0;
+			}
+			// will character will flicker to represent invulnerability
+			invulTransparencyTime += elapsedTime;
+			if (invulTransparencyTime >= 0.2f)
+			{
+				if (character.transparency == 255)
+				{
+					character.transparency = 100;
+					invulTransparencyTime = 0;
+				}
+				else if (character.transparency == 100)
+				{
+					character.transparency = 255;
+					invulTransparencyTime = 0;
+				}
+			}
+		}
+
+		// updates character's positon based off WASD inputs. Function defined in movement.c
+		if (character.energy > 0)
+		{
+			character.Pos = charMovement(character.Pos, character.speed); // character movement
+			if (playerNum == 1)
+				gunPlayer = charImageRanged(gunPlayer, character.Pos);
+			else if (playerNum == 2)
+				swordPlayer = charImageMelee(swordPlayer, character.Pos, &characterFacing); // changes character sprite based on which direction he is facing
+		}
+
+		// no power ups
+
+		// recharge energy if < 5
+		if (character.energy < 5)
+		{
+			energyRechargeTime += elapsedTime;
+
+			if (energyRechargeTime >= 3)
+			{ // if stunned for more than 2 seconds, go back to being unstunned
+				++character.energy;
+				energyRechargeTime = 0;
+			}
+
+			if (character.energy < 1)
+			{ // draw stunned animation
+				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
+			}
+		}
+
+		// if char dies
+		if (character.health <= 0)
+		{
+			lose = 1;
+		}
+		else
+		{
+			lose = 0;
+		}
+
+		// no enemies to draw
+		
+
+		// draw player
+		if (playerNum == 1)
+		{
+			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
+
+			// draw projectile
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
+				if (firstShoot == 1)
+				{
+					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
+				}
+			}
+		}
+		if (playerNum == 2)
+		{
+			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
+		}
+
+		// display char health and energy ///
+		CP_Font_DrawText("Health:", 50, 50);
+		for (int i = 0; i < character.health; ++i)
+		{
+			CP_Image_Draw(char_health, (float)i * 52 + 150, 50, (float)CP_Image_GetWidth(char_health), (float)CP_Image_GetHeight(char_health), 255);
+		}
+
+		CP_Font_DrawText("Energy:", 50, 102);
+		for (int i = 0; i < character.energy; ++i)
+		{
+			CP_Image_Draw(char_energy, (float)i * 52 + 150, 102, (float)CP_Image_GetWidth(char_energy), (float)CP_Image_GetHeight(char_energy), 255);
+		}
 
 
 		CP_Image_Draw(boss.enemySprite, boss.pos.x, boss.pos.y, boss.width, boss.height, 255);
@@ -1051,35 +1362,6 @@ void level_4_Update()
 				// printf("Drawing %d", bulletSpawnIndex);
 			}
 		}
-
-
-
-		if (playerNum == 2)
-		{
-			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, 255);
-		}
-
-		for (int i = 0; i < dropIndex; ++i)
-		{
-			if (itemDrop[i].dropTrue == 1)
-			{
-				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
-			}
-		}
-
-		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
-
-		// to display character health
-		sprintf_s(characterHealthDisplay, MAX_LENGTH, "%d", character.health);
-		CP_Font_DrawText("Health:", 200, 200);
-		CP_Font_DrawText(characterHealthDisplay, 260, 200);
-
-		// to display character energy
-		sprintf_s(characterEnergyDisplay, MAX_LENGTH, "%d", character.energy);
-		CP_Font_DrawText("Energy:", 200, 230);
-		CP_Font_DrawText(characterEnergyDisplay, 260, 230);
 	}
 }
 

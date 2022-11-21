@@ -117,7 +117,7 @@ void level_3_Init()
 	// enemy width and height
 	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
 	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
-	enemy.speed = 70;
+	enemy.speed = 100;
 	healthDrop.width = (float)CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = (float)CP_Image_GetHeight(healthDrop.dropSprite);
 
@@ -150,13 +150,14 @@ void level_3_Init()
 	character.shieldedState = 0;		///
 	character.unlimitedEnergyState = 0; ///
 	invulElapsedTime = 0;				// timer for invul
+	invulTransparencyTime = 0;
 	energyRechargeTime = 0;				// timer for energyRecharge
 	stunnedElapsedTime = 0;
 	shieldedDuration = 0;		 ///
 	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
-	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2 + 20, character.Pos.y + character.health / 2);
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
 
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 	firstShoot = 0;
@@ -440,7 +441,9 @@ void level_3_Update()
 			for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
 			{
 				// check for obstructions
-				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
+				if (enemies[i].id == 2) { // ghost monster 4 can move through obstructions
+					enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
+				}
 			}
 		}
 
@@ -467,7 +470,7 @@ void level_3_Update()
 					// energy deplete function
 					if (character.unlimitedEnergyState != 1)
 					{
-						character.energy = energyDeplete(character.energy);
+						--character.energy;
 					}
 				}
 			}
@@ -639,7 +642,7 @@ void level_3_Update()
 				}
 				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)
 				{
-					character.energy = energyDeplete(character.energy);
+					--character.energy;
 				}
 			}
 			if (swingSword)
@@ -721,7 +724,7 @@ void level_3_Update()
 		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
-			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
+			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width / 2.f) == 1)
 			{
 				CP_Sound_PlayAdvanced(pickUp, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				if (itemDrop[i].itemId == 1) // shield drop
@@ -785,7 +788,7 @@ void level_3_Update()
 		// character power ups
 		if (character.shieldedState == 1)
 		{
-			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, CP_Image_GetWidth(shielded), CP_Image_GetHeight(shielded), 255);
+			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, (float)CP_Image_GetWidth(shielded), (float)CP_Image_GetHeight(shielded), 255);
 			shieldedDuration += elapsedTime;
 
 			if (shieldedDuration >= 3)
@@ -796,7 +799,7 @@ void level_3_Update()
 		}
 		if (character.unlimitedEnergyState == 1)
 		{
-			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, CP_Image_GetWidth(unlimitedEnergy), CP_Image_GetHeight(unlimitedEnergy), 255);
+			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, (float)CP_Image_GetWidth(unlimitedEnergy), (float)CP_Image_GetHeight(unlimitedEnergy), 255);
 			unlimitedEnergyDuration += elapsedTime;
 
 			if (unlimitedEnergyDuration >= 3)
@@ -857,7 +860,12 @@ void level_3_Update()
 			// only draw enemies that are alive
 			if (enemies[i].health > 0)
 			{
-				CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+				if (enemies[i].id == 1) { // draw ghost monster_4 with translucent silhouette
+					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 150);
+				}
+				else {
+					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
+				}
 			}
 		}
 
@@ -907,13 +915,13 @@ void level_3_Update()
 		CP_Font_DrawText("Health:", 50, 50);
 		for (int i = 0; i < character.health; ++i)
 		{
-			CP_Image_Draw(char_health, i * 52 + 150, 50, CP_Image_GetWidth(char_health), CP_Image_GetHeight(char_health), 255);
+			CP_Image_Draw(char_health, (float)i * 52 + 150, 50, (float)CP_Image_GetWidth(char_health), (float)CP_Image_GetHeight(char_health), 255);
 		}
 
 		CP_Font_DrawText("Energy:", 50, 102);
 		for (int i = 0; i < character.energy; ++i)
 		{
-			CP_Image_Draw(char_energy, i * 52 + 150, 102, CP_Image_GetWidth(char_energy), CP_Image_GetHeight(char_energy), 255);
+			CP_Image_Draw(char_energy, (float)i * 52 + 150, 102, (float)CP_Image_GetWidth(char_energy), (float)CP_Image_GetHeight(char_energy), 255);
 		}
 	}
 }

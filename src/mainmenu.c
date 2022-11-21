@@ -33,7 +33,7 @@ float wHeight;
 void Main_Menu_Init()
 {
 
-	clear();
+	//clear();
 	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
