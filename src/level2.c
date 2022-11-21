@@ -236,7 +236,7 @@ void level_2_Update()
 		else
 		{
 			CP_Sound_PlayAdvanced(gameOverSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			level_1_Exit();
+			level_2_Exit();
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 
