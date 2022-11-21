@@ -221,7 +221,7 @@ void level_2_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 
 			CP_Font_DrawText("You survived Level 2!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -233,8 +233,7 @@ void level_2_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			level_2_Exit();
+			CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 
@@ -286,7 +285,6 @@ void level_2_Update()
 
 					clear();
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-					level_2_Exit();
 
 					CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
 
@@ -324,7 +322,6 @@ void level_2_Update()
 		{
 			clear();
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			level_2_Exit();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
@@ -942,6 +939,7 @@ void level_2_Exit()
 	CP_Sound_Free(&projectile_shoot);
 	CP_Sound_Free(&pickUp);
 	CP_Sound_Free(&nextlvl_sound);
+	CP_Sound_Free(&gameOverSound);
 	CP_Sound_Free(&buttonClickSound);
 	CP_Sound_Free(&damageTaken);
 	CP_Image_Free(&obstruction1);

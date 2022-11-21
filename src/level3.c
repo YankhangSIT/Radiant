@@ -246,7 +246,7 @@ void level_3_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
 			CP_Font_DrawText("You survived Level 3!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -256,8 +256,7 @@ void level_3_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			level_3_Exit();
+			CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 
@@ -281,7 +280,6 @@ void level_3_Update()
 
 					clear();
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-					level_3_Exit();
 					CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 				}
 			}
@@ -313,7 +311,6 @@ void level_3_Update()
 		{
 			clear();
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			level_3_Exit();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
@@ -928,6 +925,7 @@ void level_3_Exit()
 	CP_Sound_Free(&pickUp);
 	CP_Sound_Free(&nextlvl_sound);
 	CP_Sound_Free(&buttonClickSound);
+	CP_Sound_Free(&gameOverSound);
 	CP_Sound_Free(&damageTaken);
 	CP_Image_Free(&obstruction4);
 	CP_Image_Free(&obstruction5);

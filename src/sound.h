@@ -7,4 +7,4 @@ CP_Sound nextlvl_sound;
 CP_Sound buttonClickSound;
 CP_Sound damageTaken;
 CP_Sound gameOverSound;
-CP_Sound mainmenu;
+CP_Sound backgroundMusic;

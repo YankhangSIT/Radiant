@@ -36,13 +36,15 @@ void character_Select_Init()
 	CP_Settings_TextSize(35.0f);
 	zWidth = (float)CP_System_GetWindowWidth();
 	zHeight = (float)CP_System_GetWindowHeight();
+	// CP_Sound_Free(&buttonClickSound);
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
+	backgroundMusic = CP_Sound_Load("Assets/background.wav");
 }
 
 void character_Select_Update()
 {
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-
+	CP_Sound_PlayAdvanced(backgroundMusic, 0.1f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 	// Create rectangle
 
 	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -75,11 +77,9 @@ void character_Select_Update()
 
 		if (IsAreaClicked(zWidth / 2.0f - 100, zHeight / 2.0f, (float)CP_Image_GetWidth(gunPlayer) + 10, (float)CP_Image_GetHeight(gunPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			
-	
+
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			playerNum = 1;
-			character_Select_Exit();
 			CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
 			/*panelDisplay = 0;*/
 		}
@@ -90,7 +90,6 @@ void character_Select_Update()
 			CP_Font_DrawText("Melee", zWidth / 2.0f + 100, zHeight / 2.0f + 100);
 			playerNum = 2;
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			character_Select_Exit();
 			CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
 			/*	panelDisplay = 0;*/
 		}
@@ -100,4 +99,5 @@ void character_Select_Update()
 void character_Select_Exit()
 {
 	CP_Sound_Free(&buttonClickSound);
+	CP_Sound_Free(&backgroundMusic);
 }

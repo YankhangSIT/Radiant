@@ -257,7 +257,7 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -266,8 +266,7 @@ void level_1_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			level_1_Exit();
+			CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 
@@ -292,7 +291,6 @@ void level_1_Update()
 					// clear();
 
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-					level_1_Exit();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 
 					// printf("pause  state win lv1 %d", isPaused);
@@ -326,7 +324,6 @@ void level_1_Update()
 		{
 			// clear();
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			level_1_Exit();
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
 
@@ -909,6 +906,7 @@ void level_1_Exit()
 	CP_Sound_Free(&pickUp);
 	CP_Sound_Free(&nextlvl_sound);
 	CP_Sound_Free(&buttonClickSound);
+	CP_Sound_Free(&gameOverSound);
 	CP_Sound_Free(&damageTaken);
 	CP_Image_Free(&obstruction1);
 	CP_Image_Free(&obstruction2);

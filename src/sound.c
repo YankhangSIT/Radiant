@@ -7,3 +7,4 @@ CP_Sound nextlvl_sound = NULL;
 CP_Sound buttonClickSound = NULL;
 CP_Sound damageTaken = NULL;
 CP_Sound gameOverSound = NULL;
+CP_Sound backgroundMusic = NULL;
