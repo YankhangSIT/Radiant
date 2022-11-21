@@ -140,6 +140,13 @@ int lose;
 float changeSpawnTimer;
 float startSpawnChangeTimer;
 int direction;
+
+float changeAttackTimer;
+float startChangeTimer;
+int attackMode;
+float directionAngle;
+float rotationSpeed;
+
 void clear(void);
 
 
