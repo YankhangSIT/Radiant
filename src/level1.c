@@ -61,7 +61,9 @@ CP_Image energyPickup;
 CP_Image obstruction1;
 CP_Image obstruction2;
 CP_Image obstruction3;
-
+CP_Sound sword_swing = NULL;
+CP_Sound projectile_shoot = NULL;
+CP_Sound pickUp = NULL;
 void level_1_Init()
 {
 	clear();
@@ -69,14 +71,15 @@ void level_1_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 1;
 	surviveMin = 1;
-	sec = 0;
+	sec = 55;
 	min = 0;
 	firstDrop = 0;
 	spawnIndex = 0;
@@ -102,9 +105,9 @@ void level_1_Init()
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
 	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
 	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
-	char_energy = CP_Image_Load("Assets/Char_Energy.png"); ///
-	char_health = CP_Image_Load("Assets/Char_Health.png"); /// removed drop health sprite
-	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png"); ///
+	char_energy = CP_Image_Load("Assets/Char_Energy.png");				 ///
+	char_health = CP_Image_Load("Assets/Char_Health.png");				 /// removed drop health sprite
+	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");		 ///
 	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png"); ///
 	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
 	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
@@ -162,14 +165,14 @@ void level_1_Init()
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
 	character.speed = 210;
-	character.transparency = 255; // opaque initially, will be translucent in invul state
-	character.shieldedState = 0; ///
+	character.transparency = 255;		// opaque initially, will be translucent in invul state
+	character.shieldedState = 0;		///
 	character.unlimitedEnergyState = 0; ///
-	invulElapsedTime = 0;		  // timer for invul
+	invulElapsedTime = 0;				// timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
-	shieldedDuration = 0; ///
+	shieldedDuration = 0;		 ///
 	unlimitedEnergyDuration = 0; ///
 
 	// bullet start shoot spawn position
@@ -254,10 +257,14 @@ void level_1_Init()
 	swordSwingTime = 0;
 	swingSword = false;
 	characterFacing = 0;
+	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
+	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
+	pickUp = CP_Sound_Load("Assets/pickup.wav");
 }
 
 void level_1_Update()
 {
+
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
@@ -315,7 +322,7 @@ void level_1_Update()
 
 					// clear();
 					// printf("next Level");
-					// level_2_Init();
+					level_1_Exit();
 					CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 
 					// printf("pause  state win lv1 %d", isPaused);
@@ -418,22 +425,22 @@ void level_1_Update()
 				if (direction == 1)
 				{
 					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
-					//printf("Coordinates 1: ( X:%f ,Y:%f )\n", spawnPosition.x, spawnPosition.y);
+					// printf("Coordinates 1: ( X:%f ,Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
 				else if (direction == 2)
 				{
 					spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
-					//printf("Coordinates 2: (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
+					// printf("Coordinates 2: (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
 				else if (direction == 3)
 				{
 					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wHeight));
-					//printf("Coordinates 3: (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
+					// printf("Coordinates 3: (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
 				else if (direction == 4)
 				{
 					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
-				//	printf("Coordinates 4 : (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
+					//	printf("Coordinates 4 : (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
 				// set spawn position of enemy
 				enemies[spawnIndex].pos.x = spawnPosition.x;
@@ -475,6 +482,8 @@ void level_1_Update()
 			{
 				if (CP_Input_MouseClicked() && canShoot == 1)
 				{
+					CP_Sound_PlayAdvanced(projectile_shoot, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 					if (firstShoot == 1)
 					{
@@ -486,7 +495,9 @@ void level_1_Update()
 					firstShoot = 1;
 
 					// energy deplete function
-					if (character.unlimitedEnergyState != 1) {
+					if (character.unlimitedEnergyState != 1)
+					{
+
 						character.energy = energyDeplete(character.energy);
 					}
 				}
@@ -605,6 +616,8 @@ void level_1_Update()
 				if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT))
 				{
 					swingSword = true;
+					CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					// CP_Sound_Play(sword_swing);
 				}
 				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
@@ -737,12 +750,13 @@ void level_1_Update()
 		{ // itemDrop[dropIndex]
 			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width, itemDrop[i].height) == 1)
 			{
+				CP_Sound_PlayAdvanced(pickUp, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				if (itemDrop[i].itemId == 1) // shield drop
 				{
 					character.shieldedState = 1;
 					shieldedDuration = 0;
 					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
-				} 
+				}
 				else if (itemDrop[i].itemId == 2) // health drop
 				{
 					character.unlimitedEnergyState = 1;
@@ -757,7 +771,6 @@ void level_1_Update()
 				--dropIndex;
 			}
 		}
-		
 
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1)
@@ -797,25 +810,28 @@ void level_1_Update()
 		}
 
 		// character power ups
-		if (character.shieldedState == 1) {
+		if (character.shieldedState == 1)
+		{
 			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, CP_Image_GetWidth(shielded), CP_Image_GetHeight(shielded), 255);
 			shieldedDuration += elapsedTime;
 
-			if (shieldedDuration >= 3) {
+			if (shieldedDuration >= 3)
+			{
 				character.shieldedState = 0;
 				shieldedDuration = 0;
 			}
 		}
-		if (character.unlimitedEnergyState == 1) {
+		if (character.unlimitedEnergyState == 1)
+		{
 			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, CP_Image_GetWidth(unlimitedEnergy), CP_Image_GetHeight(unlimitedEnergy), 255);
 			unlimitedEnergyDuration += elapsedTime;
 
-			if (unlimitedEnergyDuration >= 3) {
+			if (unlimitedEnergyDuration >= 3)
+			{
 				character.unlimitedEnergyState = 0;
 				unlimitedEnergyDuration = 0;
 			}
 		}
-
 
 		// recharge energy if < 5
 		if (character.energy < 5)
@@ -882,21 +898,24 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
 
-		
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);
-		for (int i = 0; i < character.health; ++i) {
+		for (int i = 0; i < character.health; ++i)
+		{
 			CP_Image_Draw(char_health, i * 52 + 150, 50, CP_Image_GetWidth(char_health), CP_Image_GetHeight(char_health), 255);
 		}
 
 		CP_Font_DrawText("Energy:", 50, 102);
-		for (int i = 0; i < character.energy; ++i) {
+		for (int i = 0; i < character.energy; ++i)
+		{
 			CP_Image_Draw(char_energy, i * 52 + 150, 102, CP_Image_GetWidth(char_energy), CP_Image_GetHeight(char_energy), 255);
 		}
-
 	}
 }
 
 void level_1_Exit()
 {
+	CP_Sound_Free(&sword_swing);
+	CP_Sound_Free(&projectile_shoot);
+	CP_Sound_Free(&pickUp);
 }
