@@ -59,6 +59,15 @@ void character_Select_Update()
 	CP_Font_DrawText("Ranged", zWidth / 2.0f - 100, zHeight / 2.0f + 100);
 	CP_Font_DrawText("Melee", zWidth / 2.0f + 100, zHeight / 2.0f + 100);
 
+	if (IsAreaClicked(zWidth / 2.0f - 100, zHeight / 2.0f, (float)CP_Image_GetWidth(gunPlayer) + 10, (float)CP_Image_GetHeight(gunPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
+	{
+		CP_Image_Draw(gunPlayer, zWidth / 2.0f - 100, zHeight / 2.0f - 10, 100, 130, 255);
+	}
+	else if (IsAreaClicked(zWidth / 2.0f + 100, zHeight / 2.0f, (float)CP_Image_GetWidth(swordPlayer) + 10, (float)CP_Image_GetHeight(swordPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
+	{
+		CP_Image_Draw(swordPlayer, zWidth / 2.0f + 100, zHeight / 2.0f - 10, 100, 130, 255);
+	}
+
 	// Pick the character, then proceed to Howtoplay page.
 	if (CP_Input_MouseClicked())
 	{
@@ -66,6 +75,8 @@ void character_Select_Update()
 
 		if (IsAreaClicked(zWidth / 2.0f - 100, zHeight / 2.0f, (float)CP_Image_GetWidth(gunPlayer) + 10, (float)CP_Image_GetHeight(gunPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			
+	
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			playerNum = 1;
 			character_Select_Exit();
@@ -75,6 +86,8 @@ void character_Select_Update()
 
 		if (IsAreaClicked(zWidth / 2.0f + 100, zHeight / 2.0f, (float)CP_Image_GetWidth(swordPlayer) + 10, (float)CP_Image_GetHeight(swordPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			CP_Settings_TextSize(40.0f);
+			CP_Font_DrawText("Melee", zWidth / 2.0f + 100, zHeight / 2.0f + 100);
 			playerNum = 2;
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			character_Select_Exit();

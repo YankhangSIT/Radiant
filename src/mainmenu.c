@@ -44,11 +44,13 @@ void Main_Menu_Init()
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
+	mainmenu = CP_Sound_Load("Assets/Main_menu.wav");
 }
 
 void Main_Menu_Update()
 {
-	// Set window width and height to variables
+	// Set background music
+	CP_Sound_PlayMusic(mainmenu);
 
 	// Set background
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
@@ -63,28 +65,38 @@ void Main_Menu_Update()
 	Button("Play", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 	// Settings Button
-	Button("Settings", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	//Button("Sound", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 	// Exit Button
 	Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-	if (CP_Input_MouseClicked())
-	{
+	
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		// If click "Play" Button
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			panelDisplay = 1;
-			Main_Menu_Exit();
-			CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
+			Button("Play", wWidth / 2.f , wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 96, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			
+			if (CP_Input_MouseClicked())
+			{
+				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+				if (IsAreaClicked(wWidth / 2.0f - 30, wHeight / 2.0f - 130, 210, 110, mouseClickPos.x, mouseClickPos.y) == 1) {
+					panelDisplay = 1;
+					Main_Menu_Exit();
+					CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
+				}
+			}
 		}
 		// else if click "Exit" button
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			Main_Menu_Exit();
-			CP_Engine_Terminate();
+			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 196, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			if (CP_Input_MouseClicked())
+			{
+				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+				Main_Menu_Exit();
+				CP_Engine_Terminate();
+			}
 		}
 
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -94,10 +106,12 @@ void Main_Menu_Update()
 			// CP_Engine_SetNextGameState(Settings_Init, Settings_Update, Settings_Exit);
 		}
 	}
-}
+
+
 
 void Main_Menu_Exit()
 {
 	CP_Image_Free(&main_menu);
 	CP_Sound_Free(&buttonClickSound);
+	CP_Sound_Free(&mainmenu);
 }
