@@ -5,6 +5,6 @@
 #include "splashScreen.h"
 
 
-void how_To_play_Init();
-void how_To_play_Update();
-void how_To_play_Exit();
+void how_To_play_Init(void);
+void how_To_play_Update(void);
+void how_To_play_Exit(void);

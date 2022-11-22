@@ -4,6 +4,6 @@
 #include "stdio.h"
 #include "splashScreen.h"
 
-void character_Select_Init();
-void character_Select_Update();
-void character_Select_Exit();
+void character_Select_Init(void);
+void character_Select_Update(void);
+void character_Select_Exit(void);

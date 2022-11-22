@@ -24,7 +24,7 @@ CP_Image swordPlayer;
 extern int playerNum = 0;
 float zWidth;
 float zHeight;
-void character_Select_Init()
+void character_Select_Init(void)
 {
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
@@ -41,7 +41,7 @@ void character_Select_Init()
 	backgroundMusic = CP_Sound_Load("Assets/background.wav");
 }
 
-void character_Select_Update()
+void character_Select_Update(void)
 {
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	CP_Sound_PlayAdvanced(backgroundMusic, 0.1f, 1.0f, FALSE, CP_SOUND_GROUP_1);
@@ -96,7 +96,7 @@ void character_Select_Update()
 	}
 }
 
-void character_Select_Exit()
+void character_Select_Exit(void)
 {
 	CP_Sound_Free(&buttonClickSound);
 	CP_Sound_Free(&backgroundMusic);

@@ -14,6 +14,7 @@
 #include "gameOverpage.h"
 #include "global.h"
 #include "sound.h"
+#include "win.h"
 
 struct Character playerGun;
 struct Character playerSword;
@@ -31,6 +32,7 @@ float stunnedElapsedTime;
 int healthChange;
 float wWidth;
 float wHeight;
+float bossMovement;
 
 // string array to use for text display
 char timeString[MAX_LENGTH];
@@ -139,6 +141,10 @@ void level_4_Init()
 	boss.pos = CP_Vector_Set(wWidth / 2, wHeight / 6);
 	boss.width = (float)CP_Image_GetWidth(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
+	boss.height = (float)CP_Image_GetHeight(bossSprite);
+
+	boss.health = 3;
+	bossMovement = 10;
 
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
@@ -224,6 +230,11 @@ void level_4_Init()
 
 void level_4_Update()
 {
+	if (boss.health <= 0) {
+		CP_Engine_SetNextGameState(win_init, win_update, win_exit);
+	}
+
+
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
@@ -517,7 +528,26 @@ void level_4_Update()
 				}
 			}
 
-			//// NO enemies this level to die to bullets
+			// boss takes damage from bullets
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
+				float xDistance = bulletArray[i].bulletPos.x - boss.pos.x;
+				float yDistance = bulletArray[i].bulletPos.y - boss.pos.y;
+				float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
+
+				// enemies die to bullets
+				if (distance < (boss.width - 150.f) && firstShoot == 1) //-150 is fine tuning
+				{ // less than bullet radius x2
+					--boss.health;
+
+					// deletion of projectile after hitting enemy
+					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+					{
+						bulletArray[x] = bulletArray[x + 1];
+					}
+					--bulletSpawnIndex;
+				}
+			}
 
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS // NEED JS TO UPDATE WHEN PILLARS ARE IMPLEMENTED
 			// for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
@@ -565,21 +595,10 @@ void level_4_Update()
 					swingSword = true;
 					CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				}
-				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
-					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
+					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, boss.pos, (boss.width / 2.f - 90.f))) //90 is for fine-tuning, boss too fat
 					{
-						//--enemies[i].health;
-						// NO DROPS FROM ENEMIES
-
-						/*if (enemies[i].health <= 0)
-						{
-							for (int y = i; y < spawnIndex; ++y)
-							{
-								enemies[y] = enemies[y + 1];
-							}
-							--spawnIndex;
-						}*/
+						--boss.health;
 					}
 				}
 				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)
@@ -714,6 +733,16 @@ void level_4_Update()
 				}
 			}
 		}
+
+		//FINAL BOSS MOVEMENT
+		if (boss.pos.x < 200.f) {
+			bossMovement = 10.f;
+		}
+		else if (boss.pos.x > wWidth - 200.f) {
+			bossMovement = -10.f;
+		}
+		boss.pos.x += bossMovement;
+
 
 		// FINAL BOSS MECHANICS
 		// changeAttackTimer -= elapsedTime;
@@ -908,6 +937,41 @@ void level_4_Update()
 					}
 					character.invulState = 1;
 				}
+			}
+		}
+
+		// check if boss projectile out of bounds, if so, delete it.
+		for (int i = 0; i < bossBulletIndex; ++i)
+		{
+			if (checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			{
+				for (int x = i; x - 1 < bossBulletIndex; ++x)
+				{
+					bossBulletArray[x] = bossBulletArray[x + 1]; // to "delete" element from array
+				}
+				--bossBulletIndex;
+			}
+		}
+		for (int i = 0; i < bossBulletIndex2; ++i)
+		{
+			if (checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			{
+				for (int x = i; x < bossBulletIndex2; ++x)
+				{
+					bossBulletArray2[x] = bossBulletArray2[x + 1];
+				}
+				--bossBulletIndex2;
+			}
+		}
+		for (int i = 0; i < bossBulletIndex3; ++i)
+		{
+			if (checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			{
+				for (int x = i; x < bossBulletIndex3; ++x)
+				{
+					bossBulletArray3[x] = bossBulletArray3[x + 1];
+				}
+				--bossBulletIndex3;
 			}
 		}
 
