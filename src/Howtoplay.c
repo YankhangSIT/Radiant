@@ -190,7 +190,7 @@ void how_To_play_Update()
 		// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 		CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 		
-		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+		//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 	}
 	// Alternatively, click the area to proceed to next page.
 	if (CP_Input_MouseClicked())
@@ -200,9 +200,9 @@ void how_To_play_Update()
 		{
 			// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+			CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 			//CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
-			CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+			//CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 		}
 	}
 }

@@ -42,4 +42,8 @@ void clear()
 	memset(enemies, 0, sizeof(enemies));
 	memset(bulletArray, 0 ,sizeof(bulletArray));
 	memset(itemDrop, 0, sizeof(itemDrop));
+	memset(bossBulletArray, 0, sizeof(bossBulletArray));
+	memset(bossBulletArray2, 0, sizeof(bossBulletArray2));
+	memset(bossBulletArray3, 0, sizeof(bossBulletArray3));
+
 }

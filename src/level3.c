@@ -907,9 +907,11 @@ void level_3_Update()
 			}
 		}
 
+		CP_Settings_TextSize(100.0f);
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
+		CP_Settings_TextSize(35.0f);
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);

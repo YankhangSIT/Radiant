@@ -879,11 +879,12 @@ void level_1_Update()
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
-
+		// display timer
+		CP_Settings_TextSize(100.0f);
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
-		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 300);
-
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
+		CP_Settings_TextSize(35.0f);
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);
 		for (int i = 0; i < character.health; ++i)
