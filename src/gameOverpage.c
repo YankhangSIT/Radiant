@@ -49,6 +49,8 @@ void game_Over_page_update(void)
 	float pWidth = (float) CP_System_GetWindowWidth();
 	float pHeight = (float) CP_System_GetWindowHeight();
 
+	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
@@ -75,10 +77,23 @@ void game_Over_page_update(void)
 
 	Button("Exit", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 250, 180, 80, 255, 0, 0, 0, 0, 0, 255);
 
+	if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+
+		Button("Restart", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 53, 190, 90, 255, 0, 0, 0, 0, 0, 255);
+	}
+
+	if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+
+		Button("Menu", pWidth / 2.0f, pHeight / 2.0f + 100, pWidth / 2.0f, pHeight / 2.0f + 97, 190, 90, 255, 0, 0, 0, 0, 0, 255);
+	}
+
+	if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1) {
+
+		Button("Exit", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 247, 190, 90, 255, 0, 0, 0, 0, 0, 255);
+	}
 
 	if (CP_Input_MouseClicked()) {
 
-		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 			if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
 				if (level == 1)

@@ -37,6 +37,8 @@ CP_Image immunity;
 CP_Image energybuff;
 CP_Image shield;
 
+CP_Image mouse;
+
 CP_Font Acme, Abril;
 void how_To_play_Init()
 {
@@ -56,7 +58,7 @@ void how_To_play_Init()
 	immunity = CP_Image_Load("Assets/Unlimited_Health_Mode.png");
 	energybuff = CP_Image_Load("Assets/Unlimited_Energy_Mode.png");
 	shield = CP_Image_Load("Assets/Shield_Drop.png");
-
+	mouse = CP_Image_Load("Assets/Mouse.png");
 	//// player type gun
 	//if (playerNum == 1)
 	//{
@@ -86,11 +88,11 @@ void how_To_play_Update()
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(CP_Color_Create(128, 128, 128, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f, xHeight / 2.0f - 100, 800, 750);
+	CP_Graphics_DrawRect(xWidth / 2.0f + 50, xHeight / 2.0f - 100, 900, 750);
 
 	CP_Settings_Fill(CP_Color_Create(139, 0, 0, 255));
 	CP_Font_Set(Acme);
-	CP_Font_DrawText("How to play:", xWidth / 2.0f, xHeight / 2.0f - 400);
+	CP_Font_DrawText("How to play:", xWidth / 2.0f + 50, xHeight / 2.0f - 400);
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Font_DrawText("Controls:", xWidth / 2.0f - 650, xHeight / 2.0f - 400);
 	CP_Font_Set(Abril);
@@ -143,6 +145,14 @@ void how_To_play_Update()
 		CP_Font_DrawText("D", xWidth / 2.0f - 708, xHeight / 2.0f - 210);
 	}
 
+	//Clicking guide:
+	CP_Image_Draw(mouse, xWidth / 2.0f - 530, xHeight / 2.0f - 200, 225 , 320, 255);
+
+
+	if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT)) {
+		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
+		CP_Graphics_DrawRect(xWidth / 2.0f - 585, xHeight / 2.0f - 310, 120, 100);
+	}
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	// Teach user how to play
@@ -151,37 +161,38 @@ void how_To_play_Update()
 	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 90, xHeight / 2.0f - 230);
 	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f +3, xHeight / 2.0f - 180);
 	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 125, xHeight / 2.0f - 130);
-	CP_Font_DrawText("6) There will be no self health regeneration", xWidth / 2.0f - 120, xHeight / 2.0f - 80);
+	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy REACHES ZERO", xWidth / 2.0f + 43, xHeight / 2.0f - 80);
+	CP_Font_DrawText("7) There will be no self health regeneration", xWidth / 2.0f - 120, xHeight / 2.0f - 30);
 
 	// Item drop guide
 	CP_Settings_Fill(CP_Color_Create(139, 0, 0, 255));
 	CP_Font_Set(Acme);
-	CP_Font_DrawText("Item Drop Guide:", xWidth / 2.0f, xHeight / 2.0f);
+	CP_Font_DrawText("Item Drop Guide:", xWidth / 2.0f + 50, xHeight / 2.0f);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_Set(Abril);
-	CP_Font_DrawText("Health, Energy & Shield Bars", xWidth / 2.0f - 195, xHeight / 2.0f + 70);
-	CP_Image_Draw(health, xWidth / 2.0f + 10 , xHeight / 2.0f + 70, (float)CP_Image_GetWidth(health), (float)CP_Image_GetHeight(health), 255);
-	CP_Image_Draw(energy, xWidth / 2.0f + 70, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(energy), (float)CP_Image_GetHeight(energy), 255);
-	CP_Image_Draw(shield, xWidth / 2.0f + 130, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(shield), (float)CP_Image_GetHeight(shield), 255);
+	CP_Font_DrawText("Energy & Shield Bars", xWidth / 2.0f - 238, xHeight / 2.0f + 70);
+	CP_Image_Draw(health, xWidth / 2.0f - 60 , xHeight / 2.0f + 70, (float)CP_Image_GetWidth(health), (float)CP_Image_GetHeight(health), 255);
+	CP_Image_Draw(energy, xWidth / 2.0f , xHeight / 2.0f + 70, (float)CP_Image_GetWidth(energy), (float)CP_Image_GetHeight(energy), 255);
+	CP_Image_Draw(shield, xWidth / 2.0f + 60, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(shield), (float)CP_Image_GetHeight(shield), 255);
 
 	CP_Font_DrawText("Power Ups: - Immunity for 3 seconds", xWidth / 2.0f - 150, xHeight / 2.0f + 120);
-	CP_Image_Draw(immunity, xWidth / 2.0f + 220, xHeight / 2.0f + 100, (float)CP_Image_GetWidth(immunity), (float)CP_Image_GetHeight(immunity), 255);
+	CP_Image_Draw(immunity, xWidth / 2.0f + 160, xHeight / 2.0f + 100, (float)CP_Image_GetWidth(immunity), (float)CP_Image_GetHeight(immunity), 255);
 	CP_Font_DrawText("- Unlimited attacks for 3 seconds", xWidth / 2.0f - 33 , xHeight / 2.0f + 170);
-	CP_Image_Draw(energybuff, xWidth / 2.0f + 330, xHeight / 2.0f + 150, (float)CP_Image_GetWidth(energybuff), (float)CP_Image_GetHeight(energybuff), 255);
+	CP_Image_Draw(energybuff, xWidth / 2.0f + 270, xHeight / 2.0f + 150, (float)CP_Image_GetWidth(energybuff), (float)CP_Image_GetHeight(energybuff), 255);
 
 	// Prompt user to click 'enter' to proceed to game
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 200, 45);
+	CP_Graphics_DrawRect(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 200, 45);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Continue", xWidth / 2.0f + 180, xHeight / 2.0f + 240);
+	CP_Font_DrawText("Continue", xWidth / 2.0f + 320, xHeight / 2.0f + 240);
 
 	
-	if (IsAreaClicked(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
+	if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 220, 55);
+		CP_Graphics_DrawRect(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 220, 55);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Continue", xWidth / 2.0f + 180, xHeight / 2.0f + 236);
+		CP_Font_DrawText("Continue", xWidth / 2.0f + 320, xHeight / 2.0f + 236);
 	}
 
 	// Press Enter to proceed to next page

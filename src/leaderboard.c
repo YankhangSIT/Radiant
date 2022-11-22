@@ -15,7 +15,7 @@
 //
 //
 //CP_Image win;
-//float TimeElapsed;
+//float TimeElapsed;6
 //FILE* leaderboard = NULL;
 //char username[12] = { '/0' };
 //

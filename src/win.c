@@ -32,6 +32,8 @@ void win_init() {
 void win_update() {
 	float gWidth = (float)CP_System_GetWindowWidth();
 	float gHeight = (float)CP_System_GetWindowHeight();
+	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	// Buffer time for splashscreen image & cursor creation
@@ -51,8 +53,12 @@ void win_update() {
 
 	Button("Next", gWidth / 2.0f, gHeight / 2.0f - 50, gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
+	if (IsAreaClicked(gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+	{
+		Button("Next", gWidth / 2.0f, gHeight / 2.0f - 50, gWidth / 2.0f, gHeight / 2.0f - 47, 190, 90, 0, 255, 0, 0, 0, 0, 255);
+	}
+
 	if (CP_Input_MouseClicked()) {
-		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (IsAreaClicked(gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));

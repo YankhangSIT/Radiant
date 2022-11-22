@@ -18,6 +18,7 @@
 #include "button.h"
 #include "gameOverpage.h"
 #include "sound.h"
+#include "credits.h"
 
 int panelDisplay = 0;
 float elapsedTime;
@@ -89,6 +90,9 @@ void Main_Menu_Update()
 	// Exit Button
 	Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
+	// Credits Button
+	Button("Credits", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	// If click "Play" Button
 	if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -124,6 +128,14 @@ void Main_Menu_Update()
 	{
 		// CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 		// CP_Engine_SetNextGameState(Settings_Init, Settings_Update, Settings_Exit);
+	}
+	else if (IsAreaClicked(wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+	{
+		Button("Credits", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 696, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+		if (CP_Input_MouseClicked())
+		{
+			CP_Engine_SetNextGameState(Credits_Init, Credits_Update, Credits_Exit);
+		}
 	}
 }
 

@@ -8,3 +8,4 @@ CP_Sound buttonClickSound;
 CP_Sound damageTaken;
 CP_Sound gameOverSound;
 CP_Sound backgroundMusic;
+CP_Sound credits;

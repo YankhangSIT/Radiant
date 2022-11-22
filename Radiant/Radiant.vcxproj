@@ -169,6 +169,9 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\button.c" />
     <ClCompile Include="..\src\characterSelect.c" />
     <ClCompile Include="..\src\combat.c" />
+    <ClCompile Include="..\src\credits.c" />
+    <ClCompile Include="..\src\credits_2.c" />
+    <ClCompile Include="..\src\credits_3.c" />
     <ClCompile Include="..\src\gameOverpage.c" />
     <ClCompile Include="..\src\Howtoplay.c" />
     <ClCompile Include="..\src\leaderboard.c" />
@@ -192,6 +195,9 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\src\button.h" />
     <ClInclude Include="..\src\characterSelect.h" />
     <ClInclude Include="..\src\combat.h" />
+    <ClInclude Include="..\src\credits.h" />
+    <ClInclude Include="..\src\credits_2.h" />
+    <ClInclude Include="..\src\credits_3.h" />
     <ClInclude Include="..\src\gameOverpage.h" />
     <ClInclude Include="..\src\global.h" />
     <ClInclude Include="..\src\Howtoplay.h" />
