@@ -81,9 +81,9 @@ void level_1_Init()
 	char_health = CP_Image_Load("Assets/Char_Health.png");				 /// removed drop health sprite
 	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");		 ///
 	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png"); ///
-	CP_Image obstruction1 = CP_Image_Load("Assets/obstruction1.png");
-	CP_Image obstruction2 = CP_Image_Load("Assets/obstruction2.png");
-	CP_Image obstruction3 = CP_Image_Load("Assets/obstruction3.png");
+	obstruction1 = CP_Image_Load("Assets/obstruction1.png");
+	obstruction2 = CP_Image_Load("Assets/obstruction2.png");
+	obstruction3 = CP_Image_Load("Assets/obstruction3.png");
 	obsWidth1 = (float)CP_Image_GetWidth(obstruction1);
 	obsHeight1 = (float)CP_Image_GetHeight(obstruction1);
 	obsWidth2 = (float)CP_Image_GetWidth(obstruction2);
@@ -257,7 +257,7 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			CP_Sound_PlayAdvanced(nextlvl_sound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
 			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -266,7 +266,7 @@ void level_1_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			CP_Sound_PlayAdvanced(gameOverSound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 
@@ -279,13 +279,13 @@ void level_1_Update()
 
 	if (isPaused)
 	{
-	
+
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
 			if (win == TRUE)
 			{
-				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 &&  CP_Input_MouseClicked())
+				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 				{
 					delayShootTime = delayShootStart;
 
@@ -296,7 +296,7 @@ void level_1_Update()
 
 					// printf("pause  state win lv1 %d", isPaused);
 				}
-				else if	(IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
 					Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 				}
@@ -326,7 +326,7 @@ void level_1_Update()
 				level_1_Init();
 			}
 		}
-		else if(IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y))
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y))
 		{
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
@@ -336,7 +336,7 @@ void level_1_Update()
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 		}
-		else if(IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}

@@ -133,7 +133,7 @@ void level_2_Init()
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	invulElapsedTime = 0;		  // timer for invul
 	invulTransparencyTime = 0;
-	energyRechargeTime = 0;		  // timer for energyRecharge
+	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
 	shieldedDuration = 0;		 ///
 	unlimitedEnergyDuration = 0; ///
@@ -223,7 +223,7 @@ void level_2_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			CP_Sound_PlayAdvanced(nextlvl_sound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
 
 			CP_Font_DrawText("You survived Level 2!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -235,7 +235,7 @@ void level_2_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			CP_Sound_PlayAdvanced(gameOverSound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 
@@ -750,7 +750,7 @@ void level_2_Update()
 		// pickup items
 		for (int i = 0; i < dropIndex; ++i)
 		{ // itemDrop[dropIndex]
-			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width/2.f) == 1)
+			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width / 2.f) == 1)
 			{
 				CP_Sound_PlayAdvanced(pickUp, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				if (itemDrop[i].itemId == 1) // shield drop
@@ -919,7 +919,7 @@ void level_2_Update()
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 		}
 
-		//draw drops
+		// draw drops
 		for (int i = 0; i < dropIndex; ++i)
 		{
 			// check if any item drop is set to true

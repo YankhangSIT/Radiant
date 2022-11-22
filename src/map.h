@@ -35,9 +35,8 @@ CP_Image obstruction6;
 CP_Image obstruction7;
 CP_Image obstruction8;
 CP_Image obstruction9;
-
+CP_Image obstruction10;
 Obstruction obs;
-
 float obsWidth1;
 float obsHeight1;
 float obsWidth2;
@@ -56,3 +55,5 @@ float obsWidth8;
 float obsHeight8;
 float obsWidth9;
 float obsHeight9;
+float obsWidth10;
+float obsHeight10;

@@ -151,7 +151,7 @@ void level_3_Init()
 	character.unlimitedEnergyState = 0; ///
 	invulElapsedTime = 0;				// timer for invul
 	invulTransparencyTime = 0;
-	energyRechargeTime = 0;				// timer for energyRecharge
+	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
 	shieldedDuration = 0;		 ///
 	unlimitedEnergyDuration = 0; ///
@@ -247,7 +247,7 @@ void level_3_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			CP_Sound_PlayAdvanced(nextlvl_sound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
 			CP_Font_DrawText("You survived Level 3!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -257,7 +257,7 @@ void level_3_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			CP_Sound_PlayAdvanced(gameOverSound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
 			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
 		}
 
@@ -281,7 +281,6 @@ void level_3_Update()
 
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
-
 				}
 				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
@@ -457,7 +456,8 @@ void level_3_Update()
 			for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
 			{
 				// check for obstructions
-				if (enemies[i].id == 2) { // ghost monster 4 can move through obstructions
+				if (enemies[i].id == 2)
+				{ // ghost monster 4 can move through obstructions
 					enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
 				}
 			}
@@ -876,10 +876,12 @@ void level_3_Update()
 			// only draw enemies that are alive
 			if (enemies[i].health > 0)
 			{
-				if (enemies[i].id == 1) { // draw ghost monster_4 with translucent silhouette
+				if (enemies[i].id == 1)
+				{ // draw ghost monster_4 with translucent silhouette
 					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 150);
 				}
-				else {
+				else
+				{
 					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 				}
 			}
