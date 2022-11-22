@@ -16,15 +16,15 @@ C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(275,25): warning C
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(281,65): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(281,93): warning C4020: 'SetRect_': too many actual parameters
 C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(282,24): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(869,71): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
-C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(869,92): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(891,71): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
+C:\Users\darre\OneDrive\Documents\GitHub\Radiant\src\level4.c(891,92): warning C4244: 'function': conversion from 'double' to 'float', possible loss of data
 LINK : warning C4742: 'win' has different alignment in 'c:\users\darre\onedrive\documents\github\radiant\src\win.c' and 'c:\users\darre\onedrive\documents\github\radiant\src\spawn.c': 8 and 4
 LINK : warning C4743: 'win' has different size in 'c:\users\darre\onedrive\documents\github\radiant\src\win.c' and 'c:\users\darre\onedrive\documents\github\radiant\src\spawn.c': 8 and 4 bytes
 LINK : warning C4744: 'win' has different type in 'c:\users\darre\onedrive\documents\github\radiant\src\win.c' and 'c:\users\darre\onedrive\documents\github\radiant\src\spawn.c': 'pointer' and 'int'
   Generating code
   1 of 56 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    6 functions had inline decision re-evaluated but remain unchanged
+    10 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Radiant.vcxproj -> C:\Users\darre\OneDrive\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied

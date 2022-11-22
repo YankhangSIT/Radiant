@@ -320,8 +320,8 @@ void level_4_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Font_DrawText("You survived Level 4!", wWidth / 2.0f, wHeight / 2.0f - 300);
-			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			CP_Font_DrawText("Congratulations You beat the game!", wWidth / 2.0f, wHeight / 2.0f - 300);
+		//	Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -338,56 +338,78 @@ void level_4_Update()
 		isPaused = TRUE;
 	}
 
-	if (CP_Input_MouseClicked() && isPaused)
+	if (isPaused)
 	{
+
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
 			if (win == TRUE)
 			{
-				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-				{
-					delayShootTime = delayShootStart;
+				//if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+			//	{
+				//	delayShootTime = delayShootStart;
 
-					printf("next Level");
-					// level_2_Init();
-					// CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+				//	// clear();
 
-					// printf("pause  state win lv1 %d", isPaused);
-				}
+				//	CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+				//	CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+
+				//	// printf("pause  state win lv1 %d", isPaused);
+				//}
+				//else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+				//{
+				//	Button("You Win!", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+				//}
 			}
 
-			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 			{
 				if (win == FALSE)
 				{
+					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					delayShootTime = delayShootStart;
 					isPaused = !isPaused;
 				}
 			}
-		}
-
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-		{
-			// isPaused = !isPaused;
-			if (isPaused == TRUE)
+			else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
-				win = FALSE;
-				clear();
-				level_4_Init();
+				Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			}
 		}
 
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
-			clear();
-			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			if (isPaused == TRUE)
+			{
+				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+				win = FALSE;
+				level_4_Init();
+			}
+		}
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y))
+		{
+			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
-			clear();
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+		}
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		{
+			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+		}
+
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		{
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			CP_Engine_Terminate();
+		}
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		{
+			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 	}
 
