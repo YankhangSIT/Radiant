@@ -63,7 +63,9 @@ struct Bullet
 	CP_Vector acceleration;
 	CP_Vector directionBullet;
 	CP_Vector normalizedDirection;
+	int isSpawn;
 	float bulletSpeed;
+	float startBulletSpeed;
 	float width;
 	float height;
 };
@@ -90,6 +92,13 @@ struct Bullet bossBulletArray3[SIZE];
 struct Enemy boss;
 float bossShootTimer;
 float startBossShootTimer;
+
+float bossShootTimer2;
+float startBossShootTimer2;
+
+float bossShootTimer3;
+float startBossShootTimer3;
+
 int bossShoot;
 int bossBulletIndex;
 int bossBulletIndex2;
@@ -146,7 +155,9 @@ float startChangeTimer;
 int attackMode;
 float directionAngle;
 float rotationSpeed;
-
+int bossChangeAttack;
+float clearBulletTime;
+float startclearBulletTime;
 void clear(void);
 
 
