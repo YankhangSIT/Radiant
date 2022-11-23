@@ -32,6 +32,9 @@ CP_Image main_menu;
 float wWidth;
 float wHeight;
 int isPaused;
+float mouseX1;
+float mouseX2;
+float sliderBoxX;
 void Main_Menu_Init()
 {
 
@@ -58,6 +61,8 @@ void Main_Menu_Init()
 	exitCount = FALSE;
 	exitSec = 0.f;
 	isPaused = FALSE;
+	mouseX1 = wWidth / 2;
+	mouseX2 = wWidth / 2;
 }
 
 void Main_Menu_Update()
@@ -131,6 +136,7 @@ void Main_Menu_Update()
 		// volume settings
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+			Button("Sound", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 46, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			if (CP_Input_MouseClicked())
 			{
 				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
@@ -157,18 +163,42 @@ void Main_Menu_Update()
 		CP_Font_DrawText("Volume settings", wWidth / 2.0f, wHeight / 2.0f - 300);
 
 		CP_Font_DrawText("Background music", wWidth / 2.0f, wHeight / 2.0f - 600);
-
-		TriButton("", wWidth / 2.0f - 200, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f, wWidth / 2.0f + 200, wHeight / 2.0f + 200, 360, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Back", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 200, 180, mouseClickPos.x, mouseClickPos.y) == 1)
+		sliderBar(wWidth / 2, wHeight / 2 - 100, 400, 10, 255, 255, 255, 255);
+		if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT) && IsAreaClicked(mouseX1, wHeight / 2 - 100, 800, 160, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
+
+			mouseX1 = CP_Input_GetMouseX();
+		}
+		if (!(mouseX1 > wWidth / 2 + 200) && !(mouseX1 < wWidth / 2 - 200))
+			sliderBox(mouseX1, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
+		else if (mouseX1 > wWidth / 2 + 200)
+			sliderBox(wWidth / 2 + 200, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
+		else if (mouseX1 < wWidth / 2 - 200)
+			sliderBox(wWidth / 2 - 200, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
+
+		sliderBar(wWidth / 2, wHeight / 2 + 100, 400, 10, 255, 255, 255, 255);
+		if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT) && IsAreaClicked(mouseX2, wHeight / 2 + 100, 800, 160, mouseClickPos.x, mouseClickPos.y) == 1)
+		{
+
+			mouseX2 = CP_Input_GetMouseX();
+		}
+		if (!(mouseX2 > wWidth / 2 + 200) && !(mouseX2 < wWidth / 2 - 200))
+			sliderBox(mouseX2, wHeight / 2 + 100, 10, 20, 0, 0, 0, 255);
+		else if (mouseX2 > wWidth / 2 + 200)
+			sliderBox(wWidth / 2 + 200, wHeight / 2 + 100, 10, 20, 0, 0, 0, 255);
+		else if (mouseX2 < wWidth / 2 - 200)
+			sliderBox(wWidth / 2 - 200, wHeight / 2 + 100, 10, 20, 0, 0, 0, 255);
+
+		// sliderBox(sliderBoxX, wHeight / 2, 10, 20, 0, 0, 0, 255);
+		// TriButton(wWidth / 2, wHeight / 2, wWidth / 2 + 50, wHeight / 2, wWidth / 2, wHeight / 2 + 50, 360, wWidth / 2.0f, wHeight / 2.0f - 200, 0, 255, 0, 0, 0, 0, 255);
+		Button("Back", wWidth / 2.0f, wHeight / 2.0f + 300, wWidth / 2.0f, wHeight / 2.0f + 300, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 300, 200, 180, mouseClickPos.x, mouseClickPos.y) == 1)
+		{
+			Button("Back", wWidth / 2.0f, wHeight / 2.0f + 300, wWidth / 2.0f, wHeight / 2.0f + 296, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			if (CP_Input_MouseClicked())
 			{
-				if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 200, 180, mouseClickPos.x, mouseClickPos.y) == 1)
-				{
-					isPaused = !isPaused;
-				}
+				isPaused = !isPaused;
 			}
 		}
 	}
