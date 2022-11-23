@@ -148,9 +148,9 @@ void level_4_Init()
 
 	boss.health = 12;
 	bossMovement = 10;
-	bossHealthScale = 100; // NEW VARIABLE
+	bossHealthScale = 100;							  // NEW VARIABLE
 	hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
-	hpbarOriginalX = hpBarCurrLengthX; /// JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
+	hpbarOriginalX = hpBarCurrLengthX;				  // JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
 
@@ -218,8 +218,8 @@ void level_4_Init()
 	isPaused = 0;
 
 	// initiate obstruction
-	obs.rec_block[obstructionCount3 + 1] = SetRect_(obsWidth10 / 2, wHeight / 2, obsWidth10, obsHeight10, obstruction10);
-	obs.rec_block[obstructionCount3 + 2] = SetRect_(wWidth - obsWidth10 / 2, wHeight / 2, obsWidth10, obsHeight10, obstruction10);
+	obs.rec_block[obstructionCount3] = SetRect_(obsWidth10 / 2, wHeight / 2, obsWidth10, obsHeight10, obstruction10);
+	obs.rec_block[obstructionCount3 + 1] = SetRect_(wWidth - obsWidth10 / 2, wHeight / 2, obsWidth10, obsHeight10, obstruction10);
 	// melee character swing sword area check
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
 	swordSwingTime = 0;
@@ -232,11 +232,11 @@ void level_4_Init()
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
 	gameOverSound = CP_Sound_Load("Assets/gameOver.wav");
+	elapsedTime = 0.f;
 }
 
 void level_4_Update()
 {
-
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
@@ -260,7 +260,7 @@ void level_4_Update()
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	}
 
-	if (boss.health <= 0|| lose == 1)
+	if (boss.health <= 0 || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 
@@ -269,12 +269,12 @@ void level_4_Update()
 		if (lose == 0)
 		{
 			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
-			//CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
-			//CP_Font_DrawText("Congratulations You beat the game!", wWidth / 2.0f, wHeight / 2.0f - 300);
+			// CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			// CP_Font_DrawText("Congratulations You beat the game!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			//	Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			//Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			//Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			//Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			// Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			// Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			// Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		}
 		else
 		{
@@ -556,7 +556,7 @@ void level_4_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
+				for (int o = obstructionCount3; o < obstructionCount4; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -574,7 +574,7 @@ void level_4_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
+				for (int o = obstructionCount3; o < obstructionCount4; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -631,7 +631,7 @@ void level_4_Update()
 		}
 
 		// draw obs and check player collision with obstruction
-		for (int i = obstructionCount3 + 1; i < obstructionCount4 + 1; i++)
+		for (int i = obstructionCount3; i < obstructionCount4; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -749,17 +749,17 @@ void level_4_Update()
 		}
 		boss.pos.x += bossMovement;
 
-		//CP_Settings_RectMode(CP_POSITION_CORNER);
+		// CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Graphics_DrawRect(wWidth, wHeight - 100, hpbarOriginalX, 50);
-	//	CP_Settings_RectMode(CP_POSITION_CORNER);
-		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));		
+		//	CP_Settings_RectMode(CP_POSITION_CORNER);
+		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(wWidth, wHeight - 100, hpBarCurrLengthX, 50);
 		hpBarCurrLengthX = boss.health * bossHealthScale;
 
-		//CP_Settings_RectMode(CP_POSITION_CENTER);
-		// FINAL BOSS MECHANICS
-		// changeAttackTimer -= elapsedTime;
+		// CP_Settings_RectMode(CP_POSITION_CENTER);
+		//  FINAL BOSS MECHANICS
+		//  changeAttackTimer -= elapsedTime;
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
 		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width / 2, boss.pos.y);
 		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width / 2, boss.pos.y);
@@ -957,7 +957,7 @@ void level_4_Update()
 		// check if boss projectile out of bounds, if so, delete it.
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
-			for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
+			for (int o = obstructionCount3; o < obstructionCount4; o++)
 			{
 
 				if (checkProjectileObsCollision(bossBulletArray[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
@@ -972,7 +972,7 @@ void level_4_Update()
 		}
 		for (int i = 0; i < bossBulletIndex2; ++i)
 		{
-			for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
+			for (int o = obstructionCount3; o < obstructionCount4; o++)
 			{
 				if (checkProjectileObsCollision(bossBulletArray2[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 				{
@@ -986,7 +986,7 @@ void level_4_Update()
 		}
 		for (int i = 0; i < bossBulletIndex3; ++i)
 		{
-			for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
+			for (int o = obstructionCount3; o < obstructionCount4; o++)
 			{
 				if (checkProjectileObsCollision(bossBulletArray3[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 				{
@@ -1135,7 +1135,7 @@ void level_4_Update()
 		// clearBulletTime -= elapsedTime;
 		// if (clearBulletTime <= 0)
 		//{
-		//for (int i = 0; i < bossBulletIndex; i++)
+		// for (int i = 0; i < bossBulletIndex; i++)
 		//{
 		//	if (bossBulletArray[bossBulletIndex].bulletPos.x > wWidth || bossBulletArray[bossBulletIndex].bulletPos.y > wHeight)
 		//	{
@@ -1143,7 +1143,7 @@ void level_4_Update()
 		//		--bossBulletIndex;
 		//	}
 		//}
-		//for (int i = 0; i < bossBulletIndex2; i++)
+		// for (int i = 0; i < bossBulletIndex2; i++)
 		//{
 		//	if (bossBulletArray2[bossBulletIndex2].bulletPos.x > wWidth || bossBulletArray2[bossBulletIndex2].bulletPos.y > wHeight)
 		//	{
@@ -1152,16 +1152,16 @@ void level_4_Update()
 		//	}
 		//}
 
-		//for (int i = 0; i < bossBulletIndex3; i++)
+		// for (int i = 0; i < bossBulletIndex3; i++)
 		//{
 		//	if (bossBulletArray3[bossBulletIndex3].bulletPos.x > wWidth || bossBulletArray3[bossBulletIndex3].bulletPos.y > wHeight)
 		//	{
 		//		bossBulletArray3[bossBulletIndex3].isSpawn = 0;
 		//		--bossBulletIndex3;
 		//	}
-		//}
+		// }
 		//	clearBulletTime = startclearBulletTime;
-		//}
+		// }
 	}
 }
 

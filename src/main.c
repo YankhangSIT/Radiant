@@ -23,7 +23,7 @@
 #include "leaderboard.h"
 #include "credits.h"
 #include "credits_2.h"
-#include "Howtoplay.h"""
+#include "Howtoplay.h"
 int main(void)
 {
 

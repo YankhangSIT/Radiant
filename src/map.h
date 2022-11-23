@@ -1,9 +1,9 @@
 #include <stdbool.h>
 #include "cprocessing.h"
 #define MAX_Obs1 66
-#define MAX_Obs2 101
-#define MAX_Obs3 136
-#define MAX_Obs4 138
+#define MAX_Obs2 100
+#define MAX_Obs3 135
+#define MAX_Obs4 137
 CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY);
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height);
 int checkProjectileMapCollision(CP_Vector bulletPosition, float minX, float maxX, float minY, float maxY);
@@ -18,7 +18,7 @@ typedef struct Rect
 } Rect;
 typedef struct Obstruction
 {
-	Rect rec_block[MAX_Obs3];
+	Rect rec_block[MAX_Obs4];
 } Obstruction;
 Rect SetRect_(float x, float y, float width, float height, CP_Image sprite);
 const int obstructionCount1;
