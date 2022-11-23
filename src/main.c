@@ -28,8 +28,9 @@
 int main(void)
 {
 
-	// CP_Engine_SetNextGameState(Credits_2_Init, Credits_2_Update, Credits_2_Exit);
+	
 	CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+	//CP_Engine_SetNextGameState(leaderboard_init, leaderboard_update, leaderboard_exit);
 	CP_Engine_Run();
 	return 0;
 }

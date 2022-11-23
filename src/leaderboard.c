@@ -12,14 +12,20 @@
 //#include "gameOverPage.h"
 //#include "button.h"
 //#include "characterSelect.h"
-//
+//#include "leaderboard_2.h"
 //
 //CP_Image win;
-//float TimeElapsed;6
+//float TimeElapsed;
 //FILE* leaderboard = NULL;
 //char username[12] = { '/0' };
 //
-//int points[];
+////union account {
+////	char username[12] = { '/0' };
+////	int points[];
+////};
+////struct user1;
+//
+//int points = 1000;
 //int i = 0;
 //
 //void leaderboard_init() {
@@ -33,7 +39,6 @@
 //	CP_Settings_TextAlignment(horizontal, vertical);
 //	CP_Settings_TextSize(35.0f);
 //
-//	fopen(leaderboard, "r");
 //}
 //
 //void leaderboard_update() {
@@ -41,8 +46,10 @@
 //	float gHeight = (float)CP_System_GetWindowHeight();
 //	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 //	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-//	CP_Font_DrawText("Enter Username[MAX12CHARACTERS]: ", gWidth / 2.0f - 130, gHeight / 2.0f - 400 );
-//	
+//	CP_Font_DrawText("Enter Username[MAX12CHARACTERS]: ", gWidth / 2.0f - 130, gHeight / 2.0f - 400);
+//
+//
+//
 //	if (i < 12) {
 //
 //		if (CP_Input_KeyTriggered(KEY_A)) {
@@ -155,31 +162,30 @@
 //		username[i] = ' ';
 //	}
 //	CP_Font_DrawText(username, gWidth / 2.0f + 250, gHeight / 2.0f - 400);
+//	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 //	
 //
-//	if (CP_Input_KeyTriggered(KEY_ENTER)) {
-//		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-//		CP_Graphics_DrawRect(gWidth / 2.0f, gHeight / 2.0f + 100, 750, 500);
+//	if (CP_Input_KeyDown(KEY_ENTER)) {
+//		
 //		//sort array here
-//		
-//		
-//		fopen_s(&leaderboard,"Assets/leaderboard.txt", "w+");
+//
+//		//save leaderboard score to txt file with append+, if use w+ will overwirte the original content
+//		fopen_s(&leaderboard, "Assets/leaderboard.txt", "a+");
 //		if (leaderboard != NULL) {
 //			fputs(username, leaderboard);
-//			//Prompt the leaderboard to display with the updated file data.
-//			
-//			/*	while(fgets(username, i, leaderboard){
-//					for(int j = 0; j < 10; j++){
-//						fprintf(stdout, "%c")*/
+//			fprintf(leaderboard, " %d", points);
+//			fprintf(leaderboard, "\n");
+//
+//		/*	fgets(username, points, leaderboard);*/
 //			fclose(leaderboard);
 //		}
 //
-//
+//		CP_Engine_SetNextGameState(leaderboard_2_init, leaderboard_2_update, leaderboard_2_exit);
 //
 //	}
 //
 //}
 //
 //void leaderboard_exit() {
-//	
+//
 //}
