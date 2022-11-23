@@ -233,7 +233,7 @@ void level_2_Update()
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, 1000);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, wHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
@@ -272,7 +272,7 @@ void level_2_Update()
 		//	printf("paused screen state  lv2 %d", isPaused);
 		// CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
 
@@ -577,7 +577,7 @@ void level_2_Update()
 
 						itemDrop[dropIndex].itemId = dropId;
 
-						if (randomRate == 2 && enemies[i].health <= 0)
+						if (randomRate == 2 && enemies[j].health <= 0)
 						{
 
 							itemDrop[dropIndex].dropTrue = 1;
@@ -599,8 +599,8 @@ void level_2_Update()
 								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
 							}
 							// set item with the drop index to the enemy coordinate
-							itemDrop[dropIndex].pos.x = enemies[i].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[i].pos.y;
+							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+							itemDrop[dropIndex].pos.y = enemies[j].pos.y;
 							++dropIndex;
 						}
 
@@ -658,7 +658,7 @@ void level_2_Update()
 					{
 						--enemies[i].health;
 						enemies[i].takeDamage = 1.0f;
-						unsigned int randomRate = CP_Random_RangeInt(1, 4);
+						unsigned int randomRate = CP_Random_RangeInt(1, 3);
 						// randomly set drop id between 1 or 2
 						unsigned int dropId = CP_Random_RangeInt(1, 2);
 						itemDrop[dropIndex].itemId = dropId;

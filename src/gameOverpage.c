@@ -15,7 +15,7 @@
 
 CP_Image gameOver;
 float TimeElapsed;
-
+float elapsedTime;
 void game_Over_page_Init()
 {
 	// Set TimeElapsed to float 0
