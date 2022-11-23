@@ -27,7 +27,7 @@
 
 struct Character playerGun;
 struct Character playerSword;
-
+int x = 100, a = 60;
 // Sprite Image
 CP_Image gunPlayer;
 CP_Image swordPlayer;
@@ -88,119 +88,119 @@ void how_To_play_Update(void)
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	CP_Settings_Fill(CP_Color_Create(128, 128, 128, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f + 50, xHeight / 2.0f - 100, 850, 750);
+	CP_Graphics_DrawRect(xWidth / 2.0f + 50, xHeight / 2.0f - 100 + x, 850, 850);
 
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Font_Set(Acme);
-	CP_Font_DrawText("How to play:", xWidth / 2.0f + 50, xHeight / 2.0f - 400);
+	CP_Font_DrawText("How to play:", xWidth / 2.0f + 50, xHeight / 2.0f - 400 + a );
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Font_DrawText("Controls:", xWidth / 2.0f - 650, xHeight / 2.0f - 400);
+	CP_Font_DrawText("Controls:", xWidth / 2.0f - 650, xHeight / 2.0f - 300 + x);
 	CP_Font_Set(Abril);
 
 	// WASD Movement guide:
 	// W
-	CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 300, 75, 75);
+	CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 150 + x, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("W", xWidth / 2.0f - 800, xHeight / 2.0f - 300);
-	if (CP_Input_KeyDown(KEY_W) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 300, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	CP_Font_DrawText("W", xWidth / 2.0f - 800, xHeight / 2.0f - 150+ x);
+	if (CP_Input_KeyDown(KEY_W) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 150 + x, 75, 75, mouseClickPos.x, mouseClickPos.y))
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 300, 85, 85);
+		CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 150 + x, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("W", xWidth / 2.0f - 800, xHeight / 2.0f - 302);
+		CP_Font_DrawText("W", xWidth / 2.0f - 800, xHeight / 2.0f - 152 + x);
 	}
 
 	// A
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 210, 75, 75);
+	CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 60 + x, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("S", xWidth / 2.0f - 800, xHeight / 2.0f - 210);
-	if (CP_Input_KeyDown(KEY_S) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	CP_Font_DrawText("S", xWidth / 2.0f - 800, xHeight / 2.0f - 60 + x);
+	if (CP_Input_KeyDown(KEY_S) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 60 + x, 75, 75, mouseClickPos.x, mouseClickPos.y))
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 210, 85, 85);
+		CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 60 + x, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("S", xWidth / 2.0f - 800, xHeight / 2.0f - 208);
+		CP_Font_DrawText("S", xWidth / 2.0f - 800, xHeight / 2.0f - 58 + x);
 	}
 
 	// S
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f - 890, xHeight / 2.0f - 210, 75, 75);
+	CP_Graphics_DrawRect(xWidth / 2.0f - 890, xHeight / 2.0f - 60 + x, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("A", xWidth / 2.0f - 890, xHeight / 2.0f - 210);
-	if (CP_Input_KeyDown(KEY_A) || IsAreaClicked(xWidth / 2.0f - 890, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	CP_Font_DrawText("A", xWidth / 2.0f - 890, xHeight / 2.0f - 60 + x);
+	if (CP_Input_KeyDown(KEY_A) || IsAreaClicked(xWidth / 2.0f - 890, xHeight / 2.0f - 60 + x, 75, 75, mouseClickPos.x, mouseClickPos.y))
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(xWidth / 2.0f - 890, xHeight / 2.0f - 210, 85, 85);
+		CP_Graphics_DrawRect(xWidth / 2.0f - 890, xHeight / 2.0f - 60 + x, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("A", xWidth / 2.0f - 892, xHeight / 2.0f - 210);
+		CP_Font_DrawText("A", xWidth / 2.0f - 892, xHeight / 2.0f - 60 + x);
 	}
 
 	// D
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f - 710, xHeight / 2.0f - 210, 75, 75);
+	CP_Graphics_DrawRect(xWidth / 2.0f - 710, xHeight / 2.0f - 60 + x, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("D", xWidth / 2.0f - 710, xHeight / 2.0f - 210);
-	if (CP_Input_KeyDown(KEY_D) || IsAreaClicked(xWidth / 2.0f - 710, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	CP_Font_DrawText("D", xWidth / 2.0f - 710, xHeight / 2.0f - 60 + x);
+	if (CP_Input_KeyDown(KEY_D) || IsAreaClicked(xWidth / 2.0f - 710, xHeight / 2.0f - 60 + x, 75, 75, mouseClickPos.x, mouseClickPos.y))
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(xWidth / 2.0f - 710, xHeight / 2.0f - 210, 85, 85);
+		CP_Graphics_DrawRect(xWidth / 2.0f - 710, xHeight / 2.0f - 60 + x, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("D", xWidth / 2.0f - 708, xHeight / 2.0f - 210);
+		CP_Font_DrawText("D", xWidth / 2.0f - 708, xHeight / 2.0f - 10 + x);
 	}
 
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-	CP_Font_DrawText("Movement", xWidth / 2.0f - 790, xHeight / 2.0f - 130);
-	CP_Font_DrawText("Left Click to Attack", xWidth / 2.0f - 530, xHeight / 2.0f - 20 );
+	CP_Font_DrawText("Movement", xWidth / 2.0f - 790, xHeight / 2.0f + 20 + x);
+	CP_Font_DrawText("Left Click to Attack", xWidth / 2.0f - 530, xHeight / 2.0f  + 80 + x );
 
 	// Clicking guide:
-	CP_Image_Draw(mouse, xWidth / 2.0f - 530, xHeight / 2.0f - 200, 225, 320, 255);
+	CP_Image_Draw(mouse, xWidth / 2.0f - 530, xHeight / 2.0f - 100 + 100, 225, 320, 255);
 
 	if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT))
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(xWidth / 2.0f - 585, xHeight / 2.0f - 310, 120, 100);
+		CP_Graphics_DrawRect(xWidth / 2.0f - 585, xHeight / 2.0f - 210 + 100, 120, 100);
 	}
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	// Teach user how to play
-	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 100, xHeight / 2.0f - 350);
-	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f - 95, xHeight / 2.0f - 300);
-	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 35 , xHeight / 2.0f - 250);
-	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f + 58, xHeight / 2.0f - 200);
-	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 70, xHeight / 2.0f - 150);
-	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy ", xWidth / 2.0f , xHeight / 2.0f - 100);
-	CP_Font_DrawText("REACHES ZERO", xWidth / 2.0f - 193, xHeight / 2.0f - 70);
-	CP_Font_DrawText("7) There will be no self health regeneration", xWidth / 2.0f - 65, xHeight / 2.0f - 30);
+	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 100, xHeight / 2.0f - 350 + a);
+	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f - 95, xHeight / 2.0f - 300 + a);
+	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 35 , xHeight / 2.0f - 250 + a);
+	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f + 58, xHeight / 2.0f - 200 + a);
+	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 70, xHeight / 2.0f - 150 + a);
+	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy ", xWidth / 2.0f , xHeight / 2.0f - 100 + a);
+	CP_Font_DrawText("REACHES ZERO", xWidth / 2.0f - 193, xHeight / 2.0f - 70 + a);
+	CP_Font_DrawText("7) There will be no self health regeneration", xWidth / 2.0f - 65, xHeight / 2.0f - 30 + a);
 
 	// Item drop guide
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Font_Set(Acme);
-	CP_Font_DrawText("Item Drop Guide:", xWidth / 2.0f + 50, xHeight / 2.0f + 20);
+	CP_Font_DrawText("Item Drop Guide:", xWidth / 2.0f + 50, xHeight / 2.0f + 20 + a);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_Set(Abril);
-	CP_Font_DrawText("Power Ups: - Energy & Shield Icon", xWidth / 2.0f - 120, xHeight / 2.0f + 70);
+	CP_Font_DrawText("Power Ups: - Shield & Energy Icon", xWidth / 2.0f - 120, xHeight / 2.0f + 70 + a);
 	
-	CP_Image_Draw(energy, xWidth / 2.0f + 130, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(energy), (float)CP_Image_GetHeight(energy), 255);
-	CP_Image_Draw(shield, xWidth / 2.0f + 190, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(shield), (float)CP_Image_GetHeight(shield), 255);
+	CP_Image_Draw(shield, xWidth / 2.0f + 130, xHeight / 2.0f + 70 + a, (float)CP_Image_GetWidth(shield), (float)CP_Image_GetHeight(shield), 255);
+	CP_Image_Draw(energy, xWidth / 2.0f + 190, xHeight / 2.0f + 70 + a, (float)CP_Image_GetWidth(energy), (float)CP_Image_GetHeight(energy), 255);
 
-	CP_Font_DrawText("- Immunity for 3 seconds", xWidth / 2.0f - 35, xHeight / 2.0f + 120);
-	CP_Image_Draw(immunity, xWidth / 2.0f + 270, xHeight / 2.0f + 150, (float)CP_Image_GetWidth(immunity), (float)CP_Image_GetHeight(immunity), 255);
-	CP_Font_DrawText("- Unlimited attacks for 3 seconds", xWidth / 2.0f + 12, xHeight / 2.0f + 170);
-	CP_Image_Draw(energybuff, xWidth / 2.0f + 380, xHeight / 2.0f + 150, (float)CP_Image_GetWidth(energybuff), (float)CP_Image_GetHeight(energybuff), 255);
+	CP_Font_DrawText("- Immunity for 3 seconds", xWidth / 2.0f - 35, xHeight / 2.0f + 120 + a);
+	//CP_Image_Draw(immunity, xWidth / 2.0f + 270, xHeight / 2.0f + 150, (float)CP_Image_GetWidth(immunity), (float)CP_Image_GetHeight(immunity), 255);
+	CP_Font_DrawText("- Unlimited attacks for 3 seconds", xWidth / 2.0f + 12, xHeight / 2.0f + 170 + a);
+	//CP_Image_Draw(energybuff, xWidth / 2.0f + 380, xHeight / 2.0f + 150, (float)CP_Image_GetWidth(energybuff), (float)CP_Image_GetHeight(energybuff), 255);
 
 	// Prompt user to click 'enter' to proceed to game
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Graphics_DrawRect(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 200, 45);
+	CP_Graphics_DrawRect(xWidth / 2.0f + 320, xHeight / 2.0f + 240 + x, 200, 90);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText("Continue", xWidth / 2.0f + 320, xHeight / 2.0f + 240);
+	CP_Font_DrawText("Continue", xWidth / 2.0f + 320, xHeight / 2.0f + 240 + x);
 
-	if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
+	if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240 + x, 200, 90, mouseClickPos.x, mouseClickPos.y) == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-		CP_Graphics_DrawRect(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 220, 55);
+		CP_Graphics_DrawRect(xWidth / 2.0f + 320, xHeight / 2.0f + 240 + x, 220, 110);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Continue", xWidth / 2.0f + 320, xHeight / 2.0f + 236);
+		CP_Font_DrawText("Continue", xWidth / 2.0f + 320, xHeight / 2.0f + 236 + x);
 	}
 
 	// Press Enter to proceed to next page
@@ -215,7 +215,7 @@ void how_To_play_Update(void)
 	if (CP_Input_MouseClicked())
 	{
 
-		if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240 + x, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
