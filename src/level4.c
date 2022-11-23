@@ -149,8 +149,9 @@ void level_4_Init()
 	boss.health = 12;
 	boss.maxHealth = boss.health;
 	bossMovement = 10;
-	bossHealthScale = 160;							  // NEW VARIABLE
-	hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
+	//bossHealthScale = 160;							  // NEW VARIABLE
+	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
+	//hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
 	hpbarOriginalX = hpBarCurrLengthX;				  // JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
@@ -756,7 +757,7 @@ void level_4_Update()
 		//	CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(0, wHeight - 100, hpBarCurrLengthX, 50);
-		hpBarCurrLengthX = boss.health * bossHealthScale;
+		hpBarCurrLengthX = wWidth/boss.maxHealth * boss.health;
 
 		 CP_Settings_RectMode(CP_POSITION_CENTER);	
 		 CP_Settings_TextSize(70.0f);
