@@ -21,7 +21,6 @@
 
 float TimeElapsed;
 CP_Font Alclonia;
-CP_Image enter;
 float wWidth;
 float wHeight;
 void Credits_3_Init()
@@ -31,7 +30,6 @@ void Credits_3_Init()
 	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
-	enter = CP_Image_Load("Assets/credits.png");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
 
@@ -53,7 +51,6 @@ void Credits_3_Update()
 	{
 		TimeElapsed = 0;
 	}
-	CP_Image_Draw(enter, wWidth / 2.0f + 600, wHeight / 2.0f + 500, 550, 50, 255);
 
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(60.f);
@@ -77,7 +74,20 @@ void Credits_3_Update()
 
 	CP_Settings_TextSize(30.0f);
 	CP_Font_DrawText("WWW.DIGIPEN.EDU", wWidth / 2.0f, wHeight / 2.0f + 400);
-	CP_Font_DrawText("All content 20XX DigiPen Institute of Technology Singapore. All Rights Reserved", wWidth / 2.0f, wHeight / 2.0f + 450);
+	CP_Font_DrawText("All content 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", wWidth / 2.0f, wHeight / 2.0f + 450);
+
+
+	Button("Continue", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+	if (IsAreaClicked(wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+	{
+		Button("Continue", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 696, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+		if (CP_Input_MouseClicked())
+		{
+			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+		}
+	}
+
 
 	if (CP_Input_KeyTriggered(KEY_ENTER))
 	{
