@@ -45,7 +45,8 @@ void level_3_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
@@ -214,12 +215,26 @@ void level_3_Init()
 	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-	gameOverSound = CP_Sound_Load("Assets/gameOver.wav");
+	nextState = 0.f;
+	startCount = FALSE;
+	menuState = FALSE;
+	exitState = FALSE;
+	startCountG = 0.f;
+	playVictorySound = FALSE;
+	victorySoundCount = 0.f;
 }
 
 void level_3_Update()
 {
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	if (playVictorySound)
+	{
+		victorySoundCount += 1.f;
+	}
+	if (victorySoundCount == 2.f)
+		CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
+
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
 		isPaused = !isPaused;
@@ -247,8 +262,8 @@ void level_3_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
-			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			playVictorySound = TRUE;
 			CP_Font_DrawText("You survived Level 3!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -257,8 +272,8 @@ void level_3_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
-			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			CP_Engine_SetNextGameState(game_Over_page_Init, game_Over_page_Update, game_Over_page_Exit);
 		}
 
 		if (lose == 0)
@@ -269,6 +284,18 @@ void level_3_Update()
 	}
 	if (isPaused)
 	{
+		elapsedTime = CP_System_GetDt();
+		if (startCount)
+			nextState += elapsedTime;
+		if (nextState > 0.2)
+		{
+			if (exitState)
+				CP_Engine_Terminate();
+			else if (menuState)
+				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			else
+				CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+		}
 
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
@@ -280,7 +307,8 @@ void level_3_Update()
 					delayShootTime = delayShootStart;
 
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-					CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+					if (!nextState)
+						startCount = TRUE;
 				}
 				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
@@ -320,7 +348,11 @@ void level_3_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			if (!nextState)
+			{
+				startCount = TRUE;
+				menuState = TRUE;
+			}
 		}
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -330,7 +362,11 @@ void level_3_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			CP_Engine_Terminate();
+			if (!nextState)
+			{
+				startCount = TRUE;
+				exitState = TRUE;
+			}
 		}
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -453,7 +489,7 @@ void level_3_Update()
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
-			for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
+			for (int o = obstructionCount2 ; o < obstructionCount3; o++)
 			{
 				// check for obstructions
 				if (enemies[i].id == 2)
@@ -584,7 +620,7 @@ void level_3_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
+				for (int o = obstructionCount2 ; o < obstructionCount3; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -682,7 +718,7 @@ void level_3_Update()
 			swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
 		}
 
-		for (int i = obstructionCount2 + 1; i < obstructionCount3; i++)
+		for (int i = obstructionCount2; i < obstructionCount3; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -953,7 +989,6 @@ void level_3_Exit()
 	CP_Sound_Free(&pickUp);
 	CP_Sound_Free(&nextlvl_sound);
 	CP_Sound_Free(&buttonClickSound);
-	CP_Sound_Free(&gameOverSound);
 	CP_Sound_Free(&damageTaken);
 	CP_Image_Free(&obstruction4);
 	CP_Image_Free(&obstruction5);

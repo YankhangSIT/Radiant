@@ -24,7 +24,7 @@ CP_Image swordPlayer;
 extern int playerNum = 0;
 float zWidth;
 float zHeight;
-void character_Select_Init(void)
+void character_Select_Init()
 {
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
@@ -38,11 +38,19 @@ void character_Select_Init(void)
 	zHeight = (float)CP_System_GetWindowHeight();
 	// CP_Sound_Free(&buttonClickSound);
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
-	backgroundMusic = CP_Sound_Load("Assets/background.wav");
+	nextState = 0.f;
+	startCount = FALSE;
 }
 
-void character_Select_Update(void)
+void character_Select_Update()
 {
+	// delay call next game state by 0.1 sec to register the button sound
+	elapsedTime = CP_System_GetDt();
+	if (startCount)
+		nextState += elapsedTime;
+	if (nextState > 0.2)
+		CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
+
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	CP_Sound_PlayAdvanced(backgroundMusic, 0.1f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 	// Create rectangle
@@ -80,24 +88,27 @@ void character_Select_Update(void)
 
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			playerNum = 1;
-			CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
+			if (!nextState)
+				startCount = TRUE;
+
 			/*panelDisplay = 0;*/
 		}
 
 		if (IsAreaClicked(zWidth / 2.0f + 100, zHeight / 2.0f, (float)CP_Image_GetWidth(swordPlayer) + 10, (float)CP_Image_GetHeight(swordPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			CP_Settings_TextSize(40.0f);
-			CP_Font_DrawText("Melee", zWidth / 2.0f + 100, zHeight / 2.0f + 100);
+			// CP_Settings_TextSize(40.0f);
+			// CP_Font_DrawText("Melee", zWidth / 2.0f + 100, zHeight / 2.0f + 100);
 			playerNum = 2;
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
+			if (!nextState)
+				startCount = TRUE;
 			/*	panelDisplay = 0;*/
 		}
 	}
 }
 
-void character_Select_Exit(void)
+void character_Select_Exit()
 {
 	CP_Sound_Free(&buttonClickSound);
-	CP_Sound_Free(&backgroundMusic);
+	// CP_Sound_Free(&backgroundMusic);
 }

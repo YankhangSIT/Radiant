@@ -13,8 +13,6 @@
 #include "sound.h"
 #include "credits_2.h"
 
-
-
 float TimeElapsed;
 
 CP_Image credits_title;
@@ -30,19 +28,17 @@ void Credits_Init()
 	credits_title = CP_Image_Load("Assets/credits_title.PNG");
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
-	CP_System_Fullscreen();
-
-	
-	
+	CP_System_SetWindowSize(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
 }
 
 void Credits_Update()
 {
 	float wWidth = (float)CP_System_GetWindowWidth();
 	float wHeight = (float)CP_System_GetWindowHeight();
-	// Buffer time for credits title image 
+	// Buffer time for credits title image
 	TimeElapsed += CP_System_GetDt();
-	
+
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
 	float alphatime = 3;
@@ -51,7 +47,8 @@ void Credits_Update()
 	if (fadeoutt == TRUE)
 	{
 		resulttime = 255 - (TimeElapsed / alphatime) * 255; // Fade out formula
-		if (TimeElapsed >= alphatime) {
+		if (TimeElapsed >= alphatime)
+		{
 			CP_Engine_SetNextGameState(Credits_2_Init, Credits_2_Update, Credits_2_Exit);
 		}
 	}
@@ -63,12 +60,10 @@ void Credits_Update()
 		alphatime = 3;
 	}
 	CP_Image_Draw(credits_title, wWidth / 2.0f - 490, wHeight / 2.0f - 250, 1000, 400, (int)resulttime); // Draw Credits title image
-
 }
 
 void Credits_Exit()
 {
-	
+
 	CP_Image_Free(&credits_title);
-	
 }

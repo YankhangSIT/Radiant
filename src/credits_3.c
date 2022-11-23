@@ -27,7 +27,8 @@ void Credits_3_Init()
 {
 
 	// clear();
-	CP_System_Fullscreen();
+	CP_System_SetWindowSize(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
@@ -37,14 +38,23 @@ void Credits_3_Init()
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
-
+	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
+	nextState = 0.f;
+	startCount = FALSE;
 }
 
 void Credits_3_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	elapsedTime = CP_System_GetDt();
+	if (startCount)
+		nextState += elapsedTime;
+	if (nextState > 0.2)
+	{
+		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+	}
 
 	float alphatime = 2;
 	if (TimeElapsed >= alphatime + 1)
@@ -76,7 +86,6 @@ void Credits_3_Update()
 	CP_Font_DrawText("WWW.DIGIPEN.EDU", wWidth / 2.0f, wHeight / 2.0f + 400);
 	CP_Font_DrawText("All content 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", wWidth / 2.0f, wHeight / 2.0f + 450);
 
-
 	Button("Continue", wWidth / 2.0f + 720, wHeight / 2.0f + 450, wWidth / 2.0f + 720, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	if (IsAreaClicked(wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -84,10 +93,11 @@ void Credits_3_Update()
 		Button("Continue", wWidth / 2.0f + 720, wHeight / 2.0f + 450, wWidth / 2.0f + 716, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		if (CP_Input_MouseClicked())
 		{
-			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			if (!nextState)
+				startCount = TRUE;
 		}
 	}
-
 
 	if (CP_Input_KeyTriggered(KEY_ENTER))
 	{
@@ -97,4 +107,5 @@ void Credits_3_Update()
 
 void Credits_3_Exit()
 {
+	CP_Sound_Free(&buttonClickSound);
 }

@@ -29,10 +29,11 @@ void Credits_2_Init()
 {
 
 	// clear();
-	CP_System_Fullscreen();
+	CP_System_SetWindowSize(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
-	
+
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
 
@@ -40,15 +41,24 @@ void Credits_2_Init()
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
-
+	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
+	nextState = 0.f;
+	startCount = FALSE;
 	// credits = CP_Sound_Load("Assets/credits.wav");
 }
 
 void Credits_2_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	elapsedTime = CP_System_GetDt();
+	if (startCount)
+		nextState += elapsedTime;
+	if (nextState > 0.2)
+	{
+		CP_Engine_SetNextGameState(Credits_3_Init, Credits_3_Update, Credits_3_Exit);
+	}
 	// CP_Sound_PlayAdvanced(credits, 0.5f, 0.5f, TRUE, CP_SOUND_GROUP_1);
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
@@ -57,7 +67,7 @@ void Credits_2_Update()
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
 	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f - 350);
-	
+
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
 	CP_Font_DrawText("PRODUCER and DESIGN LEAD", wWidth / 2.0f, wHeight / 2.0f - 250);
@@ -97,7 +107,9 @@ void Credits_2_Update()
 		Button("Continue", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 696, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		if (CP_Input_MouseClicked())
 		{
-			CP_Engine_SetNextGameState(Credits_3_Init, Credits_3_Update, Credits_3_Exit);
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			if (!nextState)
+				startCount = TRUE;
 		}
 	}
 
@@ -109,4 +121,5 @@ void Credits_2_Update()
 
 void Credits_2_Exit()
 {
+	CP_Sound_Free(&buttonClickSound);
 }

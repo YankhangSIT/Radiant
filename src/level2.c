@@ -43,7 +43,8 @@ void level_2_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 1.7f;
 
@@ -173,7 +174,7 @@ void level_2_Init()
 		if (i == 77 || i == 81)
 		{
 			x = 0;
-			y += (int) (obsHeight5 * 0.7);
+			y += (int)(obsHeight5 * 0.7);
 		}
 	}
 	// center trees
@@ -209,12 +210,25 @@ void level_2_Init()
 	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-	gameOverSound = CP_Sound_Load("Assets/gameOver.wav");
+	nextState = 0.f;
+	startCount = FALSE;
+	menuState = FALSE;
+	exitState = FALSE;
+	startCountG = 0.f;
+	playVictorySound = FALSE;
+	victorySoundCount = 0.f;
 }
 
 void level_2_Update()
 {
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	if (playVictorySound)
+	{
+		victorySoundCount += 1.f;
+	}
+	if (victorySoundCount == 2.f)
+		CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
 
 	if (min == surviveMin || lose == 1)
 	{
@@ -223,8 +237,8 @@ void level_2_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
-
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			playVictorySound = TRUE;
 			CP_Font_DrawText("You survived Level 2!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -235,8 +249,8 @@ void level_2_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 0.1f, 0.1f, FALSE, CP_SOUND_GROUP_1);
-			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			CP_Engine_SetNextGameState(game_Over_page_Init, game_Over_page_Update, game_Over_page_Exit);
 		}
 
 		// Button("Next level", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -275,6 +289,19 @@ void level_2_Update()
 
 	if (isPaused)
 	{
+		// delay call next game state by 0.1 sec to register the button sound
+		elapsedTime = CP_System_GetDt();
+		if (startCount)
+			nextState += elapsedTime;
+		if (nextState > 0.2)
+		{
+			if (exitState)
+				CP_Engine_Terminate();
+			else if (menuState)
+				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			else
+				CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
+		}
 
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
@@ -288,8 +315,8 @@ void level_2_Update()
 					// clear();
 
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-					CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
-
+					if (!nextState)
+						startCount = TRUE;
 					// printf("pause  state win lv1 %d", isPaused);
 				}
 				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -330,7 +357,11 @@ void level_2_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			if (!nextState)
+			{
+				startCount = TRUE;
+				menuState = TRUE;
+			}
 		}
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -340,7 +371,11 @@ void level_2_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			CP_Engine_Terminate();
+			if (!nextState)
+			{
+				startCount = TRUE;
+				exitState = TRUE;
+			}
 		}
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -464,7 +499,7 @@ void level_2_Update()
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
-			for (int o = obstructionCount1 + 1; o < obstructionCount2; o++)
+			for (int o = obstructionCount1 ; o < obstructionCount2; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
@@ -592,7 +627,7 @@ void level_2_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = obstructionCount1 + 1; o < obstructionCount2; o++)
+				for (int o = obstructionCount1; o < obstructionCount2; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -692,7 +727,7 @@ void level_2_Update()
 		}
 
 		// check player collision with obstruction
-		for (int i = obstructionCount1 + 1; i < obstructionCount2; i++)
+		for (int i = obstructionCount1; i < obstructionCount2; i++)
 		{
 			// draw obstruction
 			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
@@ -957,7 +992,6 @@ void level_2_Exit()
 	CP_Sound_Free(&projectile_shoot);
 	CP_Sound_Free(&pickUp);
 	CP_Sound_Free(&nextlvl_sound);
-	CP_Sound_Free(&gameOverSound);
 	CP_Sound_Free(&buttonClickSound);
 	CP_Sound_Free(&damageTaken);
 	CP_Image_Free(&obstruction1);

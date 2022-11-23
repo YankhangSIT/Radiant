@@ -21,11 +21,7 @@
 #include "credits.h"
 
 int panelDisplay = 0;
-float elapsedTime;
 int startCount;
-float nextState;
-int exitCount;
-float exitSec;
 float TimeElapsed;
 CP_Font Alclonia;
 CP_Image main_menu;
@@ -58,8 +54,8 @@ void Main_Menu_Init()
 	backgroundMusic = CP_Sound_Load("Assets/background.wav");
 	nextState = 0.f;
 	startCount = FALSE;
-	exitCount = FALSE;
-	exitSec = 0.f;
+	exitState = FALSE;
+	creditState = FALSE;
 	isPaused = FALSE;
 	mouseX1 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_1) * 400);
 	mouseX2 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_0) * 400);
@@ -67,6 +63,7 @@ void Main_Menu_Init()
 
 void Main_Menu_Update()
 {
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 
 	if (!isPaused)
 	{
@@ -75,11 +72,15 @@ void Main_Menu_Update()
 		if (startCount)
 			nextState += elapsedTime;
 		if (nextState > 0.2)
-			CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
-		if (exitCount)
-			exitSec += elapsedTime;
-		if (exitSec > 0.2)
-			CP_Engine_Terminate();
+		{
+			if (exitState)
+				CP_Engine_Terminate();
+			else if (creditState)
+				CP_Engine_SetNextGameState(Credits_Init, Credits_Update, Credits_Exit);
+			else
+				CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
+		}
+
 		// Set background music
 		CP_Sound_PlayAdvanced(backgroundMusic, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_1);
 		// Set background
@@ -114,10 +115,11 @@ void Main_Menu_Update()
 
 				if (IsAreaClicked(wWidth / 2.0f - 30, wHeight / 2.0f - 130, 210, 110, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
-					if (!nextState)
-						startCount = TRUE;
+
 					panelDisplay = 1;
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					if (!nextState)
+						startCount = TRUE;
 				}
 			}
 		}
@@ -128,9 +130,13 @@ void Main_Menu_Update()
 			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 196, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			if (CP_Input_MouseClicked())
 			{
-				if (!exitSec)
-					exitCount = TRUE;
+
 				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+				if (!nextState)
+				{
+					startCount = TRUE;
+					exitState = TRUE;
+				}
 			}
 		}
 		// volume settings
@@ -148,7 +154,12 @@ void Main_Menu_Update()
 			Button("Credits", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 696, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			if (CP_Input_MouseClicked())
 			{
-				CP_Engine_SetNextGameState(Credits_Init, Credits_Update, Credits_Exit);
+				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+				if (!nextState)
+				{
+					startCount = TRUE;
+					creditState = TRUE;
+				}
 			}
 		}
 	}
@@ -224,5 +235,5 @@ void Main_Menu_Exit()
 {
 	CP_Image_Free(&main_menu);
 	CP_Sound_Free(&buttonClickSound);
-	CP_Sound_Free(&backgroundMusic);
+	// CP_Sound_Free(&backgroundMusic);
 }

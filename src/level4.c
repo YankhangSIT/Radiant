@@ -46,8 +46,8 @@ void level_4_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	 CP_System_FullscreenAdvanced(1920, 1080);
-	//CP_System_SetWindowSize(1920, 1080);
+	//  CP_System_FullscreenAdvanced(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	bossBullet.bulletSpeed = 200;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;
@@ -145,14 +145,14 @@ void level_4_Init()
 	boss.width = (float)CP_Image_GetWidth(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
-	
+
 	boss.health = 12;
 	boss.maxHealth = boss.health;
 	bossMovement = 10;
-	//bossHealthScale = 160;							  // NEW VARIABLE
+	// bossHealthScale = 160;							  // NEW VARIABLE
 	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
-	//hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
-	hpbarOriginalX = hpBarCurrLengthX;				  // JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
+	// hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
+	hpbarOriginalX = hpBarCurrLengthX; // JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
 
@@ -230,16 +230,19 @@ void level_4_Init()
 	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
 	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
 	pickUp = CP_Sound_Load("Assets/pickup.wav");
-	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-	gameOverSound = CP_Sound_Load("Assets/gameOver.wav");
-	elapsedTime = 0.f;
+	nextState = 0.f;
+	startCount = FALSE;
+	menuState = FALSE;
+	exitState = FALSE;
+	gameOverState = FALSE;
+	startCountG = 0.f;
 }
 
 void level_4_Update()
 {
-
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == 0)
@@ -270,6 +273,8 @@ void level_4_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			// CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
 			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
 			// CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 			// CP_Font_DrawText("Congratulations You beat the game!", wWidth / 2.0f, wHeight / 2.0f - 300);
@@ -280,8 +285,8 @@ void level_4_Update()
 		}
 		else
 		{
-			CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
-			CP_Engine_SetNextGameState(game_Over_page_init, game_Over_page_update, game_Over_page_exit);
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			CP_Engine_SetNextGameState(game_Over_page_Init, game_Over_page_Update, game_Over_page_Exit);
 		}
 
 		if (lose == 0)
@@ -293,6 +298,17 @@ void level_4_Update()
 
 	if (isPaused)
 	{
+		// delay call next game state by 0.1 sec to register the button sound
+		elapsedTime = CP_System_GetDt();
+		if (startCount)
+			nextState += elapsedTime;
+		if (nextState > 0.2)
+		{
+			if (exitState)
+				CP_Engine_Terminate();
+			else if (menuState)
+				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+		}
 
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
@@ -348,7 +364,11 @@ void level_4_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			if (!nextState)
+			{
+				startCount = TRUE;
+				menuState = TRUE;
+			}
 		}
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -358,7 +378,11 @@ void level_4_Update()
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			CP_Engine_Terminate();
+			if (!nextState)
+			{
+				startCount = TRUE;
+				exitState = TRUE;
+			}
 		}
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -757,13 +781,13 @@ void level_4_Update()
 		//	CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(0, wHeight - 100, hpBarCurrLengthX, 50);
-		hpBarCurrLengthX = wWidth/boss.maxHealth * boss.health;
+		hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
 
-		 CP_Settings_RectMode(CP_POSITION_CENTER);	
-		 CP_Settings_TextSize(70.0f);
-		 CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));	
+		CP_Settings_RectMode(CP_POSITION_CENTER);
+		CP_Settings_TextSize(70.0f);
+		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		sprintf_s(timeString, MAX_LENGTH, "Boss Health:%d/%d", boss.health, boss.maxHealth);
-		CP_Font_DrawText(timeString, wWidth/2 , wHeight - 75);
+		CP_Font_DrawText(timeString, wWidth / 2, wHeight - 75);
 		CP_Settings_TextSize(35.0f);
 		//  FINAL BOSS MECHANICS
 		//  changeAttackTimer -= elapsedTime;
