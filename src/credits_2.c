@@ -22,7 +22,7 @@
 
 float TimeElapsed;
 CP_Font Alclonia;
-CP_Image enter;
+
 float wWidth;
 float wHeight;
 void Credits_2_Init()
@@ -32,7 +32,7 @@ void Credits_2_Init()
 	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
-	enter = CP_Image_Load("Assets/credits.png");
+	
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
 
@@ -51,41 +51,55 @@ void Credits_2_Update()
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	// CP_Sound_PlayAdvanced(credits, 0.5f, 0.5f, TRUE, CP_SOUND_GROUP_1);
 
-	CP_Image_Draw(enter, wWidth / 2.0f + 600, wHeight / 2.0f + 500, 550, 50, 255);
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
+	CP_Settings_TextSize(60.f);
+	CP_Font_DrawText("DIRECTOR and PROGRAMMER", wWidth / 2.0f, wHeight / 2.0f - 450);
+	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
+	CP_Settings_TextSize(45.0f);
+	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f - 350);
+	
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
+	CP_Settings_TextSize(60.f);
+	CP_Font_DrawText("PRODUCER and DESIGN LEAD", wWidth / 2.0f, wHeight / 2.0f - 250);
+	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
+	CP_Settings_TextSize(45.0f);
+	CP_Font_DrawText("Wei Jing Song", wWidth / 2.0f, wHeight / 2.0f - 200);
 
-	CP_Settings_Fill(CP_Color_Create(247, 162, 51, 255));
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("GRAPHICS PROGRAMMER", wWidth / 2.0f, wHeight / 2.0f - 500);
-	CP_Font_DrawText("LEVEL DESIGNER", wWidth / 2.0f, wHeight / 2.0f - 400);
+	CP_Font_DrawText("ENVIRONMENT ARTISTS and USER-INTERFACE", wWidth / 2.0f, wHeight / 2.0f - 100);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Darren Lua", wWidth / 2.0f, wHeight / 2.0f - 350);
-	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f - 310);
-	CP_Settings_Fill(CP_Color_Create(247, 162, 51, 255));
-	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("MAP ARTIST AND USER-INTERFACE", wWidth / 2.0f, wHeight / 2.0f - 230);
-	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
-	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Seah Sheng Rong Donovan", wWidth / 2.0f, wHeight / 2.0f - 180);
-	CP_Font_DrawText("Wei Jing Song", wWidth / 2.0f, wHeight / 2.0f - 140);
+	CP_Font_DrawText("Seah Sheng Rong Donovan", wWidth / 2.0f, wHeight / 2.0f - 50);
 
-	CP_Settings_Fill(CP_Color_Create(247, 162, 51, 255));
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("ART DESIGN & AUDIO LEAD", wWidth / 2.0f, wHeight / 2.0f - 60);
+	CP_Font_DrawText("TECHNICAL LEAD", wWidth / 2.0f, wHeight / 2.0f + 50);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Seah Sheng Rong Donovan", wWidth / 2.0f, wHeight / 2.0f - 10);
-	CP_Font_DrawText("Wei Jing Song", wWidth / 2.0f, wHeight / 2.0f + 30);
-	CP_Font_DrawText("Darren Lua", wWidth / 2.0f, wHeight / 2.0f + 70);
-	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f + 110);
+	CP_Font_DrawText("Lua Wei Xiang Darren", wWidth / 2.0f, wHeight / 2.0f + 100);
 
-	CP_Settings_Fill(CP_Color_Create(247, 162, 51, 255));
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("SPECIAL THANKS TO: ", wWidth / 2.0f, wHeight / 2.0f + 400);
+	CP_Font_DrawText("SPECIAL THANKS TO: ", wWidth / 2.0f, wHeight / 2.0f + 200);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Teaching Assistants & Lecturers", wWidth / 2.0f, wHeight / 2.0f + 470);
-	CP_Font_DrawText("Play Testers", wWidth / 2.0f, wHeight / 2.0f + 515);
+	CP_Font_DrawText("Professor Cheng Ding Xiang", wWidth / 2.0f, wHeight / 2.0f + 250);
+	CP_Font_DrawText("Mr Gerald Wong", wWidth / 2.0f, wHeight / 2.0f + 300);
+	CP_Font_DrawText("Teaching Assistants", wWidth / 2.0f, wHeight / 2.0f + 350);
+	CP_Font_DrawText("Play Testers", wWidth / 2.0f, wHeight / 2.0f + 400);
+
+	CP_Settings_TextSize(30.0f);
+	Button("Continue", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+	if (IsAreaClicked(wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+	{
+		Button("Continue", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 696, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+		if (CP_Input_MouseClicked())
+		{
+			CP_Engine_SetNextGameState(Credits_3_Init, Credits_3_Update, Credits_3_Exit);
+		}
+	}
 
 	if (CP_Input_KeyTriggered(KEY_ENTER))
 	{
