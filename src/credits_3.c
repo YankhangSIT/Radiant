@@ -18,6 +18,7 @@
 #include "button.h"
 #include "gameOverpage.h"
 #include "sound.h"
+#include "credits_4.h"
 
 float TimeElapsed;
 CP_Font Alclonia;
@@ -96,12 +97,13 @@ void Credits_3_Update()
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
 				startCount = TRUE;
+			CP_Engine_SetNextGameState(Credits_4_Init, Credits_4_Update, Credits_4_Exit);
 		}
 	}
 
 	if (CP_Input_KeyTriggered(KEY_ENTER))
 	{
-		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+		CP_Engine_SetNextGameState(Credits_4_Init, Credits_4_Update, Credits_4_Exit);
 	}
 }
 

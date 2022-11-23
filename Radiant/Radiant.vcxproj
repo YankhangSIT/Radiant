@@ -172,9 +172,11 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\credits.c" />
     <ClCompile Include="..\src\credits_2.c" />
     <ClCompile Include="..\src\credits_3.c" />
+    <ClCompile Include="..\src\credits_4.c" />
     <ClCompile Include="..\src\gameOverpage.c" />
     <ClCompile Include="..\src\Howtoplay.c" />
     <ClCompile Include="..\src\leaderboard.c" />
+    <ClCompile Include="..\src\leaderboard_2.c" />
     <ClCompile Include="..\src\level1.c" />
     <ClCompile Include="..\src\level2.c" />
     <ClCompile Include="..\src\level3.c" />
@@ -198,10 +200,12 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClInclude Include="..\src\credits.h" />
     <ClInclude Include="..\src\credits_2.h" />
     <ClInclude Include="..\src\credits_3.h" />
+    <ClInclude Include="..\src\credits_4.h" />
     <ClInclude Include="..\src\gameOverpage.h" />
     <ClInclude Include="..\src\global.h" />
     <ClInclude Include="..\src\Howtoplay.h" />
     <ClInclude Include="..\src\leaderboard.h" />
+    <ClInclude Include="..\src\leaderboard_2.h" />
     <ClInclude Include="..\src\level1.h" />
     <ClInclude Include="..\src\level2.h" />
     <ClInclude Include="..\src\level3.h" />

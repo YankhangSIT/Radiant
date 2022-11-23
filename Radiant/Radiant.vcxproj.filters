@@ -81,6 +81,12 @@
     <ClCompile Include="..\src\credits_3.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\credits_4.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\leaderboard_2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Extern\CProcessing\inc\cprocessing.h">
@@ -153,6 +159,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\credits_3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\credits_4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\leaderboard_2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

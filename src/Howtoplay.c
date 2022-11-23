@@ -226,7 +226,7 @@ void how_To_play_Update(void)
 	if (CP_Input_MouseClicked())
 	{
 
-		if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240 + x, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240 + x, 220, 110, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
