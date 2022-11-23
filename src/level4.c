@@ -46,8 +46,8 @@ void level_4_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	//  CP_System_FullscreenAdvanced(1920, 1080);
-	CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	bossBullet.bulletSpeed = 200;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;

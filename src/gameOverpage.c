@@ -22,8 +22,8 @@ void game_Over_page_Init()
 	// Load your image
 	// Position your image to the corner of top left
 	// Set the size according to your image size.
-	// CP_System_FullscreenAdvanced(1920, 1080);
-	CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 

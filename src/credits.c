@@ -28,8 +28,8 @@ void Credits_Init()
 	credits_title = CP_Image_Load("Assets/credits_title.PNG");
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
-	CP_System_SetWindowSize(1920, 1080);
-	// CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
 }
 
 void Credits_Update()

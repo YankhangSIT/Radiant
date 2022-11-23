@@ -28,8 +28,8 @@ void Credits_3_Init()
 {
 
 	// clear();
-	CP_System_SetWindowSize(1920, 1080);
-	// CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);

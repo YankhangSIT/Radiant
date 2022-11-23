@@ -45,8 +45,8 @@ void level_3_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	// CP_System_FullscreenAdvanced(1920, 1080);
-	CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
@@ -489,7 +489,7 @@ void level_3_Update()
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
-			for (int o = obstructionCount2 ; o < obstructionCount3; o++)
+			for (int o = obstructionCount2; o < obstructionCount3; o++)
 			{
 				// check for obstructions
 				if (enemies[i].id == 2)
@@ -620,7 +620,7 @@ void level_3_Update()
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = obstructionCount2 ; o < obstructionCount3; o++)
+				for (int o = obstructionCount2; o < obstructionCount3; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{

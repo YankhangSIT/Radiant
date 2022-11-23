@@ -43,8 +43,8 @@ void level_2_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	// CP_System_FullscreenAdvanced(1920, 1080);
-	CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 1.7f;
 
@@ -499,7 +499,7 @@ void level_2_Update()
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
-			for (int o = obstructionCount1 ; o < obstructionCount2; o++)
+			for (int o = obstructionCount1; o < obstructionCount2; o++)
 			{
 				// check for obstructions
 				enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
