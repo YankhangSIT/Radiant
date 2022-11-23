@@ -39,7 +39,6 @@ char characterEnergyDisplay[MAX_LENGTH];
 void level_1_Init()
 {
 	clear();
-	// CP_System_Fullscreen();
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;

@@ -8,3 +8,5 @@ CP_Sound buttonClickSound = NULL;
 CP_Sound damageTaken = NULL;
 CP_Sound gameOverSound = NULL;
 CP_Sound backgroundMusic = NULL;
+float backgroundVolume = 0.5f;
+float sfxVolume = 0.5f;

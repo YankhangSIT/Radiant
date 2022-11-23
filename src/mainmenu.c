@@ -39,8 +39,8 @@ void Main_Menu_Init()
 {
 
 	// clear();
-	// CP_System_Fullscreen();
-	CP_System_FullscreenAdvanced(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
 	main_menu = CP_Image_Load("Assets/Main_menu.jpg");
@@ -61,12 +61,13 @@ void Main_Menu_Init()
 	exitCount = FALSE;
 	exitSec = 0.f;
 	isPaused = FALSE;
-	mouseX1 = wWidth / 2;
-	mouseX2 = wWidth / 2;
+	mouseX1 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_1) * 400);
+	mouseX2 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_0) * 400);
 }
 
 void Main_Menu_Update()
 {
+
 	if (!isPaused)
 	{
 		// delay call next game state by 0.1 sec to register the button sound
@@ -80,8 +81,7 @@ void Main_Menu_Update()
 		if (exitSec > 0.2)
 			CP_Engine_Terminate();
 		// Set background music
-		CP_Sound_PlayAdvanced(backgroundMusic, 0.1f, 0.5f, TRUE, CP_SOUND_GROUP_1);
-
+		CP_Sound_PlayAdvanced(backgroundMusic, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_1);
 		// Set background
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, (float)CP_Image_GetWidth(main_menu), (float)CP_Image_GetHeight(main_menu), 255);
@@ -155,14 +155,18 @@ void Main_Menu_Update()
 
 	if (isPaused)
 	{
+		// Volume settings
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Volume settings", wWidth / 2.0f, wHeight / 2.0f - 300);
-
-		CP_Font_DrawText("Background music", wWidth / 2.0f, wHeight / 2.0f - 600);
+		CP_Settings_TextSize(27.0f);
+		CP_Font_DrawText("Background music", wWidth / 2.0f, wHeight / 2.0f - 140);
+		CP_Font_DrawText("Sound effects", wWidth / 2.0f, wHeight / 2.0f + 60);
+		CP_Settings_TextSize(35.0f);
+		// background music volume adjustment
 		sliderBar(wWidth / 2, wHeight / 2 - 100, 400, 10, 255, 255, 255, 255);
 		if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT) && IsAreaClicked(mouseX1, wHeight / 2 - 100, 800, 160, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -175,7 +179,14 @@ void Main_Menu_Update()
 			sliderBox(wWidth / 2 + 200, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
 		else if (mouseX1 < wWidth / 2 - 200)
 			sliderBox(wWidth / 2 - 200, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
-
+		*&backgroundVolume = (float)((mouseX1 - (wWidth / 2 - 200)) / 400);
+		if (*&backgroundVolume > 1.f)
+			*&backgroundVolume = 1.f;
+		else if (*&backgroundVolume < 0)
+			*&backgroundVolume = 0;
+		CP_Sound_SetGroupVolume(CP_SOUND_GROUP_1, *&backgroundVolume);
+		mouseX1 = ((wWidth / 2 - 200) + *&backgroundVolume * 400);
+		// SFX volume adjustment
 		sliderBar(wWidth / 2, wHeight / 2 + 100, 400, 10, 255, 255, 255, 255);
 		if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT) && IsAreaClicked(mouseX2, wHeight / 2 + 100, 800, 160, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -188,9 +199,13 @@ void Main_Menu_Update()
 			sliderBox(wWidth / 2 + 200, wHeight / 2 + 100, 10, 20, 0, 0, 0, 255);
 		else if (mouseX2 < wWidth / 2 - 200)
 			sliderBox(wWidth / 2 - 200, wHeight / 2 + 100, 10, 20, 0, 0, 0, 255);
-
-		// sliderBox(sliderBoxX, wHeight / 2, 10, 20, 0, 0, 0, 255);
-		// TriButton(wWidth / 2, wHeight / 2, wWidth / 2 + 50, wHeight / 2, wWidth / 2, wHeight / 2 + 50, 360, wWidth / 2.0f, wHeight / 2.0f - 200, 0, 255, 0, 0, 0, 0, 255);
+		*&sfxVolume = (float)((mouseX2 - (wWidth / 2 - 200)) / 400);
+		if (*&sfxVolume > 1.f)
+			*&sfxVolume = 1.f;
+		else if (*&sfxVolume < 0)
+			*&sfxVolume = 0;
+		mouseX2 = ((wWidth / 2 - 200) + *&sfxVolume * 400);
+		CP_Sound_SetGroupVolume(CP_SOUND_GROUP_0, *&sfxVolume);
 		Button("Back", wWidth / 2.0f, wHeight / 2.0f + 300, wWidth / 2.0f, wHeight / 2.0f + 300, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 300, 200, 180, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -198,6 +213,7 @@ void Main_Menu_Update()
 			Button("Back", wWidth / 2.0f, wHeight / 2.0f + 300, wWidth / 2.0f, wHeight / 2.0f + 296, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			if (CP_Input_MouseClicked())
 			{
+				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				isPaused = !isPaused;
 			}
 		}
