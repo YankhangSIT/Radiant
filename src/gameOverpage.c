@@ -51,11 +51,19 @@ void game_Over_page_Init()
 	level2State = FALSE;
 	level3State = FALSE;
 	level4State = FALSE;
+	playVictorySound = FALSE;
+	victorySoundCount = 0.f;
 }
 
 void game_Over_page_Update()
 {
-	CP_Sound_PlayAdvanced(gameOverSound, 0.2f, 0.3f, FALSE, CP_SOUND_GROUP_0);
+	if (!playVictorySound)
+	{
+		victorySoundCount += 1.f;
+	}
+	if (victorySoundCount == 2.f)
+		CP_Sound_PlayAdvanced(gameOverSound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
+
 	elapsedTime = CP_System_GetDt();
 	if (startCount)
 		nextState += elapsedTime;
