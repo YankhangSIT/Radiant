@@ -46,8 +46,8 @@ void level_4_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	// CP_System_FullscreenAdvanced(1920, 1080);
-	CP_System_SetWindowSize(1920, 1080);
+	 CP_System_FullscreenAdvanced(1920, 1080);
+	//CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	bossBullet.bulletSpeed = 200;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;
@@ -145,11 +145,13 @@ void level_4_Init()
 	boss.width = (float)CP_Image_GetWidth(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
-
+	
 	boss.health = 12;
+	boss.maxHealth = boss.health;
 	bossMovement = 10;
-	bossHealthScale = 100;							  // NEW VARIABLE
-	hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
+	//bossHealthScale = 160;							  // NEW VARIABLE
+	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
+	//hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
 	hpbarOriginalX = hpBarCurrLengthX;				  // JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
@@ -749,15 +751,20 @@ void level_4_Update()
 		}
 		boss.pos.x += bossMovement;
 
-		// CP_Settings_RectMode(CP_POSITION_CORNER);
+		CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Graphics_DrawRect(wWidth, wHeight - 100, hpbarOriginalX, 50);
+		CP_Graphics_DrawRect(0, wHeight - 100, hpbarOriginalX, 50);
 		//	CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
-		CP_Graphics_DrawRect(wWidth, wHeight - 100, hpBarCurrLengthX, 50);
-		hpBarCurrLengthX = boss.health * bossHealthScale;
+		CP_Graphics_DrawRect(0, wHeight - 100, hpBarCurrLengthX, 50);
+		hpBarCurrLengthX = wWidth/boss.maxHealth * boss.health;
 
-		// CP_Settings_RectMode(CP_POSITION_CENTER);
+		 CP_Settings_RectMode(CP_POSITION_CENTER);	
+		 CP_Settings_TextSize(70.0f);
+		 CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));	
+		sprintf_s(timeString, MAX_LENGTH, "Boss Health:%d/%d", boss.health, boss.maxHealth);
+		CP_Font_DrawText(timeString, wWidth/2 , wHeight - 75);
+		CP_Settings_TextSize(35.0f);
 		//  FINAL BOSS MECHANICS
 		//  changeAttackTimer -= elapsedTime;
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
