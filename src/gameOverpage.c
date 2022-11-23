@@ -35,7 +35,6 @@ void game_Over_page_Init()
 	gameOver = CP_Image_Load("Assets/Gameover.png");
 	CP_Settings_ImageMode(CP_POSITION_CORNER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
-	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	gameOverSound = CP_Sound_Load("Assets/gameOver.wav");
@@ -56,7 +55,7 @@ void game_Over_page_Init()
 
 void game_Over_page_Update()
 {
-	CP_Sound_PlayAdvanced(gameOverSound, 0.2f, 0.5f, FALSE, CP_SOUND_GROUP_0);
+	CP_Sound_PlayAdvanced(gameOverSound, 0.2f, 0.3f, FALSE, CP_SOUND_GROUP_0);
 	elapsedTime = CP_System_GetDt();
 	if (startCount)
 		nextState += elapsedTime;
