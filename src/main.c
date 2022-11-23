@@ -24,11 +24,12 @@
 #include "credits.h"
 #include "credits_2.h"
 #include "Howtoplay.h"
+#include "credits_4.h"
 int main(void)
 {
 
 	// CP_Engine_SetNextGameState(Credits_2_Init, Credits_2_Update, Credits_2_Exit);
-	CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+	CP_Engine_SetNextGameState(Credits_4_Init, Credits_4_Update, Credits_4_Exit);
 	CP_Engine_Run();
 	return 0;
 }

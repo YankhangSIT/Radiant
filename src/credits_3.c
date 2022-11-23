@@ -18,6 +18,7 @@
 #include "button.h"
 #include "gameOverpage.h"
 #include "sound.h"
+#include "credits_4.h"
 
 float TimeElapsed;
 CP_Font Alclonia;
@@ -84,14 +85,14 @@ void Credits_3_Update()
 		Button("Continue", wWidth / 2.0f + 720, wHeight / 2.0f + 450, wWidth / 2.0f + 716, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		if (CP_Input_MouseClicked())
 		{
-			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+			CP_Engine_SetNextGameState(Credits_4_Init, Credits_4_Update, Credits_4_Exit);
 		}
 	}
 
 
 	if (CP_Input_KeyTriggered(KEY_ENTER))
 	{
-		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
+		CP_Engine_SetNextGameState(Credits_4_Init, Credits_4_Update, Credits_4_Exit);
 	}
 }
 
