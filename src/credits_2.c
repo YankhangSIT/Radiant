@@ -89,7 +89,7 @@ void Credits_2_Update()
 	CP_Font_DrawText("Teaching Assistants", wWidth / 2.0f, wHeight / 2.0f + 350);
 	CP_Font_DrawText("Play Testers", wWidth / 2.0f, wHeight / 2.0f + 400);
 
-
+	CP_Settings_TextSize(30.0f);
 	Button("Continue", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	if (IsAreaClicked(wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
