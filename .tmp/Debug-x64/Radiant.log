@@ -1,26 +1,25 @@
-﻿  leaderboard_2.c
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\leaderboard.c' and 'c:\users\donovan\documents\github\radiant\src\howtoplay.c': 8 and 4
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\leaderboard.c' and 'c:\users\donovan\documents\github\radiant\src\howtoplay.c': 8 and 4 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\leaderboard.c' and 'c:\users\donovan\documents\github\radiant\src\howtoplay.c': 'pointer' and 'int'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level1.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level1.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level1.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level2.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level2.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level2.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level3.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level3.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level3.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\level4.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\level4.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\level4.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
-LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8
-LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
-LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
+﻿  Howtoplay.c
+  characterSelect.c
+  credits.c
+  credits_2.c
+  credits_3.c
+  credits_4.c
+  gameOverpage.c
+  leaderboard.c
+  leaderboard_2.c
+  level1.c
+  level2.c
+  level3.c
+  level4.c
+  loadingScreen.c
+  main.c
+  mainmenu.c
+  splashScreen.c
+  win.c
   Generating code
-  2 of 77 functions ( 2.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    11 functions had inline decision re-evaluated but remain unchanged
+  39 of 70 functions (55.7%) were compiled, the rest were copied from previous compilation.
+    3 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   Radiant.vcxproj -> C:\Users\Donovan\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied

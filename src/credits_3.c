@@ -63,19 +63,24 @@ void Credits_3_Update()
 		TimeElapsed = 0;
 	}
 
-	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
 	CP_Font_DrawText("Created at", wWidth / 2.0f, wHeight / 2.0f - 450);
+	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Font_DrawText("DigiPen Institute of Technology Singapore", wWidth / 2.0f, wHeight / 2.0f - 390);
 
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(70.f);
 	CP_Font_DrawText("PRESIDENT", wWidth / 2.0f, wHeight / 2.0f - 210);
+	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(60.f);
 	CP_Font_DrawText("CLAUDE COMAIR", wWidth / 2.0f, wHeight / 2.0f - 150);
 
+	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(70.f);
-	CP_Font_DrawText("EXCUTIVES", wWidth / 2.0f, wHeight / 2.0f + 30);
+	CP_Font_DrawText("EXECUTIVES", wWidth / 2.0f, wHeight / 2.0f + 30);
 
+	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(60.0f);
 	CP_Font_DrawText("JASON CHU     SAMIR ABOU SAMRA     MICHELE COMAIR", wWidth / 2.0f, wHeight / 2.0f + 100);
 	CP_Font_DrawText("PRASANNA GHALI     ANGELA KUGLER     ERIK MOHRMANN", wWidth / 2.0f, wHeight / 2.0f + 150);

@@ -66,7 +66,7 @@ void Credits_2_Update()
 	CP_Font_DrawText("DIRECTOR and PROGRAMMER", wWidth / 2.0f, wHeight / 2.0f - 450);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f - 350);
+	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f - 400);
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
