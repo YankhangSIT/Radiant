@@ -64,8 +64,9 @@ void Credits_3_Update()
 	}
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
-	CP_Settings_TextSize(60.f);
+	CP_Settings_TextSize(70.f);
 	CP_Font_DrawText("CREATED AT", wWidth / 2.0f, wHeight / 2.0f - 450);
+	CP_Settings_TextSize(60.f);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Font_DrawText("DigiPen Institute of Technology Singapore", wWidth / 2.0f, wHeight / 2.0f - 390);
 
