@@ -20,7 +20,7 @@ struct Enemy {
 	int health;
 	int id;
 	float takeDamage;
-	int isDead;
+	int maxHealth;
 };
 //
 //struct Boss
