@@ -146,9 +146,11 @@ void level_4_Init()
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 
-	boss.health = 3;
+	boss.health = 12;
 	bossMovement = 10;
-
+	bossHealthScale = 100; // NEW VARIABLE
+	hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
+	hpbarOriginalX = hpBarCurrLengthX; /// JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
 
@@ -213,7 +215,7 @@ void level_4_Init()
 
 	firstShoot = 0;
 
-	isPaused = FALSE;
+	isPaused = 0;
 
 	// initiate obstruction
 	obs.rec_block[obstructionCount3 + 1] = SetRect_(obsWidth10 / 2, wHeight / 2, obsWidth10, obsHeight10, obstruction10);
@@ -234,19 +236,16 @@ void level_4_Init()
 
 void level_4_Update()
 {
-	if (boss.health <= 0)
-	{
-		CP_Engine_SetNextGameState(win_init, win_update, win_exit);
-	}
+
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
-	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
+	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == 0)
 	{
 		isPaused = !isPaused;
 	}
 
-	if (isPaused && win == FALSE)
+	if (isPaused && win == 0)
 	{
 		// printf("paused screen state lv1 %d", isPaused);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -261,7 +260,7 @@ void level_4_Update()
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	}
 
-	if (min == surviveMin || lose == 1)
+	if (boss.health <= 0|| lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 
@@ -269,12 +268,13 @@ void level_4_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
-			CP_Font_DrawText("Congratulations You beat the game!", wWidth / 2.0f, wHeight / 2.0f - 300);
+			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
+			//CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
+			//CP_Font_DrawText("Congratulations You beat the game!", wWidth / 2.0f, wHeight / 2.0f - 300);
 			//	Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			//Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			//Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			//Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		}
 		else
 		{
@@ -284,9 +284,9 @@ void level_4_Update()
 
 		if (lose == 0)
 		{
-			win = TRUE;
+			win = 1;
 		}
-		isPaused = TRUE;
+		isPaused = 1;
 	}
 
 	if (isPaused)
@@ -295,7 +295,7 @@ void level_4_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
-			if (win == TRUE)
+			if (win == 1)
 			{
 				// if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 				//	{
@@ -316,7 +316,7 @@ void level_4_Update()
 
 			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 			{
-				if (win == FALSE)
+				if (win == 0)
 				{
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					delayShootTime = delayShootStart;
@@ -749,6 +749,15 @@ void level_4_Update()
 		}
 		boss.pos.x += bossMovement;
 
+		//CP_Settings_RectMode(CP_POSITION_CORNER);
+		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
+		CP_Graphics_DrawRect(wWidth, wHeight - 100, hpbarOriginalX, 50);
+	//	CP_Settings_RectMode(CP_POSITION_CORNER);
+		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));		
+		CP_Graphics_DrawRect(wWidth, wHeight - 100, hpBarCurrLengthX, 50);
+		hpBarCurrLengthX = boss.health * bossHealthScale;
+
+		//CP_Settings_RectMode(CP_POSITION_CENTER);
 		// FINAL BOSS MECHANICS
 		// changeAttackTimer -= elapsedTime;
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
@@ -1126,31 +1135,31 @@ void level_4_Update()
 		// clearBulletTime -= elapsedTime;
 		// if (clearBulletTime <= 0)
 		//{
-		for (int i = 0; i < bossBulletIndex; i++)
-		{
-			if (bossBulletArray[bossBulletIndex].bulletPos.x > wWidth || bossBulletArray[bossBulletIndex].bulletPos.y > wHeight)
-			{
-				bossBulletArray[bossBulletIndex].isSpawn = 0;
-				--bossBulletIndex;
-			}
-		}
-		for (int i = 0; i < bossBulletIndex2; i++)
-		{
-			if (bossBulletArray2[bossBulletIndex2].bulletPos.x > wWidth || bossBulletArray2[bossBulletIndex2].bulletPos.y > wHeight)
-			{
-				bossBulletArray2[bossBulletIndex2].isSpawn = 0;
-				--bossBulletIndex2;
-			}
-		}
+		//for (int i = 0; i < bossBulletIndex; i++)
+		//{
+		//	if (bossBulletArray[bossBulletIndex].bulletPos.x > wWidth || bossBulletArray[bossBulletIndex].bulletPos.y > wHeight)
+		//	{
+		//		bossBulletArray[bossBulletIndex].isSpawn = 0;
+		//		--bossBulletIndex;
+		//	}
+		//}
+		//for (int i = 0; i < bossBulletIndex2; i++)
+		//{
+		//	if (bossBulletArray2[bossBulletIndex2].bulletPos.x > wWidth || bossBulletArray2[bossBulletIndex2].bulletPos.y > wHeight)
+		//	{
+		//		bossBulletArray2[bossBulletIndex2].isSpawn = 0;
+		//		--bossBulletIndex2;
+		//	}
+		//}
 
-		for (int i = 0; i < bossBulletIndex3; i++)
-		{
-			if (bossBulletArray3[bossBulletIndex3].bulletPos.x > wWidth || bossBulletArray3[bossBulletIndex3].bulletPos.y > wHeight)
-			{
-				bossBulletArray3[bossBulletIndex3].isSpawn = 0;
-				--bossBulletIndex3;
-			}
-		}
+		//for (int i = 0; i < bossBulletIndex3; i++)
+		//{
+		//	if (bossBulletArray3[bossBulletIndex3].bulletPos.x > wWidth || bossBulletArray3[bossBulletIndex3].bulletPos.y > wHeight)
+		//	{
+		//		bossBulletArray3[bossBulletIndex3].isSpawn = 0;
+		//		--bossBulletIndex3;
+		//	}
+		//}
 		//	clearBulletTime = startclearBulletTime;
 		//}
 	}

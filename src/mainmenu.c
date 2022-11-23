@@ -40,7 +40,7 @@ void Main_Menu_Init()
 
 	// clear();
 	// CP_System_Fullscreen();
-	CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
 	main_menu = CP_Image_Load("Assets/Main_menu.jpg");

@@ -42,7 +42,7 @@ CP_Image mouse;
 CP_Font Acme, Abril;
 void how_To_play_Init(void)
 {
-
+	CP_System_FullscreenAdvanced(1920, 1080);
 	Abril = CP_Font_Load("Assets/Abril_Fatface.ttf");
 	Acme = CP_Font_Load("Assets/Acme_Regular.ttf");
 	// align texts to center and set font size 35

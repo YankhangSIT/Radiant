@@ -20,6 +20,7 @@ struct Enemy {
 	int health;
 	int id;
 	float takeDamage;
+	int isDead;
 };
 //
 //struct Boss
@@ -158,6 +159,9 @@ float rotationSpeed;
 int bossChangeAttack;
 float clearBulletTime;
 float startclearBulletTime;
+float hpBarCurrLengthX;
+float hpbarOriginalX;
+float bossHealthScale;
 void clear(void);
 
 

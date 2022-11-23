@@ -13,7 +13,7 @@
 #include "characterSelect.h"
 
 
-CP_Image win;
+CP_Image winImage;
 float TimeElapsed;
 
 void win_init() {
@@ -22,7 +22,7 @@ void win_init() {
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 
 
-	win = CP_Image_Load("Assets/victory.png");
+	winImage = CP_Image_Load("Assets/victory.png");
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
 	CP_Settings_TextAlignment(horizontal, vertical);
@@ -49,7 +49,7 @@ void win_update() {
 	}
 
 	float resulttime = (TimeElapsed / alphatime) * 255;
-	CP_Image_Draw(win, gWidth / 2.0f , (gHeight / 2.0f - 300), (float)CP_Image_GetWidth(win), (float)CP_Image_GetHeight(win), (int)resulttime);
+	CP_Image_Draw(winImage, gWidth / 2.0f , (gHeight / 2.0f - 300), (float)CP_Image_GetWidth(winImage), (float)CP_Image_GetHeight(winImage), (int)resulttime);
 
 	Button("Next", gWidth / 2.0f, gHeight / 2.0f - 50, gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
@@ -71,5 +71,5 @@ void win_update() {
 
 void win_exit() {
 	// Image would be free from the memory running.
-	CP_Image_Free(&win);
+	CP_Image_Free(&winImage);
 }

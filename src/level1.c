@@ -43,8 +43,8 @@ void level_1_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	// CP_System_FullscreenAdvanced(1920, 1080);
-	CP_System_SetWindowSize(1920, 1080);
+	 CP_System_FullscreenAdvanced(1920, 1080);
+	//CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
