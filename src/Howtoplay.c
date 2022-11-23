@@ -60,24 +60,24 @@ void how_To_play_Init(void)
 	shield = CP_Image_Load("Assets/Shield_Drop.png");
 	mouse = CP_Image_Load("Assets/Mouse.png");
 	//// player type gun
-	//if (playerNum == 1)
+	// if (playerNum == 1)
 	//{
 	//	character.playerSprite = gunPlayer;
 	//	character.width = (float)CP_Image_GetWidth(gunPlayer);
 	//	character.height = (float)CP_Image_GetHeight(gunPlayer);
-	//}
+	// }
 
 	//// player type sword
-	//if (playerNum == 2)
+	// if (playerNum == 2)
 	//{
 	//	character.playerSprite = swordPlayer;
 	//	character.width = (float)CP_Image_GetWidth(swordPlayer);
 	//	character.height = (float)CP_Image_GetHeight(swordPlayer);
 	//	canShoot = 0;
-	//}
+	// }
 
-	//gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
-	//swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
+	// gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
+	// swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 }
 
 void how_To_play_Update(void)
@@ -97,69 +97,73 @@ void how_To_play_Update(void)
 	CP_Font_DrawText("Controls:", xWidth / 2.0f - 650, xHeight / 2.0f - 400);
 	CP_Font_Set(Abril);
 
-	//WASD Movement guide:
-	//W
+	// WASD Movement guide:
+	// W
 	CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 300, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_DrawText("W", xWidth / 2.0f - 800, xHeight / 2.0f - 300);
-	if (CP_Input_KeyDown(KEY_W) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 300, 75, 75, mouseClickPos.x, mouseClickPos.y)) {
+	if (CP_Input_KeyDown(KEY_W) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 300, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 300, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("W", xWidth / 2.0f - 800, xHeight / 2.0f - 302);
 	}
 
-	//A 
+	// A
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 210, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_DrawText("S", xWidth / 2.0f - 800, xHeight / 2.0f - 210);
-	if (CP_Input_KeyDown(KEY_S) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y)){
+	if (CP_Input_KeyDown(KEY_S) || IsAreaClicked(xWidth / 2.0f - 800, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(xWidth / 2.0f - 800, xHeight / 2.0f - 210, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("S", xWidth / 2.0f - 800, xHeight / 2.0f - 208);
 	}
 
-	//S
+	// S
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_DrawRect(xWidth / 2.0f - 890, xHeight / 2.0f - 210, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_DrawText("A", xWidth / 2.0f - 890, xHeight / 2.0f - 210);
-	if (CP_Input_KeyDown(KEY_A) || IsAreaClicked(xWidth / 2.0f - 890, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y)) {
+	if (CP_Input_KeyDown(KEY_A) || IsAreaClicked(xWidth / 2.0f - 890, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(xWidth / 2.0f - 890, xHeight / 2.0f - 210, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("A", xWidth / 2.0f - 892, xHeight / 2.0f - 210);
 	}
 
-	//D
+	// D
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_DrawRect(xWidth / 2.0f - 710, xHeight / 2.0f - 210, 75, 75);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_DrawText("D", xWidth / 2.0f - 710, xHeight / 2.0f - 210);
-	if (CP_Input_KeyDown(KEY_D) || IsAreaClicked(xWidth / 2.0f - 710, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y)) {
+	if (CP_Input_KeyDown(KEY_D) || IsAreaClicked(xWidth / 2.0f - 710, xHeight / 2.0f - 210, 75, 75, mouseClickPos.x, mouseClickPos.y))
+	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(xWidth / 2.0f - 710, xHeight / 2.0f - 210, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("D", xWidth / 2.0f - 708, xHeight / 2.0f - 210);
 	}
 
-	//Clicking guide:
-	CP_Image_Draw(mouse, xWidth / 2.0f - 530, xHeight / 2.0f - 200, 225 , 320, 255);
+	// Clicking guide:
+	CP_Image_Draw(mouse, xWidth / 2.0f - 530, xHeight / 2.0f - 200, 225, 320, 255);
 
-
-	if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT)) {
+	if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT))
+	{
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(xWidth / 2.0f - 585, xHeight / 2.0f - 310, 120, 100);
 	}
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	// Teach user how to play
-	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 155 , xHeight / 2.0f - 330);
+	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 155, xHeight / 2.0f - 330);
 	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f - 150, xHeight / 2.0f - 280);
 	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 90, xHeight / 2.0f - 230);
-	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f +3, xHeight / 2.0f - 180);
+	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f + 3, xHeight / 2.0f - 180);
 	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 125, xHeight / 2.0f - 130);
 	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy REACHES ZERO", xWidth / 2.0f + 43, xHeight / 2.0f - 80);
 	CP_Font_DrawText("7) There will be no self health regeneration", xWidth / 2.0f - 120, xHeight / 2.0f - 30);
@@ -171,13 +175,13 @@ void how_To_play_Update(void)
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_Set(Abril);
 	CP_Font_DrawText("Energy & Shield Bars", xWidth / 2.0f - 238, xHeight / 2.0f + 70);
-	CP_Image_Draw(health, xWidth / 2.0f - 60 , xHeight / 2.0f + 70, (float)CP_Image_GetWidth(health), (float)CP_Image_GetHeight(health), 255);
-	CP_Image_Draw(energy, xWidth / 2.0f , xHeight / 2.0f + 70, (float)CP_Image_GetWidth(energy), (float)CP_Image_GetHeight(energy), 255);
+	CP_Image_Draw(health, xWidth / 2.0f - 60, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(health), (float)CP_Image_GetHeight(health), 255);
+	CP_Image_Draw(energy, xWidth / 2.0f, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(energy), (float)CP_Image_GetHeight(energy), 255);
 	CP_Image_Draw(shield, xWidth / 2.0f + 60, xHeight / 2.0f + 70, (float)CP_Image_GetWidth(shield), (float)CP_Image_GetHeight(shield), 255);
 
 	CP_Font_DrawText("Power Ups: - Immunity for 3 seconds", xWidth / 2.0f - 150, xHeight / 2.0f + 120);
 	CP_Image_Draw(immunity, xWidth / 2.0f + 160, xHeight / 2.0f + 100, (float)CP_Image_GetWidth(immunity), (float)CP_Image_GetHeight(immunity), 255);
-	CP_Font_DrawText("- Unlimited attacks for 3 seconds", xWidth / 2.0f - 33 , xHeight / 2.0f + 170);
+	CP_Font_DrawText("- Unlimited attacks for 3 seconds", xWidth / 2.0f - 33, xHeight / 2.0f + 170);
 	CP_Image_Draw(energybuff, xWidth / 2.0f + 270, xHeight / 2.0f + 150, (float)CP_Image_GetWidth(energybuff), (float)CP_Image_GetHeight(energybuff), 255);
 
 	// Prompt user to click 'enter' to proceed to game
@@ -186,7 +190,6 @@ void how_To_play_Update(void)
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_DrawText("Continue", xWidth / 2.0f + 320, xHeight / 2.0f + 240);
 
-	
 	if (IsAreaClicked(xWidth / 2.0f + 320, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
@@ -200,20 +203,20 @@ void how_To_play_Update(void)
 	{
 		// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 		CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-		
-		//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+
+		// CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 	}
 	// Alternatively, click the area to proceed to next page.
 	if (CP_Input_MouseClicked())
 	{
-		
+
 		if (IsAreaClicked(xWidth / 2.0f + 180, xHeight / 2.0f + 240, 200, 45, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-			//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-			//CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
-			//CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+			// CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+			// CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
+			// CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 		}
 	}
 }

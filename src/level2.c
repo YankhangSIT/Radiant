@@ -147,55 +147,55 @@ void level_2_Init()
 
 	// initiate obstruction
 	// big house
-	obs.rec_block[obstructionCount1 + 1] = SetRect_(wWidth * 2.3 / 4, wHeight * 1.3 / 4, obsWidth4 * 1.8, obsHeight4 * 1.8, obstruction4);
+	obs.rec_block[obstructionCount1 + 1] = SetRect_((float)(wWidth * 2.3 / 4), (float)(wHeight * 1.3 / 4), (float)(obsWidth4 * 1.8), (float)(obsHeight4 * 1.8), obstruction4);
 	// left side ice cube
 	for (int i = obstructionCount1 + 2, x = 0; i < 71; i++)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 1 / 8 + x, wHeight * 2 / 4, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
-		x += obsWidth6;
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 8 + x, wHeight * 2 / 4, (float)(obsWidth6 * 0.8), (float)(obsHeight6 * 0.8), obstruction6);
+		x += (int)obsWidth6;
 	}
 	// right side ice cube
 	for (int i = 71, x = 0; i < 74; i++)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 4.5 / 5 + x, wHeight * 7 / 8, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
-		x -= obsWidth6;
+		obs.rec_block[i] = SetRect_((float)(wWidth * 4.5 / 5 + x), wHeight * 7 / 8, (float)(obsWidth6 * 0.8), (float)(obsHeight6 * 0.8), obstruction6);
+		x -= (int)obsWidth6;
 	}
 	for (int i = 74, x = 0, y = 0; i < 77; i++)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 2.3 / 3 + x, wHeight * 1 / 2 + y, obsWidth6 * 0.8, obsHeight6 * 0.8, obstruction6);
-		x += obsWidth6;
+		obs.rec_block[i] = SetRect_((float)(wWidth * 2.3 / 3 + x), wHeight * 1 / 2 + y, (float)(obsWidth6 * 0.8), (float)(obsHeight6 * 0.8), obstruction6);
+		x += (int)obsWidth6;
 	}
 	// bottom left trees
 	for (int i = 77, x = 0, y = 0; i < 89; i++)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 1 / 16 + x, wHeight * 1.3 / 2 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
-		x += obsWidth5;
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 16 + x, (float)(wHeight * 1.3 / 2 + y), obsWidth5, (float)(obsHeight5 * 0.7), obstruction5);
+		x += (int)obsWidth5;
 		if (i == 78 || i == 82)
 		{
 			x = 0;
-			y += obsHeight5 * 0.7;
+			y += (int) (obsHeight5 * 0.7);
 		}
 	}
 	// center trees
 	for (int i = 89, x = 0, y = 0; i < 91; i++)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 1 / 3 + x, wHeight * 0.8 / 2 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
-		x += obsWidth5;
-		y += obsHeight5 * 0.7f * 2.f + 80.f;
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 3 + x, (float)(wHeight * 0.8 / 2 + y), obsWidth5, (float)(obsHeight5 * 0.7), obstruction5);
+		x += (int)obsWidth5;
+		y += (int)(obsHeight5 * 0.7f * 2.f + 80.f);
 	}
 	// top right trees
 	for (int i = 91, x = 0, y = 0; i < 101; i++)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 2.4 / 3 + x, wHeight * 1 / 8 + y, obsWidth5, obsHeight5 * 0.7, obstruction5);
+		obs.rec_block[i] = SetRect_((float)(wWidth * 2.4 / 3 + x), wHeight * 1 / 8 + y, obsWidth5, (float)(obsHeight5 * 0.7), obstruction5);
 		if (i < 95)
-			x += obsWidth5;
+			x += (int)obsWidth5;
 		else if (i == 95)
-			y = obsHeight5 * 0.7 * 2.f;
+			y = (int)(obsHeight5 * 0.7 * 2);
 		else
 		{
 
-			y = obsHeight5 * 0.7 * 2.f;
-			x -= obsWidth5;
+			y = (int)(obsHeight5 * 0.7 * 2.f);
+			x -= (int)obsWidth5;
 		}
 	}
 

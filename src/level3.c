@@ -169,39 +169,39 @@ void level_3_Init()
 	for (int i = obstructionCount2 + 1, x = 0, y = 0; i < 114; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth * 1 / 10 + x, wHeight * 1.f / 2.f - obsHeight9 * 0.25 + y, obsWidth9, obsHeight9 * 0.5, obstruction9);
-		x += obs.rec_block[i].width;
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 10 + x, (float)(wHeight * 1.f / 2.f - obsHeight9 * 0.25 + y), obsWidth9, (float)(obsHeight9 * 0.5), obstruction9);
+		x += (int)obs.rec_block[i].width;
 		if (i == 107)
 		{
 			x = 0;
-			y += obs.rec_block[i].height * 2.5;
+			y +=(int) ( obs.rec_block[i].height * 2.5);
 		}
 	}
 	// skulls
 	for (int i = 114, x = 0, y = 0; i < 130; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth * 1.1 / 2 + x, wHeight * 1 / 2 + y, obsWidth8, obsHeight8, obstruction8);
-		x += obs.rec_block[i].width;
+		obs.rec_block[i] = SetRect_((float)(wWidth * 1.1 / 2 + x), wHeight * 1 / 2 + y, obsWidth8, obsHeight8, obstruction8);
+		x += (int)obs.rec_block[i].width;
 		if (i == 121)
 		{
 			x = 0;
-			y -= obs.rec_block[i].height * 3;
+			y -= (int)(obs.rec_block[i].height * 3);
 		}
 	}
 	// top left rocks
 	for (int i = 130, x = 0; i < 133; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(obsWidth7 * 1.5 + x, wHeight * 0.8 / 3, obsWidth7, obsHeight7, obstruction7);
-		x += obs.rec_block[i].width * 2;
+		obs.rec_block[i] = SetRect_((float)(obsWidth7 * 1.5 + x), (float)(wHeight * 0.8 / 3), obsWidth7, obsHeight7, obstruction7);
+		x += (int)(obs.rec_block[i].width * 2);
 	}
 	// bottom right rocks
 	for (int i = 133, x = 0; i < 136; i++)
 	{
 
-		obs.rec_block[i] = SetRect_(wWidth * 5 / 6 + x, wHeight * 1.3 / 2 + obsHeight7, obsWidth7, obsHeight7, obstruction7);
-		x -= obs.rec_block[i].width * 2;
+		obs.rec_block[i] = SetRect_(wWidth * 5 / 6 + x, (float)(wHeight * 1.3 / 2 + obsHeight7), obsWidth7, obsHeight7, obstruction7);
+		x -= (int)(obs.rec_block[i].width * 2);
 	}
 	// melee character swing sword area check
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);

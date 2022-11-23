@@ -156,35 +156,35 @@ void level_1_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-	for (int i = 0, x = 0; i < 6; i++, x += obsWidth2)
+	for (int i = 0, x = 0; i < 6; i++, x += (int)obsWidth2)
 	{
 		obs.rec_block[i] = SetRect_(wWidth / 10.f + x, wHeight / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
-	for (int i = 6, x = 0; i < 12; i++, x -= obsWidth2)
+	for (int i = 6, x = 0; i < 12; i++, x -= (int)obsWidth2)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + x, wHeight / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
-	for (int i = 12, x = 0; i < 18; i++, x += obsWidth2)
+	for (int i = 12, x = 0; i < 18; i++, x += (int)obsWidth2)
 	{
 		obs.rec_block[i] = SetRect_(wWidth / 10.f + x, wHeight * 7.f / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
-	for (int i = 18, x = 0; i < 24; i++, x -= obsWidth2)
+	for (int i = 18, x = 0; i < 24; i++, x -= (int)obsWidth2)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + x, wHeight * 7.f / 8.f, obsWidth2, obsHeight2 * 2.f, obstruction2);
 	}
-	for (int i = 24, y = 0; i < 27; i++, y += obsHeight3)
+	for (int i = 24, y = 0; i < 27; i++, y += (int)obsHeight3)
 	{
 		obs.rec_block[i] = SetRect_(wWidth / 10.f - obsWidth2 / 2.f + obsWidth3 / 2.f, wHeight / 8.f + obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
-	for (int i = 27, y = 0; i < 30; i++, y += obsHeight3)
+	for (int i = 27, y = 0; i < 30; i++, y += (int)obsHeight3)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2.f, wHeight / 8.f + obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
-	for (int i = 30, y = 0; i < 33; i++, y -= obsHeight3)
+	for (int i = 30, y = 0; i < 33; i++, y -= (int)obsHeight3)
 	{
 		obs.rec_block[i] = SetRect_(wWidth / 10.f - obsWidth2 / 2.f + obsWidth3 / 2.f, wHeight * 7.f / 8.f - obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
-	for (int i = 33, y = 0; i < 36; i++, y -= obsHeight3)
+	for (int i = 33, y = 0; i < 36; i++, y -= (int)obsHeight3)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 9.f / 10.f + obsWidth2 / 2.f - obsWidth3 / 2.f, wHeight * 7.f / 8.f - obsHeight3 / 2.f + y, obsWidth3 * 2.f, obsHeight3, obstruction3);
 	}
@@ -193,10 +193,10 @@ void level_1_Init()
 	{
 
 		obs.rec_block[i] = SetRect_(wWidth / 6.f + x, wHeight / 4.2f + obsHeight1 * 2 + y, obsWidth1, obsHeight1, obstruction1);
-		x += obs.rec_block[i].width;
+		x += (int)obs.rec_block[i].width;
 		if (i == 41)
 		{
-			y += obs.rec_block[i].height + character.height * 2;
+			y += (int) (obs.rec_block[i].height + character.height * 2);
 			x = 0;
 		}
 	}
@@ -204,10 +204,10 @@ void level_1_Init()
 	{
 
 		obs.rec_block[i] = SetRect_(wWidth * 5.f / 6.f + x, wHeight / 4.2f + y, obsWidth1, obsHeight1, obstruction1);
-		x -= obs.rec_block[i].width;
+		x -= (int)obs.rec_block[i].width;
 		if (i == 53 || i == 59)
 		{
-			y += obs.rec_block[i].height + character.height * 2;
+			y += (int)(obs.rec_block[i].height + character.height * 2);
 			x = 0;
 		}
 	}

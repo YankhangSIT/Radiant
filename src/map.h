@@ -20,7 +20,7 @@ typedef struct Obstruction
 {
 	Rect rec_block[MAX_Obs3];
 } Obstruction;
-Rect SetRect_(float x, float y, float width, float height);
+Rect SetRect_(float x, float y, float width, float height, CP_Image sprite);
 const int obstructionCount1;
 const int obstructionCount2;
 const int obstructionCount3;

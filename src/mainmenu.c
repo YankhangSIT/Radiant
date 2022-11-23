@@ -36,7 +36,8 @@ void Main_Menu_Init()
 {
 
 	// clear();
-	CP_System_Fullscreen();
+	// CP_System_Fullscreen();
+	CP_System_SetWindowSize(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
 	main_menu = CP_Image_Load("Assets/Main_menu.jpg");
@@ -157,7 +158,7 @@ void Main_Menu_Update()
 
 		CP_Font_DrawText("Background music", wWidth / 2.0f, wHeight / 2.0f - 600);
 
-		TriButton("", wWidth / 2.0f - 200, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f, wWidth / 2.0f + 200, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		TriButton("", wWidth / 2.0f - 200, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f, wWidth / 2.0f + 200, wHeight / 2.0f + 200, 360, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Back", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 200, 180, mouseClickPos.x, mouseClickPos.y) == 1)

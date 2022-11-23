@@ -46,7 +46,8 @@ void level_4_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_FullscreenAdvanced(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	bossBullet.bulletSpeed = 200;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;
@@ -84,6 +85,8 @@ void level_4_Init()
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
 	obstruction10 = CP_Image_Load("Assets/obstruction10.png");
+	obsWidth10 = (float)CP_Image_GetWidth(obstruction10);
+	obsHeight10 = (float)CP_Image_GetHeight(obstruction10);
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetHeight(bullet.bulletSprite);
 	// player sprite
@@ -213,7 +216,8 @@ void level_4_Init()
 	isPaused = FALSE;
 
 	// initiate obstruction
-
+	obs.rec_block[obstructionCount3 + 1] = SetRect_(obsWidth10 / 2, wHeight / 2, obsWidth10, obsHeight10, obstruction10);
+	obs.rec_block[obstructionCount3 + 2] = SetRect_(wWidth - obsWidth10 / 2, wHeight / 2, obsWidth10, obsHeight10, obstruction10);
 	// melee character swing sword area check
 	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
 	swordSwingTime = 0;
@@ -230,10 +234,10 @@ void level_4_Init()
 
 void level_4_Update()
 {
-	if (boss.health <= 0) {
+	if (boss.health <= 0)
+	{
 		CP_Engine_SetNextGameState(win_init, win_update, win_exit);
 	}
-
 
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 
@@ -537,7 +541,7 @@ void level_4_Update()
 
 				// enemies die to bullets
 				if (distance < (boss.width - 150.f) && firstShoot == 1) //-150 is fine tuning
-				{ // less than bullet radius x2
+				{														// less than bullet radius x2
 					--boss.health;
 
 					// deletion of projectile after hitting enemy
@@ -549,28 +553,28 @@ void level_4_Update()
 				}
 			}
 
-			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS // NEED JS TO UPDATE WHEN PILLARS ARE IMPLEMENTED
-			// for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			//{
-			//	for (int o = obstructionCount1 + 1; o < obstructionCount2; o++)
-			//	{ // check if projectile hits obstructions, if so, delete it.
-			//		if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
-			//		{
-			//			// check for obstructions
-			//			for (int x = i; x - 1 < bulletSpawnIndex; ++x)
-			//			{
-			//				bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-			//				// more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
-			//			}
-			//			--bulletSpawnIndex;
-			//		}
-			//	}
-			//}
+			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
+			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			{
+				for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
+				{ // check if projectile hits obstructions, if so, delete it.
+					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
+					{
+						// check for obstructions
+						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+						{
+							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
+																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+						}
+						--bulletSpawnIndex;
+					}
+				}
+			}
 
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
-				for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
+				for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
@@ -595,8 +599,8 @@ void level_4_Update()
 					swingSword = true;
 					CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				}
-				{ // SWORD SWING
-					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, boss.pos, (boss.width / 2.f - 90.f))) //90 is for fine-tuning, boss too fat
+				{																															 // SWORD SWING
+					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, boss.pos, (boss.width / 2.f - 90.f))) // 90 is for fine-tuning, boss too fat
 					{
 						--boss.health;
 					}
@@ -626,14 +630,14 @@ void level_4_Update()
 			swordSwingArea = UpdateSwordSwing(swordSwingArea, character.Pos, character.width, character.height);
 		}
 
-		// check player collision with obstruction // NEED JS TO UPDATE WHEN PILLARS ARE IMPLEMENTED
-		// for (int i = 0; i < obstructionCount1; i++)
-		//{
-		//	// draw obstruction
-		//	CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
-		//	// check for obstructions
-		//	character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
-		//}
+		// draw obs and check player collision with obstruction
+		for (int i = obstructionCount3 + 1; i < obstructionCount4 + 1; i++)
+		{
+			// draw obstruction
+			CP_Image_Draw(obs.rec_block[i].spriteImage, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height, 255);
+			// check for obstructions
+			character.Pos = checkObsCollision(character.Pos, character.width, character.height, obs.rec_block[i].x, obs.rec_block[i].y, obs.rec_block[i].width, obs.rec_block[i].height);
+		}
 
 		// check where character going out of bounds
 		character.Pos = checkMapCollision(character.Pos, character.width / 2, wWidth - character.width / 2, character.height / 2, wHeight - character.height / 2);
@@ -734,15 +738,16 @@ void level_4_Update()
 			}
 		}
 
-		//FINAL BOSS MOVEMENT
-		if (boss.pos.x < 200.f) {
+		// FINAL BOSS MOVEMENT
+		if (boss.pos.x < 200.f)
+		{
 			bossMovement = 10.f;
 		}
-		else if (boss.pos.x > wWidth - 200.f) {
+		else if (boss.pos.x > wWidth - 200.f)
+		{
 			bossMovement = -10.f;
 		}
 		boss.pos.x += bossMovement;
-
 
 		// FINAL BOSS MECHANICS
 		// changeAttackTimer -= elapsedTime;
@@ -844,7 +849,7 @@ void level_4_Update()
 
 			if (bossShootTimer3 <= 0)
 			{
-				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Set(cos(directionAngle), sin(directionAngle));
+				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Set((float)(cos(directionAngle)), (float)(sin(directionAngle)));
 				directionAngle += rotationSpeed * elapsedTime;
 				printf("angle: %f \n", directionAngle);
 				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
@@ -943,37 +948,49 @@ void level_4_Update()
 		// check if boss projectile out of bounds, if so, delete it.
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
-			if (checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
 			{
-				for (int x = i; x - 1 < bossBulletIndex; ++x)
+
+				if (checkProjectileObsCollision(bossBulletArray[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 				{
-					bossBulletArray[x] = bossBulletArray[x + 1]; // to "delete" element from array
+					for (int x = i; x - 1 < bossBulletIndex; ++x)
+					{
+						bossBulletArray[x] = bossBulletArray[x + 1]; // to "delete" element from array
+					}
+					--bossBulletIndex;
 				}
-				--bossBulletIndex;
 			}
 		}
 		for (int i = 0; i < bossBulletIndex2; ++i)
 		{
-			if (checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
 			{
-				for (int x = i; x < bossBulletIndex2; ++x)
+				if (checkProjectileObsCollision(bossBulletArray2[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 				{
-					bossBulletArray2[x] = bossBulletArray2[x + 1];
+					for (int x = i; x < bossBulletIndex2; ++x)
+					{
+						bossBulletArray2[x] = bossBulletArray2[x + 1];
+					}
+					--bossBulletIndex2;
 				}
-				--bossBulletIndex2;
 			}
 		}
 		for (int i = 0; i < bossBulletIndex3; ++i)
 		{
-			if (checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			for (int o = obstructionCount3 + 1; o < obstructionCount4 + 1; o++)
 			{
-				for (int x = i; x < bossBulletIndex3; ++x)
+				if (checkProjectileObsCollision(bossBulletArray3[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 				{
-					bossBulletArray3[x] = bossBulletArray3[x + 1];
+					for (int x = i; x < bossBulletIndex3; ++x)
+					{
+						bossBulletArray3[x] = bossBulletArray3[x + 1];
+					}
+					--bossBulletIndex3;
 				}
-				--bossBulletIndex3;
 			}
 		}
+
+		// check boss projectile collision with obstruction
 
 		// no items to pickup
 
