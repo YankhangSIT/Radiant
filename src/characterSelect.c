@@ -83,27 +83,22 @@ void character_Select_Update()
 	if (CP_Input_MouseClicked())
 	{
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-
+		/*Done by Darren Lua and improved by Donovan*/
 		if (IsAreaClicked(zWidth / 2.0f - 100, zHeight / 2.0f, (float)CP_Image_GetWidth(gunPlayer) + 10, (float)CP_Image_GetHeight(gunPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			playerNum = 1;
 			if (!nextState)
 				startCount = TRUE;
 
-			/*panelDisplay = 0;*/
 		}
-
+		/*Done by Darren Lua and improved by Donovan*/
 		if (IsAreaClicked(zWidth / 2.0f + 100, zHeight / 2.0f, (float)CP_Image_GetWidth(swordPlayer) + 10, (float)CP_Image_GetHeight(swordPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			// CP_Settings_TextSize(40.0f);
-			// CP_Font_DrawText("Melee", zWidth / 2.0f + 100, zHeight / 2.0f + 100);
 			playerNum = 2;
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
 				startCount = TRUE;
-			/*	panelDisplay = 0;*/
 		}
 	}
 }

@@ -403,11 +403,10 @@ void level_3_Update()
 		}
 
 		spawnTimer -= elapsedTime;
-		// keeps spawning until the player survives
+		// keeps spawning for 1 minute
 		if (min < surviveMin)
 		{
 			changeSpawnTimer -= elapsedTime;
-			// printf("change spawntimer %f\n" , changeSpawnTimer);
 			if (changeSpawnTimer <= 0)
 			{
 				if (direction == 4)
@@ -435,6 +434,7 @@ void level_3_Update()
 		if (spawnTimer <= 0)
 		{
 			// set random spawn position based on width and height of the screen
+			/*The 4 directions represent different locations of the spawn */
 			if (direction == 1)
 			{
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
@@ -505,6 +505,8 @@ void level_3_Update()
 			bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
 			// SHOOT PROJECTILE MECHANIC
+
+			/*Darren Lua Shoot Projectile Code*/
 			if (character.energy > 0)
 			{
 				if (CP_Input_MouseClicked() && canShoot == 1)
@@ -515,8 +517,11 @@ void level_3_Update()
 					{
 						++bulletSpawnIndex;
 					}
+					/*Set the bullet vector directions from the shooting position to mouse click position*/
 					bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+					/*Set bullet's position to the shooting position*/
 					bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+					/*Normalize the direction to prevent the bullet speed from changing based on distance vector*/
 					bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
 					firstShoot = 1;
 
@@ -527,10 +532,12 @@ void level_3_Update()
 					}
 				}
 			}
-
+			/*bullet movement/velocity*/
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
+				/*scale the acceleration of the bullet based on the normalized direction and the speed*/
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
+				/*Add the bullet's acceleration vector to the bullet's position*/
 				bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
 			}
 
@@ -894,6 +901,7 @@ void level_3_Update()
 		// enemy damaged sprite + draw enemies
 		for (int i = 0; i < spawnIndex; i++)
 		{
+			// damage effect code by Darren Lua
 			// check any enemies that take damage
 			if (enemies[i].takeDamage == 1.0f)
 			{

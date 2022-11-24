@@ -394,7 +394,7 @@ void level_2_Update()
 			sec = 0;
 			min++;
 		}
-
+		/*Done by Darren Lua*/
 		if (playerNum == 1)
 		{
 			canShoot = 0;
@@ -414,9 +414,10 @@ void level_2_Update()
 		if (min < surviveMin)
 		{
 			changeSpawnTimer -= elapsedTime;
-			// printf("change spawntimer %f\n" , changeSpawnTimer);
+
 			if (changeSpawnTimer <= 0)
 			{
+				//change directions every time change spawn timer reaches 0 or less
 				if (direction == 4)
 				{
 					direction = 1;
@@ -441,8 +442,8 @@ void level_2_Update()
 		// check if spawn timer
 		if (spawnTimer <= 0)
 		{
-
 			// set random spawn position based on width and height of the screen
+			/*The 4 directions represent different locations of the spawn */
 			if (direction == 1)
 			{
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
@@ -459,10 +460,11 @@ void level_2_Update()
 			{
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
 			}
+
+
 			// set spawn position of enemy
 			enemies[spawnIndex].pos.x = spawnPosition.x;
 			enemies[spawnIndex].pos.y = spawnPosition.y;
-			// enemies[spawnIndex].isDead = 0;
 			//  add one to enemy count and set spawn index to 1 for the enemy
 			spawnIndex++;
 			// restart spawn time
@@ -512,16 +514,21 @@ void level_2_Update()
 			// SHOOT PROJECTILE MECHANIC
 			if (character.energy > 0)
 			{
+				/*Darren Lua Shoot Projectile Code*/
 				if (CP_Input_MouseClicked() && canShoot == 1)
 				{
 					CP_Sound_PlayAdvanced(projectile_shoot, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+					/*Only increment after the index 0 bullet is spawned*/
 					if (firstShoot == 1)
 					{
 						++bulletSpawnIndex;
 					}
+					/*Set the bullet vector directions from the shooting position to mouse click position*/
 					bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+					/*Set bullet's position to the shooting position*/
 					bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+					/*Normalize the direction to prevent the bullet speed from changing based on distance vector*/
 					bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
 					firstShoot = 1;
 
@@ -532,10 +539,11 @@ void level_2_Update()
 					}
 				}
 			}
-
+			/*bullet movement*/
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{
+			{	/*scale the acceleration of the bullet based on the normalized direction and the speed*/
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
+				/*Add the bullet's acceleration vector to the bullet's position*/
 				bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
 			}
 
@@ -899,6 +907,7 @@ void level_2_Update()
 		// enemy damaged sprite + draw enemies
 		for (int i = 0; i < spawnIndex; i++)
 		{
+			// damage effect code by Darren Lua
 			// check any enemies that take damage
 			if (enemies[i].takeDamage == 1.0f)
 			{
@@ -973,7 +982,7 @@ void level_2_Update()
 			}
 		}
 
-		// display timer
+		// display timer done by Darren Lua
 		CP_Settings_TextSize(100.0f);
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));

@@ -369,7 +369,7 @@ void level_4_Update()
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
-
+		/*Darren Lua timer code*/
 		if (sec >= 60)
 		{
 			sec = 0;
@@ -397,6 +397,7 @@ void level_4_Update()
 			bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
 			// SHOOT PROJECTILE MECHANIC
+			/*Darren Lua Shoot Projectile Code*/
 			if (character.energy > 0)
 			{
 				if (CP_Input_MouseClicked() && canShoot == 1)
@@ -407,8 +408,11 @@ void level_4_Update()
 					{
 						++bulletSpawnIndex;
 					}
+					/*Set the bullet vector directions from the shooting position to mouse click position*/
 					bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+					/*Set bullet's position to the shooting position*/
 					bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+					/*Normalize the direction to prevent the bullet speed from changing based on distance vector*/
 					bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
 					firstShoot = 1;
 
@@ -713,21 +717,31 @@ void level_4_Update()
 
 			if (bossShootTimer <= 0)
 			{
+				/*Back to Original Boss Bullet Sprite*/
+				bossBulletArray[bossBulletIndex].bulletSprite = bossBullet.bulletSprite;
+				bossBulletArray[bossBulletIndex].width = (float)CP_Image_GetWidth(bossBulletArray[(int)bossBulletIndex].bulletSprite);
+				bossBulletArray[bossBulletIndex].height = (float)CP_Image_GetHeight(bossBulletArray[(int)bossBulletIndex].bulletSprite);
 
 				/*Direction Vector to the player*/
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
 				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
+				/*Normalised Direction based on the center bullet shoot position*/
 				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
+				/*Set Bullet Spawn to true*/
 				bossBulletArray[bossBulletIndex].isSpawn = 1;
 
 				bossBulletArray2[bossBulletIndex2].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition2);
 				bossBulletArray2[bossBulletIndex2].bulletPos = bossBullet.shootPosition2;
+				/*Normalised Direction based on the center bullet shoot position*/
 				bossBulletArray2[bossBulletIndex2].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex2].directionBullet);
+				/*Set Bullet Spawn to true*/
 				bossBulletArray2[bossBulletIndex2].isSpawn = 1;
 
 				bossBulletArray3[bossBulletIndex3].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition3);
 				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
+				/*Normalised Direction based on the center bullet shoot position*/
 				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex3].directionBullet);
+				/*Set Bullet Spawn to true*/
 				bossBulletArray3[bossBulletIndex3].isSpawn = 1;
 
 				bossChangeAttack = 1;
@@ -742,9 +756,10 @@ void level_4_Update()
 			bossShootTimer2 -= elapsedTime;
 			if (bossShootTimer2 <= 0)
 			{
-				//bossBulletArray[bossBulletIndex].bulletSprite = bossBullet.bulletSprite;
-				//bossBulletArray[bossBulletIndex].width = (float)CP_Image_GetWidth(bossBulletArray[(int)bossBulletIndex].bulletSprite);
-				//bossBulletArray[bossBulletIndex].height = (float)CP_Image_GetHeight(bossBulletArray[(int)bossBulletIndex].bulletSprite);
+				/*Back to Original Boss Bullet Sprite*/
+				bossBulletArray[bossBulletIndex].bulletSprite = bossBullet.bulletSprite;
+				bossBulletArray[bossBulletIndex].width = (float)CP_Image_GetWidth(bossBulletArray[(int)bossBulletIndex].bulletSprite);
+				bossBulletArray[bossBulletIndex].height = (float)CP_Image_GetHeight(bossBulletArray[(int)bossBulletIndex].bulletSprite);
 
 				/*Direction Vector to the player*/
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
@@ -772,18 +787,22 @@ void level_4_Update()
 		else if (attackMode == 3)
 		{
 			bossShootTimer3 -= elapsedTime;
+			/*Change Boss Bullet Sprite*/
+			bossBulletArray[bossBulletIndex].bulletSprite = bossBulletSprite2;
+			bossBulletArray[bossBulletIndex].width = (float)CP_Image_GetWidth(bossBulletArray[(int)bossBulletIndex].bulletSprite);
+			bossBulletArray[bossBulletIndex].height = (float)CP_Image_GetHeight(bossBulletArray[(int)bossBulletIndex].bulletSprite);
 
 			if (bossShootTimer3 <= 0)
 			{	
 				
 
-				/*Direction Vector based on Direction Angle of Rotation */
+				/*Direction Vector based on the Angle of Rotation */
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Set((float)(cos(directionAngle)), (float)(sin(directionAngle)));
-				/*Changing of Direction Angle based on elasped*/
+				/*Changing of Direction Angle based on elasped time*/
 				directionAngle += rotationSpeed * elapsedTime;
 				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
-
+				/*Set Bullet Spawn to true*/
 				bossBulletArray[bossBulletIndex].isSpawn = 1;
 				bossChangeAttack = 1;
 				++bossBulletIndex;
@@ -805,7 +824,7 @@ void level_4_Update()
 
 		for (int i = 0; i < bossBulletIndex2; ++i)
 		{
-
+			/*Draw only bullets that are spawned*/
 			if (bossBulletArray2[i].isSpawn == 1)
 			{
 				bossBulletArray2[i].acceleration = CP_Vector_Scale(bossBulletArray2[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
@@ -1032,7 +1051,7 @@ void level_4_Update()
 
 			if (bossBulletArray[i].isSpawn == 1)
 			{
-				CP_Image_Draw(bossBullet.bulletSprite, bossBulletArray[i].bulletPos.x, bossBulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
+				CP_Image_Draw(bossBulletArray[i].bulletSprite, bossBulletArray[i].bulletPos.x, bossBulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
 			}
 		}
 

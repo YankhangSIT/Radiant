@@ -431,7 +431,7 @@ void level_1_Update()
 			changeSpawnTimer -= elapsedTime;			
 			if (changeSpawnTimer <= 0)
 			{
-				//change directions every time change spawn timer reaches 0 ore less
+				//change directions every time change spawn timer reaches 0 or less
 				if (direction == 4)
 				{
 					direction = 1;
@@ -457,7 +457,7 @@ void level_1_Update()
 			{
 
 				// set random spawn position based on width and height of the screen
-				/*The three directions represent different locations of the spawn */
+				/*The 4 directions represent different locations of the spawn */
 				if (direction == 1)
 				{
 					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
@@ -517,7 +517,7 @@ void level_1_Update()
 
 					/*Shoot Mechanic done by Darren Lua*/
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-					/*Post Increment and only increament after the index 0 bullet is spawned*/
+					/*Only increment after the index 0 bullet is spawned*/
 					if (firstShoot == 1)
 					{
 						++bulletSpawnIndex;
@@ -538,7 +538,7 @@ void level_1_Update()
 					}
 				}
 			}
-			
+			/*bullet movement*/
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{	/*scale the acceleration of the bullet based on the normalized direction and the speed*/
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
@@ -575,7 +575,7 @@ void level_1_Update()
 						// decrease health after collision
 						--enemies[j].health;
 
-						/*Darren Lua Item Drop Mechanic*/										
+						/*Darren Lua Item Drop code*/										
 						if (enemies[j].health <= 0)
 						{						
 							 //randomize spawn rate from 1 to 2 meaning 1 in 4 chance of spawn
@@ -664,7 +664,7 @@ void level_1_Update()
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].width))
 					{
 						--enemies[i].health;
-
+						/*Darren Lua Item Drop code*/
 						if (enemies[i].health <= 0)
 						{							
 							//randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
