@@ -82,7 +82,7 @@ void Main_Menu_Update()
 		}
 
 		// Set background music
-		CP_Sound_PlayAdvanced(backgroundMusic, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_1);
+		CP_Sound_PlayAdvanced(backgroundMusic, 0.02f, 1.0f, TRUE, CP_SOUND_GROUP_1);
 		// Set background
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, (float)CP_Image_GetWidth(main_menu), (float)CP_Image_GetHeight(main_menu), 255);
