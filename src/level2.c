@@ -54,7 +54,6 @@ void level_2_Init()
 	surviveMin = 1;
 	sec = 0;
 	min = 0;
-	firstDrop = 0;
 	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
@@ -69,7 +68,7 @@ void level_2_Init()
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background2.png");
-	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
+	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
 
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemySprite2 = CP_Image_Load("Assets/Monster_2.png");
@@ -570,38 +569,40 @@ void level_2_Update()
 						// activate take damge effect
 						enemies[j].takeDamage = 1.0f;
 
-						// randomize spawn rate from 1 to 3
-						unsigned int randomRate = CP_Random_RangeInt(1, 3);
-						// randomly set drop id between 1 or 2
-						unsigned int dropId = CP_Random_RangeInt(1, 2);
-
-						itemDrop[dropIndex].itemId = dropId;
-
-						if (randomRate == 2 && enemies[j].health <= 0)
+						if (enemies[j].health <= 0)
 						{
-
+							//randomize spawn rate from 1 to 4 meaning 1 in 2 chance of spawn
+							unsigned int randomRate = CP_Random_RangeInt(1, 2);
+							// randomly set drop id between 1 or 2
+							unsigned int dropId = CP_Random_RangeInt(1, 2);
+							//set drop Id and drop boolean to true
+							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
-							// check item drop's id by the spawn index of the drop
-							if (itemDrop[dropIndex].itemId == 1)
+							if (randomRate == 2)
 							{
-								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropShieldSprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								// check item drop's id by the spawn index of the drop
+								if (itemDrop[dropIndex].itemId == 1)
+								{
+									// if item's id is 1 set the item's dropSprite to the dropHealthSprite
+									itemDrop[dropIndex].dropSprite = dropShieldSprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								else if (itemDrop[dropIndex].itemId == 2)
+								{
+									// if item's id is 2 set the item's dropSprite to the dropEnergySprite
+									itemDrop[dropIndex].dropSprite = dropEnergySprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								// set item with the drop index to the enemy coordinate
+								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+								/*Increment drop index*/
+								++dropIndex;
 							}
-							else if (itemDrop[dropIndex].itemId == 2)
-							{
-								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-							}
-							// set item with the drop index to the enemy coordinate
-							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-							++dropIndex;
 						}
 
 						// deletion of projectile after hitting enemy
@@ -654,39 +655,47 @@ void level_2_Update()
 				}
 				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
-					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
+					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].width))
 					{
 						--enemies[i].health;
+						/*take damage effect Darren Lua*/
 						enemies[i].takeDamage = 1.0f;
-						unsigned int randomRate = CP_Random_RangeInt(1, 3);
-						// randomly set drop id between 1 or 2
-						unsigned int dropId = CP_Random_RangeInt(1, 2);
-						itemDrop[dropIndex].itemId = dropId;
-						if (randomRate == 2 && enemies[i].health <= 0)
-						{
+						/*Darren Lua Item Drop Mechanic*/
 
+						if (enemies[i].health <= 0)
+						{
+							//randomize spawn rate from 1 to 4 meaning 1 in 3 chance of spawn
+							unsigned int randomRate = CP_Random_RangeInt(1, 3);
+							// randomly set drop id between 1 or 2
+							unsigned int dropId = CP_Random_RangeInt(1, 2);
+							//set drop Id and drop boolean to true
+							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
-							// check item drop's id by the spawn index of the drop
-							if (itemDrop[dropIndex].itemId == 1)
+							if (randomRate == 2)
 							{
-								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropShieldSprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								// check item drop's id by the spawn index of the drop
+								if (itemDrop[dropIndex].itemId == 1)
+								{
+									// if item's id is 1 set the item's dropSprite to the dropHealthSprite
+									itemDrop[dropIndex].dropSprite = dropShieldSprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								else if (itemDrop[dropIndex].itemId == 2)
+								{
+									// if item's id is 2 set the item's dropSprite to the dropEnergySprite
+									itemDrop[dropIndex].dropSprite = dropEnergySprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								// set item with the drop index to the enemy coordinate
+								itemDrop[dropIndex].pos.x = enemies[i].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[i].pos.y;
+								/*Increment drop index*/
+								++dropIndex;
 							}
-							else if (itemDrop[dropIndex].itemId == 2)
-							{
-								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-							}
-							// set item with the drop index to the enemy coordinate
-							itemDrop[dropIndex].pos.x = enemies[i].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[i].pos.y;
-							++dropIndex;
 						}
 
 						if (enemies[i].health <= 0)

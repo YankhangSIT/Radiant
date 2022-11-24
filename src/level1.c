@@ -51,7 +51,6 @@ void level_1_Init()
 	surviveMin = 1;
 	sec = 0;
 	min = 0;
-	firstDrop = 0;
 	spawnIndex = 0;
 	spawnIndex = 0;
 	firstShoot = 0;
@@ -66,7 +65,7 @@ void level_1_Init()
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background1.png");
-	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
+	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png"); /// added
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
@@ -103,7 +102,8 @@ void level_1_Init()
 	enemies[spawnIndex].pos.y = spawnPosition.y;
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
-	// enemy width and height
+	// set enemy width and height based on the sprite
+	/*Darren Lua Code for setting width and height*/
 	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
 	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
 	enemy.speed = 70;
@@ -425,13 +425,13 @@ void level_1_Update()
 		}
 
 		spawnTimer -= elapsedTime;
-		// keeps spawning until the player survives
+		// keeps spawning for 1 min
 		if (min < surviveMin)
 		{
-			changeSpawnTimer -= elapsedTime;
-			// printf("change spawntimer %f\n" , changeSpawnTimer);
+			changeSpawnTimer -= elapsedTime;			
 			if (changeSpawnTimer <= 0)
 			{
+				//change directions every time change spawn timer reaches 0 ore less
 				if (direction == 4)
 				{
 					direction = 1;
@@ -448,38 +448,35 @@ void level_1_Update()
 				{
 					direction = 2;
 				}
+				/*reset the spawn timer*/
 				changeSpawnTimer = startSpawnChangeTimer;
 			}
 
-			// check if spawn timer
+			// check spawn timer and acts as rate of spawn
 			if (spawnTimer <= 0)
 			{
 
 				// set random spawn position based on width and height of the screen
+				/*The three directions represent different locations of the spawn */
 				if (direction == 1)
 				{
 					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
-					// printf("Coordinates 1: ( X:%f ,Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
 				else if (direction == 2)
 				{
 					spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
-					// printf("Coordinates 2: (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
 				else if (direction == 3)
 				{
 					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wHeight));
-					// printf("Coordinates 3: (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
 				else if (direction == 4)
 				{
 					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
-					//	printf("Coordinates 4 : (X:%f , Y:%f )\n", spawnPosition.x, spawnPosition.y);
 				}
-				// set spawn position of enemy
+				// set spawn positions of the enemies
 				enemies[spawnIndex].pos.x = spawnPosition.x;
 				enemies[spawnIndex].pos.y = spawnPosition.y;
-				// enemies[spawnIndex].isDead = 0;
 				//  add one to enemy count and set spawn index to 1 for the enemy
 				spawnIndex++;
 				// restart spawn time
@@ -492,7 +489,7 @@ void level_1_Update()
 		{
 			// set enemy sprite to enemy sprite1
 			enemies[i].enemySprite = enemySprite1;
-			// set the width and height to the respective sprite
+			//set the width and height to the respective sprite
 			enemies[i].width = (float)CP_Image_GetWidth(enemies[i].enemySprite);
 			enemies[i].height = (float)CP_Image_GetHeight(enemies[i].enemySprite);
 			enemies[i].health = 1;
@@ -518,13 +515,18 @@ void level_1_Update()
 				{
 					CP_Sound_PlayAdvanced(projectile_shoot, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 
+					/*Shoot Mechanic done by Darren Lua*/
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
+					/*Post Increment and only increament after the index 0 bullet is spawned*/
 					if (firstShoot == 1)
 					{
 						++bulletSpawnIndex;
 					}
+					/*Set the bullet vector directions from the shooting position to mouse click position*/
 					bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
+					/*Set bullet's position to the shooting position*/
 					bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+					/*Normalize the direction to prevent the bullet speed from changing based on distance vector*/
 					bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
 					firstShoot = 1;
 
@@ -536,10 +538,11 @@ void level_1_Update()
 					}
 				}
 			}
-
+			
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{
+			{	/*scale the acceleration of the bullet based on the normalized direction and the speed*/
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
+				/*Add the bullet's acceleration vector to the bullet's position*/
 				bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
 			}
 
@@ -568,41 +571,45 @@ void level_1_Update()
 					// enemies die to bullets
 					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
 					{ // less than bullet radius x2
+
 						// decrease health after collision
 						--enemies[j].health;
 
-						// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
-						unsigned int randomRate = CP_Random_RangeInt(1, 4);
-						// randomly set drop id between 1 or 2
-						unsigned int dropId = CP_Random_RangeInt(1, 2);
-
-						itemDrop[dropIndex].itemId = dropId;
-
-						if (randomRate == 2 && enemies[j].health <= 0)
-						{
-
+						/*Darren Lua Item Drop Mechanic*/										
+						if (enemies[j].health <= 0)
+						{						
+							 //randomize spawn rate from 1 to 2 meaning 1 in 4 chance of spawn
+							unsigned int randomRate = CP_Random_RangeInt(1, 4);
+							// randomly set drop id between 1 or 2
+							unsigned int dropId = CP_Random_RangeInt(1, 2);
+							//set drop Id and drop boolean to true
+							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
-							// check item drop's id by the spawn index of the drop
-							if (itemDrop[dropIndex].itemId == 1)
+							if (randomRate == 2)
 							{
-								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropShieldSprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								// check item drop's id by the spawn index of the drop
+								if (itemDrop[dropIndex].itemId == 1)
+								{
+									// if item's id is 1 set the item's dropSprite to the dropHealthSprite
+									itemDrop[dropIndex].dropSprite = dropShieldSprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								else if (itemDrop[dropIndex].itemId == 2)
+								{
+									// if item's id is 2 set the item's dropSprite to the dropEnergySprite
+									itemDrop[dropIndex].dropSprite = dropEnergySprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								// set item with the drop index to the enemy coordinate
+								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
+								/*Increment drop index*/
+								++dropIndex;
 							}
-							else if (itemDrop[dropIndex].itemId == 2)
-							{
-								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-							}
-							// set item with the drop index to the enemy coordinate
-							itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-							++dropIndex;
 						}
 
 						// deletion of projectile after hitting enemy
@@ -654,38 +661,44 @@ void level_1_Update()
 				}
 				for (int i = 0; i < spawnIndex; i++)
 				{ // SWORD SWING
-					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].radius))
+					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].width))
 					{
 						--enemies[i].health;
-						unsigned int randomRate = CP_Random_RangeInt(1, 4);
-						// randomly set drop id between 1 or 2
-						unsigned int dropId = CP_Random_RangeInt(1, 2);
-						itemDrop[dropIndex].itemId = dropId;
-						if (randomRate == 2 && enemies[i].health <= 0)
-						{
 
+						if (enemies[i].health <= 0)
+						{							
+							//randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
+							unsigned int randomRate = CP_Random_RangeInt(1, 4);
+							// randomly set drop id between 1 or 2
+							unsigned int dropId = CP_Random_RangeInt(1, 2);
+							//set drop Id and drop boolean to true
+							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
-							// check item drop's id by the spawn index of the drop
-							if (itemDrop[dropIndex].itemId == 1)
+							if (randomRate == 2)
 							{
-								// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-								itemDrop[dropIndex].dropSprite = dropShieldSprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								// check item drop's id by the spawn index of the drop
+								if (itemDrop[dropIndex].itemId == 1)
+								{
+									// if item's id is 1 set the item's dropSprite to the dropHealthSprite
+									itemDrop[dropIndex].dropSprite = dropShieldSprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								else if (itemDrop[dropIndex].itemId == 2)
+								{
+									// if item's id is 2 set the item's dropSprite to the dropEnergySprite
+									itemDrop[dropIndex].dropSprite = dropEnergySprite;
+									// set the width and height to the respective sprite
+									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
+									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
+								}
+								// set item with the drop index to the enemy coordinate
+								itemDrop[dropIndex].pos.x = enemies[i].pos.x;
+								itemDrop[dropIndex].pos.y = enemies[i].pos.y;
+								/*Increment drop index*/
+								++dropIndex;
 							}
-							else if (itemDrop[dropIndex].itemId == 2)
-							{
-								// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-								itemDrop[dropIndex].dropSprite = dropEnergySprite;
-								// set the width and height to the respective sprite
-								itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-								itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-							}
-							// set item with the drop index to the enemy coordinate
-							itemDrop[dropIndex].pos.x = enemies[i].pos.x;
-							itemDrop[dropIndex].pos.y = enemies[i].pos.y;
-							++dropIndex;
 						}
 
 						if (enemies[i].health <= 0)
@@ -899,7 +912,8 @@ void level_1_Update()
 			lose = 0;
 		}
 
-		// draw enemy
+		//Darren draw enemies, player and bullet code 
+		// draw enemy 
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
@@ -916,7 +930,6 @@ void level_1_Update()
 				if (firstShoot == 1)
 				{
 					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
-					// printf("Drawing %d", bulletSpawnIndex);
 				}
 			}
 		}
@@ -932,12 +945,14 @@ void level_1_Update()
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
-		// display timer
+		// display timer done by Darren Lua
 		CP_Settings_TextSize(100.0f);
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
+
+
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);
 		for (int i = 0; i < character.health; ++i)

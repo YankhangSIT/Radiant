@@ -6,7 +6,7 @@ void level_4_Update(void);
 
 void level_4_Exit(void);
 
-
+/*Determine Player Num Type Gun or Sword*/
 int playerNum;
 
 extern struct Button nextLevel;

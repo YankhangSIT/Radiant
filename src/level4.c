@@ -60,7 +60,6 @@ void level_4_Init()
 	surviveMin = 1;
 	sec = 0;
 	min = 0;
-	firstDrop = 0;
 	spawnIndex = 0;
 	firstShoot = 0;
 	dropIndex = 0;
@@ -75,9 +74,9 @@ void level_4_Init()
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	map_background = CP_Image_Load("Assets/map_background4.png");
-	bullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-	bossBullet.bulletSprite = CP_Image_Load("Assets/playerBullet.png");
-
+	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
+	bossBullet.bulletSprite = CP_Image_Load("Assets/Triple_Boss_Bullet.png");
+	bossBulletSprite2 = CP_Image_Load("Assets/Spiral_Boss_Bullet.png");
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
@@ -149,10 +148,12 @@ void level_4_Init()
 	boss.health = 12;
 	boss.maxHealth = boss.health;
 	bossMovement = 10;
-	// bossHealthScale = 160;							  // NEW VARIABLE
+
+	/*Darren Lua Boss Health Bar*/
 	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
-	// hpBarCurrLengthX = boss.health * bossHealthScale; // NEW VARIABLE
-	hpbarOriginalX = hpBarCurrLengthX; // JING SONG HERE IS THERE VARIABLE THIS IF DEFINED, CRASHES THE ENTIRE PROGRAM, U CAN COMMENT IT OUT AND CHECK
+	hpbarOriginalX = hpBarCurrLengthX; 
+
+	/*Darren Lua Boss Shoot Attack Timer*/
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
 
@@ -165,16 +166,16 @@ void level_4_Init()
 	bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
 	bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x, boss.pos.y);
 	bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x, boss.pos.y);
-	bossShoot = 0;
+	/*Boss Change Attack Timer*/
 	changeAttackTimer = 2.f;
 	startChangeTimer = changeAttackTimer;
 	attackMode = 1;
 	bossChangeAttack = 0;
-	clearBulletTime = 10.f;
-	startclearBulletTime = clearBulletTime;
 	firstShoot = 0;
 	directionAngle = 0;
+	/*Boss Bullet shoot rotation speed*/
 	rotationSpeed = 30.142f;
+
 
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	character.health = 5;				// start with 5 hp
@@ -244,22 +245,19 @@ void level_4_Update()
 {
 	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-
+	/*Darren Lua Pause Code*/
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == 0)
 	{
 		isPaused = !isPaused;
 	}
-
+	/*Darren Lua Pause Menu*/
 	if (isPaused && win == 0)
 	{
-		// printf("paused screen state lv1 %d", isPaused);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
-
 		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		//	Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -274,14 +272,7 @@ void level_4_Update()
 		if (lose == 0)
 		{
 			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
-			// CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
 			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
-			// CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 1.0f, FALSE, CP_SOUND_GROUP_1);
-			// CP_Font_DrawText("Congratulations You beat the game!", wWidth / 2.0f, wHeight / 2.0f - 300);
-			//	Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			// Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			// Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			// Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		}
 		else
 		{
@@ -289,10 +280,11 @@ void level_4_Update()
 			CP_Engine_SetNextGameState(game_Over_page_Init, game_Over_page_Update, game_Over_page_Exit);
 		}
 
-		if (lose == 0)
-		{
-			win = 1;
-		}
+		//if (lose == 0)
+		//{
+		//	win = 1;
+		//}
+
 		isPaused = 1;
 	}
 
@@ -313,25 +305,6 @@ void level_4_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
-			if (win == 1)
-			{
-				// if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
-				//	{
-				//	delayShootTime = delayShootStart;
-
-				//	// clear();
-
-				//	CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-				//	CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
-
-				//	// printf("pause  state win lv1 %d", isPaused);
-				//}
-				// else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-				//{
-				//	Button("You Win!", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
-				//}
-			}
-
 			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 			{
 				if (win == 0)
@@ -417,99 +390,7 @@ void level_4_Update()
 			}
 		}
 
-		// timers
-		spawnTimer -= elapsedTime;
 
-		// keeps spawning until the player survives
-		if (min < surviveMin)
-		{
-			changeSpawnTimer -= elapsedTime;
-			if (changeSpawnTimer <= 0)
-			{
-				if (direction == 4)
-				{
-					direction = 1;
-				}
-				else if (direction == 3)
-				{
-					direction = 4;
-				}
-				else if (direction == 2)
-				{
-					direction = 3;
-				}
-				else if (direction == 1)
-				{
-					direction = 2;
-				}
-
-				changeSpawnTimer = startSpawnChangeTimer;
-			}
-
-			// check if spawn timer
-			if (spawnTimer <= 0)
-			{
-				// set random spawn position based on width and height of the screen
-				if (direction == 1)
-				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
-				}
-				else if (direction == 2)
-				{
-					spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
-				}
-				else if (direction == 3)
-				{
-					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wWidth));
-				}
-				else if (direction == 4)
-				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
-				}
-				// set spawn position of enemy
-				enemies[spawnIndex].pos.x = spawnPosition.x;
-				enemies[spawnIndex].pos.y = spawnPosition.y;
-				// enemies[spawnIndex].isDead = 0;
-				//  add one to enemy count and set spawn index to 1 for the enemy
-				spawnIndex++;
-				// restart spawn time
-				spawnTimer = startSpawnTimer;
-			}
-		}
-		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
-		// for (int i = 0; i < spawnIndex; i++)
-		//{
-
-		//	randomId = CP_Random_RangeInt(1, 2);
-		//	enemies[spawnIndex].id = randomId;
-		//	if (enemies[spawnIndex].id == 1)
-		//	{
-		//		// set enemy with this id to the respective sprite
-		//		enemies[spawnIndex].enemySprite = enemySprite1;
-		//		// set the width and height to the respective sprite
-		//		enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-		//		enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-		//		// set health for the enemy id number
-		//		enemies[spawnIndex].health = 1;
-		//	}
-		//	else if (enemies[spawnIndex].id == 2)
-		//	{
-		//		// set enemy with this id to the respective sprite
-		//		enemies[spawnIndex].enemySprite = enemySprite2;
-		//		// set the width and height to the respective sprite
-		//		enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-		//		enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-		//		// set health for the enemy id number
-		//		enemies[spawnIndex].health = 2;
-		//	}
-
-		//	enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
-		//	for (int o = obstructionCount2 + 1; o < obstructionCount3; o++)
-		//	{
-		//		// check for obstructions
-		//		enemies[i].pos = checkObsCollision(enemies[i].pos, enemies[i].width, enemies[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height);
-		//	}
-		//}
 
 		if (playerNum == 1)
 		{ // IF RANGED CHAR
@@ -775,22 +656,27 @@ void level_4_Update()
 		}
 		boss.pos.x += bossMovement;
 
+		/*Darren Lua Boss Health Bar*/
+		/*Corner for the health bar to decrease from the right*/
 		CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Graphics_DrawRect(0, wHeight - 100, hpbarOriginalX, 50);
-		//	CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(0, wHeight - 100, hpBarCurrLengthX, 50);
+		/*For the Boss health bar scaling with the window width*/
 		hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
-
+		/*Display Boss Health Values*/
 		CP_Settings_RectMode(CP_POSITION_CENTER);
 		CP_Settings_TextSize(70.0f);
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		sprintf_s(timeString, MAX_LENGTH, "Boss Health:%d/%d", boss.health, boss.maxHealth);
 		CP_Font_DrawText(timeString, wWidth / 2, wHeight - 75);
 		CP_Settings_TextSize(35.0f);
+
 		//  FINAL BOSS MECHANICS
-		//  changeAttackTimer -= elapsedTime;
+
+
+		/* Darren Lua Boss Bullet Projectile*/
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
 		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width / 2, boss.pos.y);
 		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width / 2, boss.pos.y);
@@ -805,17 +691,14 @@ void level_4_Update()
 			if (attackMode == 2)
 			{
 				attackMode = 3;
-				printf("switching to attack 3 \n");
 			}
 			else if (attackMode == 1)
 			{
 				attackMode = 2;
-				printf("switching to attack 2 \n");
 			}
 			else if (attackMode == 3)
 			{
 				attackMode = 1;
-				printf("switching to attack 1 \n");
 			}
 			bossChangeAttack = 0;
 			changeAttackTimer = startChangeTimer;
@@ -823,15 +706,15 @@ void level_4_Update()
 			bossShootTimer2 = startBossShootTimer2;
 			bossShootTimer3 = startBossShootTimer3;
 		}
-
+		/*For Boss bullets moving in three parallel direction*/
 		if (attackMode == 1)
 		{
 			bossShootTimer -= elapsedTime;
-			printf("timer1: %f \n", bossShootTimer);
 
 			if (bossShootTimer <= 0)
 			{
 
+				/*Direction Vector to the player*/
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
 				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
@@ -853,13 +736,17 @@ void level_4_Update()
 				++bossBulletIndex3;
 				bossShootTimer = startBossShootTimer;
 			}
-		}
+		} /*For Boss bullets moving in converging path*/
 		else if (attackMode == 2)
 		{
 			bossShootTimer2 -= elapsedTime;
-			printf("timer2: %f \n", bossShootTimer2);
 			if (bossShootTimer2 <= 0)
 			{
+				//bossBulletArray[bossBulletIndex].bulletSprite = bossBullet.bulletSprite;
+				//bossBulletArray[bossBulletIndex].width = (float)CP_Image_GetWidth(bossBulletArray[(int)bossBulletIndex].bulletSprite);
+				//bossBulletArray[bossBulletIndex].height = (float)CP_Image_GetHeight(bossBulletArray[(int)bossBulletIndex].bulletSprite);
+
+				/*Direction Vector to the player*/
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
 				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
@@ -881,27 +768,31 @@ void level_4_Update()
 				++bossBulletIndex3;
 				bossShootTimer2 = startBossShootTimer2;
 			}
-		}
+		} /*For Boss bullets moving in spiral path*/
 		else if (attackMode == 3)
 		{
 			bossShootTimer3 -= elapsedTime;
-			printf("timer3: %f \n", bossShootTimer3);
 
 			if (bossShootTimer3 <= 0)
-			{
+			{	
+				
+
+				/*Direction Vector based on Direction Angle of Rotation */
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Set((float)(cos(directionAngle)), (float)(sin(directionAngle)));
+				/*Changing of Direction Angle based on elasped*/
 				directionAngle += rotationSpeed * elapsedTime;
-				printf("angle: %f \n", directionAngle);
 				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
-				bossBulletArray[bossBulletIndex].isSpawn = 1;
 
+				bossBulletArray[bossBulletIndex].isSpawn = 1;
 				bossChangeAttack = 1;
 				++bossBulletIndex;
 				bossShootTimer3 = startBossShootTimer3;
 			}
 		}
 
+		/*Darren Lua Boss Bullet Boss Bullet Velocity code*/
+		 
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
 

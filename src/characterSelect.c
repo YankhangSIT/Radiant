@@ -20,8 +20,9 @@
 
 CP_Image gunPlayer;
 CP_Image swordPlayer;
-
+/*Determine Player Num Type Gun or Sword*/
 extern int playerNum = 0;
+
 float zWidth;
 float zHeight;
 void character_Select_Init()

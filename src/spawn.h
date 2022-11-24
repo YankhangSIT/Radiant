@@ -1,5 +1,5 @@
 #pragma once
-
+/*Darren Lua Spawn Header*/
 #include "cprocessing.h"
 #include "math.h"
 #include "stdio.h"
@@ -13,7 +13,6 @@
 struct Enemy {
 	CP_Vector pos;
 	CP_Image enemySprite;	
-	float radius;
 	float height;
 	float width;
 	float speed;
@@ -22,19 +21,10 @@ struct Enemy {
 	float takeDamage;
 	int maxHealth;
 };
-//
-//struct Boss
-//{
-//	CP_Vector pos;
-//	CP_Image bossSprite;
-//	float height;
-//	float width;
-//	float speed;
-//	int health;
-//	float takeDamage;
-//};
 
-// enemy struct with all the properties needed for the drop
+
+
+// Drop struct with all the variables needed for the drop
 struct Drop
 {
 	CP_Vector pos;
@@ -53,7 +43,7 @@ struct Button
 	float height;
 };
 
-// Bullet struct with the properties needed
+// Bullet struct with the variables needed
 struct Bullet
 {
 	CP_Vector shootPosition;
@@ -78,19 +68,21 @@ float startSpawnTimer;
 int isCompleted;
 int spawnIndex;
 
-// Bullet Struct Contains all the properties of the bullet
+//Declarations for enemies
 struct Enemy enemies[SIZE];
 struct Enemy enemy;
 
-// declarations needed for the bullet 
+// declarations needed for the bullets
 struct Bullet bullet;
 struct Bullet bulletArray[SIZE];
 
+//Declarations needed for the boss bullets
 struct Bullet bossBullet;
 struct Bullet bossBulletArray[SIZE];
 struct Bullet bossBulletArray2[SIZE];
 struct Bullet bossBulletArray3[SIZE];
 struct Enemy boss;
+//Bullet Attack Speed Timer
 float bossShootTimer;
 float startBossShootTimer;
 
@@ -100,7 +92,15 @@ float startBossShootTimer2;
 float bossShootTimer3;
 float startBossShootTimer3;
 
-int bossShoot;
+/*Boss change attack Timer and for Boss attack rotation*/
+float changeAttackTimer;
+float startChangeTimer;
+int attackMode;
+float directionAngle;
+float rotationSpeed;
+int bossChangeAttack;
+
+/*Boss Bullet Indexes for the three array*/
 int bossBulletIndex;
 int bossBulletIndex2;
 int bossBulletIndex3;
@@ -118,7 +118,6 @@ struct Drop itemDrop[SIZE];
 struct Drop healthDrop;
 int dropIndex;
 CP_Vector itemSpawn;
-int firstDrop;
 CP_Vector dropPositions;
 
 float shieldedDuration;
@@ -129,6 +128,10 @@ CP_Image enemySprite1;
 CP_Image enemySprite2;
 CP_Image damagedSprite1;
 CP_Image damagedSprite2;
+CP_Image bossBulletSprite1;
+CP_Image bossBulletSprite2;
+
+
 CP_Image char_health; /// changed from dropHealthSprite
 CP_Image char_energy; /// added
 CP_Image dropShieldSprite;
@@ -136,6 +139,8 @@ CP_Image dropEnergySprite;
 CP_Image shielded;
 CP_Image unlimitedEnergy;
 CP_Image bossSprite;
+
+/*Enemy ID*/
 unsigned int randomId;
 
 //min and sec counter
@@ -145,25 +150,22 @@ float sec;
 int surviveMin;
 // win condition boolean
 int win;
-//float spawnTimer = 0.f;
 int lose;
+
+/*Declaration of change enemy spawn timer with the different direction/spawn position as int value*/
 float changeSpawnTimer;
 float startSpawnChangeTimer;
 int direction;
 
-float changeAttackTimer;
-float startChangeTimer;
-int attackMode;
-float directionAngle;
-float rotationSpeed;
-int bossChangeAttack;
-float clearBulletTime;
-float startclearBulletTime;
+
+
+/*Boss Health Bar*/
 float hpBarCurrLengthX;
 float hpbarOriginalX;
 float bossHealthScale;
+
 void clear(void);
+//void spawnItem(struct Enemy enemies[], struct Drop itemDrop[], CP_Image dropShieldSprite, CP_Image dropEnergySprite, int dropIndex, int enemyIndex);
 
 
-//void spawnEnemies(struct Enemy* enemies, int spawnSize, CP_Vector* spawnPositions, int wWidth, int wHeight);
 
