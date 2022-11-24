@@ -46,14 +46,15 @@ void level_4_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	//CP_System_FullscreenAdvanced(1920, 1080);
-	 CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
 	bossBullet.bulletSpeed = 250;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;
 
+	spawnTimer = 1.7f;
 
-
+	startSpawnTimer = spawnTimer;
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
 	surviveMin = 1;
@@ -68,7 +69,7 @@ void level_4_Init()
 	level = 4;
 	changeSpawnTimer = 0.1f;
 	startSpawnChangeTimer = changeSpawnTimer;
-
+	direction = 1;
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
@@ -114,14 +115,6 @@ void level_4_Init()
 
 	nextLevel.pos.x = wWidth / 2.0f;
 	nextLevel.pos.y = wHeight / 2.0f - 200;
-	resumeButton.pos.x = wWidth / 2.0f;
-	resumeButton.pos.y = wHeight / 2.0f - 200;
-	restartButton.pos.x = wWidth / 2.0f;
-	restartButton.pos.y = wHeight / 2.0f - 50;
-	menuButton.pos.x = wWidth / 2.0f;
-	menuButton.pos.y = wHeight / 2.0f + 100;
-	exitLevelButton.pos.x = wWidth / 2.0f;
-	exitLevelButton.pos.y = wHeight / 2.0f + 250;
 	// player type gun
 	if (playerNum == 1)
 	{
@@ -152,9 +145,9 @@ void level_4_Init()
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 
-	boss.health = 25;
+	boss.health = 20;
 	boss.maxHealth = boss.health;
-	bossMovement = 10;
+	bossMovement = 5;
 
 	/*Darren Lua Boss Health Bar*/
 	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
@@ -261,20 +254,20 @@ void level_4_Update()
 	if (isPaused && win == 0)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
-		Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	}
 
 	if (boss.health <= 0 || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, wHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
@@ -312,38 +305,22 @@ void level_4_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
-			if (win == TRUE)
+			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 			{
-				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
-				{
-					delayShootTime = delayShootStart;
-
-					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-					if (!nextState)
-						startCount = TRUE;
-				}
-				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-				{
-					Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
-				}
-			}
-
-			if (IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
-			{
-				if (win == FALSE)
+				if (win == 0)
 				{
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					delayShootTime = delayShootStart;
 					isPaused = !isPaused;
 				}
 			}
-			else if (win == FALSE && IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+			else if (win == FALSE && IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
-				Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+				Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			}
 		}
 
-		if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			if (isPaused == TRUE)
 			{
@@ -352,12 +329,12 @@ void level_4_Update()
 				level_4_Init();
 			}
 		}
-		else if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y))
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y))
 		{
-			Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 
-		if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
@@ -366,12 +343,12 @@ void level_4_Update()
 				menuState = TRUE;
 			}
 		}
-		else if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 
-		if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
@@ -380,9 +357,9 @@ void level_4_Update()
 				exitState = TRUE;
 			}
 		}
-		else if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 	}
 
@@ -534,7 +511,7 @@ void level_4_Update()
 					CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				}
 				{																															 // SWORD SWING
-					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, boss.pos, (boss.width / 2.f - 90.f))) // 90 is for fine-tuning, boss too fat
+					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, boss.pos, (boss.width / 2.f - 60.f))) // 60 is for fine-tuning, boss too fat
 					{
 						--boss.health;
 					}
@@ -578,108 +555,18 @@ void level_4_Update()
 
 		/// no enemy obstruction
 
-		// damage taking and 2 second invulnerability after code.
-		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
-		if (character.invulState != 1)
-		{ // if not invul, check for damage (collision with mobs) every frame
-			for (int i = 0; i < spawnIndex; i++)
-			{
-				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, (enemies[i].width / 2)) == 1 && enemies[i].health > 0)
-				{
-					if (healthChange == 0)
-					{
-						CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-						character.health = takeDamage(character.health);
-						healthChange = 1; // telling program health has changed, dont change again in this frame
-					}
-					character.invulState = 1;
-				}
-			}
-		}
-
-		// damage taking and 2 second invulnerability after code.
-		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
-		if (character.invulState != 1 && character.shieldedState != 1)
-		{ // if not invul, check for damage (collision with mobs) every frame
-			character.transparency = 255;
-			for (int i = 0; i < bossBulletIndex; ++i)
-			{
-				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray[i].bulletPos, (bossBulletArray[i].width / 2)) == 1)
-				{
-					if (healthChange == 0)
-					{ // sound to be implemented
-					  // if (!damageTakenTime)
-					  //{
-					  //	damageSound = true;
-					  //	CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
-					  // }
-						CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-						character.health = takeDamage(character.health);
-						healthChange = 1; // telling program health has changed, dont change again in this frame
-					}
-					character.invulState = 1;
-				}
-			}
-		}
-
-		// damage taking and 2 second invulnerability after code.
-		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
-		if (character.invulState != 1 && character.shieldedState != 1)
-		{ // if not invul, check for damage (collision with mobs) every frame
-			character.transparency = 255;
-			for (int i = 0; i < bossBulletIndex; ++i)
-			{
-				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray[i].bulletPos, (bossBulletArray[i].width / 2)) == 1)
-				{
-					if (healthChange == 0)
-					{ // sound to be implemented
-					  // if (!damageTakenTime)
-					  //{
-					  //	damageSound = true;
-					  //	CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
-					  // }
-						CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-						character.health = takeDamage(character.health);
-						healthChange = 1; // telling program health has changed, dont change again in this frame
-					}
-					character.invulState = 1;
-				}
-			}
-		}
-
-		// damage taking and 2 second invulnerability after code.
-		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
-		if (character.invulState != 1 && character.shieldedState != 1)
-		{ // if not invul, check for damage (collision with mobs) every frame
-			character.transparency = 255;
-			for (int i = 0; i < bossBulletIndex; ++i)
-			{
-				if (checkDamage(character.Pos, character.width, character.height, bossBulletArray[i].bulletPos, (bossBulletArray[i].width / 2)) == 1)
-				{
-					if (healthChange == 0)
-					{ // sound to be implemented
-					  // if (!damageTakenTime)
-					  //{
-					  //	damageSound = true;
-					  //	CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
-					  // }
-						CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-						character.health = takeDamage(character.health);
-						healthChange = 1; // telling program health has changed, dont change again in this frame
-					}
-					character.invulState = 1;
-				}
-			}
-		}
-
 		// FINAL BOSS MOVEMENT
 		if (boss.pos.x < 200.f)
 		{
-			bossMovement = 10.f;
+			if (bossMovement < 0) {
+				bossMovement *= -1;
+			}
 		}
 		else if (boss.pos.x > wWidth - 200.f)
 		{
-			bossMovement = -10.f;
+			if (bossMovement > 0) {
+				bossMovement *= -1;
+			}
 		}
 		boss.pos.x += bossMovement;
 
@@ -866,7 +753,7 @@ void level_4_Update()
 
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
-		if (character.invulState != 1 && character.shieldedState != 1)
+		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE FROM BOSS BULLET ARRAY 1
 		{ // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < bossBulletIndex; ++i)
@@ -883,7 +770,7 @@ void level_4_Update()
 				}
 			}
 		}
-		if (character.invulState != 1 && character.shieldedState != 1)
+		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE FROM BOSS BULLET ARRAY 2
 		{ // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < bossBulletIndex2; ++i)
@@ -900,7 +787,7 @@ void level_4_Update()
 				}
 			}
 		}
-		if (character.invulState != 1 && character.shieldedState != 1)
+		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE FROM BOSS BULLET ARRAY 3
 		{ // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < bossBulletIndex3; ++i)
@@ -917,16 +804,69 @@ void level_4_Update()
 				}
 			}
 		}
+		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE WHEN COLLIDE WITH BOSS
+		{ // if not invul, check for damage (collision with mobs) every frame
+			character.transparency = 255;
+			if (checkDamage(character.Pos, character.width, character.height, boss.pos, (boss.width / 2)) == 1)
+			{
+				if (healthChange == 0)
+				{
+					CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					character.health = takeDamage(character.health);
+					healthChange = 1; // telling program health has changed, dont change again in this frame
+				}
+				character.invulState = 1;
+			}
+			
+		}
 
-		// check if boss projectile out of bounds, if so, delete it.
+		// check if projectile out of bounds, if so, delete it.
+		for (int i = 0; i < bossBulletIndex; ++i)
+		{
+			if (checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bossBullet.width / 2, wWidth - bossBullet.width / 2, 0 + bossBullet.height / 2, wHeight - bossBullet.height / 2) == 1)
+			{
+				for (int x = i; x < bossBulletIndex; ++x)
+				{
+					bossBulletArray[x] = bossBulletArray[x + 1]; // to "delete" element from array
+				}
+				--bossBulletIndex;
+			}
+		}
+
+		for (int i = 0; i < bossBulletIndex2; ++i)
+		{
+			if (checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bossBullet.width / 2, wWidth - bossBullet.width / 2, 0 + bossBullet.height / 2, wHeight - bossBullet.height / 2) == 1)
+			{
+				for (int x = i; x < bossBulletIndex2; ++x)
+				{
+					bossBulletArray2[x] = bossBulletArray2[x + 1]; // to "delete" element from array
+				}
+				--bossBulletIndex2;
+			}
+		}
+
+		for (int i = 0; i < bossBulletIndex3; ++i)
+		{
+			if (checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bossBullet.width / 2, wWidth - bossBullet.width / 2, 0 + bossBullet.height / 2, wHeight - bossBullet.height / 2) == 1)
+			{
+				for (int x = i; x < bossBulletIndex3; ++x)
+				{
+					bossBulletArray3[x] = bossBulletArray3[x + 1]; // to "delete" element from array
+				}
+				--bossBulletIndex3;
+			}
+		}
+
+
+		// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
 			for (int o = obstructionCount3; o < obstructionCount4; o++)
-			{
-
-				if (checkProjectileObsCollision(bossBulletArray[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			{ // check if projectile hits obstructions, if so, delete it.
+				if (checkProjectileObsCollision(bossBulletArray[i].bulletPos, bossBulletArray[i].width, bossBulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 				{
-					for (int x = i; x - 1 < bossBulletIndex; ++x)
+					// check for obstructions
+					for (int x = i; x < bossBulletIndex; ++x)
 					{
 						bossBulletArray[x] = bossBulletArray[x + 1]; // to "delete" element from array
 					}
@@ -934,34 +874,83 @@ void level_4_Update()
 				}
 			}
 		}
+
 		for (int i = 0; i < bossBulletIndex2; ++i)
 		{
 			for (int o = obstructionCount3; o < obstructionCount4; o++)
-			{
-				if (checkProjectileObsCollision(bossBulletArray2[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			{ // check if projectile hits obstructions, if so, delete it.
+				if (checkProjectileObsCollision(bossBulletArray2[i].bulletPos, bossBulletArray2[i].width, bossBulletArray2[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 				{
+					// check for obstructions
 					for (int x = i; x < bossBulletIndex2; ++x)
 					{
-						bossBulletArray2[x] = bossBulletArray2[x + 1];
+						bossBulletArray2[x] = bossBulletArray2[x + 1]; // to "delete" element from array
 					}
 					--bossBulletIndex2;
 				}
 			}
 		}
+		
 		for (int i = 0; i < bossBulletIndex3; ++i)
 		{
 			for (int o = obstructionCount3; o < obstructionCount4; o++)
-			{
-				if (checkProjectileObsCollision(bossBulletArray3[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+			{ // check if projectile hits obstructions, if so, delete it.
+				if (checkProjectileObsCollision(bossBulletArray3[i].bulletPos, bossBulletArray3[i].width, bossBulletArray3[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 				{
+					// check for obstructions
 					for (int x = i; x < bossBulletIndex3; ++x)
 					{
-						bossBulletArray3[x] = bossBulletArray3[x + 1];
+						bossBulletArray3[x] = bossBulletArray3[x + 1]; // to "delete" element from array
 					}
 					--bossBulletIndex3;
 				}
 			}
 		}
+
+		//// check if boss projectile out of bounds, if so, delete it.
+		//for (int i = 0; i < bossBulletIndex; ++i)
+		//{
+		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
+		//	{
+
+		//		if (checkProjectileObsCollision(bossBulletArray[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+		//		{
+		//			for (int x = i; x - 1 < bossBulletIndex; ++x)
+		//			{
+		//				bossBulletArray[x] = bossBulletArray[x + 1]; // to "delete" element from array
+		//			}
+		//			--bossBulletIndex;
+		//		}
+		//	}
+		//}
+		//for (int i = 0; i < bossBulletIndex2; ++i)
+		//{
+		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
+		//	{
+		//		if (checkProjectileObsCollision(bossBulletArray2[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+		//		{
+		//			for (int x = i; x < bossBulletIndex2; ++x)
+		//			{
+		//				bossBulletArray2[x] = bossBulletArray2[x + 1];
+		//			}
+		//			--bossBulletIndex2;
+		//		}
+		//	}
+		//}
+		//for (int i = 0; i < bossBulletIndex3; ++i)
+		//{
+		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
+		//	{
+		//		if (checkProjectileObsCollision(bossBulletArray3[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
+		//		{
+		//			for (int x = i; x < bossBulletIndex3; ++x)
+		//			{
+		//				bossBulletArray3[x] = bossBulletArray3[x + 1];
+		//			}
+		//			--bossBulletIndex3;
+		//		}
+		//	}
+		//}
 
 		// check boss projectile collision with obstruction
 
