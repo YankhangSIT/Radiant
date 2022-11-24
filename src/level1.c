@@ -1,3 +1,13 @@
+﻿//---------------------------------------------------------
+// file:	level1.c
+// author:	Koh Yan Khang, Lua Wei Xiang Darren, Wei Jingsong
+// email:	yankhang.k@digipen.edu, weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
+// brief:	Includes code for the first level of the game, with only one type of monster
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
+//header files
 #include "cprocessing.h"
 #include "stdio.h"
 #include "utils.h"
@@ -15,21 +25,26 @@
 #include "global.h"
 #include "sound.h"
 
+// two structs for two classes
 struct Character playerGun;
 struct Character playerSword;
 
-// Sprite Image
+// Sprite Image for char
 CP_Image gunPlayer;
 CP_Image swordPlayer;
 
+// game state variables
 int isPaused;
+float wWidth;
+float wHeight;
+
+// in-game variables
 float invulElapsedTime;
 float invulTransparencyTime;
 float energyRechargeTime;
 float stunnedElapsedTime;
 int healthChange;
-float wWidth;
-float wHeight;
+
 // string array to use for text display
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
@@ -38,46 +53,78 @@ char characterEnergyDisplay[MAX_LENGTH];
 void level_1_Init()
 {
 	clear();
+
+	// level init
+	CP_System_FullscreenAdvanced(1920, 1080);
+	wWidth = (float)CP_System_GetWindowWidth();
+	wHeight = (float)CP_System_GetWindowHeight();
+	level = 1;
+	// ranged char init
+	firstShoot = 0;
+	bullet.bulletSpeed = 1000; 
+	bulletSpawnIndex = 0;
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_FullscreenAdvanced(1920, 1080);
-	// CP_System_SetWindowSize(1920, 1080);
-	bullet.bulletSpeed = 1000;
+	canShoot = 0;
+	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
+	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
+	bullet.height = (float)CP_Image_GetHeight(bullet.bulletSprite);
+	if (playerNum == 1)
+	{
+		character.playerSprite = gunPlayer;
+		character.width = (float)CP_Image_GetWidth(gunPlayer);
+		character.height = (float)CP_Image_GetHeight(gunPlayer);
+	}
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f); // bullet start shoot spawn position
+	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+	firstShoot = 0;
+	// melee char init
+	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
+	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
+	if (playerNum == 2)
+	{
+		character.playerSprite = swordPlayer;
+		character.width = (float)CP_Image_GetWidth(swordPlayer);
+		character.height = (float)CP_Image_GetHeight(swordPlayer);
+		canShoot = 0;
+	}
+	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
+	swordSwingTime = 0;
+	damageTakenTime = 0;
+	swingSword = false;
+	damageSound = false;
+	characterFacing = 0;
+	// enemy init
 	spawnTimer = 1.f;
+	spawnIndex = 0;
 	startSpawnTimer = spawnTimer;
-	bulletSpawnIndex = 0;
-	elapsedTime = 1;
+	startSpawnChangeTimer = changeSpawnTimer;
+	changeSpawnTimer = 0.1f;
+	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
+	enemies[spawnIndex].pos.x = spawnPosition.x;
+	enemies[spawnIndex].pos.y = spawnPosition.y;
+	spawnPosition = CP_Vector_Set(0, 0); // set spawn positions to 0 coordinate
+	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
+	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
+	enemy.speed = 70;
+	//drops init
+	dropIndex = 0;
+	itemDrop[dropIndex].pos.x = spawnPosition.x;
+	itemDrop[dropIndex].pos.y = spawnPosition.y;
+	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
+	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
+	healthDrop.width = (float)CP_Image_GetWidth(healthDrop.dropSprite);
+	healthDrop.height = (float)CP_Image_GetHeight(healthDrop.dropSprite);
+	// misc init
+	elapsedTime = 0; 
 	surviveMin = 1;
 	sec = 0;
 	min = 0;
-	spawnIndex = 0;
-	spawnIndex = 0;
-	firstShoot = 0;
-	dropIndex = 0;
 	lose = 0;
-	canShoot = 0;
-	level = 1;
-	changeSpawnTimer = 0.1f;
-	startSpawnChangeTimer = changeSpawnTimer;
 	direction = 1;
-	// Set window width and height to variables
-	wWidth = (float)CP_System_GetWindowWidth();
-	wHeight = (float)CP_System_GetWindowHeight();
+	// map init
 	map_background = CP_Image_Load("Assets/map_background1.png");
-	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
-	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
-	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png"); /// added
-	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
-	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
-	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
-	stunned = CP_Image_Load("Assets/stunned_animation.png");
-	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
-	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
-	char_energy = CP_Image_Load("Assets/Char_Energy.png");				 ///
-	char_health = CP_Image_Load("Assets/Char_Health.png");				 /// removed drop health sprite
-	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");		 ///
-	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png"); ///
 	obstruction1 = CP_Image_Load("Assets/obstruction1.png");
 	obstruction2 = CP_Image_Load("Assets/obstruction2.png");
 	obstruction3 = CP_Image_Load("Assets/obstruction3.png");
@@ -89,27 +136,16 @@ void level_1_Init()
 	obsHeight3 = (float)CP_Image_GetHeight(obstruction3);
 	stunnedWidth = (float)CP_Image_GetWidth(stunned);
 	stunnedHeight = (float)CP_Image_GetHeight(stunned);
-	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
-	bullet.height = (float)CP_Image_GetHeight(bullet.bulletSprite);
-	// player sprite
-	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
-	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
-
-	// set spawn positions to 0 coordinate
-	spawnPosition = CP_Vector_Set(0, 0);
-
-	enemies[spawnIndex].pos.x = spawnPosition.x;
-	enemies[spawnIndex].pos.y = spawnPosition.y;
-	itemDrop[dropIndex].pos.x = spawnPosition.x;
-	itemDrop[dropIndex].pos.y = spawnPosition.y;
-	// set enemy width and height based on the sprite
-	/*Darren Lua Code for setting width and height*/
-	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
-	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
-	enemy.speed = 70;
-	healthDrop.width = (float)CP_Image_GetWidth(healthDrop.dropSprite);
-	healthDrop.height = (float)CP_Image_GetHeight(healthDrop.dropSprite);
-
+	// gameplay init
+	stunned = CP_Image_Load("Assets/stunned_animation.png");
+	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
+	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
+	char_energy = CP_Image_Load("Assets/Char_Energy.png");
+	char_health = CP_Image_Load("Assets/Char_Health.png");
+	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");		 
+	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png");
+	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png"); // player sprite 
+	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");// player sprite
 	nextLevel.pos.x = wWidth / 2.0f;
 	nextLevel.pos.y = wHeight / 2.0f - 200;
 	resumeButton.pos.x = wWidth / 2.0f;
@@ -120,46 +156,35 @@ void level_1_Init()
 	menuButton.pos.y = wHeight / 2.0f + 100;
 	exitLevelButton.pos.x = wWidth / 2.0f;
 	exitLevelButton.pos.y = wHeight / 2.0f + 250;
-
-	// player type gun
-	if (playerNum == 1)
-	{
-		character.playerSprite = gunPlayer;
-		character.width = (float)CP_Image_GetWidth(gunPlayer);
-		character.height = (float)CP_Image_GetHeight(gunPlayer);
-	}
-
-	// player type sword
-	if (playerNum == 2)
-	{
-		character.playerSprite = swordPlayer;
-		character.width = (float)CP_Image_GetWidth(swordPlayer);
-		character.height = (float)CP_Image_GetHeight(swordPlayer);
-		canShoot = 0;
-	}
-
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	character.health = 5;	  // start with 5 hp
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
 	character.speed = 210;
 	character.transparency = 255;		// opaque initially, will be translucent in invul state
-	character.shieldedState = 0;		///
-	character.unlimitedEnergyState = 0; ///
+	character.shieldedState = 0;		
+	character.unlimitedEnergyState = 0; 
 	invulElapsedTime = 0;				// timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
-	shieldedDuration = 0;		 ///
-	unlimitedEnergyDuration = 0; ///
-
-	// bullet start shoot spawn position
-	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
-
-	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
-	firstShoot = 0;
-
+	shieldedDuration = 0;		 
+	unlimitedEnergyDuration = 0;
+	nextState = 0.f;
+	startCount = FALSE;
+	menuState = FALSE;
+	exitState = FALSE;
+	startCountG = 0.f;
+	playVictorySound = FALSE;
+	victorySoundCount = 0.f;
 	isPaused = FALSE;
+	// sound init 
+	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
+	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
+	pickUp = CP_Sound_Load("Assets/pickup.wav");
+	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
+	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
+	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
 
 	// initiate obstruction
 	for (int i = 0, x = 0; i < 6; i++, x += (int)obsWidth2)
@@ -197,7 +222,6 @@ void level_1_Init()
 	// square obstruction
 	for (int i = 36, x = 0, y = 0; i < 48; i++)
 	{
-
 		obs.rec_block[i] = SetRect_(wWidth / 6.f + x, wHeight / 4.2f + obsHeight1 * 2 + y, obsWidth1, obsHeight1, obstruction1);
 		x += (int)obs.rec_block[i].width;
 		if (i == 41)
@@ -217,27 +241,6 @@ void level_1_Init()
 			x = 0;
 		}
 	}
-
-	// melee character swing sword area check
-	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
-	swordSwingTime = 0;
-	damageTakenTime = 0;
-	swingSword = false;
-	damageSound = false;
-	characterFacing = 0;
-	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
-	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
-	pickUp = CP_Sound_Load("Assets/pickup.wav");
-	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
-	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
-	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-	nextState = 0.f;
-	startCount = FALSE;
-	menuState = FALSE;
-	exitState = FALSE;
-	startCountG = 0.f;
-	playVictorySound = FALSE;
-	victorySoundCount = 0.f;
 }
 
 void level_1_Update()

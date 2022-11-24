@@ -1,3 +1,12 @@
+﻿//---------------------------------------------------------
+// file:	level4.c
+// author:	Koh Yan Khang, Lua Wei Xiang Darren, Wei Jingsong
+// email:	yankhang.k@digipen.edu, weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
+// brief:	Includes code for the final level of the game, with a final boss consisting of two attack patterns.
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "stdio.h"
 #include "utils.h"
