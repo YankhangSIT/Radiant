@@ -1,3 +1,12 @@
+//---------------------------------------------------------
+// file:	combat.c
+// author:	Koh Yan Khang, Wei Jingsong
+// email:	yankhang.k@digipen.edu, jingsong.wei@digipen.edu
+// brief:	Includes code for the combat mechanics of the game
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "math.h"
 #include "stdio.h"

@@ -51,14 +51,13 @@ char characterEnergyDisplay[MAX_LENGTH];
 
 void level_2_Init()
 {
-	clear();
-
 	// level init
+	clear();
 	CP_System_FullscreenAdvanced(1920, 1080);
-	// CP_System_SetWindowSize(1920, 1080);
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 2;
+	
 	// ranged char init
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
@@ -78,6 +77,7 @@ void level_2_Init()
 	}
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+	
 	// melee char init
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
@@ -92,6 +92,7 @@ void level_2_Init()
 	swordSwingTime = 0;
 	swingSword = false;
 	characterFacing = 0;
+	
 	// enemy init
 	spawnTimer = 1.4f;
 	startSpawnTimer = spawnTimer;
@@ -106,12 +107,14 @@ void level_2_Init()
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
 	enemy.speed = 80;
+	
 	// drops init
 	dropIndex = 0;
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
+	
 	// misc init
 	elapsedTime = 0;
 	surviveMin = 1;
@@ -120,6 +123,7 @@ void level_2_Init()
 	lose = 0;
 	win = 0;
 	direction = 2;
+	
 	// map init
 	map_background = CP_Image_Load("Assets/map_background2.png");
 	CP_Image obstruction4 = CP_Image_Load("Assets/obstruction4.png");
@@ -131,12 +135,11 @@ void level_2_Init()
 	obsHeight5 = (float)CP_Image_GetHeight(obstruction5);
 	obsWidth6 = (float)CP_Image_GetWidth(obstruction6);
 	obsHeight6 = (float)CP_Image_GetHeight(obstruction6);
+	
 	// gameplay init
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
-	hpPickup = CP_Image_Load("Assets/hp_pickup_animation.png");
-	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
 	char_energy = CP_Image_Load("Assets/Char_Energy.png");
 	char_health = CP_Image_Load("Assets/Char_Health.png");
 	nextLevel.pos.x = wWidth / 2.0f;
@@ -171,6 +174,7 @@ void level_2_Init()
 	playVictorySound = FALSE;
 	victorySoundCount = 0.f;
 	isPaused = FALSE;
+	
 	// sound init
 	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
 	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
@@ -810,13 +814,11 @@ void level_2_Update()
 				{
 					character.shieldedState = 1;
 					shieldedDuration = 0;
-					CP_Image_Draw(hpPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(hpPickup), (float)CP_Image_GetHeight(hpPickup), 255);
 				}
 				else if (itemDrop[i].itemId == 2) // health drop
 				{
 					character.unlimitedEnergyState = 1;
 					unlimitedEnergyDuration = 0;
-					CP_Image_Draw(energyPickup, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(energyPickup), (float)CP_Image_GetHeight(energyPickup), 255);
 				}
 
 				for (int y = i; y < dropIndex; ++y)

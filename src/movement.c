@@ -1,3 +1,12 @@
+//---------------------------------------------------------
+// file:	movement.c
+// author:	Koh Yan Khang
+// email:	yankhang.k@digipen.edu
+// brief:	Includes code for the movement mechanics (char and enemy) of the game, including collision tech between enemies, image rendering when character changes direction.
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "math.h"
 #include "stdio.h"
@@ -73,28 +82,3 @@ float toDisplace(CP_Vector enemy1Pos, CP_Vector enemy2Pos, float radius)
 	float toDisplace = 0.5f * distance - (radius * 2);
 }
 
-/*
-CP_Vector checkEnemyCollision(CP_Vector enemy1Position, CP_Vector enemy2Position, float radius) {
-	// buffer is preferred distance between enemies
-	float xDistance = enemy2Position.x - enemy1Position.x;
-	float yDistance = enemy2Position.y - enemy1Position.y;
-	float distance = sqrt(pow(xDistance, 2) + pow(yDistance, 2));
-	float toDisplace = 0.5 * distance - (radius * 2);
-	//printf("distance between enemy 1 and enemy 2 is: %f\n", distance);
-
-	if (distance < radius) {
-		CP_Vector vectorBetween = CP_Vector_Set(xDistance, yDistance);
-		return vectorBetween;
-		//2 has to go vectorbetween/2
-		//1 has to go vectorbetween/-2
-		//enemy2Position.x = enemy2Position.x * (vectorBetween.x * 0.5);
-		//enemy2Position.y = enemy2Position.y * (vectorBetween.y * 0.5);
-		//enemy1Position.x = enemy1Position.x * (vectorBetween.x * -0.5);
-		//enemy1Position.y = enemy1Position.y * (vectorBetween.y * -0.5);
-	}
-	else {
-		CP_Vector noChange = CP_Vector_Set(0, 0);
-		return noChange;
-	}
-}
-*/
