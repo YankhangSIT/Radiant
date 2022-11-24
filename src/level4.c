@@ -261,7 +261,7 @@ void level_4_Update()
 	if (isPaused && win == 0)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
 		Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
@@ -274,7 +274,7 @@ void level_4_Update()
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{

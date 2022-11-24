@@ -260,7 +260,7 @@ void level_1_Update()
 	if (isPaused && win == FALSE)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
 
@@ -274,7 +274,7 @@ void level_1_Update()
 	{
 
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
