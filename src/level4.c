@@ -46,15 +46,14 @@ void level_4_Init()
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
 	delayShootTime = delayShootStart;
-	CP_System_FullscreenAdvanced(1920, 1080);
-	// CP_System_SetWindowSize(1920, 1080);
+	//CP_System_FullscreenAdvanced(1920, 1080);
+	 CP_System_SetWindowSize(1920, 1080);
 	bullet.bulletSpeed = 1000;
-	bossBullet.bulletSpeed = 200;
+	bossBullet.bulletSpeed = 250;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;
 
-	spawnTimer = 1.7f;
 
-	startSpawnTimer = spawnTimer;
+
 	bulletSpawnIndex = 0;
 	elapsedTime = 0;
 	surviveMin = 1;
@@ -69,7 +68,7 @@ void level_4_Init()
 	level = 4;
 	changeSpawnTimer = 0.1f;
 	startSpawnChangeTimer = changeSpawnTimer;
-	direction = 1;
+
 	// Set window width and height to variables
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
@@ -115,6 +114,14 @@ void level_4_Init()
 
 	nextLevel.pos.x = wWidth / 2.0f;
 	nextLevel.pos.y = wHeight / 2.0f - 200;
+	resumeButton.pos.x = wWidth / 2.0f;
+	resumeButton.pos.y = wHeight / 2.0f - 200;
+	restartButton.pos.x = wWidth / 2.0f;
+	restartButton.pos.y = wHeight / 2.0f - 50;
+	menuButton.pos.x = wWidth / 2.0f;
+	menuButton.pos.y = wHeight / 2.0f + 100;
+	exitLevelButton.pos.x = wWidth / 2.0f;
+	exitLevelButton.pos.y = wHeight / 2.0f + 250;
 	// player type gun
 	if (playerNum == 1)
 	{
@@ -145,7 +152,7 @@ void level_4_Init()
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 
-	boss.health = 12;
+	boss.health = 25;
 	boss.maxHealth = boss.health;
 	bossMovement = 10;
 
@@ -257,17 +264,17 @@ void level_4_Update()
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
-		Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	}
 
 	if (boss.health <= 0 || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f - 100, 500, wHeight);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, wHeight);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
@@ -305,22 +312,38 @@ void level_4_Update()
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
-			if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+			if (win == TRUE)
 			{
-				if (win == 0)
+				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+				{
+					delayShootTime = delayShootStart;
+
+					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					if (!nextState)
+						startCount = TRUE;
+				}
+				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+				{
+					Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+				}
+			}
+
+			if (IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+			{
+				if (win == FALSE)
 				{
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					delayShootTime = delayShootStart;
 					isPaused = !isPaused;
 				}
 			}
-			else if (win == FALSE && IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+			else if (win == FALSE && IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
-				Button("Resume", wWidth / 2.0f, wHeight / 2.0f - 200, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+				Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 			}
 		}
 
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			if (isPaused == TRUE)
 			{
@@ -329,12 +352,12 @@ void level_4_Update()
 				level_4_Init();
 			}
 		}
-		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y))
+		else if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y))
 		{
-			Button("Restart", wWidth / 2.0f, wHeight / 2.0f - 50, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
@@ -343,12 +366,12 @@ void level_4_Update()
 				menuState = TRUE;
 			}
 		}
-		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		else if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			Button("Menu", wWidth / 2.0f, wHeight / 2.0f + 100, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 
-		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
@@ -357,9 +380,9 @@ void level_4_Update()
 				exitState = TRUE;
 			}
 		}
-		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		else if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 250, wWidth / 2.0f, wHeight / 2.0f + 250, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 	}
 

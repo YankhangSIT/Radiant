@@ -9,7 +9,7 @@ void level_4_Exit(void);
 /*Determine Player Num Type Gun or Sword*/
 int playerNum;
 
-extern struct Button nextLevel;
-extern struct Button restart;
-extern struct Button menu;
-extern struct Button exitLevel;
+//extern struct Button nextLevel;
+//extern struct Button restart;
+//extern struct Button menu;
+//extern struct Button exitLevel;

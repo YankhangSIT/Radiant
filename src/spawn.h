@@ -24,6 +24,7 @@ struct Enemy {
 
 
 
+
 // Drop struct with all the variables needed for the drop
 struct Drop
 {
@@ -36,12 +37,19 @@ struct Drop
 };
 
 // Button struct
-struct Button
+struct ButtonStruct
 {
 	CP_Vector pos;
 	float width;
 	float height;
 };
+
+struct ButtonStruct nextLevel;
+struct ButtonStruct resumeButton;
+struct ButtonStruct restartButton;
+struct ButtonStruct menuButton;
+struct ButtonStruct exitLevelButton;
+
 
 // Bullet struct with the variables needed
 struct Bullet

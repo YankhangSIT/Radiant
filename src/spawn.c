@@ -29,10 +29,10 @@ int surviveMin = 1;
 int win = 0;
 float spawnTimer = 0.f;
 int lose = 0;
-struct Button nextLevel;
-struct Button restart;
-struct Button menu;
-struct Button exitLevel;
+//struct Button nextLevel;
+//struct Button restart;
+//struct Button menu;
+//struct Button exitLevel;
 
 /*To clear the array*/
 void clear()
