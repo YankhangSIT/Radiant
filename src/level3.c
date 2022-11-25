@@ -154,16 +154,35 @@ void level_3_Init()
 	stunnedHeight = (float)CP_Image_GetHeight(stunned);
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
+
+	buttonWidthOffset = 20;
+	buttonHeightOffset = 20;
+
 	nextLevel.pos.x = wWidth / 2.0f;
 	nextLevel.pos.y = wHeight / 2.0f - 200;
+	nextLevel.width = 300;
+	nextLevel.height = 80;
+
 	resumeButton.pos.x = wWidth / 2.0f;
 	resumeButton.pos.y = wHeight / 2.0f - 200;
+	resumeButton.width = 300;
+	resumeButton.height = 80;
+
 	restartButton.pos.x = wWidth / 2.0f;
 	restartButton.pos.y = wHeight / 2.0f - 50;
+	restartButton.width = 300;
+	restartButton.height = 80;
+
 	menuButton.pos.x = wWidth / 2.0f;
 	menuButton.pos.y = wHeight / 2.0f + 100;
+	menuButton.width = 300;
+	menuButton.height = 80;
+
 	exitLevelButton.pos.x = wWidth / 2.0f;
 	exitLevelButton.pos.y = wHeight / 2.0f + 250;
+	exitLevelButton.width = 300;
+	exitLevelButton.height = 80;
+
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	character.health = 5;	  // start with 5 hp
 	character.energy = 5;	  // start with 5 energy
@@ -259,30 +278,33 @@ void level_3_Update()
 	if (isPaused && win == FALSE)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 1000, 2000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 300);
-
-		Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-		Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		CP_Settings_TextSize(100.0f);
+		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 400);
+		CP_Settings_TextSize(35.0f);
+		Button("Resume Game", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, resumeButton.width, resumeButton.height, 0, 255, 0, 0, 0, 0, 255);
+		Button("Restart Game", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width, restartButton.height, 0, 255, 0, 0, 0, 0, 255);
+		Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width, menuButton.height, 0, 255, 0, 0, 0, 0, 255);
+		Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width, exitLevelButton.height, 0, 255, 0, 0, 0, 0, 255);
 	}
 	/*Darren Lua win/next level panel*/
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
-		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 2000);
+		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 1000, 2000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
 			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 			playVictorySound = TRUE;
-			CP_Font_DrawText("You survived Level 3!", wWidth / 2.0f, wHeight / 2.0f - 300);
-			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-			Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+			CP_Settings_TextSize(100.0f);
+			CP_Font_DrawText("You survived Level 3!", wWidth / 2.0f, wHeight / 2.0f - 400.f);
+			CP_Settings_TextSize(35.0f);
+			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, nextLevel.width, nextLevel.height, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart Game", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width, restartButton.height, 0, 255, 0, 0, 0, 0, 255);
+			Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width, menuButton.height, 0, 255, 0, 0, 0, 0, 255);
+			Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width, exitLevelButton.height, 0, 255, 0, 0, 0, 0, 255);
 		}
 		else
 		{
@@ -319,8 +341,8 @@ void level_3_Update()
 		if (lose == 0)
 		{
 			if (win == TRUE)
-			{
-				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+			{	// next level button
+				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, nextLevel.width, nextLevel.height, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 				{
 					delayShootTime = delayShootStart;
 
@@ -330,11 +352,11 @@ void level_3_Update()
 				}
 				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
-					Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+					Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, nextLevel.width + buttonWidthOffset, nextLevel.height + buttonHeightOffset, 0, 255, 0, 0, 0, 0, 255);
 				}
 			}
 
-			if (IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+			if (IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, resumeButton.width, resumeButton.height, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 			{
 				if (win == FALSE)
 				{
@@ -342,14 +364,14 @@ void level_3_Update()
 					delayShootTime = delayShootStart;
 					isPaused = !isPaused;
 				}
-			}
-			else if (win == FALSE && IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+			} // resume button
+			else if (win == FALSE && IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, resumeButton.width, resumeButton.height, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
-				Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+				Button("Resume Game", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, resumeButton.width + buttonWidthOffset, resumeButton.height + buttonHeightOffset, 0, 255, 0, 0, 0, 0, 255);
 			}
 		}
 
-		if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, restartButton.width, restartButton.height, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			if (isPaused == TRUE)
 			{
@@ -358,9 +380,9 @@ void level_3_Update()
 				level_3_Init();
 			}
 		}
-		else if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y))
-		{
-			Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+		else if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, restartButton.width, restartButton.height, mouseClickPos.x, mouseClickPos.y))
+		{ // restart button
+			Button("Restart Game", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width + buttonWidthOffset, restartButton.height + buttonHeightOffset, 0, 255, 0, 0, 0, 0, 255);
 		}
 
 		if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
@@ -372,12 +394,12 @@ void level_3_Update()
 				menuState = TRUE;
 			}
 		}
-		else if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-		{
-			Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+		else if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, menuButton.width, menuButton.height, mouseClickPos.x, mouseClickPos.y) == 1)
+		{ // menu button
+			Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width + buttonWidthOffset, menuButton.height + buttonHeightOffset, 0, 255, 0, 0, 0, 0, 255);
 		}
 
-		if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
+		if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, exitLevelButton.width, exitLevelButton.height, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 		{
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
@@ -386,9 +408,9 @@ void level_3_Update()
 				exitState = TRUE;
 			}
 		}
-		else if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-		{
-			Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+		else if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, exitLevelButton.width, exitLevelButton.height, mouseClickPos.x, mouseClickPos.y) == 1)
+		{ // exit button
+			Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width + buttonWidthOffset, exitLevelButton.height + buttonHeightOffset, 0, 255, 0, 0, 0, 0, 255);
 		}
 	}
 
