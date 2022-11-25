@@ -31,7 +31,7 @@ int isPaused;
 float mouseX1;
 float mouseX2;
 float sliderBoxX;
-int playBackgroundMusic = 1;
+static int playBackgroundMusic = 1;
 void Main_Menu_Init()
 {
 
