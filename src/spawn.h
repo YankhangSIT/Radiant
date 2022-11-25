@@ -170,6 +170,7 @@ float hpBarCurrLengthX;
 float hpbarOriginalX;
 float bossHealthScale;
 
+
 void clear(void);
 void spawnItem(struct Enemy* enemies, struct Drop* itemDrop, CP_Image dropShieldSprite, CP_Image dropEnergySprite, int* dropIndex, int enemyIndex,int lowRange,int highLimit);
 
