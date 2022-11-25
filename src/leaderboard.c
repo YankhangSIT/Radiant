@@ -15,7 +15,6 @@
 #include "sound.h"
 #include <stdlib.h>
 
-CP_Image win;
 float TimeElapsed;
 FILE* leaderboard = NULL;
 
