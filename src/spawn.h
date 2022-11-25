@@ -165,7 +165,7 @@ float changeSpawnTimer;
 float startSpawnChangeTimer;
 int direction;
 
-
+float pauseElapsedTime;
 
 /*Boss Health Bar*/
 float hpBarCurrLengthX;

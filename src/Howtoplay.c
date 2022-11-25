@@ -89,8 +89,10 @@ void how_To_play_Update(void)
 	if (startCount)
 		nextState += elapsedTime;
 	if (nextState > 0.2)
-		//CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+	{
+		level_1_Init();
 		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+	}
 
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	float xWidth = (float)CP_System_GetWindowWidth();
@@ -233,7 +235,7 @@ void how_To_play_Update(void)
 			if (!nextState)
 				startCount = TRUE;
 			//!! do not initiate next state here! do it at line 92 onwards
-			 CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+			 //CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 			// CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
 			// CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 			// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
