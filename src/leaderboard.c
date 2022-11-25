@@ -236,6 +236,7 @@ void leaderboard_update() {
 		Button("Continue", gWidth / 2.0f + 720, gHeight / 2.0f + 450, gWidth / 2.0f + 716, gHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		if (CP_Input_MouseClicked())
 		{
+			CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
 				startCount = TRUE;

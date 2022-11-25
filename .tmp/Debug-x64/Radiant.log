@@ -20,7 +20,7 @@ LINK : warning C4742: 'win' has different alignment in 'c:\users\donovan\documen
 LINK : warning C4743: 'win' has different size in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 4 and 8 bytes
 LINK : warning C4744: 'win' has different type in 'c:\users\donovan\documents\github\radiant\src\spawn.c' and 'c:\users\donovan\documents\github\radiant\src\leaderboard.c': 'int' and 'pointer'
   Generating code
-  2 of 81 functions ( 2.5%) were compiled, the rest were copied from previous compilation.
+  2 of 80 functions ( 2.5%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     10 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
