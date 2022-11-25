@@ -1,12 +1,13 @@
-/*!
-@file mainmenu.c
-@author Koh Yan Khang (yankhang.k)
-@course csd1401f22
-@section b
-@CarSelectGame
-@date 28/09/2022
-*/
-/*______________________________________________________________________*/
+//---------------------------------------------------------
+// file:	characterSelec.c
+// author:	Seah Sheng Rong Donovan, Lua Wei Xiang Darren
+// email:	s.seah@digipen.edu, weixiangdarren.lua@digipen.edu
+// brief:	This file writes the code for selecting the character and prompt to next page
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
+// header files
 
 #include "cprocessing.h"
 #include "utils.h"

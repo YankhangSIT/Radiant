@@ -1,12 +1,13 @@
-/*!
-@file mainmenu.c
-@author Koh Yan Khang (yankhang.k)
-@course csd1401f22
-@section b
-@CarSelectGame
-@date 28/09/2022
-*/
-/*______________________________________________________________________*/
+//---------------------------------------------------------
+// file:	Howtoplay.c
+// author:	Seah Sheng Rong Donovan
+// email:	s.seah@digipen.edu
+// brief:	This file writes the code for teaching users how to play the game with some UI movement interactive features.
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
+// header files
 
 #include "cprocessing.h"
 #include "stdio.h"
