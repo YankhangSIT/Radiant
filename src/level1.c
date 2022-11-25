@@ -55,8 +55,8 @@ void level_1_Init()
 	clear();
 
 	// level init
-	//CP_System_FullscreenAdvanced(1920, 1080);
-	CP_System_SetWindowSize(1920, 1080);
+	CP_System_FullscreenAdvanced(1920, 1080);
+	//CP_System_SetWindowSize(1920, 1080);
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 1;
