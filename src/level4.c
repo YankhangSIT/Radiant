@@ -3,11 +3,11 @@
 // author:	Koh Yan Khang, Lua Wei Xiang Darren, Wei Jingsong
 // email:	yankhang.k@digipen.edu, weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
 // brief:	Includes code for the final level of the game, with a final boss consisting of two attack patterns.
-// 
+//
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
-//header files
+// header files
 #include "cprocessing.h"
 #include "stdio.h"
 #include "utils.h"
@@ -78,7 +78,7 @@ void level_4_Init()
 	}
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
-	
+
 	// melee char init
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
@@ -93,7 +93,7 @@ void level_4_Init()
 	swordSwingTime = 0;
 	swingSword = false;
 	characterFacing = 0;
-	
+
 	// boss init
 	bossBullet.bulletSpeed = 250;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;
@@ -146,7 +146,7 @@ void level_4_Init()
 	{
 		bossBulletArray3[i].isSpawn = 0;
 	}
-	
+
 	// enemy init (necessary?)
 	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
@@ -160,7 +160,7 @@ void level_4_Init()
 	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
 	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
 	enemy.speed = 70;
-	
+
 	// drops init (necessary?)
 	dropIndex = 0;
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
@@ -169,7 +169,7 @@ void level_4_Init()
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	healthDrop.width = (float)CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = (float)CP_Image_GetHeight(healthDrop.dropSprite);
-	
+
 	// misc init
 	elapsedTime = 0;
 	surviveMin = 1;
@@ -178,7 +178,7 @@ void level_4_Init()
 	lose = 0;
 	win = 0;
 	direction = 1;
-	
+
 	// map init
 	map_background = CP_Image_Load("Assets/map_background4.png");
 	obstruction10 = CP_Image_Load("Assets/obstruction10.png");
@@ -198,19 +198,19 @@ void level_4_Init()
 	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
 	hpbarOriginalX = hpBarCurrLengthX;
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
-	character.health = 5;				// start with 5 hp
-	character.energy = 5;				// start with 5 energy
-	character.invulState = 0;			// start not invul
-	character.shieldedState = 0;		
-	character.unlimitedEnergyState = 0; 
+	character.health = 5;	  // start with 5 hp
+	character.energy = 5;	  // start with 5 energy
+	character.invulState = 0; // start not invul
+	character.shieldedState = 0;
+	character.unlimitedEnergyState = 0;
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	invulElapsedTime = 0;		  // timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
-	shieldedDuration = 0;		
-	unlimitedEnergyDuration = 0; 
+	shieldedDuration = 0;
+	unlimitedEnergyDuration = 0;
 	firstShoot = 0;
 	isPaused = 0;
 	nextState = 0.f;
@@ -219,19 +219,20 @@ void level_4_Init()
 	exitState = FALSE;
 	gameOverState = FALSE;
 	startCountG = 0.f;
-	
+
 	// sound init
 	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
 	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
 	pickUp = CP_Sound_Load("Assets/pickup.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-	
+	bossTime = CP_Sound_Load("Assets/bossTime.mp3");
+	CP_Sound_PlayAdvanced(bossTime, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_2);
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
 }
 
 void level_4_Update()
 {
-	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 	/*Darren Lua Pause Code*/
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == 0)
@@ -259,25 +260,26 @@ void level_4_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
 		}
 		else
 		{
-			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+			CP_Sound_PauseGroup(CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameState(game_Over_page_Init, game_Over_page_Update, game_Over_page_Exit);
 		}
 
-		//if (lose == 0)
+		// if (lose == 0)
 		//{
 		//	win = 1;
-		//}
+		// }
 
 		isPaused = 1;
 	}
 
 	if (isPaused)
 	{
+		CP_Sound_PauseGroup(CP_SOUND_GROUP_2);
 		// delay call next game state by 0.1 sec to register the button sound
 		elapsedTime = CP_System_GetDt();
 		if (startCount)
@@ -353,6 +355,7 @@ void level_4_Update()
 
 	if (!isPaused)
 	{
+		CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
@@ -377,8 +380,6 @@ void level_4_Update()
 				canShoot = 1;
 			}
 		}
-
-
 
 		if (playerNum == 1)
 		{ // IF RANGED CHAR
@@ -546,13 +547,15 @@ void level_4_Update()
 		// FINAL BOSS MOVEMENT
 		if (boss.pos.x < 200.f)
 		{
-			if (bossMovement < 0) {
+			if (bossMovement < 0)
+			{
 				bossMovement *= -1;
 			}
 		}
 		else if (boss.pos.x > wWidth - 200.f)
 		{
-			if (bossMovement > 0) {
+			if (bossMovement > 0)
+			{
 				bossMovement *= -1;
 			}
 		}
@@ -576,7 +579,6 @@ void level_4_Update()
 		CP_Settings_TextSize(35.0f);
 
 		//  FINAL BOSS MECHANICS
-
 
 		/* Darren Lua Boss Bullet Projectile*/
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
@@ -691,8 +693,7 @@ void level_4_Update()
 			bossBulletArray[bossBulletIndex].height = (float)CP_Image_GetHeight(bossBulletArray[(int)bossBulletIndex].bulletSprite);
 
 			if (bossShootTimer3 <= 0)
-			{	
-				
+			{
 
 				/*Direction Vector based on the Angle of Rotation */
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Set((float)(cos(directionAngle)), (float)(sin(directionAngle)));
@@ -709,7 +710,7 @@ void level_4_Update()
 		}
 
 		/*Darren Lua Boss Bullet Boss Bullet Velocity code*/
-		 
+
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
 
@@ -740,9 +741,9 @@ void level_4_Update()
 		}
 
 		// damage taking and 2 second invulnerability after code.
-		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
+		healthChange = 0;											   // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE FROM BOSS BULLET ARRAY 1
-		{ // if not invul, check for damage (collision with mobs) every frame
+		{															   // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < bossBulletIndex; ++i)
 			{
@@ -759,7 +760,7 @@ void level_4_Update()
 			}
 		}
 		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE FROM BOSS BULLET ARRAY 2
-		{ // if not invul, check for damage (collision with mobs) every frame
+		{															   // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < bossBulletIndex2; ++i)
 			{
@@ -776,7 +777,7 @@ void level_4_Update()
 			}
 		}
 		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE FROM BOSS BULLET ARRAY 3
-		{ // if not invul, check for damage (collision with mobs) every frame
+		{															   // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < bossBulletIndex3; ++i)
 			{
@@ -793,7 +794,7 @@ void level_4_Update()
 			}
 		}
 		if (character.invulState != 1 && character.shieldedState != 1) // TAKE DAMAGE WHEN COLLIDE WITH BOSS
-		{ // if not invul, check for damage (collision with mobs) every frame
+		{															   // if not invul, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			if (checkDamage(character.Pos, character.width, character.height, boss.pos, (boss.width / 2)) == 1)
 			{
@@ -805,7 +806,6 @@ void level_4_Update()
 				}
 				character.invulState = 1;
 			}
-			
 		}
 
 		// check if projectile out of bounds, if so, delete it.
@@ -845,7 +845,6 @@ void level_4_Update()
 			}
 		}
 
-
 		// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
@@ -878,7 +877,7 @@ void level_4_Update()
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < bossBulletIndex3; ++i)
 		{
 			for (int o = obstructionCount3; o < obstructionCount4; o++)
@@ -896,7 +895,7 @@ void level_4_Update()
 		}
 
 		//// check if boss projectile out of bounds, if so, delete it.
-		//for (int i = 0; i < bossBulletIndex; ++i)
+		// for (int i = 0; i < bossBulletIndex; ++i)
 		//{
 		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
 		//	{
@@ -911,7 +910,7 @@ void level_4_Update()
 		//		}
 		//	}
 		//}
-		//for (int i = 0; i < bossBulletIndex2; ++i)
+		// for (int i = 0; i < bossBulletIndex2; ++i)
 		//{
 		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
 		//	{
@@ -925,7 +924,7 @@ void level_4_Update()
 		//		}
 		//	}
 		//}
-		//for (int i = 0; i < bossBulletIndex3; ++i)
+		// for (int i = 0; i < bossBulletIndex3; ++i)
 		//{
 		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
 		//	{

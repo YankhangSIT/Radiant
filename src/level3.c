@@ -3,11 +3,11 @@
 // author:	Koh Yan Khang, Lua Wei Xiang Darren, Wei Jingsong
 // email:	yankhang.k@digipen.edu, weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
 // brief:	Includes code for the third level of the game, with 2 types of monster of different healths, with a special "ghost" type
-// 
+//
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
-//header files
+// header files
 #include "cprocessing.h"
 #include "stdio.h"
 #include "utils.h"
@@ -58,7 +58,7 @@ void level_3_Init()
 	level = 3;
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
-	
+
 	// ranged char init
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
@@ -78,7 +78,7 @@ void level_3_Init()
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 	firstShoot = 0;
-	
+
 	// melee char init
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
@@ -93,7 +93,7 @@ void level_3_Init()
 	swordSwingTime = 0;
 	swingSword = false;
 	characterFacing = 0;
-	
+
 	// enemy init
 	spawnTimer = 1.7f;
 	startSpawnTimer = spawnTimer;
@@ -110,7 +110,7 @@ void level_3_Init()
 	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
 	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
 	enemy.speed = 100;
-	
+
 	// drops init
 	dropIndex = 0;
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png"); /// added
@@ -119,11 +119,11 @@ void level_3_Init()
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	healthDrop.width = (float)CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = (float)CP_Image_GetHeight(healthDrop.dropSprite);
-	
+
 	// misc init
 	elapsedTime = 0;
 	surviveMin = 1;
-	sec = 0;
+	sec = 55;
 	min = 0;
 	lose = 0;
 	win = 0;
@@ -142,14 +142,14 @@ void level_3_Init()
 	obsHeight8 = (float)CP_Image_GetHeight(obstruction8);
 	obsWidth9 = (float)CP_Image_GetWidth(obstruction9);
 	obsHeight9 = (float)CP_Image_GetHeight(obstruction9);
-	
+
 	// gameplay init
 	canShoot = 0;
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
-	char_energy = CP_Image_Load("Assets/Char_Energy.png");	
-	char_health = CP_Image_Load("Assets/Char_Health.png");	
-	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");	
-	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png"); 
+	char_energy = CP_Image_Load("Assets/Char_Energy.png");
+	char_health = CP_Image_Load("Assets/Char_Health.png");
+	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");
+	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png");
 	stunnedWidth = (float)CP_Image_GetWidth(stunned);
 	stunnedHeight = (float)CP_Image_GetHeight(stunned);
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
@@ -169,15 +169,15 @@ void level_3_Init()
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
 	character.speed = 210;
-	character.transparency = 255;		// opaque initially, will be translucent in invul state
-	character.shieldedState = 0;		
-	character.unlimitedEnergyState = 0; 
-	invulElapsedTime = 0;				// timer for invul
+	character.transparency = 255; // opaque initially, will be translucent in invul state
+	character.shieldedState = 0;
+	character.unlimitedEnergyState = 0;
+	invulElapsedTime = 0; // timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
-	shieldedDuration = 0;		
-	unlimitedEnergyDuration = 0; 
+	shieldedDuration = 0;
+	unlimitedEnergyDuration = 0;
 	isPaused = FALSE;
 	nextState = 0.f;
 	startCount = FALSE;
@@ -186,7 +186,7 @@ void level_3_Init()
 	startCountG = 0.f;
 	playVictorySound = FALSE;
 	victorySoundCount = 0.f;
-	
+
 	// sound init
 	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
 	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
@@ -234,18 +234,19 @@ void level_3_Init()
 		obs.rec_block[i] = SetRect_(wWidth * 5 / 6 + x, (float)(wHeight * 1.3 / 2 + obsHeight7), obsWidth7, obsHeight7, obstruction7);
 		x -= (int)(obs.rec_block[i].width * 2);
 	}
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 }
 
 void level_3_Update()
 {
-	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	//Force victory sound to not loop with game update function
 	if (playVictorySound)
 	{
 		victorySoundCount += 1.f;
 	}
 	if (victorySoundCount == 2.f)
-		CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
+		CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
@@ -294,6 +295,7 @@ void level_3_Update()
 	}
 	if (isPaused)
 	{
+		CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 		elapsedTime = CP_System_GetDt();
 		if (startCount)
 			nextState += elapsedTime;
@@ -315,7 +317,6 @@ void level_3_Update()
 				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 				{
 					delayShootTime = delayShootStart;
-
 
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					if (!nextState)
@@ -387,6 +388,7 @@ void level_3_Update()
 
 	if (!isPaused)
 	{
+		CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
@@ -581,14 +583,13 @@ void level_3_Update()
 						// activate take damge effect
 						enemies[j].takeDamage = 1.0f;
 
-
 						if (enemies[j].health <= 0)
 						{
-							//randomize spawn rate from 1 to 2 meaning 1 in 2 chance of spawn
+							// randomize spawn rate from 1 to 2 meaning 1 in 2 chance of spawn
 							unsigned int randomRate = CP_Random_RangeInt(1, 2);
 							// randomly set drop id between 1 or 2
 							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							//set drop Id and drop boolean to true
+							// set drop Id and drop boolean to true
 							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
 							if (randomRate == 2)
@@ -673,16 +674,16 @@ void level_3_Update()
 						--enemies[i].health;
 
 						/*take damage effect Darren Lua*/
-						enemies[i].takeDamage = 1.0f;	
+						enemies[i].takeDamage = 1.0f;
 						/*Darren Lua Item Drop Mechanic*/
 
 						if (enemies[i].health <= 0)
 						{
-							//randomize spawn rate from 1 to 2 meaning 1 in 2 chance of spawn
+							// randomize spawn rate from 1 to 2 meaning 1 in 2 chance of spawn
 							unsigned int randomRate = CP_Random_RangeInt(1, 2);
 							// randomly set drop id between 1 or 2
 							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							//set drop Id and drop boolean to true
+							// set drop Id and drop boolean to true
 							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
 							if (randomRate == 2)

@@ -3,11 +3,11 @@
 // author:	Koh Yan Khang, Lua Wei Xiang Darren, Wei Jingsong
 // email:	yankhang.k@digipen.edu, weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
 // brief:	Includes code for the second level of the game, with 2 types of monster of different healths
-// 
+//
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
-//header files
+// header files
 #include "cprocessing.h"
 #include "stdio.h"
 #include "utils.h"
@@ -57,7 +57,7 @@ void level_2_Init()
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 2;
-	
+
 	// ranged char init
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
@@ -77,7 +77,7 @@ void level_2_Init()
 	}
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f);
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
-	
+
 	// melee char init
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
@@ -92,7 +92,7 @@ void level_2_Init()
 	swordSwingTime = 0;
 	swingSword = false;
 	characterFacing = 0;
-	
+
 	// enemy init
 	spawnTimer = 1.4f;
 	startSpawnTimer = spawnTimer;
@@ -107,23 +107,23 @@ void level_2_Init()
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
 	enemy.speed = 80;
-	
+
 	// drops init
 	dropIndex = 0;
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
-	
+
 	// misc init
 	elapsedTime = 0;
 	surviveMin = 1;
-	sec = 0;
+	sec = 55;
 	min = 0;
 	lose = 0;
 	win = 0;
 	direction = 2;
-	
+
 	// map init
 	map_background = CP_Image_Load("Assets/map_background2.png");
 	CP_Image obstruction4 = CP_Image_Load("Assets/obstruction4.png");
@@ -135,7 +135,7 @@ void level_2_Init()
 	obsHeight5 = (float)CP_Image_GetHeight(obstruction5);
 	obsWidth6 = (float)CP_Image_GetWidth(obstruction6);
 	obsHeight6 = (float)CP_Image_GetHeight(obstruction6);
-	
+
 	// gameplay init
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
@@ -153,11 +153,11 @@ void level_2_Init()
 	exitLevelButton.pos.x = wWidth / 2.0f;
 	exitLevelButton.pos.y = wHeight / 2.0f + 250;
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
-	character.health = 5;				// start with 5 hp
-	character.energy = 5;				// start with 5 energy
-	character.invulState = 0;			// start not invul
-	character.shieldedState = 0;		
-	character.unlimitedEnergyState = 0; 
+	character.health = 5;	  // start with 5 hp
+	character.energy = 5;	  // start with 5 energy
+	character.invulState = 0; // start not invul
+	character.shieldedState = 0;
+	character.unlimitedEnergyState = 0;
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	invulElapsedTime = 0;		  // timer for invul
@@ -174,7 +174,7 @@ void level_2_Init()
 	playVictorySound = FALSE;
 	victorySoundCount = 0.f;
 	isPaused = FALSE;
-	
+
 	// sound init
 	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
 	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
@@ -236,18 +236,19 @@ void level_2_Init()
 			x -= (int)obsWidth5;
 		}
 	}
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 }
 
 void level_2_Update()
 {
-	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+	// Force victory sound to not loop with game update function
 	if (playVictorySound)
 	{
 		victorySoundCount += 1.f;
 	}
 	if (victorySoundCount == 2.f)
-		CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
+		CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 
 	if (min == surviveMin || lose == 1)
 	{
@@ -297,6 +298,7 @@ void level_2_Update()
 
 	if (isPaused)
 	{
+		CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 		// delay call next game state by 0.1 sec to register the button sound
 		elapsedTime = CP_System_GetDt();
 		if (startCount)
@@ -322,7 +324,6 @@ void level_2_Update()
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					if (!nextState)
 						startCount = TRUE;
-
 				}
 				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
@@ -390,6 +391,7 @@ void level_2_Update()
 
 	if (!isPaused)
 	{
+		CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
@@ -423,7 +425,7 @@ void level_2_Update()
 
 			if (changeSpawnTimer <= 0)
 			{
-				//change directions every time change spawn timer reaches 0 or less
+				// change directions every time change spawn timer reaches 0 or less
 				if (direction == 4)
 				{
 					direction = 1;
@@ -466,7 +468,6 @@ void level_2_Update()
 			{
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
 			}
-
 
 			// set spawn position of enemy
 			enemies[spawnIndex].pos.x = spawnPosition.x;
@@ -547,7 +548,7 @@ void level_2_Update()
 			}
 			/*bullet movement*/
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{	/*scale the acceleration of the bullet based on the normalized direction and the speed*/
+			{ /*scale the acceleration of the bullet based on the normalized direction and the speed*/
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
 				/*Add the bullet's acceleration vector to the bullet's position*/
 				bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
@@ -585,11 +586,11 @@ void level_2_Update()
 
 						if (enemies[j].health <= 0)
 						{
-							//randomize spawn rate from 1 to 4 meaning 1 in 2 chance of spawn
+							// randomize spawn rate from 1 to 4 meaning 1 in 2 chance of spawn
 							unsigned int randomRate = CP_Random_RangeInt(1, 2);
 							// randomly set drop id between 1 or 2
 							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							//set drop Id and drop boolean to true
+							// set drop Id and drop boolean to true
 							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
 							if (randomRate == 2)
@@ -677,11 +678,11 @@ void level_2_Update()
 
 						if (enemies[i].health <= 0)
 						{
-							//randomize spawn rate from 1 to 4 meaning 1 in 3 chance of spawn
+							// randomize spawn rate from 1 to 4 meaning 1 in 3 chance of spawn
 							unsigned int randomRate = CP_Random_RangeInt(1, 3);
 							// randomly set drop id between 1 or 2
 							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							//set drop Id and drop boolean to true
+							// set drop Id and drop boolean to true
 							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
 							if (randomRate == 2)

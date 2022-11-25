@@ -9,6 +9,7 @@ CP_Sound damageTaken;
 CP_Sound gameOverSound;
 CP_Sound backgroundMusic;
 CP_Sound credits;
+CP_Sound bossTime;
 float backgroundVolume;
 float sfxVolume;
 int startCount;
