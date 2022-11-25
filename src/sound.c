@@ -9,5 +9,5 @@ CP_Sound damageTaken = NULL;
 CP_Sound gameOverSound = NULL;
 CP_Sound backgroundMusic = NULL;
 CP_Sound bossTime = NULL;
-float backgroundVolume = 0.5f;
-float sfxVolume = 0.5f;
+float backgroundVolume;
+float sfxVolume;

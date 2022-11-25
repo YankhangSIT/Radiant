@@ -31,6 +31,7 @@ int isPaused;
 float mouseX1;
 float mouseX2;
 float sliderBoxX;
+int playBackgroundMusic = 1;
 void Main_Menu_Init()
 {
 
@@ -57,12 +58,17 @@ void Main_Menu_Init()
 	exitState = FALSE;
 	creditState = FALSE;
 	isPaused = FALSE;
-	*&backgroundVolume = 0.2f;
-	CP_Sound_PlayAdvanced(backgroundMusic, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_1);
+	if (playBackgroundMusic)
+	{
+		CP_Sound_PlayAdvanced(backgroundMusic, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_1);
+		playBackgroundMusic = 0;
+		*&backgroundVolume = 0.2f;
+	}
+	else
+		CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_1, *&backgroundVolume);
 	mouseX1 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_1) * 400);
 	mouseX2 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_0) * 400);
-	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 }
 
 void Main_Menu_Update()
