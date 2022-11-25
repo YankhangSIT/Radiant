@@ -215,6 +215,7 @@ void level_4_Init()
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
 	bossTime = CP_Sound_Load("Assets/bossTime.mp3");
 	CP_Sound_PlayAdvanced(bossTime, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_2);
+	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_2, *&backgroundVolume);
 	CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
 }
 
