@@ -3,7 +3,7 @@
 // author:	Koh Yan Khang, Lua Wei Xiang Darren, Wei Jingsong
 // email:	yankhang.k@digipen.edu, weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
 // brief:	Includes code for the first level of the game, with only one type of monster
-//
+//			
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 

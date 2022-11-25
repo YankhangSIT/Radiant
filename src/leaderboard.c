@@ -224,7 +224,7 @@ void leaderboard_update() {
 	{
 		if (q >= 10)break;
 		char temp_str[50];
-		sprintf(&temp_str, "%s %d", points[q].username, points[q].points);
+		sprintf(temp_str, "%s %d", points[q].username, points[q].points);
 		CP_Font_DrawText(temp_str, gWidth / 2.0f, gHeight / 2.0f + 40 * q - 50);
 	}
 

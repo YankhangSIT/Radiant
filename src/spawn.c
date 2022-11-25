@@ -1,8 +1,8 @@
 //---------------------------------------------------------
 // file:	spawn.c
 // author:	Lua Wei Xiang Darren
-// email:	 weixiangdarren.lua@digipen.edu
-// brief:	Includes code for the first level of the game, with only one type of monster
+// email:	weixiangdarren.lua@digipen.edu
+// brief:	Spawn source file containing function related to spawning such as item drop from monsters 
 //
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
@@ -12,36 +12,10 @@
 #include "cprocessing.h"
 #include <stdlib.h>
 #include "global.h"
-/*Darren Lua Source File*/
-
-struct Bullet bullet;
-struct Bullet bulletArray[SIZE];
-
-int bulletSpawnIndex = 0;
-int firstShoot = 0;
-int canShoot = 0;
-float delayShootTime = 0;
-float delayShootStart = 0;
-CP_Vector spawnPosition;
-struct Enemy enemies[SIZE];
-struct Enemy enemy;
-struct Drop itemDrop[SIZE];
-struct Drop healthDrop;
-int dropIndex = 0;
-CP_Vector itemSpawn;
-int firstDrop = 0;
-CP_Image enemySprite1;
-CP_Image enemySprite2;
-int min = 0;
-float sec = 0;
-int surviveMin = 1;
-// win condition boolean
-int win = 0;
-float spawnTimer = 0.f;
-int lose = 0;
 
 
-/*To clear the array*/
+
+/*To clear the arrays*/
 void clear()
 {
 	memset(enemies, 0, sizeof(enemies));

@@ -2,7 +2,7 @@
 // file:	spawn.c
 // author:	Lua Wei Xiang Darren, Jing Song
 // email:	 weixiangdarren.lua@digipen.edu , jingsong.wei@digipen.edu
-// brief:	Includes code for the first level of the game, with only one type of monster
+// brief:	Contains the functions for buttons and slider
 //
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------

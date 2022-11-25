@@ -73,12 +73,5 @@ CP_Vector enemyMovement(CP_Vector charPosition, CP_Vector enemyPosition, float e
 	return enemyPosition;
 }
 
-// toDisplace(enemy1[i].pos, enemy1[j].pos, enemy.radius);
-float toDisplace(CP_Vector enemy1Pos, CP_Vector enemy2Pos, float radius)
-{
-	float xDistance = enemy1Pos.x - enemy2Pos.x;
-	float yDistance = enemy1Pos.y - enemy2Pos.y;
-	float distance = (float) sqrt(pow(xDistance, 2) + pow(yDistance, 2));
-	float toDisplace = 0.5f * distance - (radius * 2);
-}
+
 

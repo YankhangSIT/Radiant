@@ -111,8 +111,8 @@ void level_4_Init()
 	boss.width = (float)CP_Image_GetWidth(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
-	// boss.health = 20;
-	boss.health = 1;
+
+	boss.health = 20;
 	boss.maxHealth = boss.health;
 	bossMovement = 5;
 	bossShootTimer = 0.5f;
@@ -184,10 +184,6 @@ void level_4_Init()
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
 
-	//nextLevel.pos.x = wWidth / 2.0f;
-	//nextLevel.pos.y = wHeight / 2.0f - 200;
-	//nextLevel.width = 300;
-	//nextLevel.height = 80;
 
 	resumeButton.pos.x = wWidth / 2.0f;
 	resumeButton.pos.y = wHeight / 2.0f - 200;

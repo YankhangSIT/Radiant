@@ -1,4 +1,15 @@
 #pragma once
+//---------------------------------------------------------
+// file:	spawn.h
+// author:	Lua Wei Xiang Darren
+// email:	weixiangdarren.lua@digipen.edu
+// brief:	Spawn header file containing function prototypes, struct and declarations related to spawning and misc stuff like buttons and health bar
+//			
+//
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
+
 /*Darren Lua Spawn Header*/
 #include "cprocessing.h"
 #include "math.h"

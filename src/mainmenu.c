@@ -1,12 +1,12 @@
-/*!
-@file mainmenu.c
-@author Koh Yan Khang (yankhang.k)
-@course csd1401f22
-@section b
-@CarSelectGame
-@date 28/09/2022
-*/
-/*______________________________________________________________________*/
+//---------------------------------------------------------
+// file:	mainmenu.c
+// author:	Lua Wei Xiang Darren, Jing Song , Seah Sheng Rong Donovan
+// email:	weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu, s.seah@digipen.edu
+// brief:	Contains the code for main menu buttons such as Start Game, Options, Credits and Quit Game
+//			the options code contains code for the sound adjustment slider
+//
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 
 #include "cprocessing.h"
 #include "utils.h"
@@ -102,22 +102,22 @@ void Main_Menu_Update()
 		CP_Settings_RectMode(CP_POSITION_CENTER);
 
 		// Play Button
-		Button("Play", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Start Game", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 100, 220, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		// volume ettings Button
-		Button("Sound", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Options", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 220, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		// Exit Button
-		Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Quit Game", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 220, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		// Credits Button
-		Button("Credits", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+		Button("Credits", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 220, 80, 0, 255, 0, 0, 0, 0, 255);
 
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		// If click "Play" Button
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			Button("Play", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 96, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Start Game", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 96, 260, 100, 0, 255, 0, 0, 0, 0, 255);
 
 			if (CP_Input_MouseClicked())
 			{
@@ -136,7 +136,7 @@ void Main_Menu_Update()
 		// else if click "Exit" button
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			Button("Exit", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 196, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Quit Game", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 196, 260, 100, 0, 255, 0, 0, 0, 0, 255);
 			if (CP_Input_MouseClicked())
 			{
 
@@ -151,7 +151,7 @@ void Main_Menu_Update()
 		// volume settings
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
-			Button("Sound", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 46, 220, 100, 0, 255, 0, 0, 0, 0, 255);
+			Button("Options", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 46, 260, 100, 0, 255, 0, 0, 0, 0, 255);
 			if (CP_Input_MouseClicked())
 			{
 				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
@@ -240,10 +240,8 @@ void Main_Menu_Update()
 		}
 		if (CP_Input_KeyDown(KEY_ESCAPE))
 		{
-			// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			isPaused = !isPaused;
-			// CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 		}
 	}
 }
@@ -252,5 +250,4 @@ void Main_Menu_Exit()
 {
 	CP_Image_Free(&main_menu);
 	CP_Sound_Free(&buttonClickSound);
-	// CP_Sound_Free(&backgroundMusic);
 }

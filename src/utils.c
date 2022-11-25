@@ -45,6 +45,3 @@ CP_Vector AngleToVector(float radian_angle)
 	return ret;
 }
 
-CP_Vector moveCar(CP_Vector position, CP_Vector direction, float speed)
-{
-}
