@@ -31,6 +31,7 @@ int isPaused;
 float mouseX1;
 float mouseX2;
 float sliderBoxX;
+int playBackgroundMusic = 1;
 void Main_Menu_Init()
 {
 
@@ -51,19 +52,27 @@ void Main_Menu_Init()
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
-	backgroundMusic = CP_Sound_Load("Assets/background.wav");
+	backgroundMusic = CP_Sound_Load("Assets/background.mp3");
 	nextState = 0.f;
 	startCount = FALSE;
 	exitState = FALSE;
 	creditState = FALSE;
 	isPaused = FALSE;
+	if (playBackgroundMusic)
+	{
+		CP_Sound_PlayAdvanced(backgroundMusic, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_1);
+		playBackgroundMusic = 0;
+		*&backgroundVolume = 0.2f;
+	}
+	else
+		CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
+	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_1, *&backgroundVolume);
 	mouseX1 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_1) * 400);
 	mouseX2 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_0) * 400);
 }
 
 void Main_Menu_Update()
 {
-	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 
 	if (!isPaused)
 	{
@@ -82,7 +91,7 @@ void Main_Menu_Update()
 		}
 
 		// Set background music
-		CP_Sound_PlayAdvanced(backgroundMusic, 0.02f, 1.0f, TRUE, CP_SOUND_GROUP_1);
+		// CP_Sound_PlayAdvanced(backgroundMusic, 0.5f, 1.0f, TRUE, CP_SOUND_GROUP_1);
 		// Set background
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, (float)CP_Image_GetWidth(main_menu), (float)CP_Image_GetHeight(main_menu), 255);
@@ -196,6 +205,7 @@ void Main_Menu_Update()
 		else if (*&backgroundVolume < 0)
 			*&backgroundVolume = 0;
 		CP_Sound_SetGroupVolume(CP_SOUND_GROUP_1, *&backgroundVolume);
+		CP_Sound_SetGroupVolume(CP_SOUND_GROUP_2, *&backgroundVolume);
 		mouseX1 = ((wWidth / 2 - 200) + *&backgroundVolume * 400);
 		// SFX volume adjustment
 		sliderBar(wWidth / 2, wHeight / 2 + 100, 400, 10, 255, 255, 255, 255);
@@ -227,6 +237,13 @@ void Main_Menu_Update()
 				CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				isPaused = !isPaused;
 			}
+		}
+		if (CP_Input_KeyDown(KEY_ESCAPE))
+		{
+			// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+			isPaused = !isPaused;
+			// CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 		}
 	}
 }

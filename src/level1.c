@@ -3,11 +3,11 @@
 // author:	Koh Yan Khang, Lua Wei Xiang Darren, Wei Jingsong
 // email:	yankhang.k@digipen.edu, weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
 // brief:	Includes code for the first level of the game, with only one type of monster
-// 
+//
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
-//header files
+// header files
 #include "cprocessing.h"
 #include "stdio.h"
 #include "utils.h"
@@ -60,10 +60,10 @@ void level_1_Init()
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 1;
-	
+
 	// ranged char init
 	firstShoot = 0;
-	bullet.bulletSpeed = 1000; 
+	bullet.bulletSpeed = 1000;
 	bulletSpawnIndex = 0;
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
@@ -80,6 +80,7 @@ void level_1_Init()
 	}
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f); // bullet start shoot spawn position
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
+	firstShoot = 0;
 	canShoot = 0;
 
 
@@ -100,7 +101,7 @@ void level_1_Init()
 	swingSword = false;
 	damageSound = false;
 	characterFacing = 0;
-	
+
 	// enemy init
 	spawnTimer = 1.f;
 	spawnIndex = 0;
@@ -110,12 +111,12 @@ void level_1_Init()
 	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
-	spawnPosition = CP_Vector_Set(0, 0); // set spawn positions to 0 coordinate
+	spawnPosition = CP_Vector_Set(0, 0);						  // set spawn positions to 0 coordinate
 	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
 	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
 	enemy.speed = 70;
-	
-	//drops init
+
+	// drops init
 	dropIndex = 0;
 	itemDrop[dropIndex].pos.x = spawnPosition.x;
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
@@ -123,15 +124,15 @@ void level_1_Init()
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
 	healthDrop.width = (float)CP_Image_GetWidth(healthDrop.dropSprite);
 	healthDrop.height = (float)CP_Image_GetHeight(healthDrop.dropSprite);
-	
+
 	// misc init
-	elapsedTime = 0; 
+	elapsedTime = 0;
 	surviveMin = 1;
 	sec = 0;
 	min = 0;
 	lose = 0;
 	direction = 1;
-	
+
 	// map init
 	map_background = CP_Image_Load("Assets/map_background1.png");
 	obstruction1 = CP_Image_Load("Assets/obstruction1.png");
@@ -145,15 +146,15 @@ void level_1_Init()
 	obsHeight3 = (float)CP_Image_GetHeight(obstruction3);
 	stunnedWidth = (float)CP_Image_GetWidth(stunned);
 	stunnedHeight = (float)CP_Image_GetHeight(stunned);
-	
+
 	// gameplay init
 	stunned = CP_Image_Load("Assets/stunned_animation.png");
 	char_energy = CP_Image_Load("Assets/Char_Energy.png");
 	char_health = CP_Image_Load("Assets/Char_Health.png");
-	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");		 
+	shielded = CP_Image_Load("Assets/Unlimited_Health_Mode.png");
 	unlimitedEnergy = CP_Image_Load("Assets/Unlimited_Energy_Mode.png");
-	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png"); // player sprite 
-	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");// player sprite
+	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");  // player sprite
+	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png"); // player sprite
 	nextLevel.pos.x = wWidth / 2.0f;
 	nextLevel.pos.y = wHeight / 2.0f - 200;
 	resumeButton.pos.x = wWidth / 2.0f;
@@ -169,14 +170,14 @@ void level_1_Init()
 	character.energy = 5;	  // start with 5 energy
 	character.invulState = 0; // start not invul
 	character.speed = 210;
-	character.transparency = 255;		// opaque initially, will be translucent in invul state
-	character.shieldedState = 0;		
-	character.unlimitedEnergyState = 0; 
-	invulElapsedTime = 0;				// timer for invul
+	character.transparency = 255; // opaque initially, will be translucent in invul state
+	character.shieldedState = 0;
+	character.unlimitedEnergyState = 0;
+	invulElapsedTime = 0; // timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
-	shieldedDuration = 0;		 
+	shieldedDuration = 0;
 	unlimitedEnergyDuration = 0;
 	nextState = 0.f;
 	startCount = FALSE;
@@ -186,8 +187,8 @@ void level_1_Init()
 	playVictorySound = FALSE;
 	victorySoundCount = 0.f;
 	isPaused = FALSE;
-	
-	// sound init 
+
+	// sound init
 	sword_swing = CP_Sound_Load("Assets/sword_swing.wav");
 	projectile_shoot = CP_Sound_Load("Assets/projectile.wav");
 	pickUp = CP_Sound_Load("Assets/pickup.wav");
@@ -250,18 +251,19 @@ void level_1_Init()
 			x = 0;
 		}
 	}
+	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 }
 
 void level_1_Update()
 {
-	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
+    //Force victory sound to not loop with game update function
 	if (playVictorySound)
 	{
 		victorySoundCount += 1.f;
 	}
 	if (victorySoundCount == 2.f)
-		CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
+		CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
@@ -312,13 +314,12 @@ void level_1_Update()
 
 	if (isPaused)
 	{
+		CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 		delayShootTime = delayShootStart;
-		printf("delayshootTim %f\n", delayShootTime);
-		printf("elapsedTime paused %f\n", elapsedTime);
 		// delay call next game state by 0.1 sec to register the button sound
-		pauseElapsedTime = CP_System_GetDt();
+		elapsedTime = CP_System_GetDt();
 		if (startCount)
-			nextState += pauseElapsedTime;
+			nextState += elapsedTime;
 		if (nextState > 0.2)
 		{
 			if (exitState)
@@ -326,7 +327,10 @@ void level_1_Update()
 			else if (menuState)
 				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			else
+			{
+				level_2_Init();
 				CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+			}
 		}
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
@@ -340,7 +344,6 @@ void level_1_Update()
 					CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 					if (!nextState)
 						startCount = TRUE;
-
 				}
 				else if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 				{
@@ -408,6 +411,7 @@ void level_1_Update()
 
 	if (!isPaused)
 	{
+		CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
@@ -435,13 +439,10 @@ void level_1_Update()
 			if (delayShootTime > 0.f)
 			{
 				
-				delayShootTime -= elapsedTime;
-				printf("delayshootTim %f\n", delayShootTime);
-				
+				delayShootTime -= elapsedTime;				
 			}
 			else if (delayShootTime < 0.f)
 			{
-				printf("canShoot\n");
 				canShoot = 1;				
 			}
 		}
@@ -450,10 +451,10 @@ void level_1_Update()
 		// keeps spawning for 1 min
 		if (min < surviveMin)
 		{
-			changeSpawnTimer -= elapsedTime;			
+			changeSpawnTimer -= elapsedTime;
 			if (changeSpawnTimer <= 0)
 			{
-				//change directions every time change spawn timer reaches 0 or less
+				// change directions every time change spawn timer reaches 0 or less
 				if (direction == 4)
 				{
 					direction = 1;
@@ -480,21 +481,21 @@ void level_1_Update()
 
 				// set random spawn position based on width and height of the screen
 				/*The 4 directions represent different locations of the spawn */
-				if (direction == 1)
+				if (direction == 1)	/*top of the map*/
 				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), 40);
 				}
-				else if (direction == 2)
+				else if (direction == 2) /*left of the map*/
 				{
-					spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
+					spawnPosition = CP_Vector_Set(40, CP_Random_RangeFloat(40, wHeight - 40));
 				}
-				else if (direction == 3)
+				else if (direction == 3) /*right of the map*/
 				{
-					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wHeight));
+					spawnPosition = CP_Vector_Set(wWidth - 40, CP_Random_RangeFloat(40, wHeight - 40));
 				}
-				else if (direction == 4)
+				else if (direction == 4)  /*bottom of the map*/
 				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
+					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), wHeight - 40);
 				}
 				// set spawn positions of the enemies
 				enemies[spawnIndex].pos.x = spawnPosition.x;
@@ -511,7 +512,7 @@ void level_1_Update()
 		{
 			// set enemy sprite to enemy sprite1
 			enemies[i].enemySprite = enemySprite1;
-			//set the width and height to the respective sprite
+			// set the width and height to the respective sprite
 			enemies[i].width = (float)CP_Image_GetWidth(enemies[i].enemySprite);
 			enemies[i].height = (float)CP_Image_GetHeight(enemies[i].enemySprite);
 			enemies[i].health = 1;
@@ -562,7 +563,7 @@ void level_1_Update()
 			}
 			/*bullet movement*/
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{	/*scale the acceleration of the bullet based on the normalized direction and the speed*/
+			{ /*scale the acceleration of the bullet based on the normalized direction and the speed*/
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
 				/*Add the bullet's acceleration vector to the bullet's position*/
 				bulletArray[i].bulletPos = CP_Vector_Add(bulletArray[i].bulletPos, bulletArray[i].acceleration);
@@ -597,14 +598,14 @@ void level_1_Update()
 						// decrease health after collision
 						--enemies[j].health;
 
-						/*Darren Lua Item Drop code*/										
+						/*Darren Lua Item Drop code*/
 						if (enemies[j].health <= 0)
-						{						
-							 //randomize spawn rate from 1 to 2 meaning 1 in 4 chance of spawn
+						{
+							// randomize spawn rate from 1 to 2 meaning 1 in 4 chance of spawn
 							unsigned int randomRate = CP_Random_RangeInt(1, 4);
 							// randomly set drop id between 1 or 2
 							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							//set drop Id and drop boolean to true
+							// set drop Id and drop boolean to true
 							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
 							if (randomRate == 2)
@@ -688,12 +689,12 @@ void level_1_Update()
 						--enemies[i].health;
 						/*Darren Lua Item Drop code*/
 						if (enemies[i].health <= 0)
-						{							
-							//randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
+						{
+							// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
 							unsigned int randomRate = CP_Random_RangeInt(1, 4);
 							// randomly set drop id between 1 or 2
 							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							//set drop Id and drop boolean to true
+							// set drop Id and drop boolean to true
 							itemDrop[dropIndex].itemId = dropId;
 							itemDrop[dropIndex].dropTrue = 1;
 							if (randomRate == 2)
@@ -932,8 +933,8 @@ void level_1_Update()
 			lose = 0;
 		}
 
-		//Darren draw enemies, player and bullet code 
-		// draw enemy 
+		// Darren draw enemies, player and bullet code
+		//  draw enemy
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
@@ -953,6 +954,7 @@ void level_1_Update()
 				}
 			}
 		}
+
 		if (playerNum == 2)
 		{
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
@@ -965,13 +967,12 @@ void level_1_Update()
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
-		// display timer done by Darren Lua
+		// display timer 
 		CP_Settings_TextSize(100.0f);
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
-
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);
