@@ -50,7 +50,7 @@ float bossMovement;
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
-
+static int playBackgroundMusic = 1;
 void level_4_Init()
 {
 	// level init
@@ -239,10 +239,16 @@ void level_4_Init()
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
 	bossTime = CP_Sound_Load("Assets/bossTime.mp3");
 	stunnedSound = CP_Sound_Load("Assets/stunned.wav");
-	CP_Sound_PlayAdvanced(bossTime, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_2);
+	if (playBackgroundMusic)
+	{
+		CP_Sound_PlayAdvanced(bossTime, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_2);
+		playBackgroundMusic = 0;
+		*&backgroundVolume = 0.2f;
+	}
+	else
+		CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
 	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_2, *&backgroundVolume);
 	CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
-	CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
 	playStunnedSound = 1;
 	StunnedSoundTime = 0;
 }
