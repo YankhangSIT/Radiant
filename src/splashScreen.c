@@ -1,3 +1,13 @@
+//---------------------------------------------------------
+// file:	splashScreen.c
+// author:	Seah Sheng Rong Donovan
+// email:	s.seah@digipen.edu
+// brief:	This file writes the code for Splashscreen page as required from Digipen
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
+// header files
 #include "cprocessing.h"
 #include "utils.h"
 #include "level1.h"

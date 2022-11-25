@@ -1,3 +1,14 @@
+//---------------------------------------------------------
+// file:	loadingScreen.c
+// author:	Seah Sheng Rong Donovan
+// email:	s.seah@digipen.edu
+// brief:	This file writes the code for loading screen with a loading bar.
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
+// header files
+
 #include "cprocessing.h"
 #include "utils.h"
 #include "level1.h"

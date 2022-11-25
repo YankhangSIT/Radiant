@@ -1,13 +1,13 @@
-/*!
-@file mainmenu.c
-@author Koh Yan Khang (yankhang.k)
-@course csd1401f22
-@section b
-@CarSelectGame
-@date 28/09/2022
-*/
-/*______________________________________________________________________*/
+//---------------------------------------------------------
+// file:	credits_2.c
+// author:	Seah Sheng Rong Donovan
+// email:	s.seah@digipen.edu
+// brief:	credits page 1 (Roles & Credits)
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 
+//header files
 #include "cprocessing.h"
 #include "utils.h"
 #include "level1.h"
