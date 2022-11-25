@@ -251,6 +251,8 @@ void level_4_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
+			character.points += 100;
+
 			CP_Sound_PauseGroup(CP_SOUND_GROUP_2);
 			CP_Engine_SetNextGameState(win_init, win_update, win_exit);
 		}

@@ -18,5 +18,6 @@ struct Character
 	int transparency;
 	int shieldedState;
 	int unlimitedEnergyState;
+	int points;
 } character;
 // CP_Vector checkEnemyCollision(CP_Vector enemy1Position, CP_Vector enemy2Position, float buffer);

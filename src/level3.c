@@ -172,6 +172,7 @@ void level_3_Init()
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	character.shieldedState = 0;
 	character.unlimitedEnergyState = 0;
+	character.points = previousLevelPoints;
 	invulElapsedTime = 0; // timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
@@ -588,25 +589,28 @@ void level_3_Update()
 						// activate take damge effect
 						enemies[j].takeDamage = 1.0f;
 
-						if (enemies[j].health <= 0)
-						{
-							/*Spawn Item Function*/
-							// randomize spawn rate from 1 to 2 meaning 1 in 2 chance of spawn
-							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
-							j is int and represents enemy index, 1 , 2 represent random range of 1 to 2*/
-							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, j, 1, 2);
-						}
-
 						// deletion of projectile after hitting enemy
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
 						}
 						--bulletSpawnIndex;
 
 						if (enemies[j].health <= 0)
 						{
+							if (enemies[j].id == 1) {
+								character.points += 30;
+							}
+							else if (enemies[j].id == 2) {
+								character.points += 20;
+							}
+
+							/*Spawn Item Function*/
+							// randomize spawn rate from 1 to 2 meaning 1 in 2 chance of spawn
+							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
+							j is int and represents enemy index, 1 , 2 represent random range of 1 to 2*/
+							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, j, 1, 2);
+
 							for (int y = j; y < spawnIndex; ++y)
 							{
 								enemies[y] = enemies[y + 1];
@@ -657,15 +661,19 @@ void level_3_Update()
 
 						if (enemies[i].health <= 0)
 						{
+							if (enemies[i].id == 1) {
+								character.points += 30;
+							}
+							else if (enemies[i].id == 2) {
+								character.points += 20;
+							}
+
 							/*Spawn Item Function*/
 							// randomize spawn rate from 1 to 2 meaning 1 in 2 chance of spawn
 							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
 							i is int and represents enemy index, 1 , 2 represent random range of 1 to 2*/
 							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, i, 1, 2);
-						}
 
-						if (enemies[i].health <= 0)
-						{
 							for (int y = i; y < spawnIndex; ++y)
 							{
 								enemies[y] = enemies[y + 1];

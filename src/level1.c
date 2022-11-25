@@ -171,6 +171,7 @@ void level_1_Init()
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	character.shieldedState = 0;
 	character.unlimitedEnergyState = 0;
+	character.points = 0;
 	invulElapsedTime = 0; // timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
@@ -264,12 +265,12 @@ void level_1_Update()
 	}
 	if (victorySoundCount == 2.f)
 		CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-
+	// enter pause state with esc
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == FALSE)
 	{
 		isPaused = !isPaused;
 	}
-
+	// pause window
 	if (isPaused && win == FALSE)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -282,7 +283,7 @@ void level_1_Update()
 		Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 		Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	}
-
+	// completed level window
 	if (min == surviveMin || lose == 1)
 	{
 
@@ -291,6 +292,8 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
+			previousLevelPoints = character.points;
+
 			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 			playVictorySound = TRUE;
 			CP_Font_DrawText("You survived Level 1!", wWidth / 2.0f, wHeight / 2.0f - 300);
@@ -336,7 +339,7 @@ void level_1_Update()
 		if (lose == 0)
 		{
 			if (win == TRUE)
-			{
+			{	// next level button
 				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 				{
 					delayShootTime = delayShootStart;
@@ -359,7 +362,7 @@ void level_1_Update()
 					delayShootTime = delayShootStart;
 					isPaused = !isPaused;
 				}
-			}
+			} // resume button
 			else if (win == FALSE && IsAreaClicked(resumeButton.pos.x, resumeButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 			{
 				Button("Resume", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, 220, 100, 0, 255, 0, 0, 0, 0, 255);
@@ -376,7 +379,7 @@ void level_1_Update()
 			}
 		}
 		else if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y))
-		{
+		{ // restart button
 			Button("Restart", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 
@@ -390,7 +393,7 @@ void level_1_Update()
 			}
 		}
 		else if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-		{
+		{ // menu button
 			Button("Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 
@@ -404,16 +407,16 @@ void level_1_Update()
 			}
 		}
 		else if (IsAreaClicked(exitLevelButton.pos.x, exitLevelButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
-		{
+		{ // exit button
 			Button("Exit", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, 220, 100, 0, 255, 0, 0, 0, 0, 255);
 		}
 	}
 
-	if (!isPaused)
+	if (!isPaused) // if not paused
 	{
 		CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 		CP_Settings_ImageMode(CP_POSITION_CENTER);
-		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
+		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255); // background map 
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
 
@@ -438,7 +441,6 @@ void level_1_Update()
 			// prevent the player from shooting immediately when resuming, restarting or when entering the game
 			if (delayShootTime > 0.f)
 			{
-				
 				delayShootTime -= elapsedTime;				
 			}
 			else if (delayShootTime < 0.f)
@@ -448,7 +450,7 @@ void level_1_Update()
 		}
 
 		spawnTimer -= elapsedTime;
-		// keeps spawning for 1 min
+		// keeps spawning enemies for 1 min
 		if (min < surviveMin)
 		{
 			changeSpawnTimer -= elapsedTime;
@@ -538,7 +540,6 @@ void level_1_Update()
 				{
 					CP_Sound_PlayAdvanced(projectile_shoot, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 
-					/*Shoot Mechanic done by Darren Lua*/
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 					/*Only increment after the index 0 bullet is spawned*/
 					if (firstShoot == 1)
@@ -553,10 +554,9 @@ void level_1_Update()
 					bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
 					firstShoot = 1;
 
-					// energy deplete function
+					// energy deplete
 					if (character.unlimitedEnergyState != 1)
 					{
-
 						--character.energy;
 					}
 				}
@@ -572,6 +572,7 @@ void level_1_Update()
 			// check if projectile out of bounds, if so, delete it.
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
+				// defined in map.c
 				if (checkProjectileMapCollision(bulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
 				{
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
@@ -584,30 +585,19 @@ void level_1_Update()
 
 			// enemies dying to bullets
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
-			{
+			{ // nested loop to check each bullet with each enemy
 				for (int j = 0; j < (spawnIndex); ++j)
 				{
 					float xDistance = bulletArray[i].bulletPos.x - enemies[j].pos.x;
 					float yDistance = bulletArray[i].bulletPos.y - enemies[j].pos.y;
-					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
+					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2)); // distance between two circles
 
 					// enemies die to bullets
 					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
-					{ // less than bullet radius x2
+					{ // if distance less than bullet width
 
 						// decrease health after collision
 						--enemies[j].health;
-
-						/*Item Drop code*/
-						if (enemies[j].health <= 0)
-						{
-							/*Spawn Item Function*/
-							// randomize spawn rate from l to 4 meaning 1 in 4 chance of spawn
-							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
-							 j is int and represents enemy index, 1 , 4 represent random range of 1 to 4*/
-							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, j, 1, 4);
-					
-						}
 
 						// deletion of projectile after hitting enemy
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
@@ -615,9 +605,17 @@ void level_1_Update()
 							bulletArray[x] = bulletArray[x + 1];
 						}
 						--bulletSpawnIndex;
-
+						// deletion of enemy after their health reaches 0
 						if (enemies[j].health <= 0)
 						{
+							character.points += 10;
+
+							/*Spawn Power-up Function*/
+							// randomize spawn rate from l to 4 meaning 1 in 4 chance of spawn
+							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
+							j is int and represents enemy index, 1 , 4 represent random range of 1 to 4*/
+							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, j, 1, 4);
+
 							for (int y = j; y < spawnIndex; ++y)
 							{
 								enemies[y] = enemies[y + 1];
@@ -638,8 +636,7 @@ void level_1_Update()
 						// check for obstructions
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
-							bulletArray[x] = bulletArray[x + 1]; // to "delete" element from array
-																 // more info: https://codeforwin.org/2015/07/c-program-to-delete-element-from-array.html
+							bulletArray[x] = bulletArray[x + 1]; // to "delete" bullet from array
 						}
 						--bulletSpawnIndex;
 					}
@@ -656,23 +653,23 @@ void level_1_Update()
 					swingSword = true;
 					CP_Sound_PlayAdvanced(sword_swing, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				}
-				for (int i = 0; i < spawnIndex; i++)
+				for (int i = 0; i < spawnIndex; i++) // for each enemy
 				{ // SWORD SWING
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, enemies[i].pos, enemies[i].width))
-					{
+					{	// if enemies are detected to be within sword swing area
 						--enemies[i].health;
-						/*Darren Lua Item Drop code*/
+
 						if (enemies[i].health <= 0)
-						{
-							/*Spawn Item Function*/
+						{ 
+							character.points += 10;
+
+							/*Spawn Power-up Function*/
 							// randomize spawn rate from l to 4 meaning 1 in 4 chance of spawn
 							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
 							 i is int and represents enemy index, 1 , 4 represent random range of 1 to 4*/
 							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, i, 1, 4);
-						}
 
-						if (enemies[i].health <= 0)
-						{
+							// deletion of enemy after their health reaches 0
 							for (int y = i; y < spawnIndex; ++y)
 							{
 								enemies[y] = enemies[y + 1];
@@ -682,15 +679,15 @@ void level_1_Update()
 					}
 				}
 				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)
-				{
+				{ // -1 energy per sword swing
 					--character.energy;
 				}
 			}
 			if (swingSword)
-			{
+			{	// draw sword swing sprite for 0.2s
 				swordSwingTime += elapsedTime;
 				if (swordSwingTime > 0)
-				{
+				{	// draw the sprite where the char is facing
 					if (characterFacing)
 						CP_Image_Draw(swordSwingSprite1, swordSwingArea.x, swordSwingArea.y, (float)CP_Image_GetWidth(swordSwingSprite1), (float)CP_Image_GetHeight(swordSwingSprite1), 255);
 					else
@@ -720,22 +717,21 @@ void level_1_Update()
 
 		// enemy obstruction
 		for (int i = 0; i < (spawnIndex); ++i)
-		{
+		{ // nested loop to compare each enemies position against every other alive enemy
 			for (int j = 0; j < (spawnIndex); ++j)
 			{
-				if (i == j)
+				if (i == j) // dont check against itself
 					continue;
 				float xDistance = enemies[i].pos.x - enemies[j].pos.x;
 				float yDistance = enemies[i].pos.y - enemies[j].pos.y;
-				float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2));
-				float toDisplace = 0.5f * distance - (enemies[j].width);
+				float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2)); // distance between two circles
 
-				if (distance < enemies[j].width)
+				if (distance < enemies[j].width) // if overlapping
 				{
-					float toDisplace = 0.5f * (distance - (enemies[j].width));
-					enemies[i].pos.x -= toDisplace * (xDistance) / distance;
+					float toDisplace = 0.5f * (distance - (enemies[j].width)); // displace vectors where each enemy is pushed away from each other at an equidistance
+					enemies[i].pos.x -= toDisplace * (xDistance) / distance; 
 					enemies[i].pos.y -= toDisplace * (yDistance) / distance;
-
+					// displace each enemy in opposite directions
 					enemies[j].pos.x += toDisplace * (xDistance) / distance;
 					enemies[j].pos.y += toDisplace * (yDistance) / distance;
 				}
@@ -745,47 +741,47 @@ void level_1_Update()
 		// damage taking and 2 second invulnerability after code.
 		healthChange = 0; // to prevent -3 health per frame when colliding with 3 mobs
 		if (character.invulState != 1 && character.shieldedState != 1)
-		{ // if not invul, check for damage (collision with mobs) every frame
+		{ // if not invul and shielded, check for damage (collision with mobs) every frame
 			character.transparency = 255;
 			for (int i = 0; i < spawnIndex; i++)
-			{
-				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, (enemies[i].width / 2)) == 1 && enemies[i].health > 0)
+			{	// check character for collision with every monster
+				if (checkDamage(character.Pos, character.width, character.height, enemies[i].pos, (enemies[i].width / 2)) == 1 && enemies[i].health > 0) // if colliding
 				{
 					if (healthChange == 0)
 					{
 						if (!damageTakenTime)
-						{
+						{ // damage sfx
 							damageSound = true;
 							CP_Sound_PlayAdvanced(damageTaken, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0); // sound for damage taken
 						}
-
+						// char takes damage
 						character.health = takeDamage(character.health);
 						healthChange = 1; // telling program health has changed, dont change again in this frame
-					}
+					} // goes invul for 2 seconds
 					character.invulState = 1;
 				}
 			}
 		}
 
 		// pickup items
-		for (int i = 0; i < dropIndex; ++i)
+		for (int i = 0; i < dropIndex; ++i) // check character collision against every item
 		{ // itemDrop[dropIndex]
 			if (checkDamage(character.Pos, character.width, character.height, itemDrop[i].pos, itemDrop[i].width / 2.f) == 1)
-			{
+			{ // if char is colliding with a drop (power-up)
 				CP_Sound_PlayAdvanced(pickUp, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 				if (itemDrop[i].itemId == 1) // shield drop
-				{
+				{ // shield drop
 					character.shieldedState = 1;
 					shieldedDuration = 0;
 				}
 				else if (itemDrop[i].itemId == 2) // health drop
-				{
+				{ // battery drop
 					character.unlimitedEnergyState = 1;
 					unlimitedEnergyDuration = 0;
 				}
 
 				for (int y = i; y < dropIndex; ++y)
-				{
+				{ // remove drop once picked up
 					itemDrop[y] = itemDrop[y + 1]; // similar to above^
 				}
 				--dropIndex;
@@ -794,7 +790,7 @@ void level_1_Update()
 
 		// if character is invulnerable, don't take damage
 		if (character.invulState == 1)
-		{
+		{	//timer to check if >2s
 			invulElapsedTime += elapsedTime;
 
 			if (invulElapsedTime >= 2)
@@ -829,9 +825,9 @@ void level_1_Update()
 				swordPlayer = charImageMelee(swordPlayer, character.Pos, &characterFacing); // changes character sprite based on which direction he is facing
 		}
 
-		// character power ups
+		// draw and implement powered-up state of character
 		if (character.shieldedState == 1)
-		{
+		{ // shield power-up
 			CP_Image_Draw(shielded, character.Pos.x, character.Pos.y, (float)CP_Image_GetWidth(shielded), (float)CP_Image_GetHeight(shielded), 255);
 			shieldedDuration += elapsedTime;
 
@@ -842,7 +838,7 @@ void level_1_Update()
 			}
 		}
 		if (character.unlimitedEnergyState == 1)
-		{
+		{ // battery power-up
 			CP_Image_Draw(unlimitedEnergy, character.Pos.x + 5, character.Pos.y, (float)CP_Image_GetWidth(unlimitedEnergy), (float)CP_Image_GetHeight(unlimitedEnergy), 255);
 			unlimitedEnergyDuration += elapsedTime;
 
@@ -858,14 +854,14 @@ void level_1_Update()
 		{
 			energyRechargeTime += elapsedTime;
 
-			if (energyRechargeTime >= 3)
-			{ // if stunned for more than 2 seconds, go back to being unstunned
+			if (energyRechargeTime >= 3) // +1 energy every 3 seconds
+			{
 				++character.energy;
 				playStunnedSound = TRUE;
 				energyRechargeTime = 0;
 			}
 
-			if (character.energy < 1)
+			if (character.energy < 1) // when stunned
 			{ // draw stunned animation
 				if (playStunnedSound)
 				{
@@ -892,19 +888,18 @@ void level_1_Update()
 			lose = 0;
 		}
 
-		// Darren draw enemies, player and bullet code
 		//  draw enemy
 		for (int i = 0; i < spawnIndex; i++)
 		{
 			CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 		}
 
-		// draw player
+		// draw character
 		if (playerNum == 1)
 		{
 			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 
-			// draw projectile
+			// draw projectile for ranged char
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
 				if (firstShoot == 1)
@@ -913,12 +908,12 @@ void level_1_Update()
 				}
 			}
 		}
-
 		if (playerNum == 2)
 		{
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 		}
 
+		// draw power-ups
 		for (int i = 0; i < dropIndex; ++i)
 		{
 			if (itemDrop[i].dropTrue == 1)
@@ -926,6 +921,7 @@ void level_1_Update()
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
+
 		// display timer 
 		CP_Settings_TextSize(100.0f);
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
@@ -933,7 +929,7 @@ void level_1_Update()
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
 
-		// display char health and energy ///
+		// display char health and energy as images on the top left
 		CP_Font_DrawText("Health:", 50, 50);
 		for (int i = 0; i < character.health; ++i)
 		{

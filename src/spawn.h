@@ -22,9 +22,6 @@ struct Enemy {
 	int maxHealth;
 };
 
-
-
-
 // Drop struct with all the variables needed for the drop
 struct Drop
 {
@@ -159,6 +156,7 @@ int surviveMin;
 // win condition boolean
 int win;
 int lose;
+int previousLevelPoints;
 
 /*Declaration of change enemy spawn timer with the different direction/spawn position as int value*/
 float changeSpawnTimer;
