@@ -56,7 +56,7 @@ void level_1_Init()
 
 	// level init
 	CP_System_FullscreenAdvanced(1920, 1080);
-	//CP_System_SetWindowSize(1920, 1080);
+	// CP_System_SetWindowSize(1920, 1080);
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 1;
@@ -67,7 +67,6 @@ void level_1_Init()
 	bulletSpawnIndex = 0;
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
-
 
 	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
@@ -83,10 +82,9 @@ void level_1_Init()
 	firstShoot = 0;
 	canShoot = 0;
 
-
 	// melee char init
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
-	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");	
+	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
 
 	if (playerNum == 2)
 	{
@@ -195,7 +193,7 @@ void level_1_Init()
 	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-
+	stunnedSound = CP_Sound_Load("Assets/stunned.wav");
 	// initiate obstruction
 	for (int i = 0, x = 0; i < 6; i++, x += (int)obsWidth2)
 	{
@@ -252,12 +250,14 @@ void level_1_Init()
 		}
 	}
 	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
+	playStunnedSound = 1;
+	StunnedSoundTime = 0;
 }
 
 void level_1_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-    //Force victory sound to not loop with game update function
+	// Force victory sound to not loop with game update function
 	if (playVictorySound)
 	{
 		victorySoundCount += 1.f;
@@ -914,11 +914,23 @@ void level_1_Update()
 			if (energyRechargeTime >= 3)
 			{ // if stunned for more than 2 seconds, go back to being unstunned
 				++character.energy;
+				playStunnedSound = TRUE;
 				energyRechargeTime = 0;
 			}
 
 			if (character.energy < 1)
 			{ // draw stunned animation
+				if (playStunnedSound)
+				{
+					CP_Sound_PlayAdvanced(stunnedSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					StunnedSoundTime += elapsedTime;
+					if (StunnedSoundTime)
+						playStunnedSound = FALSE;
+				}
+				else
+				{
+					StunnedSoundTime = 0;
+				}
 				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
@@ -997,6 +1009,7 @@ void level_1_Exit()
 	CP_Sound_Free(&nextlvl_sound);
 	CP_Sound_Free(&buttonClickSound);
 	CP_Sound_Free(&damageTaken);
+	CP_Sound_Free(&stunnedSound);
 	CP_Image_Free(&obstruction1);
 	CP_Image_Free(&obstruction2);
 	CP_Image_Free(&obstruction3);

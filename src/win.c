@@ -29,24 +29,16 @@ void win_init()
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
-	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
+	victorySound = CP_Sound_Load("Assets/victory.wav");
 	nextState = 0.f;
 	startCount = FALSE;
 	menuState = FALSE;
 	exitState = FALSE;
-	playVictorySound = FALSE;
-	victorySoundCount = 0.f;
+	CP_Sound_PlayAdvanced(victorySound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 }
 
 void win_update()
 {
-
-	if (!playVictorySound)
-	{
-		victorySoundCount += 1.f;
-	}
-	if (victorySoundCount == 2.f)
-		CP_Sound_PlayAdvanced(nextlvl_sound, 0.5f, 0.5f, FALSE, CP_SOUND_GROUP_0);
 	// delay call next game state by 0.1 sec to register the button sound
 	elapsedTime = CP_System_GetDt();
 	if (startCount)

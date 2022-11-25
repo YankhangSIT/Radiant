@@ -182,7 +182,7 @@ void level_2_Init()
 	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-
+	stunnedSound = CP_Sound_Load("Assets/stunned.wav");
 	// initiate obstruction
 	// big house
 	obs.rec_block[obstructionCount1] = SetRect_((float)(wWidth * 2.3 / 4), (float)(wHeight * 1.3 / 4), (float)(obsWidth4 * 1.8), (float)(obsHeight4 * 1.8), obstruction4);
@@ -237,6 +237,8 @@ void level_2_Init()
 		}
 	}
 	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
+	playStunnedSound = 1;
+	StunnedSoundTime = 0;
 }
 
 void level_2_Update()
@@ -904,11 +906,23 @@ void level_2_Update()
 			if (energyRechargeTime >= 3)
 			{ // if stunned for more than 2 seconds, go back to being unstunned
 				++character.energy;
+				playStunnedSound = TRUE;
 				energyRechargeTime = 0;
 			}
 
 			if (character.energy < 1)
 			{ // draw stunned animation
+				if (playStunnedSound)
+				{
+					CP_Sound_PlayAdvanced(stunnedSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					StunnedSoundTime += elapsedTime;
+					if (StunnedSoundTime)
+						playStunnedSound = FALSE;
+				}
+				else
+				{
+					StunnedSoundTime = 0;
+				}
 				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
@@ -1025,4 +1039,5 @@ void level_2_Exit()
 	CP_Image_Free(&obstruction2);
 	CP_Image_Free(&obstruction3);
 	CP_Image_Free(&map_background);
+	CP_Sound_Free(&stunnedSound);
 }

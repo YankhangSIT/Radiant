@@ -111,6 +111,7 @@ void level_4_Init()
 	boss.width = (float)CP_Image_GetWidth(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
+	// boss.health = 20;
 	boss.health = 20;
 	boss.maxHealth = boss.health;
 	bossMovement = 5;
@@ -214,9 +215,12 @@ void level_4_Init()
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
 	bossTime = CP_Sound_Load("Assets/bossTime.mp3");
+	stunnedSound = CP_Sound_Load("Assets/stunned.wav");
 	CP_Sound_PlayAdvanced(bossTime, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_2);
 	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_2, *&backgroundVolume);
 	CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
+	playStunnedSound = 1;
+	StunnedSoundTime = 0;
 }
 
 void level_4_Update()
@@ -942,11 +946,23 @@ void level_4_Update()
 			if (energyRechargeTime >= 3)
 			{ // if stunned for more than 2 seconds, go back to being unstunned
 				++character.energy;
+				playStunnedSound = TRUE;
 				energyRechargeTime = 0;
 			}
 
 			if (character.energy < 1)
 			{ // draw stunned animation
+				if (playStunnedSound)
+				{
+					CP_Sound_PlayAdvanced(stunnedSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					StunnedSoundTime += elapsedTime;
+					if (StunnedSoundTime)
+						playStunnedSound = FALSE;
+				}
+				else
+				{
+					StunnedSoundTime = 0;
+				}
 				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
@@ -1053,4 +1069,5 @@ void level_4_Exit()
 	CP_Image_Free(&obstruction2);
 	CP_Image_Free(&obstruction3);
 	CP_Image_Free(&map_background);
+	CP_Sound_Free(&stunnedSound);
 }
