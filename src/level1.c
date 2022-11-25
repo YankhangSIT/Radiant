@@ -55,8 +55,8 @@ void level_1_Init()
 	clear();
 
 	// level init
-	CP_System_FullscreenAdvanced(1920, 1080);
-	// CP_System_SetWindowSize(1920, 1080);
+	//CP_System_FullscreenAdvanced(1920, 1080);
+	CP_System_SetWindowSize(1920, 1080);
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 1;
@@ -598,41 +598,15 @@ void level_1_Update()
 						// decrease health after collision
 						--enemies[j].health;
 
-						/*Darren Lua Item Drop code*/
+						/*Item Drop code*/
 						if (enemies[j].health <= 0)
 						{
-							// randomize spawn rate from 1 to 2 meaning 1 in 4 chance of spawn
-							unsigned int randomRate = CP_Random_RangeInt(1, 4);
-							// randomly set drop id between 1 or 2
-							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							// set drop Id and drop boolean to true
-							itemDrop[dropIndex].itemId = dropId;
-							itemDrop[dropIndex].dropTrue = 1;
-							if (randomRate == 2)
-							{
-								// check item drop's id by the spawn index of the drop
-								if (itemDrop[dropIndex].itemId == 1)
-								{
-									// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-									itemDrop[dropIndex].dropSprite = dropShieldSprite;
-									// set the width and height to the respective sprite
-									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								}
-								else if (itemDrop[dropIndex].itemId == 2)
-								{
-									// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-									itemDrop[dropIndex].dropSprite = dropEnergySprite;
-									// set the width and height to the respective sprite
-									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								}
-								// set item with the drop index to the enemy coordinate
-								itemDrop[dropIndex].pos.x = enemies[j].pos.x;
-								itemDrop[dropIndex].pos.y = enemies[j].pos.y;
-								/*Increment drop index*/
-								++dropIndex;
-							}
+							/*Spawn Item Function*/
+							// randomize spawn rate from l to 4 meaning 1 in 4 chance of spawn
+							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
+							 j is int and represents enemy index, 1 , 4 represent random range of 1 to 4*/
+							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, j, 1, 4);
+					
 						}
 
 						// deletion of projectile after hitting enemy
@@ -690,38 +664,11 @@ void level_1_Update()
 						/*Darren Lua Item Drop code*/
 						if (enemies[i].health <= 0)
 						{
-							// randomize spawn rate from 1 to 4 meaning 1 in 4 chance of spawn
-							unsigned int randomRate = CP_Random_RangeInt(1, 4);
-							// randomly set drop id between 1 or 2
-							unsigned int dropId = CP_Random_RangeInt(1, 2);
-							// set drop Id and drop boolean to true
-							itemDrop[dropIndex].itemId = dropId;
-							itemDrop[dropIndex].dropTrue = 1;
-							if (randomRate == 2)
-							{
-								// check item drop's id by the spawn index of the drop
-								if (itemDrop[dropIndex].itemId == 1)
-								{
-									// if item's id is 1 set the item's dropSprite to the dropHealthSprite
-									itemDrop[dropIndex].dropSprite = dropShieldSprite;
-									// set the width and height to the respective sprite
-									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								}
-								else if (itemDrop[dropIndex].itemId == 2)
-								{
-									// if item's id is 2 set the item's dropSprite to the dropEnergySprite
-									itemDrop[dropIndex].dropSprite = dropEnergySprite;
-									// set the width and height to the respective sprite
-									itemDrop[dropIndex].width = (float)CP_Image_GetWidth(itemDrop[(int)dropIndex].dropSprite);
-									itemDrop[dropIndex].height = (float)CP_Image_GetHeight(itemDrop[(int)dropIndex].dropSprite);
-								}
-								// set item with the drop index to the enemy coordinate
-								itemDrop[dropIndex].pos.x = enemies[i].pos.x;
-								itemDrop[dropIndex].pos.y = enemies[i].pos.y;
-								/*Increment drop index*/
-								++dropIndex;
-							}
+							/*Spawn Item Function*/
+							// randomize spawn rate from l to 4 meaning 1 in 4 chance of spawn
+							/*takes in enemies array struct, itemDrop array struct, 2 CP_Image sprites, pointer to drop index
+							 i is int and represents enemy index, 1 , 4 represent random range of 1 to 4*/
+							spawnItem(enemies, itemDrop, dropShieldSprite, dropEnergySprite, &dropIndex, i, 1, 4);
 						}
 
 						if (enemies[i].health <= 0)
