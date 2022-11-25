@@ -56,6 +56,7 @@ void level_1_Init()
 
 	// level init
 	CP_System_FullscreenAdvanced(1920, 1080);
+	//CP_System_SetWindowSize(1920, 1080);
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 1;
@@ -66,8 +67,8 @@ void level_1_Init()
 	bulletSpawnIndex = 0;
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
-	delayShootTime = delayShootStart;
-	canShoot = 0;
+
+
 	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetHeight(bullet.bulletSprite);
@@ -80,10 +81,13 @@ void level_1_Init()
 	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f); // bullet start shoot spawn position
 	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 	firstShoot = 0;
+	canShoot = 0;
+
 
 	// melee char init
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
-	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
+	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");	
+
 	if (playerNum == 2)
 	{
 		character.playerSprite = swordPlayer;
@@ -311,10 +315,13 @@ void level_1_Update()
 	if (isPaused)
 	{
 		CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
+		delayShootTime = delayShootStart;
+		printf("delayshootTim %f\n", delayShootTime);
+		printf("elapsedTime paused %f\n", elapsedTime);
 		// delay call next game state by 0.1 sec to register the button sound
-		elapsedTime = CP_System_GetDt();
+		pauseElapsedTime = CP_System_GetDt();
 		if (startCount)
-			nextState += elapsedTime;
+			nextState += pauseElapsedTime;
 		if (nextState > 0.2)
 		{
 			if (exitState)
@@ -324,7 +331,6 @@ void level_1_Update()
 			else
 				CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 		}
-
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
@@ -431,11 +437,15 @@ void level_1_Update()
 			// prevent the player from shooting immediately when resuming, restarting or when entering the game
 			if (delayShootTime > 0.f)
 			{
+				
 				delayShootTime -= elapsedTime;
+				printf("delayshootTim %f\n", delayShootTime);
+				
 			}
 			else if (delayShootTime < 0.f)
 			{
-				canShoot = 1;
+				printf("canShoot\n");
+				canShoot = 1;				
 			}
 		}
 

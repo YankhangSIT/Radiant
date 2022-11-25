@@ -1,9 +1,4 @@
-﻿  Howtoplay.c
-  Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-  All 68 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  Radiant.vcxproj -> C:\Users\Artemissed\source\repos\Radiant\bin\Debug-x64\Radiant.exe
+﻿  Radiant.vcxproj -> C:\Users\Donovan\Documents\GitHub\Radiant\bin\Debug-x64\Radiant.exe
   1 File(s) copied
   1 File(s) copied
   74 File(s) copied
