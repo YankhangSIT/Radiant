@@ -90,10 +90,14 @@ void how_To_play_Update(void)
 	if (startCount)
 		nextState += elapsedTime;
 	if (nextState > 0.2)
-		// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+		
 	{
 		level_1_Init();
 		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+		//level_2_Init();
+		//CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+		//level_4_Init();
+		// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 	}
 
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
