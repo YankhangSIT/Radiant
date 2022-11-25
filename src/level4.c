@@ -112,7 +112,7 @@ void level_4_Init()
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	// boss.health = 20;
-	boss.health = 20;
+	boss.health = 1;
 	boss.maxHealth = boss.health;
 	bossMovement = 5;
 	bossShootTimer = 0.5f;
@@ -147,8 +147,6 @@ void level_4_Init()
 	{
 		bossBulletArray3[i].isSpawn = 0;
 	}
-
-
 
 	// drops init (necessary?)
 	dropIndex = 0;
@@ -218,6 +216,7 @@ void level_4_Init()
 	stunnedSound = CP_Sound_Load("Assets/stunned.wav");
 	CP_Sound_PlayAdvanced(bossTime, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_2);
 	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_2, *&backgroundVolume);
+	CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 	CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
 	playStunnedSound = 1;
 	StunnedSoundTime = 0;
@@ -893,8 +892,6 @@ void level_4_Update()
 			}
 		}
 
-
-
 		// check boss projectile collision with obstruction
 
 		// no items to pickup
@@ -1013,18 +1010,16 @@ void level_4_Update()
 
 		if (boss.takeDamage == 1.0f)
 		{
-				boss.enemySprite = damagedSprite1;
-				CP_Image_Draw(boss.enemySprite, boss.pos.x, boss.pos.y, boss.width, boss.height, 255);
-				boss.takeDamage -= 1;
+			boss.enemySprite = damagedSprite1;
+			CP_Image_Draw(boss.enemySprite, boss.pos.x, boss.pos.y, boss.width, boss.height, 255);
+			boss.takeDamage -= 1;
 		}
 		else
 		{
-			boss.enemySprite = bossSprite;			
+			boss.enemySprite = bossSprite;
 		}
 
 		CP_Image_Draw(boss.enemySprite, boss.pos.x, boss.pos.y, boss.width, boss.height, 255);
-
-
 
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
@@ -1052,7 +1047,6 @@ void level_4_Update()
 				CP_Image_Draw(bossBullet.bulletSprite, bossBulletArray3[i].bulletPos.x, bossBulletArray3[i].bulletPos.y, bullet.width, bullet.height, 255);
 			}
 		}
-
 	}
 }
 
