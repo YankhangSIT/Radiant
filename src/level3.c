@@ -194,7 +194,7 @@ void level_3_Init()
 	nextlvl_sound = CP_Sound_Load("Assets/nextLevel.wav");
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	damageTaken = CP_Sound_Load("Assets/takingDamage.wav");
-
+	stunnedSound = CP_Sound_Load("Assets/stunned.wav");
 	// initiate obstruction
 	// trees
 	for (int i = obstructionCount2, x = 0, y = 0; i < 113; i++)
@@ -235,12 +235,14 @@ void level_3_Init()
 		x -= (int)(obs.rec_block[i].width * 2);
 	}
 	CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
+	playStunnedSound = 1;
+	StunnedSoundTime = 0;
 }
 
 void level_3_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	//Force victory sound to not loop with game update function
+	// Force victory sound to not loop with game update function
 	if (playVictorySound)
 	{
 		victorySoundCount += 1.f;
@@ -898,11 +900,23 @@ void level_3_Update()
 			if (energyRechargeTime >= 3)
 			{ // if stunned for more than 2 seconds, go back to being unstunned
 				++character.energy;
+				playStunnedSound = TRUE;
 				energyRechargeTime = 0;
 			}
 
 			if (character.energy < 1)
 			{ // draw stunned animation
+				if (playStunnedSound)
+				{
+					CP_Sound_PlayAdvanced(stunnedSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
+					StunnedSoundTime += elapsedTime;
+					if (StunnedSoundTime)
+						playStunnedSound = FALSE;
+				}
+				else
+				{
+					StunnedSoundTime = 0;
+				}
 				CP_Image_Draw(stunned, character.Pos.x, character.Pos.y - 55, (float)CP_Image_GetWidth(stunned), (float)CP_Image_GetHeight(stunned), 255);
 			}
 		}
@@ -1024,4 +1038,5 @@ void level_3_Exit()
 	CP_Image_Free(&obstruction5);
 	CP_Image_Free(&obstruction6);
 	CP_Image_Free(&map_background);
+	CP_Sound_Free(&stunnedSound);
 }
