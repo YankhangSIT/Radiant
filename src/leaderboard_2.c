@@ -14,8 +14,6 @@
 //#include "characterSelect.h"
 //#include "leaderboard.h"
 //
-//FILE* leaderboard = NULL;
-//char username[20];
 //
 ////union account {
 ////	char username[12] = { '/0' };
@@ -48,11 +46,11 @@
 //	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 //	CP_Font_DrawText("LEADERBOARD", gWidth / 2.0f, gHeight / 2.0f - 100);
 //
-//	fopen_s(&leaderboard, "Assets/leaderboard.txt", "r");
-//	if (leaderboard != NULL) {
-//		
-//		CP_Font_DrawText(username, gWidth / 2.0f, gHeight / 2.0f - 80);
-//	}
+//	//fopen_s(&leaderboard, "Assets/leaderboard.txt", "r");
+//	//if (leaderboard != NULL) {
+//	//	
+//	//	CP_Font_DrawText(username, gWidth / 2.0f, gHeight / 2.0f - 80);
+//	//}
 //}
 //
 //void leaderboard_2_exit() {

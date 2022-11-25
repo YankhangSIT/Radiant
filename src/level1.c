@@ -126,7 +126,7 @@ void level_1_Init()
 	// misc init
 	elapsedTime = 0;
 	surviveMin = 1;
-	sec = 55;
+	sec = 0;
 	min = 0;
 	lose = 0;
 	direction = 1;
@@ -316,12 +316,10 @@ void level_1_Update()
 	{
 		CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 		delayShootTime = delayShootStart;
-		printf("delayshootTim %f\n", delayShootTime);
-		printf("elapsedTime paused %f\n", elapsedTime);
 		// delay call next game state by 0.1 sec to register the button sound
-		pauseElapsedTime = CP_System_GetDt();
+		elapsedTime = CP_System_GetDt();
 		if (startCount)
-			nextState += pauseElapsedTime;
+			nextState += elapsedTime;
 		if (nextState > 0.2)
 		{
 			if (exitState)
@@ -329,7 +327,10 @@ void level_1_Update()
 			else if (menuState)
 				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			else
+			{
+				level_2_Init();
 				CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
+			}
 		}
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
@@ -437,14 +438,12 @@ void level_1_Update()
 			// prevent the player from shooting immediately when resuming, restarting or when entering the game
 			if (delayShootTime > 0.f)
 			{
-
-				delayShootTime -= elapsedTime;
-				printf("delayshootTim %f\n", delayShootTime);
+				
+				delayShootTime -= elapsedTime;				
 			}
 			else if (delayShootTime < 0.f)
 			{
-				printf("canShoot\n");
-				canShoot = 1;
+				canShoot = 1;				
 			}
 		}
 
@@ -482,21 +481,21 @@ void level_1_Update()
 
 				// set random spawn position based on width and height of the screen
 				/*The 4 directions represent different locations of the spawn */
-				if (direction == 1)
+				if (direction == 1)	/*top of the map*/
 				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), 40);
 				}
-				else if (direction == 2)
+				else if (direction == 2) /*left of the map*/
 				{
-					spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
+					spawnPosition = CP_Vector_Set(40, CP_Random_RangeFloat(40, wHeight - 40));
 				}
-				else if (direction == 3)
+				else if (direction == 3) /*right of the map*/
 				{
-					spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wHeight));
+					spawnPosition = CP_Vector_Set(wWidth - 40, CP_Random_RangeFloat(40, wHeight - 40));
 				}
-				else if (direction == 4)
+				else if (direction == 4)  /*bottom of the map*/
 				{
-					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
+					spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), wHeight - 40);
 				}
 				// set spawn positions of the enemies
 				enemies[spawnIndex].pos.x = spawnPosition.x;
@@ -967,6 +966,7 @@ void level_1_Update()
 				}
 			}
 		}
+
 		if (playerNum == 2)
 		{
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
@@ -979,7 +979,7 @@ void level_1_Update()
 				CP_Image_Draw(itemDrop[i].dropSprite, itemDrop[i].pos.x, itemDrop[i].pos.y, itemDrop[i].width, itemDrop[i].height, 255);
 			}
 		}
-		// display timer done by Darren Lua
+		// display timer 
 		CP_Settings_TextSize(100.0f);
 		sprintf_s(timeString, MAX_LENGTH, "%d:%.2f", min, sec);
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));

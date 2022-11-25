@@ -100,6 +100,7 @@ void level_4_Init()
 	bossBullet.bulletSprite = CP_Image_Load("Assets/Triple_Boss_Bullet.png");
 	bossBulletSprite2 = CP_Image_Load("Assets/Spiral_Boss_Bullet.png");
 	bossSprite = CP_Image_Load("Assets/Final_boss.png");
+	damagedSprite1 = CP_Image_Load("Assets/Final_boss_Damaged.png");
 	bossBulletIndex = 0;
 	bossBulletIndex2 = 0;
 	bossBulletIndex3 = 0;
@@ -127,7 +128,6 @@ void level_4_Init()
 	startChangeTimer = changeAttackTimer;
 	attackMode = 1;
 	bossChangeAttack = 0;
-	firstShoot = 0;
 	directionAngle = 0;
 	rotationSpeed = 30.142f; /*Boss Bullet shoot rotation speed*/
 	bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
@@ -148,19 +148,7 @@ void level_4_Init()
 		bossBulletArray3[i].isSpawn = 0;
 	}
 
-	// enemy init (necessary?)
-	spawnTimer = 1.7f;
-	startSpawnTimer = spawnTimer;
-	spawnIndex = 0;
-	changeSpawnTimer = 0.1f;
-	startSpawnChangeTimer = changeSpawnTimer;
-	enemySprite1 = CP_Image_Load("Assets/enemy1.png");
-	spawnPosition = CP_Vector_Set(0, 0);
-	enemies[spawnIndex].pos.x = spawnPosition.x;
-	enemies[spawnIndex].pos.y = spawnPosition.y;
-	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
-	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
-	enemy.speed = 70;
+
 
 	// drops init (necessary?)
 	dropIndex = 0;
@@ -212,7 +200,6 @@ void level_4_Init()
 	stunnedElapsedTime = 0;
 	shieldedDuration = 0;
 	unlimitedEnergyDuration = 0;
-	firstShoot = 0;
 	isPaused = 0;
 	nextState = 0.f;
 	startCount = FALSE;
@@ -239,12 +226,12 @@ void level_4_Init()
 void level_4_Update()
 {
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
-	/*Darren Lua Pause Code*/
+	/* Pause Code*/
 	if (CP_Input_KeyTriggered(KEY_ESCAPE) && win == 0)
 	{
 		isPaused = !isPaused;
 	}
-	/*Darren Lua Pause Menu*/
+	/* Pause Menu Panel*/
 	if (isPaused && win == 0)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -365,7 +352,7 @@ void level_4_Update()
 		CP_Image_Draw(map_background, wWidth / 2.0f, wHeight / 2.0f, wWidth, wHeight, 255);
 		elapsedTime = CP_System_GetDt();
 		sec += elapsedTime;
-		/*Darren Lua timer code*/
+		/*timer code*/
 		if (sec >= 60)
 		{
 			sec = 0;
@@ -391,7 +378,7 @@ void level_4_Update()
 			bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y);
 
 			// SHOOT PROJECTILE MECHANIC
-			/*Darren Lua Shoot Projectile Code*/
+			/*Shoot Projectile Code*/
 			if (character.energy > 0)
 			{
 				if (CP_Input_MouseClicked() && canShoot == 1)
@@ -417,7 +404,7 @@ void level_4_Update()
 					}
 				}
 			}
-
+			/*player bullet movement*/
 			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
 			{
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
@@ -448,7 +435,7 @@ void level_4_Update()
 				if (distance < (boss.width - 150.f) && firstShoot == 1) //-150 is fine tuning
 				{														// less than bullet radius x2
 					--boss.health;
-
+					boss.takeDamage = 1.0f;
 					// deletion of projectile after hitting enemy
 					for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 					{
@@ -566,8 +553,8 @@ void level_4_Update()
 		}
 		boss.pos.x += bossMovement;
 
-		/*Darren Lua Boss Health Bar*/
-		/*Corner for the health bar to decrease from the right*/
+		/*Health Bar*/
+		/*Corner Mode for the health bar to decrease health from the right*/
 		CP_Settings_RectMode(CP_POSITION_CORNER);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		CP_Graphics_DrawRect(0, wHeight - 100, hpbarOriginalX, 50);
@@ -585,7 +572,8 @@ void level_4_Update()
 
 		//  FINAL BOSS MECHANICS
 
-		/* Darren Lua Boss Bullet Projectile*/
+		/*Boss Bullet Projectile*/
+		/*Set shooting position to relative position of the boss*/
 		bossBullet.shootPosition = CP_Vector_Set(boss.pos.x, boss.pos.y);
 		bossBullet.shootPosition2 = CP_Vector_Set(boss.pos.x + boss.width / 2, boss.pos.y);
 		bossBullet.shootPosition3 = CP_Vector_Set(boss.pos.x - boss.width / 2, boss.pos.y);
@@ -597,6 +585,7 @@ void level_4_Update()
 
 		if (changeAttackTimer <= 0)
 		{
+			/*change attack modes*/
 			if (attackMode == 2)
 			{
 				attackMode = 3;
@@ -610,6 +599,7 @@ void level_4_Update()
 				attackMode = 1;
 			}
 			bossChangeAttack = 0;
+			/*reset timer*/
 			changeAttackTimer = startChangeTimer;
 			bossShootTimer = startBossShootTimer;
 			bossShootTimer2 = startBossShootTimer2;
@@ -666,7 +656,7 @@ void level_4_Update()
 				bossBulletArray[bossBulletIndex].width = (float)CP_Image_GetWidth(bossBulletArray[(int)bossBulletIndex].bulletSprite);
 				bossBulletArray[bossBulletIndex].height = (float)CP_Image_GetHeight(bossBulletArray[(int)bossBulletIndex].bulletSprite);
 
-				/*Direction Vector to the player*/
+				/*Direction Vector to the player which is from character.pos to the boss shooting position*/
 				bossBulletArray[bossBulletIndex].directionBullet = CP_Vector_Subtract(character.Pos, bossBullet.shootPosition);
 				bossBulletArray[bossBulletIndex].bulletPos = bossBullet.shootPosition;
 				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
@@ -681,8 +671,9 @@ void level_4_Update()
 				bossBulletArray3[bossBulletIndex3].bulletPos = bossBullet.shootPosition3;
 				bossBulletArray3[bossBulletIndex3].normalizedDirection = CP_Vector_Normalize(bossBulletArray3[bossBulletIndex3].directionBullet);
 				bossBulletArray3[bossBulletIndex3].isSpawn = 1;
-
+				/*bool to change boss attack*/
 				bossChangeAttack = 1;
+				/*Increment the 3 bullet indices uses for the 3 arrays*/
 				++bossBulletIndex;
 				++bossBulletIndex2;
 				++bossBulletIndex3;
@@ -708,17 +699,19 @@ void level_4_Update()
 				bossBulletArray[bossBulletIndex].normalizedDirection = CP_Vector_Normalize(bossBulletArray[bossBulletIndex].directionBullet);
 				/*Set Bullet Spawn to true*/
 				bossBulletArray[bossBulletIndex].isSpawn = 1;
+				/*bool to change boss attack*/
 				bossChangeAttack = 1;
 				++bossBulletIndex;
+				/*reset timer*/
 				bossShootTimer3 = startBossShootTimer3;
 			}
 		}
 
-		/*Darren Lua Boss Bullet Boss Bullet Velocity code*/
+		/* Bullet Boss Bullet Velocity code*/
 
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
-
+			/* move only bullets that are spawned*/
 			if (bossBulletArray[i].isSpawn == 1)
 			{
 				bossBulletArray[i].acceleration = CP_Vector_Scale(bossBulletArray[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
@@ -728,7 +721,7 @@ void level_4_Update()
 
 		for (int i = 0; i < bossBulletIndex2; ++i)
 		{
-			/*Draw only bullets that are spawned*/
+			/* move only bullets that are spawned*/
 			if (bossBulletArray2[i].isSpawn == 1)
 			{
 				bossBulletArray2[i].acceleration = CP_Vector_Scale(bossBulletArray2[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
@@ -738,6 +731,7 @@ void level_4_Update()
 
 		for (int i = 0; i < bossBulletIndex3; ++i)
 		{
+			/* move only bullets that are spawned*/
 			if (bossBulletArray3[i].isSpawn == 1)
 			{
 				bossBulletArray3[i].acceleration = CP_Vector_Scale(bossBulletArray3[i].normalizedDirection, bossBullet.bulletSpeed * elapsedTime);
@@ -899,50 +893,7 @@ void level_4_Update()
 			}
 		}
 
-		//// check if boss projectile out of bounds, if so, delete it.
-		// for (int i = 0; i < bossBulletIndex; ++i)
-		//{
-		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
-		//	{
 
-		//		if (checkProjectileObsCollision(bossBulletArray[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
-		//		{
-		//			for (int x = i; x - 1 < bossBulletIndex; ++x)
-		//			{
-		//				bossBulletArray[x] = bossBulletArray[x + 1]; // to "delete" element from array
-		//			}
-		//			--bossBulletIndex;
-		//		}
-		//	}
-		//}
-		// for (int i = 0; i < bossBulletIndex2; ++i)
-		//{
-		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
-		//	{
-		//		if (checkProjectileObsCollision(bossBulletArray2[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray2[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
-		//		{
-		//			for (int x = i; x < bossBulletIndex2; ++x)
-		//			{
-		//				bossBulletArray2[x] = bossBulletArray2[x + 1];
-		//			}
-		//			--bossBulletIndex2;
-		//		}
-		//	}
-		//}
-		// for (int i = 0; i < bossBulletIndex3; ++i)
-		//{
-		//	for (int o = obstructionCount3; o < obstructionCount4; o++)
-		//	{
-		//		if (checkProjectileObsCollision(bossBulletArray3[i].bulletPos, bullet.width / 2, bullet.height / 2, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height) || checkProjectileMapCollision(bossBulletArray3[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
-		//		{
-		//			for (int x = i; x < bossBulletIndex3; ++x)
-		//			{
-		//				bossBulletArray3[x] = bossBulletArray3[x + 1];
-		//			}
-		//			--bossBulletIndex3;
-		//		}
-		//	}
-		//}
 
 		// check boss projectile collision with obstruction
 
@@ -1060,11 +1011,24 @@ void level_4_Update()
 			CP_Image_Draw(char_energy, (float)i * 52 + 150, 102, (float)CP_Image_GetWidth(char_energy), (float)CP_Image_GetHeight(char_energy), 255);
 		}
 
+		if (boss.takeDamage == 1.0f)
+		{
+				boss.enemySprite = damagedSprite1;
+				CP_Image_Draw(boss.enemySprite, boss.pos.x, boss.pos.y, boss.width, boss.height, 255);
+				boss.takeDamage -= 1;
+		}
+		else
+		{
+			boss.enemySprite = bossSprite;			
+		}
+
 		CP_Image_Draw(boss.enemySprite, boss.pos.x, boss.pos.y, boss.width, boss.height, 255);
+
+
 
 		for (int i = 0; i < bossBulletIndex; ++i)
 		{
-
+			/* draw only bullets that are spawned*/
 			if (bossBulletArray[i].isSpawn == 1)
 			{
 				CP_Image_Draw(bossBulletArray[i].bulletSprite, bossBulletArray[i].bulletPos.x, bossBulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
@@ -1073,7 +1037,7 @@ void level_4_Update()
 
 		for (int i = 0; i < bossBulletIndex2; ++i)
 		{
-
+			/* draw only bullets that are spawned*/
 			if (bossBulletArray2[i].isSpawn == 1)
 			{
 				CP_Image_Draw(bossBullet.bulletSprite, bossBulletArray2[i].bulletPos.x, bossBulletArray2[i].bulletPos.y, bullet.width, bullet.height, 255);
@@ -1082,43 +1046,13 @@ void level_4_Update()
 
 		for (int i = 0; i < bossBulletIndex3; ++i)
 		{
-
+			/* draw only bullets that are spawned*/
 			if (bossBulletArray3[i].isSpawn == 1)
 			{
 				CP_Image_Draw(bossBullet.bulletSprite, bossBulletArray3[i].bulletPos.x, bossBulletArray3[i].bulletPos.y, bullet.width, bullet.height, 255);
 			}
 		}
 
-		// clearBulletTime -= elapsedTime;
-		// if (clearBulletTime <= 0)
-		//{
-		// for (int i = 0; i < bossBulletIndex; i++)
-		//{
-		//	if (bossBulletArray[bossBulletIndex].bulletPos.x > wWidth || bossBulletArray[bossBulletIndex].bulletPos.y > wHeight)
-		//	{
-		//		bossBulletArray[bossBulletIndex].isSpawn = 0;
-		//		--bossBulletIndex;
-		//	}
-		//}
-		// for (int i = 0; i < bossBulletIndex2; i++)
-		//{
-		//	if (bossBulletArray2[bossBulletIndex2].bulletPos.x > wWidth || bossBulletArray2[bossBulletIndex2].bulletPos.y > wHeight)
-		//	{
-		//		bossBulletArray2[bossBulletIndex2].isSpawn = 0;
-		//		--bossBulletIndex2;
-		//	}
-		//}
-
-		// for (int i = 0; i < bossBulletIndex3; i++)
-		//{
-		//	if (bossBulletArray3[bossBulletIndex3].bulletPos.x > wWidth || bossBulletArray3[bossBulletIndex3].bulletPos.y > wHeight)
-		//	{
-		//		bossBulletArray3[bossBulletIndex3].isSpawn = 0;
-		//		--bossBulletIndex3;
-		//	}
-		// }
-		//	clearBulletTime = startclearBulletTime;
-		// }
 	}
 }
 

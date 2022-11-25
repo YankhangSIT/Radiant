@@ -118,7 +118,7 @@ void level_2_Init()
 	// misc init
 	elapsedTime = 0;
 	surviveMin = 1;
-	sec = 55;
+	sec = 0;
 	min = 0;
 	lose = 0;
 	win = 0;
@@ -312,7 +312,10 @@ void level_2_Update()
 			else if (menuState)
 				CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 			else
+			{
+				level_3_Init();
 				CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
+			}
 		}
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
@@ -428,6 +431,7 @@ void level_2_Update()
 			if (changeSpawnTimer <= 0)
 			{
 				// change directions every time change spawn timer reaches 0 or less
+				/*The 4 directions represent different locations of the spawn */
 				if (direction == 4)
 				{
 					direction = 1;
@@ -454,21 +458,22 @@ void level_2_Update()
 		{
 			// set random spawn position based on width and height of the screen
 			/*The 4 directions represent different locations of the spawn */
-			if (direction == 1)
+		
+			if (direction == 1)	/*top of the map*/
 			{
-				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight / 7);
+				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), 40);
 			}
-			else if (direction == 2)
+			else if (direction == 2) /*left of the map*/
 			{
-				spawnPosition = CP_Vector_Set(wWidth / 8, CP_Random_RangeFloat(wHeight / 7, wHeight));
+				spawnPosition = CP_Vector_Set(40, CP_Random_RangeFloat(40, wHeight - 40));
 			}
-			else if (direction == 3)
+			else if (direction == 3) /*right of the map*/
 			{
-				spawnPosition = CP_Vector_Set(wWidth - 200, CP_Random_RangeFloat(wHeight / 7, wHeight));
+				spawnPosition = CP_Vector_Set(wWidth - 40, CP_Random_RangeFloat(40, wHeight - 40));
 			}
-			else if (direction == 4)
+			else if (direction == 4)  /*bottom of the map*/
 			{
-				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(wWidth / 8, wWidth), wHeight - 200);
+				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), wHeight - 40);
 			}
 
 			// set spawn position of enemy
@@ -941,7 +946,7 @@ void level_2_Update()
 					enemies[i].enemySprite = damagedSprite2;
 					CP_Image_Draw(enemies[i].enemySprite, enemies[i].pos.x, enemies[i].pos.y, enemies[i].width, enemies[i].height, 255);
 				}
-				enemies[i].takeDamage -= elapsedTime;
+				enemies[i].takeDamage -= 1;
 			}
 			else
 			{
