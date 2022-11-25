@@ -123,7 +123,7 @@ void level_3_Init()
 	// misc init
 	elapsedTime = 0;
 	surviveMin = 1;
-	sec = 55;
+	sec = 0;
 	min = 0;
 	lose = 0;
 	win = 0;
