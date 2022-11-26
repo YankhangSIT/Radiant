@@ -42,14 +42,11 @@ CP_Font Acme, Abril;
 void how_To_play_Init(void)
 {
 	CP_System_FullscreenAdvanced(1920, 1080);
-	// CP_System_SetWindowSize(1920, 1080);
 	Abril = CP_Font_Load("Assets/Abril_Fatface.ttf");
 	Acme = CP_Font_Load("Assets/Acme_Regular.ttf");
 	// align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
-	/*CP_TEXT_ALIGN_HORIZONTAL horizontal2 = CP_TEXT_ALIGN_H_LEFT;
-	CP_TEXT_ALIGN_VERTICAL vertical2 = CP_TEXT_ALIGN_V_TOP;*/
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
@@ -62,25 +59,6 @@ void how_To_play_Init(void)
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	nextState = 0.f;
 	startCount = FALSE;
-	//// player type gun
-	// if (playerNum == 1)
-	//{
-	//	character.playerSprite = gunPlayer;
-	//	character.width = (float)CP_Image_GetWidth(gunPlayer);
-	//	character.height = (float)CP_Image_GetHeight(gunPlayer);
-	// }
-
-	//// player type sword
-	// if (playerNum == 2)
-	//{
-	//	character.playerSprite = swordPlayer;
-	//	character.width = (float)CP_Image_GetWidth(swordPlayer);
-	//	character.height = (float)CP_Image_GetHeight(swordPlayer);
-	//	canShoot = 0;
-	// }
-
-	// gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
-	// swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 }
 
 void how_To_play_Update(void)
@@ -92,12 +70,9 @@ void how_To_play_Update(void)
 	if (nextState > 0.2)
 		
 	{
-		//level_1_Init();
-		//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-		//level_2_Init();
-		//CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
-		level_4_Init();
-		 CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+		level_1_Init();
+		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
+
 	}
 
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
@@ -240,12 +215,6 @@ void how_To_play_Update(void)
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
 				startCount = TRUE;
-			//!! do not initiate next state here! do it at line 92 onwards
-			//  CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-			 //CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-			// CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
-			// CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
-			// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 		}
 	}
 }

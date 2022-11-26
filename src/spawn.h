@@ -9,8 +9,6 @@
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
-
-/*Darren Lua Spawn Header*/
 #include "cprocessing.h"
 #include "math.h"
 #include "stdio.h"
@@ -162,8 +160,10 @@ unsigned int randomId;
 //min and sec counter
 int min;
 float sec;
+
 // survive condition
 int surviveMin;
+
 // win condition boolean
 int win;
 int lose;

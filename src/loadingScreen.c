@@ -69,16 +69,13 @@
 	CP_Image_Draw(game_Title, aWidth/ 2.0f , (aHeight / 2.0f - 100), (float) CP_Image_GetWidth(game_Title), (float) CP_Image_GetHeight(game_Title), 255);
 
 	//Loading Bar creation
-	/*CP_Settings_Fill(CP_Color_Create(0, 0, 255, 255));
-	CP_Graphics_DrawRect(aWidth / 2.0f, aHeight / 2.0f + 100, 840, 105);*/
+
 	CP_Settings_Fill(CP_Color_Create(167, 171, 171, 255));
 	CP_Graphics_DrawRect(aWidth - 1400 , aHeight / 2.0f + 100, loadingBar, 45);
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Graphics_DrawRect(aWidth - 1850, aHeight / 2.0f + 100, 1000, 100);
 
-	//Loading Screen percentage (%) creation
-	/*CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-	CP_Font_DrawText(loadingPercentage, aWidth / 2.0f - 350, aHeight / 2.0f + 100);*/
+
 
 
 }

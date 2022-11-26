@@ -155,6 +155,7 @@ void level_3_Init()
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 
+	/*Button position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
 
@@ -274,7 +275,7 @@ void level_3_Update()
 	{
 		isPaused = !isPaused;
 	}
-	/*Darren Lua pause panel*/
+	/*pause panel*/
 	if (isPaused && win == FALSE)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -288,7 +289,7 @@ void level_3_Update()
 		Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width, menuButton.height, 0, 255, 0, 0, 0, 0, 255);
 		Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width, exitLevelButton.height, 0, 255, 0, 0, 0, 0, 255);
 	}
-	/*Darren Lua win/next level panel*/
+	/* win/next level panel*/
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -336,7 +337,7 @@ void level_3_Update()
 				CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 			}
 		}
-		/*Darren Lua UI panel button code*/
+		/* UI button code*/
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
@@ -677,7 +678,7 @@ void level_3_Update()
 					{
 						--enemies[i].health;
 
-						/*take damage effect Darren Lua*/
+						/*set take damage effect */
 						enemies[i].takeDamage = 1.0f;
 						/*Darren Lua Item Drop Mechanic*/
 

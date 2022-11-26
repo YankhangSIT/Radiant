@@ -28,14 +28,11 @@ float wHeight;
 void Credits_2_Init()
 {
 
-	// clear();
-	// CP_System_SetWindowSize(1920, 1080);
 	CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
 
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
-	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
 
 	// align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
@@ -46,7 +43,6 @@ void Credits_2_Init()
 	wHeight = (float)CP_System_GetWindowHeight();
 	nextState = 0.f;
 	startCount = FALSE;
-	// credits = CP_Sound_Load("Assets/credits.wav");
 }
 
 void Credits_2_Update()
@@ -59,7 +55,6 @@ void Credits_2_Update()
 	{
 		CP_Engine_SetNextGameState(Credits_3_Init, Credits_3_Update, Credits_3_Exit);
 	}
-	// CP_Sound_PlayAdvanced(credits, 0.5f, 0.5f, TRUE, CP_SOUND_GROUP_1);
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);

@@ -143,6 +143,7 @@ void level_2_Init()
 	char_energy = CP_Image_Load("Assets/Char_Energy.png");
 	char_health = CP_Image_Load("Assets/Char_Health.png");
 
+	/*Button position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
 
@@ -271,7 +272,7 @@ void level_2_Update()
 	}
 	if (victorySoundCount == 2.f)
 		CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-
+	/* UI panel button code*/
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -306,7 +307,7 @@ void level_2_Update()
 	{
 		isPaused = !isPaused;
 	}
-	/*Darren Lua pause panel*/
+	/* UI pause panel*/
 	if (isPaused && win == FALSE)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -340,6 +341,7 @@ void level_2_Update()
 				CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
 			}
 		}
+		/* UI button code*/
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
@@ -430,7 +432,8 @@ void level_2_Update()
 			sec = 0;
 			min++;
 		}
-		/*Done by Darren Lua*/
+		/*check for gun player*/
+		// prevent the player from shooting immediately when resuming, restarting or when entering the game
 		if (playerNum == 1)
 		{
 			canShoot = 0;
@@ -446,7 +449,7 @@ void level_2_Update()
 		}
 
 		spawnTimer -= elapsedTime;
-		// keeps spawning until the player survives
+		// keeps spawning for 1 min
 		if (min < surviveMin)
 		{
 			changeSpawnTimer -= elapsedTime;

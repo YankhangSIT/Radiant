@@ -181,9 +181,9 @@ void level_4_Init()
 	char_energy = CP_Image_Load("Assets/Char_Energy.png");
 	char_health = CP_Image_Load("Assets/Char_Health.png");
 	
+	/*Button position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
-
 
 	resumeButton.pos.x = wWidth / 2.0f;
 	resumeButton.pos.y = wHeight / 2.0f - 200;
@@ -205,10 +205,11 @@ void level_4_Init()
 	exitLevelButton.width = 300;
 	exitLevelButton.height = 80;
 
-
-
+	/*Boss Health code display size*/
 	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
 	hpbarOriginalX = hpBarCurrLengthX;
+
+
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	character.health = 5;	  // start with 5 hp
 	character.energy = 5;	  // start with 5 energy
@@ -275,7 +276,7 @@ void level_4_Update()
 		Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width, menuButton.height, 0, 255, 0, 0, 0, 0, 255);
 		Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width, exitLevelButton.height, 0, 255, 0, 0, 0, 0, 255);
 	}
-
+	/*Win condition*/
 	if (boss.health <= 0 || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
