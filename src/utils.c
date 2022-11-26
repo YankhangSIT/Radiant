@@ -1,3 +1,12 @@
+//---------------------------------------------------------
+// file:	utils.c
+// author:	Koh Yan Khang
+// email:	yankhang.k@digipen.edu
+// brief:	Includes code for the button mechanics to check area clicked in the game.
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "math.h"
 #include "stdio.h"
