@@ -74,26 +74,26 @@ void win_update()
 	}
 
 	float resulttime = (TimeElapsed / alphatime) * 255;
-	CP_Image_Draw(winImage, gWidth / 2.0f, (gHeight / 2.0f - 300), (float)CP_Image_GetWidth(winImage), (float)CP_Image_GetHeight(winImage), (int)resulttime);
+	CP_Image_Draw(winImage, gWidth / 2.0f, gHeight / 2.0f - 100, (float)CP_Image_GetWidth(winImage), (float)CP_Image_GetHeight(winImage), (int)resulttime);
 
 	// display points accumulated
 	CP_Settings_TextSize(50.0f);
 	sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
-	CP_Font_DrawText("Points Accumulated: ", gWidth / 2.0f , gHeight / 2.0f - 200);
-	CP_Font_DrawText(pointsacc, gWidth / 2.0f, gHeight / 2.0f - 150);
+	CP_Font_DrawText("Points Accumulated: ", gWidth / 2.0f , gHeight / 2.0f );
+	CP_Font_DrawText(pointsacc, gWidth / 2.0f, gHeight / 2.0f + 50);
 	CP_Settings_TextSize(35.0f);
 
-	Button("Next", gWidth / 2.0f, gHeight / 2.0f - 50, gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, 0, 255, 0, 0, 0, 0, 255);
+	Button("Next", gWidth / 2.0f, gHeight / 2.0f + 150, gWidth / 2.0f, gHeight / 2.0f + 150, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 
-	if (IsAreaClicked(gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+	if (IsAreaClicked(gWidth / 2.0f, gHeight / 2.0f + 150, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 	{
-		Button("Next", gWidth / 2.0f, gHeight / 2.0f - 50, gWidth / 2.0f, gHeight / 2.0f - 47, 190, 90, 0, 255, 0, 0, 0, 0, 255);
+		Button("Next", gWidth / 2.0f, gHeight / 2.0f + 150, gWidth / 2.0f, gHeight / 2.0f + 147, 190, 90, 0, 255, 0, 0, 0, 0, 255);
 	}
 
 	if (CP_Input_MouseClicked())
 	{
-		if (IsAreaClicked(gWidth / 2.0f, gHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
+		if (IsAreaClicked(gWidth / 2.0f, gHeight / 2.0f + 150, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			/*CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 			CP_Font_DrawText("Enter your username: ", gWidth / 2.0f , gHeight / 2.0f-500);*/
