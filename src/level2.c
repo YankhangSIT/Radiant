@@ -999,7 +999,7 @@ void level_2_Update()
 		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
-		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 900, wHeight / 2.0f - 500);
+		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 860, wHeight / 2.0f - 500);
 		CP_Settings_TextSize(35.0f);
 
 
