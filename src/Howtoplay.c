@@ -56,7 +56,6 @@ void how_To_play_Init(void)
 	energybuff = CP_Image_Load("Assets/Unlimited_Energy_Mode.png");
 	shield = CP_Image_Load("Assets/Shield_Drop.png");
 	mouse = CP_Image_Load("Assets/Mouse.png");
-	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	nextState = 0.f;
 	startCount = FALSE;
 }
