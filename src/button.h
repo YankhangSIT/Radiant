@@ -1,7 +1,14 @@
+//---------------------------------------------------------
+// file:	button.h
+// author:	Lua Wei Xiang Darren, Jing Song
+// email:	weixiangdarren.lua@digipen.edu, jingsong.wei@digipen.edu
+// brief:	Header file containing function prototypes and declarations related to buttons
+//
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 
 
-
-
+/*Variable declarations that can be set to choose how much to increase the button size when hovered over*/
 float buttonWidthOffset;
 float buttonHeightOffset;
 

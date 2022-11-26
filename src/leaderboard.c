@@ -14,6 +14,8 @@
 #include "characterSelect.h"
 #include "sound.h"
 #include <stdlib.h>
+#include "movement.h"
+#include "global.h"
 
 float TimeElapsed;
 FILE* leaderboard = NULL;
@@ -193,7 +195,7 @@ void leaderboard_update() {
 	if (leaderboard != NULL) {
 		while (z < 30 && !feof(leaderboard)) {
 #pragma warning(disable : 4996)
-			if (fscanf(leaderboard, "%s %d", &points[z].username, &points[z].points) != 2)
+			if (fscanf(leaderboard, "%s %d", &points[z].username, &(points[z]).points) != 2)
 			{
 				break;
 			}
@@ -219,13 +221,14 @@ void leaderboard_update() {
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	CP_Font_DrawText("LEADERBOARD", gWidth / 2.0f, gHeight / 2.0f  - 100);
 
-
-	for (int q = 0; q < z; q++)
-	{
+	int q = 0;
+		points[q].points = character.points;
+	while (q < z) {
 		if (q >= 10)break;
 		char temp_str[50];
 		sprintf(temp_str, "%s %d", points[q].username, points[q].points);
 		CP_Font_DrawText(temp_str, gWidth / 2.0f, gHeight / 2.0f + 40 * q - 50);
+		q++;
 	}
 
 	Button("Continue", gWidth / 2.0f + 720, gHeight / 2.0f + 450, gWidth / 2.0f + 720, gHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);

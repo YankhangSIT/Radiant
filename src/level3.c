@@ -49,7 +49,7 @@ float wHeight;
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
-
+char pointsacc[MAX_POINTS];
 void level_3_Init()
 {
 	// level init
@@ -155,6 +155,7 @@ void level_3_Init()
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 
+	/*Button position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
 
@@ -274,7 +275,7 @@ void level_3_Update()
 	{
 		isPaused = !isPaused;
 	}
-	/*Darren Lua pause panel*/
+	/*pause panel*/
 	if (isPaused && win == FALSE)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -288,7 +289,7 @@ void level_3_Update()
 		Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width, menuButton.height, 0, 255, 0, 0, 0, 0, 255);
 		Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width, exitLevelButton.height, 0, 255, 0, 0, 0, 0, 255);
 	}
-	/*Darren Lua win/next level panel*/
+	/* win/next level panel*/
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -336,7 +337,7 @@ void level_3_Update()
 				CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 			}
 		}
-		/*Darren Lua UI panel button code*/
+		/* UI button code*/
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
@@ -499,11 +500,9 @@ void level_3_Update()
 			spawnIndex++;
 			// restart spawn time
 			spawnTimer = startSpawnTimer;
-		}
+		}	
 
-		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
-		for (int i = 0; i < spawnIndex; i++)
-		{
+			//setting enemy id, health and their sprites with their respective width and height
 			randomId = CP_Random_RangeInt(1, 2);
 			enemies[spawnIndex].id = randomId;
 			if (enemies[spawnIndex].id == 1)
@@ -527,6 +526,8 @@ void level_3_Update()
 				enemies[spawnIndex].health = 2;
 			}
 
+		for (int i = 0; i < spawnIndex; i++)
+		{
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
@@ -677,7 +678,7 @@ void level_3_Update()
 					{
 						--enemies[i].health;
 
-						/*take damage effect Darren Lua*/
+						/*set take damage effect */
 						enemies[i].takeDamage = 1.0f;
 						/*Darren Lua Item Drop Mechanic*/
 
@@ -989,6 +990,15 @@ void level_3_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
+
+		// display points 
+		CP_Settings_TextSize(50.0f);
+		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
+		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 900, wHeight / 2.0f - 500);
+		CP_Settings_TextSize(35.0f);
+
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);

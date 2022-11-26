@@ -1,8 +1,8 @@
 //---------------------------------------------------------
-// file:	spawn.c
+// file:	button.c
 // author:	Lua Wei Xiang Darren, Jing Song
-// email:	 weixiangdarren.lua@digipen.edu , jingsong.wei@digipen.edu
-// brief:	Contains the functions for buttons and slider
+// email:	weixiangdarren.lua@digipen.edu , jingsong.wei@digipen.edu
+// brief:	Contains the functions for buttons and sliders
 //
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------

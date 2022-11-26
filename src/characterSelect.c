@@ -107,5 +107,4 @@ void character_Select_Update()
 void character_Select_Exit()
 {
 	CP_Sound_Free(&buttonClickSound);
-	// CP_Sound_Free(&backgroundMusic);
 }

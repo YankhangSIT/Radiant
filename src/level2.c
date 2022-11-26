@@ -48,6 +48,7 @@ float wHeight;
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
+char pointsacc[MAX_POINTS];
 
 void level_2_Init()
 {
@@ -143,6 +144,7 @@ void level_2_Init()
 	char_energy = CP_Image_Load("Assets/Char_Energy.png");
 	char_health = CP_Image_Load("Assets/Char_Health.png");
 
+	/*Button position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
 
@@ -271,7 +273,7 @@ void level_2_Update()
 	}
 	if (victorySoundCount == 2.f)
 		CP_Sound_PlayAdvanced(nextlvl_sound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
-
+	/* UI panel button code*/
 	if (min == surviveMin || lose == 1)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -306,7 +308,7 @@ void level_2_Update()
 	{
 		isPaused = !isPaused;
 	}
-	/*Darren Lua pause panel*/
+	/* UI pause panel*/
 	if (isPaused && win == FALSE)
 	{
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
@@ -340,6 +342,7 @@ void level_2_Update()
 				CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
 			}
 		}
+		/* UI button code*/
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
@@ -430,7 +433,8 @@ void level_2_Update()
 			sec = 0;
 			min++;
 		}
-		/*Done by Darren Lua*/
+		/*check for gun player*/
+		// prevent the player from shooting immediately when resuming, restarting or when entering the game
 		if (playerNum == 1)
 		{
 			canShoot = 0;
@@ -446,7 +450,7 @@ void level_2_Update()
 		}
 
 		spawnTimer -= elapsedTime;
-		// keeps spawning until the player survives
+		// keeps spawning for 1 min
 		if (min < surviveMin)
 		{
 			changeSpawnTimer -= elapsedTime;
@@ -508,32 +512,33 @@ void level_2_Update()
 			spawnTimer = startSpawnTimer;
 		}
 
-		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
+		//setting enemy id, health and their sprites with their respective width and height
+		randomId = CP_Random_RangeInt(1, 2);
+		enemies[spawnIndex].id = randomId;
+		if (enemies[spawnIndex].id == 1)
+		{
+			// set enemy with this id to the respective sprite
+			enemies[spawnIndex].enemySprite = enemySprite1;
+			// set the width and height to the respective sprite
+			enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+			enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+			// set health for the enemy id number
+			enemies[spawnIndex].health = 1;
+		}
+		else if (enemies[spawnIndex].id == 2)
+		{
+			// set enemy with this id to the respective sprite
+			enemies[spawnIndex].enemySprite = enemySprite2;
+			// set the width and height to the respective sprite
+			enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+			enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+			// set health for the enemy id number
+			enemies[spawnIndex].health = 2;
+		}
+
+
 		for (int i = 0; i < spawnIndex; i++)
 		{
-			randomId = CP_Random_RangeInt(1, 2);
-			enemies[spawnIndex].id = randomId;
-			if (enemies[spawnIndex].id == 1)
-			{
-				// set enemy with this id to the respective sprite
-				enemies[spawnIndex].enemySprite = enemySprite1;
-				// set the width and height to the respective sprite
-				enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-				enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-				// set health for the enemy id number
-				enemies[spawnIndex].health = 1;
-			}
-			else if (enemies[spawnIndex].id == 2)
-			{
-				// set enemy with this id to the respective sprite
-				enemies[spawnIndex].enemySprite = enemySprite2;
-				// set the width and height to the respective sprite
-				enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-				enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-				// set health for the enemy id number
-				enemies[spawnIndex].health = 2;
-			}
-
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
@@ -988,6 +993,15 @@ void level_2_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
+
+		// display points 
+		CP_Settings_TextSize(50.0f);
+		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
+		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 900, wHeight / 2.0f - 500);
+		CP_Settings_TextSize(35.0f);
+
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);

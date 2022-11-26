@@ -42,14 +42,11 @@ CP_Font Acme, Abril;
 void how_To_play_Init(void)
 {
 	CP_System_FullscreenAdvanced(1920, 1080);
-	// CP_System_SetWindowSize(1920, 1080);
 	Abril = CP_Font_Load("Assets/Abril_Fatface.ttf");
 	Acme = CP_Font_Load("Assets/Acme_Regular.ttf");
 	// align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
-	/*CP_TEXT_ALIGN_HORIZONTAL horizontal2 = CP_TEXT_ALIGN_H_LEFT;
-	CP_TEXT_ALIGN_VERTICAL vertical2 = CP_TEXT_ALIGN_V_TOP;*/
 	CP_Settings_TextAlignment(horizontal, vertical);
 	CP_Settings_TextSize(35.0f);
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
@@ -62,25 +59,6 @@ void how_To_play_Init(void)
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	nextState = 0.f;
 	startCount = FALSE;
-	//// player type gun
-	// if (playerNum == 1)
-	//{
-	//	character.playerSprite = gunPlayer;
-	//	character.width = (float)CP_Image_GetWidth(gunPlayer);
-	//	character.height = (float)CP_Image_GetHeight(gunPlayer);
-	// }
-
-	//// player type sword
-	// if (playerNum == 2)
-	//{
-	//	character.playerSprite = swordPlayer;
-	//	character.width = (float)CP_Image_GetWidth(swordPlayer);
-	//	character.height = (float)CP_Image_GetHeight(swordPlayer);
-	//	canShoot = 0;
-	// }
-
-	// gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");
-	// swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png");
 }
 
 void how_To_play_Update(void)
@@ -89,15 +67,10 @@ void how_To_play_Update(void)
 	elapsedTime = CP_System_GetDt();
 	if (startCount)
 		nextState += elapsedTime;
-	if (nextState > 0.2)
-		
+	if (nextState > 0.2)		
 	{
-		//level_1_Init();
-		//CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-		//level_2_Init();
-		//CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
-		level_4_Init();
-		 CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
+		level_1_Init();
+		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 	}
 
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
@@ -110,7 +83,7 @@ void how_To_play_Update(void)
 
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Font_Set(Acme);
-	CP_Font_DrawText("How to play:", xWidth / 2.0f + 50, xHeight / 2.0f - 400 + a);
+	CP_Font_DrawText("How to play:", xWidth / 2.0f + 50, xHeight / 2.0f - 400 );
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Font_DrawText("Controls:", xWidth / 2.0f - 650, xHeight / 2.0f - 300 + x);
 	CP_Font_Set(Abril);
@@ -182,14 +155,15 @@ void how_To_play_Update(void)
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	// Teach user how to play
-	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 100, xHeight / 2.0f - 350 + a);
-	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f - 95, xHeight / 2.0f - 300 + a);
-	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 35, xHeight / 2.0f - 250 + a);
-	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f + 58, xHeight / 2.0f - 200 + a);
-	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 70, xHeight / 2.0f - 150 + a);
-	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy ", xWidth / 2.0f, xHeight / 2.0f - 100 + a);
-	CP_Font_DrawText("REACHES ZERO", xWidth / 2.0f - 193, xHeight / 2.0f - 70 + a);
-	CP_Font_DrawText("7) There will be no self health regeneration", xWidth / 2.0f - 65, xHeight / 2.0f - 30 + a);
+	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 100, xHeight / 2.0f - 350 );
+	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f - 95, xHeight / 2.0f - 300 );
+	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 35, xHeight / 2.0f - 250 );
+	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f + 58, xHeight / 2.0f - 200 );
+	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 70, xHeight / 2.0f - 150 );
+	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy ", xWidth / 2.0f, xHeight / 2.0f - 100 );
+	CP_Font_DrawText("REACHES ZERO", xWidth / 2.0f - 193, xHeight / 2.0f - 70 );
+	CP_Font_DrawText("7) There will be NO self health regeneration", xWidth / 2.0f - 65, xHeight / 2.0f - 30 );
+	CP_Font_DrawText("8) Mobs will spawn along edges of the map, YOU ARE WARNED!!", xWidth / 2.0f + 58, xHeight / 2.0f - 40 + a);
 
 	// Item drop guide
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
@@ -240,12 +214,6 @@ void how_To_play_Update(void)
 			CP_Sound_PlayAdvanced(buttonClickSound, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 			if (!nextState)
 				startCount = TRUE;
-			//!! do not initiate next state here! do it at line 92 onwards
-			//  CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-			 //CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-			// CP_Engine_SetNextGameState(level_3_Init, level_3_Update, level_3_Exit);
-			// CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
-			// CP_Engine_SetNextGameState(level_4_Init, level_4_Update, level_4_Exit);
 		}
 	}
 }

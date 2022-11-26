@@ -49,6 +49,7 @@ int healthChange;
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
+char pointsacc[MAX_POINTS];
 
 void level_1_Init()
 {
@@ -56,7 +57,6 @@ void level_1_Init()
 
 	// level init
 	CP_System_FullscreenAdvanced(1920, 1080);
-	//CP_System_SetWindowSize(1920, 1080);
 	wWidth = (float)CP_System_GetWindowWidth();
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 1;
@@ -156,7 +156,7 @@ void level_1_Init()
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");  // player sprite
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png"); // player sprite
 
-	/*Button position/size for pause menu and next level panel*/
+	/*Buttons position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
 
@@ -362,6 +362,7 @@ void level_1_Update()
 				CP_Engine_SetNextGameState(level_2_Init, level_2_Update, level_2_Exit);
 			}
 		}
+		/* UI button code*/
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		if (lose == 0)
 		{
@@ -955,6 +956,15 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
+
+		// display points 
+		CP_Settings_TextSize(50.0f);
+		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
+		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 900, wHeight / 2.0f - 500);
+		CP_Settings_TextSize(35.0f);
+
 
 		// display char health and energy as images on the top left
 		CP_Font_DrawText("Health:", 50, 50);
