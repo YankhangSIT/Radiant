@@ -96,7 +96,6 @@ void level_4_Init()
 	characterFacing = 0;
 
 	// boss init
-	bossBullet.bulletSpeed = 250;
 	bossBullet.startBulletSpeed = bossBullet.bulletSpeed;
 	bossBullet.bulletSprite = CP_Image_Load("Assets/Triple_Boss_Bullet.png");
 	bossBulletSprite2 = CP_Image_Load("Assets/Spiral_Boss_Bullet.png");
@@ -112,10 +111,17 @@ void level_4_Init()
 	boss.width = (float)CP_Image_GetWidth(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
-
-	boss.health = 20;
+	if (playerNum == 1) { // ranged character boss health, speed and projectile speed
+		boss.health = 30;
+		bossMovement = 8;
+		bossBullet.bulletSpeed = 350;
+	}
+	else { // balance for melee character
+		boss.health = 20;
+		bossMovement = 5;
+		bossBullet.bulletSpeed = 250;
+	}
 	boss.maxHealth = boss.health;
-	bossMovement = 5;
 	bossShootTimer = 0.5f;
 	startBossShootTimer = bossShootTimer;
 	bossShootTimer2 = 0.4f;

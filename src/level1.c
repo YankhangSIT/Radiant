@@ -102,7 +102,7 @@ void level_1_Init()
 
 	// enemy init
 	/*Enemy Spawn Timer*/
-	spawnTimer = 1.f;
+	spawnTimer = 0.8f;
 	spawnIndex = 0;	
 	changeSpawnTimer = 0.1f;
 	startSpawnTimer = spawnTimer;
