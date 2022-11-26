@@ -88,6 +88,7 @@ void Credits_4_Update()
 	CP_Font_DrawText("Piskel", wWidth / 2.0f, wHeight / 2.0f + 260);
 	CP_Font_DrawText("Website: www.piskelapp.com/p/create/sprite", wWidth / 2.0f, wHeight / 2.0f + 300);
 	CP_Font_DrawText("Microsoft PowerPoint", wWidth / 2.0f, wHeight / 2.0f + 340);
+	CP_Font_DrawText("ClipChamp (Microsoft Store Application)", wWidth / 2.0f, wHeight / 2.0f + 380);
 
 	Button("Continue", wWidth / 2.0f + 720, wHeight / 2.0f + 450, wWidth / 2.0f + 720, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
