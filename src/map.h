@@ -1,3 +1,12 @@
+//---------------------------------------------------------
+// file:	map.h
+// author:	Koh Yan Khang, Wei Jingsong
+// email:	yankhang.k@digipen.edu, jingsong.wei@digipen.edu
+// brief:	Includes code for the collision detection for character
+// and enemey with obstruction.
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include <stdbool.h>
 #include "cprocessing.h"
 #define MAX_Obs1 66

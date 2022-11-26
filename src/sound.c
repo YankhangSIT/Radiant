@@ -1,5 +1,12 @@
+//---------------------------------------------------------
+// file:	sound.c
+// author:	Wei Jingsong
+// email:	jingsong.wei@digipen.edu
+// brief:	Includes code for the sound variables
+// 
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include "sound.h"
-
 CP_Sound sword_swing = NULL;
 CP_Sound projectile_shoot = NULL;
 CP_Sound pickUp = NULL;
