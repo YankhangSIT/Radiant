@@ -62,6 +62,7 @@ void Credits_3_Update()
 		TimeElapsed = 0;
 	}
 
+	//Digipen main body 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(70.f);
 	CP_Font_DrawText("CREATED AT", wWidth / 2.0f, wHeight / 2.0f - 450);
@@ -92,6 +93,7 @@ void Credits_3_Update()
 	CP_Font_DrawText("WWW.DIGIPEN.EDU", wWidth / 2.0f, wHeight / 2.0f + 400);
 	CP_Font_DrawText("All content 2022 DigiPen Institute of Technology Singapore. All Rights Reserved", wWidth / 2.0f, wHeight / 2.0f + 450);
 
+	//Buttons
 	Button("Continue", wWidth / 2.0f + 720, wHeight / 2.0f + 450, wWidth / 2.0f + 720, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 	if (IsAreaClicked(wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)

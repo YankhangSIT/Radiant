@@ -55,6 +55,7 @@ void Credits_4_Update()
 		CP_Engine_SetNextGameState(Main_Menu_Init, Main_Menu_Update, Main_Menu_Exit);
 	}
 
+	//Reference from web
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
 	CP_Font_DrawText("Sound System:", wWidth / 2.0f, wHeight / 2.0f - 460);

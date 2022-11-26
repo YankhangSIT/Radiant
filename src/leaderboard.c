@@ -1,3 +1,10 @@
+//---------------------------------------------------------
+// file:	leaderboard.c
+// author:	Seah Sheng Rong Donovan
+// email:	s.seah@digipen.edu
+// brief:	Leaderboard system of the game ( COULD NOT IMPLEMENT )
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
 #include "cprocessing.h"
 #include "utils.h"
 #include "level1.h"
@@ -203,17 +210,10 @@ void leaderboard_update() {
 		}
 		fclose(leaderboard);
 
-		qsort(points,z, sizeof(struct account), compare_function);
+		qsort(points, z, sizeof(struct account), compare_function);
 
-		//for (int k = 0; k < a; k++) {
-		//	for (int j = k + 1; j < a; j++) {
-		//		if (points[i].points > points[j].points) {
-		//			struct account temp = points[j];
-		//			points[j] = points[i];
-		//			points[i] = temp;
-		//		}
-		//	}
-		//}
+
+	
 	}
 
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));

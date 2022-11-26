@@ -1,3 +1,11 @@
+//---------------------------------------------------------
+// file:	win.c
+// author:	Seah Sheng Rong Donovan
+// email:	s.seah@digipen.edu
+// brief:	Victory page of the game
+// Copyright 2022 DigiPen, All rights reserved.
+//---------------------------------------------------------
+
 #include "cprocessing.h"
 #include "utils.h"
 #include "level1.h"
@@ -68,7 +76,7 @@ void win_update()
 	float resulttime = (TimeElapsed / alphatime) * 255;
 	CP_Image_Draw(winImage, gWidth / 2.0f, (gHeight / 2.0f - 300), (float)CP_Image_GetWidth(winImage), (float)CP_Image_GetHeight(winImage), (int)resulttime);
 
-	// display points 
+	// display points accumulated
 	CP_Settings_TextSize(50.0f);
 	sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
 	CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));

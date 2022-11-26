@@ -55,7 +55,7 @@ void Credits_2_Update()
 	{
 		CP_Engine_SetNextGameState(Credits_3_Init, Credits_3_Update, Credits_3_Exit);
 	}
-
+	// Project credits
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
 	CP_Font_DrawText("DIRECTOR and PROGRAMMER", wWidth / 2.0f, wHeight / 2.0f - 400);

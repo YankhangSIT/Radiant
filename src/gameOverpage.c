@@ -96,7 +96,7 @@ void game_Over_page_Update()
 	CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 
-	// Buffer time for splashscreen image & cursor creation
+	// Buffer time for gameover image & cursor creation
 	TimeElapsed += CP_System_GetDt();
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
