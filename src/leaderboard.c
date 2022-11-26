@@ -195,7 +195,7 @@ void leaderboard_update() {
 	if (leaderboard != NULL) {
 		while (z < 30 && !feof(leaderboard)) {
 #pragma warning(disable : 4996)
-			if (fscanf(leaderboard, "%s %d", &points[z].username, &points[z].points) != 2)
+			if (fscanf(leaderboard, "%s %d", &points[z].username, &(points[z]).points) != 2)
 			{
 				break;
 			}
