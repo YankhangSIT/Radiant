@@ -19,7 +19,7 @@ enum direction
 	right
 };
 int charDirection = left;
-
+//
 int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Vector enemyPosition, float radius)
 {
 	float testX = enemyPosition.x;
@@ -45,16 +45,17 @@ int checkDamage(CP_Vector charPosition, float charWidth, float charHeight, CP_Ve
 	}
 	return 0;
 }
-
+//
 int energyDeplete(int charEnergy)
 {
 	return charEnergy - 1;
 }
-
+//
 int takeDamage(int charHealth)
 {
 	return charHealth - 1;
 }
+//
 Sword SetSword(float x, float y, float width, float height)
 {
 	Sword sword;
@@ -64,6 +65,7 @@ Sword SetSword(float x, float y, float width, float height)
 	sword.height = height;
 	return sword;
 }
+//Sword swing animation update
 Sword UpdateSwordSwing(Sword sword, CP_Vector charPosition, float cWidth, float cHeight)
 {
 	if (CP_Input_GetMouseX() > charPosition.x)
@@ -88,6 +90,7 @@ Sword UpdateSwordSwing(Sword sword, CP_Vector charPosition, float cWidth, float 
 
 	return sword;
 }
+//Melee character combat collision detection
 bool swordSwingEnemey(Sword sword, CP_Vector enemyPosition, float enemyRaduis)
 {
 

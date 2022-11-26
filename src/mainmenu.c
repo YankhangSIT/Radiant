@@ -39,8 +39,6 @@ void Main_Menu_Init()
 	Alclonia = CP_Font_Load("Assets/Alclonia_Regular.ttf");
 	main_menu = CP_Image_Load("Assets/Main_menu.jpg");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
-	/*CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP)*/;
-
 	// align texts to center and set font size 35
 	CP_TEXT_ALIGN_HORIZONTAL horizontal = CP_TEXT_ALIGN_H_CENTER;
 	CP_TEXT_ALIGN_VERTICAL vertical = CP_TEXT_ALIGN_V_MIDDLE;
@@ -55,14 +53,15 @@ void Main_Menu_Init()
 	exitState = FALSE;
 	creditState = FALSE;
 	isPaused = FALSE;
+	//Play background music only once
 	if (playBackgroundMusic)
 	{
 		CP_Sound_PlayAdvanced(backgroundMusic, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_1);
 		playBackgroundMusic = 0;
 		*&backgroundVolume = 0.2f;
 	}
-	else
-		CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
+	//If backgounrd musci already played then resume music instead of play again
+	else CP_Sound_ResumeGroup(CP_SOUND_GROUP_1);
 	CP_Sound_SetGroupVolume(CP_SOUND_GROUP_1, *&backgroundVolume);
 	mouseX1 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_1) * 400);
 	mouseX2 = ((wWidth / 2 - 200) + CP_Sound_GetGroupVolume(CP_SOUND_GROUP_0) * 400);
@@ -73,7 +72,7 @@ void Main_Menu_Update()
 
 	if (!isPaused)
 	{
-		// delay call next game state by 0.1 sec to register the button sound
+		// delay call next game state by 0.1 sec to register button sound
 		elapsedTime = CP_System_GetDt();
 		if (startCount)
 			nextState += elapsedTime;
@@ -86,30 +85,20 @@ void Main_Menu_Update()
 			else
 				CP_Engine_SetNextGameState(character_Select_Init, character_Select_Update, character_Select_Exit);
 		}
-
-		// Set background music
-		// CP_Sound_PlayAdvanced(backgroundMusic, 0.5f, 1.0f, TRUE, CP_SOUND_GROUP_1);
 		// Set background
 		CP_Graphics_ClearBackground(CP_Color_Create(0, 0, 0, 255));
 		CP_Image_Draw(main_menu, wWidth / 2.0f, wHeight / 2.0f, (float)CP_Image_GetWidth(main_menu), (float)CP_Image_GetHeight(main_menu), 255);
-
 		// Set font
 		CP_Font_Set(Alclonia);
-
 		CP_Settings_RectMode(CP_POSITION_CENTER);
-
 		// Play Button
 		Button("Start Game", wWidth / 2.f, wHeight / 2.f - 100, wWidth / 2.0f, wHeight / 2.0f - 100, 220, 80, 0, 255, 0, 0, 0, 0, 255);
-
 		// volume ettings Button
 		Button("Options", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 50, 220, 80, 0, 255, 0, 0, 0, 0, 255);
-
 		// Exit Button
 		Button("Quit Game", wWidth / 2.0f, wHeight / 2.0f + 200, wWidth / 2.0f, wHeight / 2.0f + 200, 220, 80, 0, 255, 0, 0, 0, 0, 255);
-
 		// Credits Button
 		Button("Credits", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 220, 80, 0, 255, 0, 0, 0, 0, 255);
-
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
 		// If click "Play" Button
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f - 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
@@ -129,7 +118,6 @@ void Main_Menu_Update()
 				}
 			}
 		}
-
 		// else if click "Exit" button
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 200, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
@@ -145,7 +133,7 @@ void Main_Menu_Update()
 				}
 			}
 		}
-		// volume settings
+		//Volume settings button click
 		else if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			Button("Options", wWidth / 2.0f, wHeight / 2.0f + 50, wWidth / 2.0f, wHeight / 2.0f + 46, 260, 100, 0, 255, 0, 0, 0, 0, 255);
@@ -155,6 +143,7 @@ void Main_Menu_Update()
 				isPaused = !isPaused;
 			}
 		}
+		//Credits button click
 		else if (IsAreaClicked(wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			Button("Credits", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 696, wHeight / 2.0f + 450, 220, 100, 0, 255, 0, 0, 0, 0, 255);
@@ -169,12 +158,10 @@ void Main_Menu_Update()
 			}
 		}
 	}
-
+    //Volume setting slider logic
 	if (isPaused)
 	{
-		// Volume settings
 		CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 500, 1000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
@@ -183,19 +170,22 @@ void Main_Menu_Update()
 		CP_Font_DrawText("Background music", wWidth / 2.0f, wHeight / 2.0f - 140);
 		CP_Font_DrawText("Sound effects", wWidth / 2.0f, wHeight / 2.0f + 60);
 		CP_Settings_TextSize(35.0f);
-		// background music volume adjustment
+		//background music volume adjustment
 		sliderBar(wWidth / 2, wHeight / 2 - 100, 400, 10, 255, 255, 255, 255);
+		//Get mouse position if left mouse button been held down
 		if (CP_Input_MouseDown(MOUSE_BUTTON_LEFT) && IsAreaClicked(mouseX1, wHeight / 2 - 100, 800, 160, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 
 			mouseX1 = CP_Input_GetMouseX();
 		}
+		//Check if slider box going out of bounds in the slider bar
 		if (!(mouseX1 > wWidth / 2 + 200) && !(mouseX1 < wWidth / 2 - 200))
 			sliderBox(mouseX1, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
 		else if (mouseX1 > wWidth / 2 + 200)
 			sliderBox(wWidth / 2 + 200, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
 		else if (mouseX1 < wWidth / 2 - 200)
 			sliderBox(wWidth / 2 - 200, wHeight / 2 - 100, 10, 20, 0, 0, 0, 255);
+		//Set background volume variable value accroding to the ratio of the slider
 		*&backgroundVolume = (float)((mouseX1 - (wWidth / 2 - 200)) / 400);
 		if (*&backgroundVolume > 1.f)
 			*&backgroundVolume = 1.f;
@@ -225,7 +215,6 @@ void Main_Menu_Update()
 		mouseX2 = ((wWidth / 2 - 200) + *&sfxVolume * 400);
 		CP_Sound_SetGroupVolume(CP_SOUND_GROUP_0, *&sfxVolume);
 		Button("Back", wWidth / 2.0f, wHeight / 2.0f + 300, wWidth / 2.0f, wHeight / 2.0f + 300, 180, 80, 0, 255, 0, 0, 0, 0, 255);
-
 		if (IsAreaClicked(wWidth / 2.0f, wHeight / 2.0f + 300, 200, 180, mouseClickPos.x, mouseClickPos.y) == 1)
 		{
 			Button("Back", wWidth / 2.0f, wHeight / 2.0f + 300, wWidth / 2.0f, wHeight / 2.0f + 296, 220, 100, 0, 255, 0, 0, 0, 0, 255);
