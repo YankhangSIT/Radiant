@@ -83,7 +83,7 @@ void how_To_play_Update(void)
 
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Font_Set(Acme);
-	CP_Font_DrawText("How to play:", xWidth / 2.0f + 50, xHeight / 2.0f - 400 + a);
+	CP_Font_DrawText("How to play:", xWidth / 2.0f + 50, xHeight / 2.0f - 400 );
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 	CP_Font_DrawText("Controls:", xWidth / 2.0f - 650, xHeight / 2.0f - 300 + x);
 	CP_Font_Set(Abril);
@@ -155,14 +155,15 @@ void how_To_play_Update(void)
 
 	CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 	// Teach user how to play
-	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 100, xHeight / 2.0f - 350 + a);
-	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f - 95, xHeight / 2.0f - 300 + a);
-	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 35, xHeight / 2.0f - 250 + a);
-	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f + 58, xHeight / 2.0f - 200 + a);
-	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 70, xHeight / 2.0f - 150 + a);
-	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy ", xWidth / 2.0f, xHeight / 2.0f - 100 + a);
-	CP_Font_DrawText("REACHES ZERO", xWidth / 2.0f - 193, xHeight / 2.0f - 70 + a);
-	CP_Font_DrawText("7) There will be no self health regeneration", xWidth / 2.0f - 65, xHeight / 2.0f - 30 + a);
+	CP_Font_DrawText("1) You are to stay ALIVE for 1 minute.", xWidth / 2.0f - 100, xHeight / 2.0f - 350 );
+	CP_Font_DrawText("2) Eliminate as many mobs as possible.", xWidth / 2.0f - 95, xHeight / 2.0f - 300 );
+	CP_Font_DrawText("3) Points are awarded for each boss/mobs killed.", xWidth / 2.0f - 35, xHeight / 2.0f - 250 );
+	CP_Font_DrawText("4) There are 4 stages, advance till the final stage with final boss. ", xWidth / 2.0f + 58, xHeight / 2.0f - 200 );
+	CP_Font_DrawText("5) Energy is consumed ONLY if you attack!", xWidth / 2.0f - 70, xHeight / 2.0f - 150 );
+	CP_Font_DrawText("6) Character is STUNNED & unable to MOVE if energy ", xWidth / 2.0f, xHeight / 2.0f - 100 );
+	CP_Font_DrawText("REACHES ZERO", xWidth / 2.0f - 193, xHeight / 2.0f - 70 );
+	CP_Font_DrawText("7) There will be NO self health regeneration", xWidth / 2.0f - 65, xHeight / 2.0f - 30 );
+	CP_Font_DrawText("8) Mobs will spawn along edges of the map, YOU ARE WARNED!!", xWidth / 2.0f + 58, xHeight / 2.0f - 40 + a);
 
 	// Item drop guide
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));

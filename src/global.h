@@ -11,3 +11,4 @@
 #define PI (3.141592653589793)
 #define SIZE (500)
 #define MAX_LENGTH (100)
+#define MAX_POINTS (99999)

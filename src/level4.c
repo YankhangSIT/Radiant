@@ -50,6 +50,7 @@ float bossMovement;
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
+char pointsacc[MAX_POINTS];
 static int playBackgroundMusic = 1;
 void level_4_Init()
 {
@@ -1025,6 +1026,15 @@ void level_4_Update()
 		{
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 		}
+
+		// display points 
+		CP_Settings_TextSize(50.0f);
+		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
+		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 900, wHeight / 2.0f - 500);
+		CP_Settings_TextSize(35.0f);
+
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);

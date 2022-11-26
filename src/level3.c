@@ -49,7 +49,7 @@ float wHeight;
 char timeString[MAX_LENGTH];
 char characterHealthDisplay[MAX_LENGTH];
 char characterEnergyDisplay[MAX_LENGTH];
-
+char pointsacc[MAX_POINTS];
 void level_3_Init()
 {
 	// level init
@@ -990,6 +990,15 @@ void level_3_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
+
+		// display points 
+		CP_Settings_TextSize(50.0f);
+		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
+		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
+		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
+		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 900, wHeight / 2.0f - 500);
+		CP_Settings_TextSize(35.0f);
+
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);
