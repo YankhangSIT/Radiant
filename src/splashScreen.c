@@ -27,7 +27,7 @@ void splash_screen_init()
 	// Set the size according to your image size.
 	TimeElapsed = 0.0f;
 	digipen = CP_Image_Load("Assets/DigiPen_BLACK.png");
-	CP_Settings_ImageMode(CP_POSITION_CORNER);
+	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
 	CP_System_Fullscreen();
 	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -58,7 +58,7 @@ void splash_screen_update(void)
 	}
 
 	
-	CP_Image_Draw(digipen, 0, 0, (float) CP_Image_GetWidth(digipen), (float)CP_Image_GetHeight(digipen), (int)resulttime); // Draw splashscreen image
+	CP_Image_Draw(digipen, 950, 540, (float) CP_Image_GetWidth(digipen), (float)CP_Image_GetHeight(digipen), (int)resulttime); // Draw splashscreen image
 }
 void splash_screen_exit(void)
 {

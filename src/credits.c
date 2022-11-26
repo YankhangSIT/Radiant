@@ -60,7 +60,7 @@ void Credits_Update()
 		fadeoutt = TRUE;
 		alphatime = 3;
 	}
-	CP_Image_Draw(credits_title, wWidth / 2.0f - 490, wHeight / 2.0f - 250, 1000, 400, (int)resulttime); // Draw Credits title image
+	CP_Image_Draw(credits_title, wWidth / 2.0f - 580, wHeight / 2.0f - 250, 1200, 500, (int)resulttime); // Draw Credits title image
 }
 
 void Credits_Exit()
