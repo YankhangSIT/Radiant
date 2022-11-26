@@ -136,7 +136,7 @@ void how_To_play_Update(void)
 		CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
 		CP_Graphics_DrawRect(xWidth / 2.0f - 710, xHeight / 2.0f - 60 + x, 85, 85);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
-		CP_Font_DrawText("D", xWidth / 2.0f - 708, xHeight / 2.0f - 10 + x);
+		CP_Font_DrawText("D", xWidth / 2.0f - 708, xHeight / 2.0f - 60 + x);
 	}
 
 	CP_Settings_Fill(CP_Color_Create(255, 0, 0, 255));
