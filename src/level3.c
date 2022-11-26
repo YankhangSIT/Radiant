@@ -500,11 +500,9 @@ void level_3_Update()
 			spawnIndex++;
 			// restart spawn time
 			spawnTimer = startSpawnTimer;
-		}
+		}	
 
-		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
-		for (int i = 0; i < spawnIndex; i++)
-		{
+			//setting enemy id, health and their sprites with their respective width and height
 			randomId = CP_Random_RangeInt(1, 2);
 			enemies[spawnIndex].id = randomId;
 			if (enemies[spawnIndex].id == 1)
@@ -528,6 +526,8 @@ void level_3_Update()
 				enemies[spawnIndex].health = 2;
 			}
 
+		for (int i = 0; i < spawnIndex; i++)
+		{
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 

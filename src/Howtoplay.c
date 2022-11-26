@@ -67,12 +67,10 @@ void how_To_play_Update(void)
 	elapsedTime = CP_System_GetDt();
 	if (startCount)
 		nextState += elapsedTime;
-	if (nextState > 0.2)
-		
+	if (nextState > 0.2)		
 	{
 		level_1_Init();
 		CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
-
 	}
 
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());

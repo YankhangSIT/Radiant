@@ -511,32 +511,33 @@ void level_2_Update()
 			spawnTimer = startSpawnTimer;
 		}
 
-		// spawn as much items as there are spawn index which represent the number of enemies as well as the enemy spawn index
+		//setting enemy id, health and their sprites with their respective width and height
+		randomId = CP_Random_RangeInt(1, 2);
+		enemies[spawnIndex].id = randomId;
+		if (enemies[spawnIndex].id == 1)
+		{
+			// set enemy with this id to the respective sprite
+			enemies[spawnIndex].enemySprite = enemySprite1;
+			// set the width and height to the respective sprite
+			enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+			enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+			// set health for the enemy id number
+			enemies[spawnIndex].health = 1;
+		}
+		else if (enemies[spawnIndex].id == 2)
+		{
+			// set enemy with this id to the respective sprite
+			enemies[spawnIndex].enemySprite = enemySprite2;
+			// set the width and height to the respective sprite
+			enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
+			enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
+			// set health for the enemy id number
+			enemies[spawnIndex].health = 2;
+		}
+
+
 		for (int i = 0; i < spawnIndex; i++)
 		{
-			randomId = CP_Random_RangeInt(1, 2);
-			enemies[spawnIndex].id = randomId;
-			if (enemies[spawnIndex].id == 1)
-			{
-				// set enemy with this id to the respective sprite
-				enemies[spawnIndex].enemySprite = enemySprite1;
-				// set the width and height to the respective sprite
-				enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-				enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-				// set health for the enemy id number
-				enemies[spawnIndex].health = 1;
-			}
-			else if (enemies[spawnIndex].id == 2)
-			{
-				// set enemy with this id to the respective sprite
-				enemies[spawnIndex].enemySprite = enemySprite2;
-				// set the width and height to the respective sprite
-				enemies[spawnIndex].width = (float)CP_Image_GetWidth(enemies[(int)spawnIndex].enemySprite);
-				enemies[spawnIndex].height = (float)CP_Image_GetHeight(enemies[(int)spawnIndex].enemySprite);
-				// set health for the enemy id number
-				enemies[spawnIndex].health = 2;
-			}
-
 			// enemy movement
 			enemies[i].pos = enemyMovement(character.Pos, enemies[i].pos, enemy.speed);
 
