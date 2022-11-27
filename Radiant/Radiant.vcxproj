@@ -176,7 +176,6 @@ xcopy "$(SolutionDir)Assets\*" "$(OutDir)Assets\" /s /r /y /q
     <ClCompile Include="..\src\gameOverpage.c" />
     <ClCompile Include="..\src\Howtoplay.c" />
     <ClCompile Include="..\src\leaderboard.c" />
-    <ClCompile Include="..\src\leaderboard_2.c" />
     <ClCompile Include="..\src\level1.c" />
     <ClCompile Include="..\src\level2.c" />
     <ClCompile Include="..\src\level3.c" />
