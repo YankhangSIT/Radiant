@@ -285,7 +285,7 @@ void level_3_Update()
 		CP_Font_DrawText("Paused", wWidth / 2.0f, wHeight / 2.0f - 400);
 		CP_Settings_TextSize(35.0f);
 		Button("Resume Game", resumeButton.pos.x, resumeButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, resumeButton.width, resumeButton.height, 0, 255, 0, 0, 0, 0, 255);
-		Button("Restart Game", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width, restartButton.height, 0, 255, 0, 0, 0, 0, 255);
+		Button("Restart Level", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width, restartButton.height, 0, 255, 0, 0, 0, 0, 255);
 		Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width, menuButton.height, 0, 255, 0, 0, 0, 0, 255);
 		Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width, exitLevelButton.height, 0, 255, 0, 0, 0, 0, 255);
 	}
@@ -303,7 +303,7 @@ void level_3_Update()
 			CP_Font_DrawText("You survived Level 3!", wWidth / 2.0f, wHeight / 2.0f - 400.f);
 			CP_Settings_TextSize(35.0f);
 			Button("Next level", nextLevel.pos.x, nextLevel.pos.y, wWidth / 2.0f, wHeight / 2.0f - 200, nextLevel.width, nextLevel.height, 0, 255, 0, 0, 0, 0, 255);
-			Button("Restart Game", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width, restartButton.height, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart Level", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width, restartButton.height, 0, 255, 0, 0, 0, 0, 255);
 			Button("Exit to Main Menu", menuButton.pos.x, menuButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 100, menuButton.width, menuButton.height, 0, 255, 0, 0, 0, 0, 255);
 			Button("Quit Game", exitLevelButton.pos.x, exitLevelButton.pos.y, wWidth / 2.0f, wHeight / 2.0f + 250, exitLevelButton.width, exitLevelButton.height, 0, 255, 0, 0, 0, 0, 255);
 		}
@@ -383,7 +383,7 @@ void level_3_Update()
 		}
 		else if (IsAreaClicked(restartButton.pos.x, restartButton.pos.y, restartButton.width, restartButton.height, mouseClickPos.x, mouseClickPos.y))
 		{ // restart button
-			Button("Restart Game", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width + buttonWidthOffset, restartButton.height + buttonHeightOffset, 0, 255, 0, 0, 0, 0, 255);
+			Button("Restart Level", restartButton.pos.x, restartButton.pos.y, wWidth / 2.0f, wHeight / 2.0f - 50, restartButton.width + buttonWidthOffset, restartButton.height + buttonHeightOffset, 0, 255, 0, 0, 0, 0, 255);
 		}
 
 		if (IsAreaClicked(menuButton.pos.x, menuButton.pos.y, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
