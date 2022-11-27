@@ -29,7 +29,7 @@ void splash_screen_init()
 	digipen = CP_Image_Load("Assets/DigiPen_BLACK.png");
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
-	CP_System_Fullscreen();
+	CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 }
 //

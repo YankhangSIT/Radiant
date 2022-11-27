@@ -32,8 +32,8 @@
 	game_Title = CP_Image_Load("Assets/Game_Titlee.png");
 
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
-	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP);
-	CP_System_Fullscreen();
+	CP_Settings_ImageWrapMode(CP_IMAGE_WRAP_CLAMP); 
+	CP_System_FullscreenAdvanced(1920, 1080);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 
 	CP_Settings_TextSize(35.0f);

@@ -58,41 +58,44 @@ void Credits_2_Update()
 	// Project credits
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("DIRECTOR and PROGRAMMER", wWidth / 2.0f, wHeight / 2.0f - 400);
+	CP_Font_DrawText("DIRECTOR and PROGRAMMER", wWidth / 2.0f, wHeight / 2.0f - 450);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f - 350);
+	CP_Font_DrawText("Koh Yan Khang", wWidth / 2.0f, wHeight / 2.0f - 400);
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("PRODUCER and DESIGN LEAD", wWidth / 2.0f, wHeight / 2.0f - 250);
+	CP_Font_DrawText("PRODUCER and DESIGN LEAD", wWidth / 2.0f, wHeight / 2.0f - 300);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Wei Jing Song", wWidth / 2.0f, wHeight / 2.0f - 200);
+	CP_Font_DrawText("Wei Jing Song", wWidth / 2.0f, wHeight / 2.0f - 250);
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("ENVIRONMENT ARTISTS and USER-INTERFACE", wWidth / 2.0f, wHeight / 2.0f - 100);
+	CP_Font_DrawText("ENVIRONMENT ARTISTS and USER-INTERFACE", wWidth / 2.0f, wHeight / 2.0f - 150);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Seah Sheng Rong Donovan", wWidth / 2.0f, wHeight / 2.0f - 50);
+	CP_Font_DrawText("Seah Sheng Rong Donovan", wWidth / 2.0f, wHeight / 2.0f - 100);
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("TECHNICAL LEAD", wWidth / 2.0f, wHeight / 2.0f + 50);
+	CP_Font_DrawText("TECHNICAL LEAD", wWidth / 2.0f, wHeight / 2.0f);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Lua Wei Xiang Darren", wWidth / 2.0f, wHeight / 2.0f + 100);
+	CP_Font_DrawText("Lua Wei Xiang Darren", wWidth / 2.0f, wHeight / 2.0f + 50);
 
 	CP_Settings_Fill(CP_Color_Create(160, 32, 240, 255));
 	CP_Settings_TextSize(60.f);
-	CP_Font_DrawText("SPECIAL THANKS TO: ", wWidth / 2.0f, wHeight / 2.0f + 200);
+	CP_Font_DrawText("Advisors: ", wWidth / 2.0f, wHeight / 2.0f + 150);
 	CP_Settings_Fill(CP_Color_Create(255, 250, 250, 255));
 	CP_Settings_TextSize(45.0f);
-	CP_Font_DrawText("Professor Cheng Ding Xiang", wWidth / 2.0f, wHeight / 2.0f + 250);
-	CP_Font_DrawText("Mr Gerald Wong", wWidth / 2.0f, wHeight / 2.0f + 300);
-	CP_Font_DrawText("Teaching Assistants", wWidth / 2.0f, wHeight / 2.0f + 350);
-	CP_Font_DrawText("Play Testers", wWidth / 2.0f, wHeight / 2.0f + 400);
+	CP_Font_DrawText("Cheng Ding Xiang", wWidth / 2.0f, wHeight / 2.0f + 200);
+	CP_Font_DrawText("Gerald Wong", wWidth / 2.0f, wHeight / 2.0f + 250);
+	CP_Font_DrawText("Prasanna Ghali", wWidth / 2.0f, wHeight / 2.0f + 300);
+	CP_Font_DrawText("Jeremy Chew", wWidth / 2.0f, wHeight / 2.0f + 350);
+	CP_Font_DrawText("Vadim Surov", wWidth / 2.0f, wHeight / 2.0f + 400);
+	CP_Font_DrawText("Do Duc Tai", wWidth / 2.0f, wHeight / 2.0f + 450);
+	CP_Font_DrawText("Rosa Anajao", wWidth / 2.0f, wHeight / 2.0f + 500);
 
 	CP_Settings_TextSize(30.0f);
 	Button("Continue", wWidth / 2.0f + 700, wHeight / 2.0f + 450, wWidth / 2.0f + 700, wHeight / 2.0f + 450, 180, 80, 0, 255, 0, 0, 0, 0, 255);
