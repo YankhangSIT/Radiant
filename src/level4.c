@@ -111,12 +111,14 @@ void level_4_Init()
 	boss.width = (float)CP_Image_GetWidth(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
 	boss.height = (float)CP_Image_GetHeight(bossSprite);
-	if (playerNum == 1) { // ranged character boss health, speed and projectile speed
+	if (playerNum == 1)
+	{ // ranged character boss health, speed and projectile speed
 		boss.health = 30;
 		bossMovement = 8;
 		bossBullet.bulletSpeed = 350;
 	}
-	else { // balance for melee character
+	else
+	{ // balance for melee character
 		boss.health = 20;
 		bossMovement = 5;
 		bossBullet.bulletSpeed = 250;
@@ -187,7 +189,7 @@ void level_4_Init()
 	energyPickup = CP_Image_Load("Assets/energy_pickup_animation.png");
 	char_energy = CP_Image_Load("Assets/Char_Energy.png");
 	char_health = CP_Image_Load("Assets/Char_Health.png");
-	
+
 	/*Button position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
@@ -215,7 +217,6 @@ void level_4_Init()
 	/*Boss Health code display size*/
 	hpBarCurrLengthX = wWidth / boss.maxHealth * boss.health;
 	hpbarOriginalX = hpBarCurrLengthX;
-
 
 	character.Pos = CP_Vector_Set(wWidth / 2, wHeight / 2);
 	character.health = 5;	  // start with 5 hp
@@ -251,7 +252,6 @@ void level_4_Init()
 	{
 		CP_Sound_PlayAdvanced(bossTime, 1.0f, 1.0f, TRUE, CP_SOUND_GROUP_2);
 		playBackgroundMusic = 0;
-		*&backgroundVolume = 0.2f;
 	}
 	else
 		CP_Sound_ResumeGroup(CP_SOUND_GROUP_2);
@@ -1033,14 +1033,13 @@ void level_4_Update()
 			CP_Image_Draw(swordPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 		}
 
-		// display points 
+		// display points
 		CP_Settings_TextSize(50.0f);
 		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
 		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 860, wHeight / 2.0f - 500);
 		CP_Settings_TextSize(35.0f);
-
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);
