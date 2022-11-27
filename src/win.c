@@ -28,7 +28,6 @@ char pointsacc[MAX_POINTS];
 void win_init()
 {
 	CP_System_FullscreenAdvanced(1920, 1080);
-	// CP_System_SetWindowSize(1920, 1080);
 	CP_Settings_ImageMode(CP_POSITION_CENTER);
 	CP_Settings_RectMode(CP_POSITION_CENTER);
 

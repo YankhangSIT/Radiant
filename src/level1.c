@@ -61,39 +61,19 @@ void level_1_Init()
 	wHeight = (float)CP_System_GetWindowHeight();
 	level = 1;
 
-	// ranged char init
-	firstShoot = 0;
+	// bullet/shooting stuff
 	bullet.bulletSpeed = 1000;
 	bulletSpawnIndex = 0;
 	delayShootTime = 0.1f;
 	delayShootStart = delayShootTime;
-
 	bullet.bulletSprite = CP_Image_Load("Assets/Ranged_Char_Bullet.png");
 	bullet.width = (float)CP_Image_GetWidth(bullet.bulletSprite);
 	bullet.height = (float)CP_Image_GetHeight(bullet.bulletSprite);
-	if (playerNum == 1)
-	{
-		character.playerSprite = gunPlayer;
-		character.width = (float)CP_Image_GetWidth(gunPlayer);
-		character.height = (float)CP_Image_GetHeight(gunPlayer);
-	}
-	bullet.shootPosition = CP_Vector_Set(character.Pos.x + character.width / 2.f + 20, character.Pos.y + character.health / 2.f); // bullet start shoot spawn position
-	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
-	firstShoot = 0;
 	canShoot = 0;
 
-	// melee char init
+	//sword stuff
 	swordSwingSprite1 = CP_Image_Load("Assets/sword_swing.png");
 	swordSwingSprite2 = CP_Image_Load("Assets/sword_swing2.png");
-
-	if (playerNum == 2)
-	{
-		character.playerSprite = swordPlayer;
-		character.width = (float)CP_Image_GetWidth(swordPlayer);
-		character.height = (float)CP_Image_GetHeight(swordPlayer);
-		canShoot = 0;
-	}
-	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
 	swordSwingTime = 0;
 	damageTakenTime = 0;
 	swingSword = false;
@@ -112,8 +92,6 @@ void level_1_Init()
 	enemies[spawnIndex].pos.x = spawnPosition.x;
 	enemies[spawnIndex].pos.y = spawnPosition.y;
 	spawnPosition = CP_Vector_Set(0, 0);						  // set spawn positions to 0 coordinate
-	enemy.width = (float)CP_Image_GetWidth(enemySprite1) - 2.f;	  // 2.0 for polishing purposes
-	enemy.height = (float)CP_Image_GetHeight(enemySprite1) - 2.f; // 2.0 for polishing purposes
 	enemy.speed = 70;
 
 	// drops init
@@ -122,8 +100,6 @@ void level_1_Init()
 	itemDrop[dropIndex].pos.y = spawnPosition.y;
 	dropShieldSprite = CP_Image_Load("Assets/Shield_Drop.png");
 	dropEnergySprite = CP_Image_Load("Assets/batteryDrop.png");
-	healthDrop.width = (float)CP_Image_GetWidth(healthDrop.dropSprite);
-	healthDrop.height = (float)CP_Image_GetHeight(healthDrop.dropSprite);
 
 	// misc init
 	elapsedTime = 0;
@@ -156,6 +132,25 @@ void level_1_Init()
 	gunPlayer = CP_Image_Load("Assets/ranged_char_facing_front.png");  // player sprite
 	swordPlayer = CP_Image_Load("Assets/melee_char_facing_front.png"); // player sprite
 
+	if (playerNum == 1)
+	{
+		character.playerSprite = gunPlayer;
+		character.width = (float)CP_Image_GetWidth(gunPlayer);
+		character.height = (float)CP_Image_GetHeight(gunPlayer);
+	}
+
+
+	if (playerNum == 2)
+	{
+		character.playerSprite = swordPlayer;
+		character.width = (float)CP_Image_GetWidth(swordPlayer);
+		character.height = (float)CP_Image_GetHeight(swordPlayer);
+		canShoot = 0;
+	}
+
+	swordSwingArea = SetSword(character.Pos.x - (character.width * 3.f) / 2.f, character.Pos.y, character.width * 3.f, character.height * 2.5f);
+	bullet.shootPosition = CP_Vector_Set(character.Pos.x, character.Pos.y); // bullet start shoot spawn position
+	bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 	/*Buttons position/size for pause menu and next level panel, the offset variable is the value to make the button bigger when hovered over*/
 	buttonWidthOffset = 20;
 	buttonHeightOffset = 20;
@@ -569,19 +564,15 @@ void level_1_Update()
 					CP_Sound_PlayAdvanced(projectile_shoot, 1.0f, 1.0f, FALSE, CP_SOUND_GROUP_0);
 
 					CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-					/*Only increment after the index 0 bullet is spawned*/
-					if (firstShoot == 1)
-					{
-						++bulletSpawnIndex;
-					}
+					/*Set bullet bool as 1 to be drawn*/
+					bulletArray[bulletSpawnIndex].isSpawn = 1;
 					/*Set the bullet vector directions from the shooting position to mouse click position*/
 					bulletArray[bulletSpawnIndex].directionBullet = CP_Vector_Subtract(mouseClickPos, bullet.shootPosition);
 					/*Set bullet's position to the shooting position*/
 					bulletArray[bulletSpawnIndex].bulletPos = bullet.shootPosition;
 					/*Normalize the direction to prevent the bullet speed from changing based on distance vector*/
 					bulletArray[bulletSpawnIndex].normalizedDirection = CP_Vector_Normalize(bulletArray[bulletSpawnIndex].directionBullet);
-					firstShoot = 1;
-
+					++bulletSpawnIndex;
 					// energy deplete
 					if (character.unlimitedEnergyState != 1)
 					{
@@ -590,7 +581,7 @@ void level_1_Update()
 				}
 			}
 			/*bullet movement*/
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			for (int i = 0; i  < bulletSpawnIndex; ++i)
 			{ /*scale the acceleration of the bullet based on the normalized direction and the speed*/
 				bulletArray[i].acceleration = CP_Vector_Scale(bulletArray[i].normalizedDirection, bullet.bulletSpeed * elapsedTime);
 				/*Add the bullet's acceleration vector to the bullet's position*/
@@ -598,7 +589,7 @@ void level_1_Update()
 			}
 
 			// check if projectile out of bounds, if so, delete it.
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			for (int i = 0; i  < bulletSpawnIndex; ++i)
 			{
 				// defined in map.c
 				if (checkProjectileMapCollision(bulletArray[i].bulletPos, 0 + bullet.width / 2, wWidth - bullet.width / 2, 0 + bullet.height / 2, wHeight - bullet.height / 2) == 1)
@@ -612,7 +603,7 @@ void level_1_Update()
 			}
 
 			// enemies dying to bullets
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			for (int i = 0; i  < bulletSpawnIndex; ++i)
 			{ // nested loop to check each bullet with each enemy
 				for (int j = 0; j < (spawnIndex); ++j)
 				{
@@ -621,14 +612,14 @@ void level_1_Update()
 					float distance = (float)sqrt(pow(xDistance, 2) + pow(yDistance, 2)); // distance between two circles
 
 					// enemies die to bullets
-					if (distance < enemies[j].width && enemies[j].health > 0 && firstShoot == 1)
+					if (distance < enemies[j].width && enemies[j].health > 0)
 					{ // if distance less than bullet width
 
 						// decrease health after collision
 						--enemies[j].health;
 
 						// deletion of projectile after hitting enemy
-						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+						for (int x = i; x  < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1];
 						}
@@ -655,14 +646,14 @@ void level_1_Update()
 			}
 
 			// BULLETS DISAPPEAR WHEN COLLIDING WITH OBSTRUCTIONS
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			for (int i = 0; i  < bulletSpawnIndex; ++i)
 			{
 				for (int o = 0; o < obstructionCount1; o++)
 				{ // check if projectile hits obstructions, if so, delete it.
 					if (checkProjectileObsCollision(bulletArray[i].bulletPos, bulletArray[i].width, bulletArray[i].height, obs.rec_block[o].x, obs.rec_block[o].y, obs.rec_block[o].width, obs.rec_block[o].height))
 					{
 						// check for obstructions
-						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
+						for (int x = i; x < bulletSpawnIndex; ++x)
 						{
 							bulletArray[x] = bulletArray[x + 1]; // to "delete" bullet from array
 						}
@@ -928,9 +919,9 @@ void level_1_Update()
 			CP_Image_Draw(gunPlayer, character.Pos.x, character.Pos.y, character.width, character.height, character.transparency);
 
 			// draw projectile for ranged char
-			for (int i = 0; i - 1 < bulletSpawnIndex; ++i)
+			for (int i = 0; i  < bulletSpawnIndex; ++i)
 			{
-				if (firstShoot == 1)
+				if (bulletArray[i].isSpawn == 1)
 				{
 					CP_Image_Draw(bullet.bulletSprite, bulletArray[i].bulletPos.x, bulletArray[i].bulletPos.y, bullet.width, bullet.height, 255);
 				}
@@ -994,4 +985,20 @@ void level_1_Exit()
 	CP_Image_Free(&obstruction2);
 	CP_Image_Free(&obstruction3);
 	CP_Image_Free(&map_background);
+
+	CP_Image_Free(&bullet.bulletSprite);
+	CP_Image_Free(&swordSwingSprite1);
+	CP_Image_Free(&swordSwingSprite2);
+	CP_Image_Free(&enemySprite1);
+	CP_Image_Free(&enemySprite2);
+	CP_Image_Free(&dropShieldSprite);
+	CP_Image_Free(&dropEnergySprite);
+	CP_Image_Free(&stunned);
+	CP_Image_Free(&char_energy); 
+	CP_Image_Free(&char_health);
+	CP_Image_Free(&shielded); 
+	CP_Image_Free(&unlimitedEnergy); 
+	CP_Image_Free(&gunPlayer); 
+	CP_Image_Free(&swordPlayer); 
+
 }

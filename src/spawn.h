@@ -121,7 +121,6 @@ int bossBulletIndex3;
 
 
 int bulletSpawnIndex;
-int firstShoot;
 int canShoot;
 float delayShootTime;
 float delayShootStart;
@@ -129,7 +128,6 @@ CP_Vector spawnPosition;
 
 // declarations needed for drops
 struct Drop itemDrop[SIZE];
-struct Drop healthDrop;
 int dropIndex;
 CP_Vector itemSpawn;
 CP_Vector dropPositions;
