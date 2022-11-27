@@ -3,7 +3,7 @@
 // author:	Seah Sheng Rong Donovan, Lua Wei Xiang Darren
 // email:	s.seah@digipen.edu, weixiangdarren.lua@digipen.edu
 // brief:	This file writes the code for selecting the character and prompt to next page
-// 
+//
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 
@@ -38,7 +38,6 @@ void character_Select_Init()
 	CP_Settings_TextSize(35.0f);
 	zWidth = (float)CP_System_GetWindowWidth();
 	zHeight = (float)CP_System_GetWindowHeight();
-	// CP_Sound_Free(&buttonClickSound);
 	buttonClickSound = CP_Sound_Load("Assets/buttonClick.wav");
 	nextState = 0.f;
 	startCount = FALSE;
@@ -54,7 +53,6 @@ void character_Select_Update()
 		CP_Engine_SetNextGameState(how_To_play_Init, how_To_play_Update, how_To_play_Exit);
 
 	CP_Vector mouseClickPos = CP_Vector_Set(CP_Input_GetMouseX(), CP_Input_GetMouseY());
-	CP_Sound_PlayAdvanced(backgroundMusic, 0.1f, 1.0f, FALSE, CP_SOUND_GROUP_1);
 	// Create rectangle
 
 	CP_Settings_RectMode(CP_POSITION_CENTER);
@@ -91,7 +89,6 @@ void character_Select_Update()
 			playerNum = 1;
 			if (!nextState)
 				startCount = TRUE;
-
 		}
 		/*Done by Darren Lua and improved by Donovan*/
 		if (IsAreaClicked(zWidth / 2.0f + 100, zHeight / 2.0f, (float)CP_Image_GetWidth(swordPlayer) + 10, (float)CP_Image_GetHeight(swordPlayer) + 10, mouseClickPos.x, mouseClickPos.y) == 1)
