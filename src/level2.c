@@ -276,6 +276,8 @@ void level_2_Update()
 	/* UI panel button code*/
 	if (min == surviveMin || lose == 1)
 	{
+		previousLevelPoints = character.points;
+
 		CP_Settings_Fill(CP_Color_Create(255, 255, 255, 255));
 		CP_Graphics_DrawRect(wWidth / 2.0f, wHeight / 2.0f, 1000, 2000);
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));

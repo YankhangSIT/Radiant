@@ -317,7 +317,7 @@ void level_1_Update()
 		CP_Settings_Fill(CP_Color_Create(0, 0, 0, 255));
 		if (lose == 0)
 		{
-			previousLevelPoints = character.points;
+			previousLevelPoints = character.points; // save points earned for this level
 
 			CP_Sound_PauseGroup(CP_SOUND_GROUP_1);
 			playVictorySound = TRUE;
