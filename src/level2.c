@@ -182,7 +182,7 @@ void level_2_Init()
 	character.speed = 210;
 	character.transparency = 255; // opaque initially, will be translucent in invul state
 	character.points = previousLevelPoints;
-	invulElapsedTime = 0;		  // timer for invul
+	invulElapsedTime = 0; // timer for invul
 	invulTransparencyTime = 0;
 	energyRechargeTime = 0; // timer for energyRecharge
 	stunnedElapsedTime = 0;
@@ -226,30 +226,30 @@ void level_2_Init()
 		x += (int)obsWidth6;
 	}
 	// bottom left trees
-	for (int i = 76, x = 0, y = 0; i < 88; i++)
+	for (int i = 76, x = 0, y = 0; i < 86; i++)
 	{
-		obs.rec_block[i] = SetRect_(wWidth * 1 / 16 + x, (float)(wHeight * 1.3 / 2 + y), obsWidth5, (float)(obsHeight5 * 0.7), obstruction5);
+		obs.rec_block[i] = SetRect_(wWidth * 1 / 16 + x, (float)(wHeight * 1.3 / 2 + y + obsHeight5 * 0.7), obsWidth5, (float)(obsHeight5 * 0.7), obstruction5);
 		x += (int)obsWidth5;
-		if (i == 77 || i == 81)
+		if (i == 79)
 		{
 			x = 0;
 			y += (int)(obsHeight5 * 0.7);
 		}
 	}
 	// center trees
-	for (int i = 88, x = 0, y = 0; i < 90; i++)
+	for (int i = 86, x = 0, y = 0; i < 88; i++)
 	{
 		obs.rec_block[i] = SetRect_(wWidth * 1 / 3 + x, (float)(wHeight * 0.8 / 2 + y), obsWidth5, (float)(obsHeight5 * 0.7), obstruction5);
 		x += (int)obsWidth5;
 		y += (int)(obsHeight5 * 0.7f * 2.f + 80.f);
 	}
 	// top right trees
-	for (int i = 90, x = 0, y = 0; i < 100; i++)
+	for (int i = 88, x = 0, y = 0; i < 98; i++)
 	{
 		obs.rec_block[i] = SetRect_((float)(wWidth * 2.4 / 3 + x), wHeight * 1 / 8 + y, obsWidth5, (float)(obsHeight5 * 0.7), obstruction5);
-		if (i < 94)
+		if (i < 92)
 			x += (int)obsWidth5;
-		else if (i == 94)
+		else if (i == 92)
 			y = (int)(obsHeight5 * 0.7 * 2);
 		else
 		{
@@ -347,7 +347,7 @@ void level_2_Update()
 		if (lose == 0)
 		{
 			if (win == TRUE)
-			{	// next level button
+			{ // next level button
 				if (IsAreaClicked(nextLevel.pos.x, nextLevel.pos.y, nextLevel.width, nextLevel.height, mouseClickPos.x, mouseClickPos.y) == 1 && CP_Input_MouseClicked())
 				{
 					delayShootTime = delayShootStart;
@@ -485,8 +485,8 @@ void level_2_Update()
 		{
 			// set random spawn position based on width and height of the screen
 			/*The 4 directions represent different locations of the spawn */
-		
-			if (direction == 1)	/*top of the map*/
+
+			if (direction == 1) /*top of the map*/
 			{
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), 40);
 			}
@@ -498,7 +498,7 @@ void level_2_Update()
 			{
 				spawnPosition = CP_Vector_Set(wWidth - 40, CP_Random_RangeFloat(40, wHeight - 40));
 			}
-			else if (direction == 4)  /*bottom of the map*/
+			else if (direction == 4) /*bottom of the map*/
 			{
 				spawnPosition = CP_Vector_Set(CP_Random_RangeFloat(40, wWidth - 40), wHeight - 40);
 			}
@@ -512,7 +512,7 @@ void level_2_Update()
 			spawnTimer = startSpawnTimer;
 		}
 
-		//setting enemy id, health and their sprites with their respective width and height
+		// setting enemy id, health and their sprites with their respective width and height
 		randomId = CP_Random_RangeInt(1, 2);
 		enemies[spawnIndex].id = randomId;
 		if (enemies[spawnIndex].id == 1)
@@ -535,7 +535,6 @@ void level_2_Update()
 			// set health for the enemy id number
 			enemies[spawnIndex].health = 2;
 		}
-
 
 		for (int i = 0; i < spawnIndex; i++)
 		{
@@ -619,7 +618,6 @@ void level_2_Update()
 						// activate take damge effect
 						enemies[j].takeDamage = 1.0f;
 
-
 						// deletion of projectile after hitting enemy
 						for (int x = i; x - 1 < bulletSpawnIndex; ++x)
 						{
@@ -629,10 +627,12 @@ void level_2_Update()
 
 						if (enemies[j].health <= 0)
 						{
-							if (enemies[j].id == 1) {
+							if (enemies[j].id == 1)
+							{
 								character.points += 10;
 							}
-							else if (enemies[j].id == 2) {
+							else if (enemies[j].id == 2)
+							{
 								character.points += 20;
 							}
 
@@ -690,10 +690,12 @@ void level_2_Update()
 
 						if (enemies[i].health <= 0)
 						{
-							if (enemies[i].id == 1) {
+							if (enemies[i].id == 1)
+							{
 								character.points += 10;
 							}
-							else if (enemies[i].id == 2) {
+							else if (enemies[i].id == 2)
+							{
 								character.points += 20;
 							}
 
@@ -994,14 +996,13 @@ void level_2_Update()
 		CP_Font_DrawText(timeString, wWidth / 2.0f, wHeight / 2.0f - 450);
 		CP_Settings_TextSize(35.0f);
 
-		// display points 
+		// display points
 		CP_Settings_TextSize(50.0f);
 		sprintf_s(pointsacc, MAX_POINTS, " %d", character.points);
 		CP_Settings_Fill(CP_Color_Create(0, 255, 0, 255));
 		CP_Font_DrawText("Points: ", wWidth / 2.0f + 750, wHeight / 2.0f - 500);
 		CP_Font_DrawText(pointsacc, wWidth / 2.0f + 860, wHeight / 2.0f - 500);
 		CP_Settings_TextSize(35.0f);
-
 
 		// display char health and energy ///
 		CP_Font_DrawText("Health:", 50, 50);

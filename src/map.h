@@ -4,15 +4,15 @@
 // email:	yankhang.k@digipen.edu, jingsong.wei@digipen.edu
 // brief:	Includes code for the collision detection for character
 // and enemey with obstruction.
-// 
+//
 // Copyright 2022 DigiPen, All rights reserved.
 //---------------------------------------------------------
 #include <stdbool.h>
 #include "cprocessing.h"
 #define MAX_Obs1 66
-#define MAX_Obs2 100
-#define MAX_Obs3 135
-#define MAX_Obs4 137
+#define MAX_Obs2 98
+#define MAX_Obs3 133
+#define MAX_Obs4 135
 CP_Vector checkMapCollision(CP_Vector charPosition, float minX, float maxX, float minY, float maxY);
 CP_Vector checkObsCollision(CP_Vector charPosition, float cWidth, float cHeight, float x, float y, float width, float height);
 int checkProjectileMapCollision(CP_Vector bulletPosition, float minX, float maxX, float minY, float maxY);
