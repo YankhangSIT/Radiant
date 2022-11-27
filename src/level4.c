@@ -532,6 +532,7 @@ void level_4_Update()
 					if (CP_Input_MouseTriggered(MOUSE_BUTTON_LEFT) && swordSwingEnemey(swordSwingArea, boss.pos, (boss.width / 2.f - 60.f))) // 60 is for fine-tuning, boss too fat
 					{
 						--boss.health;
+						boss.takeDamage = 1.0f;
 					}
 				}
 				if (CP_Input_MouseClicked() && character.unlimitedEnergyState != 1)

@@ -110,28 +110,28 @@ void game_Over_page_Update()
 	float resulttime = (TimeElapsed / alphatime) * 255;
 	CP_Image_Draw(gameOver, pWidth / 4.0f + 100, (pHeight / 2.0f - 300), (float)CP_Image_GetWidth(gameOver), (float)CP_Image_GetHeight(gameOver), (int)resulttime);
 
-	Button("Restart", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, 255, 0, 0, 0, 0, 0, 255);
+	Button("Restart Level", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 50, 300, 80, 255, 0, 0, 0, 0, 0, 255);
 
-	Button("Menu", pWidth / 2.0f, pHeight / 2.0f + 100, pWidth / 2.0f, pHeight / 2.0f + 100, 180, 80, 255, 0, 0, 0, 0, 0, 255);
+	Button("Exit to Main Menu", pWidth / 2.0f, pHeight / 2.0f + 100, pWidth / 2.0f, pHeight / 2.0f + 100, 300, 80, 255, 0, 0, 0, 0, 0, 255);
 
-	Button("Exit", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 250, 180, 80, 255, 0, 0, 0, 0, 0, 255);
+	Button("Quit Game", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 250, 300, 80, 255, 0, 0, 0, 0, 0, 255);
 
 	if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f - 50, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 	{
 
-		Button("Restart", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 53, 190, 90, 255, 0, 0, 0, 0, 0, 255);
+		Button("Restart Level", pWidth / 2.0f, pHeight / 2.0f - 50, pWidth / 2.0f, pHeight / 2.0f - 53, 320, 100, 255, 0, 0, 0, 0, 0, 255);
 	}
 
 	if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 	{
 
-		Button("Menu", pWidth / 2.0f, pHeight / 2.0f + 100, pWidth / 2.0f, pHeight / 2.0f + 97, 190, 90, 255, 0, 0, 0, 0, 0, 255);
+		Button("Exit to Main Menu", pWidth / 2.0f, pHeight / 2.0f + 100, pWidth / 2.0f, pHeight / 2.0f + 97, 320, 100, 255, 0, 0, 0, 0, 0, 255);
 	}
 
 	if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f + 250, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
 	{
 
-		Button("Exit", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 247, 190, 90, 255, 0, 0, 0, 0, 0, 255);
+		Button("Quit Game", pWidth / 2.0f, pHeight / 2.0f + 250, pWidth / 2.0f, pHeight / 2.0f + 247, 320, 100, 255, 0, 0, 0, 0, 0, 255);
 	}
 
 	if (CP_Input_MouseClicked())
@@ -170,8 +170,6 @@ void game_Over_page_Update()
 					level4State = TRUE;
 				}
 			}
-
-			// CP_Engine_SetNextGameState(level_1_Init, level_1_Update, level_1_Exit);
 		}
 
 		if (IsAreaClicked(pWidth / 2.0f, pHeight / 2.0f + 100, 180, 80, mouseClickPos.x, mouseClickPos.y) == 1)
